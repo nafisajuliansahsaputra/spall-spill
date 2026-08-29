@@ -1,0 +1,15 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Do not immediately consume freshly published package versions.
+# Gives the ecosystem time to detect compromised releases.
+minimumReleaseAge: 1440
+
+# Prevent transitive dependencies from silently pulling code
+# directly from Git repositories or arbitrary tarball URLs.
+blockExoticSubdeps: true
+
+# Fail installation when a dependency requires an unapproved
+# lifecycle/build script instead of silently accepting it.
+strictDepBuilds: true
