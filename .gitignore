@@ -1,8 +1,11 @@
 # Dependencies
 node_modules/
 
-# Build output
+# Next.js generated files
 .next/
+next-env.d.ts
+
+# Build output
 dist/
 coverage/
 .turbo/
