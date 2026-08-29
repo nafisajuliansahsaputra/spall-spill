@@ -1,14 +1,20 @@
 # Spall Spill
 
-Production rebuild of Spall Spill.
+Clean production-rebuild repository for Spall Spill.
 
-This repository is intentionally clean and does not inherit the legacy runtime codebase.
+This repository intentionally does **not** inherit the legacy runtime codebase. Implementation has not started yet; the project is currently at the guided setup/execution starting point.
 
-## Authority
+## Canonical authority
 
-Product and implementation decisions are governed by `docs/product-spec/` and the execution checkpoint in `docs/EXECUTION-STATE.md`.
+Product and implementation decisions are governed by `docs/product-spec/`.
 
-## Architecture baseline
+Key files:
+
+- `docs/product-spec/PRODUCT-SOURCE-OF-TRUTH.md` — current canonical product/implementation index.
+- `docs/product-spec/MIGRATION-MANIFEST.md` — immutable provenance of the historical Product Source of Truth.
+- `docs/product-spec/technical-architecture/12.4-production-technology-stack-security-architecture.md` — locked production technology/security architecture.
+
+## Locked architecture direction
 
 - Next.js Active LTS
 - React 19
@@ -24,4 +30,8 @@ Product and implementation decisions are governed by `docs/product-spec/` and th
 - OpenTelemetry + Sentry
 - GitHub Actions + Vitest + Playwright + pgTAP + security scanning
 
-See `docs/product-spec/technical-architecture/12.4-production-technology-stack-security-architecture.md` for the canonical technology/security lock.
+## Execution workflow
+
+The owner executes setup, coding, configuration, and deployment locally while ChatGPT acts as technical lead/pair programmer/reviewer. Direct changes to GitHub, Supabase, Vercel, or other services happen only when explicitly requested.
+
+The next implementation step starts from environment/setup verification before any runtime scaffold is created.
