@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - foundation
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies (bootstrap mode)
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Verify formatting, lint, types, tests, and build
+        run: pnpm verify
+
+      - name: Enforce committed lockfile after bootstrap
+        if: github.ref == 'refs/heads/main'
+        run: |
+          test -f pnpm-lock.yaml || {
+            echo "pnpm-lock.yaml is required on main. Generate and commit it before merging the foundation PR."
+            exit 1
+          }
