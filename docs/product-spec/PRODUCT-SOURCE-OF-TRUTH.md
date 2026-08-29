@@ -33,7 +33,19 @@ Locked route families remain:
 
 **EXECUTION GATE SATISFIED.**
 
-Locks 11.1–11.28 remain authoritative, including:
+Historical locks 11.1–11.28 remain authoritative for product/security semantics except where a later Stage 12 architecture lock intentionally supersedes an implementation mechanism.
+
+Important supersession rule:
+
+- historical 11.1 selected Firebase as the then-current auth provider;
+- **12.4 supersedes that provider mechanism with Supabase Auth**;
+- the preserved 11.1 product semantics remain Google + Email/Password, one universal Owner relationship, authentication metadata ≠ Published Identity, and authentication ≠ authorization.
+
+JIT implementation lock added in this repository:
+
+- [11.29 / OD-SEC-003 Intended-Destination Storage / Transport / Safety](./source-of-truth/11.29-od-sec-003-intended-destination-storage-transport-safety.md) — **LOCKED**; server-issued signed HttpOnly one-time internal navigation token; resolver/authorization always wins; re-auth mutations use separate opaque server-side action context.
+
+Other Stage 11 authority includes:
 
 - authentication/session/security boundaries;
 - server-side ownership authorization;
@@ -150,7 +162,7 @@ Quality / Security
 
 ## User Flow status
 
-**J1–J9 remain unchanged by the repository/technology migration.** No Mermaid topology update is required because infrastructure and security boundaries do not change the locked user-visible journey sequence.
+**J1–J9 remain unchanged by the repository/technology migration and 11.29.** No Mermaid topology update is required because infrastructure/security transport mechanics do not change the locked user-visible journey sequence.
 
 ## Implementation authority
 
