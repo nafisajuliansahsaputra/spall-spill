@@ -75,6 +75,7 @@ Locks 11.1–11.28 remain authoritative, including:
 - 12.5 Authentication Session & Intended-Destination Contract — **LOCKED / CURRENT AUTH IMPLEMENTATION AUTHORITY**.
 - 12.6 Owner Auth Identity & Account State Contract — **LOCKED / CURRENT OWNER-IDENTITY IMPLEMENTATION AUTHORITY**.
 - 12.7 Owner-State Resolver Contract — **LOCKED / CURRENT OWNER-STATE RESOLUTION AUTHORITY**.
+- 12.8 Email/Password Sign Up & Confirmation Contract — **LOCKED / CURRENT EMAIL-PASSWORD SIGNUP AUTHORITY**.
 
 ### Cost / scaling rule
 
