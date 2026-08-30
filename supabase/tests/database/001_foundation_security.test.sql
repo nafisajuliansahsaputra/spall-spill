@@ -44,9 +44,12 @@ select has_schema(
 -- ---------------------------------------------------------------------------
 -- Deny-by-default client access
 --
--- At foundation stage neither anon nor authenticated clients receive USAGE
--- on application schemas. Later migrations must grant access explicitly and
--- receive their own positive and negative authorization tests.
+-- Canonical/private schemas remain unavailable to normal client roles.
+--
+-- The dedicated api schema is the intentional narrow application Data API
+-- boundary. authenticated receives schema USAGE only after an implementation
+-- migration explicitly grants it. Individual api objects still require their
+-- own explicit grants.
 -- ---------------------------------------------------------------------------
 
 select ok(
@@ -65,7 +68,11 @@ select ok(
 );
 
 select ok(
-  not has_schema_privilege('authenticated', 'publication', 'USAGE'),
+  not has_schema_privilege(
+    'authenticated',
+    'publication',
+    'USAGE'
+  ),
   'authenticated cannot use publication schema by default'
 );
 
@@ -75,7 +82,11 @@ select ok(
 );
 
 select ok(
-  not has_schema_privilege('authenticated', 'analytics', 'USAGE'),
+  not has_schema_privilege(
+    'authenticated',
+    'analytics',
+    'USAGE'
+  ),
   'authenticated cannot use analytics schema'
 );
 
@@ -85,7 +96,11 @@ select ok(
 );
 
 select ok(
-  not has_schema_privilege('authenticated', 'moderation', 'USAGE'),
+  not has_schema_privilege(
+    'authenticated',
+    'moderation',
+    'USAGE'
+  ),
   'authenticated cannot use moderation schema'
 );
 
@@ -95,7 +110,11 @@ select ok(
 );
 
 select ok(
-  not has_schema_privilege('authenticated', 'audit', 'USAGE'),
+  not has_schema_privilege(
+    'authenticated',
+    'audit',
+    'USAGE'
+  ),
   'authenticated cannot use audit schema'
 );
 
@@ -105,18 +124,22 @@ select ok(
 );
 
 select ok(
-  not has_schema_privilege('authenticated', 'ops', 'USAGE'),
+  not has_schema_privilege(
+    'authenticated',
+    'ops',
+    'USAGE'
+  ),
   'authenticated cannot use ops schema'
 );
 
 select ok(
   not has_schema_privilege('anon', 'api', 'USAGE'),
-  'anon cannot use api schema by default'
+  'anon cannot use dedicated api schema'
 );
 
 select ok(
-  not has_schema_privilege('authenticated', 'api', 'USAGE'),
-  'authenticated cannot use api schema by default'
+  has_schema_privilege('authenticated', 'api', 'USAGE'),
+  'authenticated can use dedicated api schema'
 );
 
 select * from finish();
