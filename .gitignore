@@ -5,6 +5,9 @@ node_modules/
 .next/
 next-env.d.ts
 
+# TypeScript generated files
+*.tsbuildinfo
+
 # Build output
 dist/
 coverage/

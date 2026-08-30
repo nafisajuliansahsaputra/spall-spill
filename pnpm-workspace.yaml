@@ -10,3 +10,4 @@ strictDepBuilds: true
 
 allowBuilds:
   "unrs-resolver@1.12.2": true
+  "supabase@2.115.0": true

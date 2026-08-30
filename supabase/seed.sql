@@ -1,0 +1,8 @@
+-- Spall Spill local development seed.
+--
+-- Intentionally empty at the foundation stage.
+-- Controlled development fixtures will be added only when the
+-- corresponding domain schema and test requirements exist.
+--
+-- Never place production data, credentials, tokens, or personal
+-- information in this file.
