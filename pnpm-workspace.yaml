@@ -2,7 +2,21 @@ packages:
   - "apps/*"
   - "packages/*"
 
-minimumReleaseAge: 1440
+# Intentional 24-hour quarantine window.
+# pnpm 11 also uses 1440 minutes as its built-in default.
+minimumReleaseAge: 1440 # nosemgrep: package_managers.pnpm.pnpm-missing-minimum-release-age.pnpm-minimum-release-age
+
+trustPolicy: no-downgrade
+
+# Reviewed legacy trust-policy exceptions.
+# Keep these exact and version-scoped rather than disabling trust checks globally.
+trustPolicyExclude:
+  - "eslint-import-resolver-typescript@3.10.1"
+  - "semver@6.3.1"
+
+# Do not adopt fastq 1.20.2 while its publish trust is weaker than earlier releases.
+overrides:
+  "fastq@": "1.20.1"
 
 blockExoticSubdeps: true
 
