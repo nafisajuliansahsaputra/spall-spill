@@ -4,7 +4,62 @@ import {
   type NextRequest,
 } from "next/server";
 
+import {
+  getIntendedDestinationCookieOptions,
+  INTENDED_DESTINATION_COOKIE_NAME,
+  sanitizeIntendedDestination,
+} from "@/lib/auth/intended-destination";
 import { getSupabasePublicEnv } from "@/lib/supabase/env";
+
+function isProtectedOwnerPathname(
+  pathname: string,
+): boolean {
+  return (
+    pathname === "/dashboard" ||
+    pathname.startsWith("/dashboard/")
+  );
+}
+
+function copySupabaseSessionState(
+  source: NextResponse,
+  target: NextResponse,
+  authHeaders: Headers,
+): void {
+  source.cookies.getAll().forEach((cookie) => {
+    target.cookies.set(cookie);
+  });
+
+  authHeaders.forEach((value, name) => {
+    target.headers.set(name, value);
+  });
+}
+
+function applyIntendedDestination(
+  response: NextResponse,
+  pathname: string,
+): void {
+  const destination =
+    sanitizeIntendedDestination(pathname);
+
+  if (destination === null) {
+    response.cookies.set(
+      INTENDED_DESTINATION_COOKIE_NAME,
+      "",
+      {
+        ...getIntendedDestinationCookieOptions(),
+        maxAge: 0,
+      },
+    );
+
+    return;
+  }
+
+  response.cookies.set(
+    INTENDED_DESTINATION_COOKIE_NAME,
+    destination,
+    getIntendedDestinationCookieOptions(),
+  );
+}
 
 export async function updateSession(
   request: NextRequest,
@@ -13,8 +68,12 @@ export async function updateSession(
     request,
   });
 
-  const { supabaseUrl, supabasePublishableKey } =
-    getSupabasePublicEnv();
+  const authResponseHeaders = new Headers();
+
+  const {
+    supabaseUrl,
+    supabasePublishableKey,
+  } = getSupabasePublicEnv();
 
   const supabase = createServerClient(
     supabaseUrl,
@@ -26,16 +85,26 @@ export async function updateSession(
         },
 
         setAll(cookiesToSet, headers) {
-          cookiesToSet.forEach(({ name, value }) => {
-            request.cookies.set(name, value);
-          });
+          cookiesToSet.forEach(
+            ({ name, value }) => {
+              request.cookies.set(
+                name,
+                value,
+              );
+            },
+          );
 
-          supabaseResponse = NextResponse.next({
-            request,
-          });
+          supabaseResponse =
+            NextResponse.next({
+              request,
+            });
 
           cookiesToSet.forEach(
-            ({ name, value, options }) => {
+            ({
+              name,
+              value,
+              options,
+            }) => {
               supabaseResponse.cookies.set(
                 name,
                 value,
@@ -46,7 +115,15 @@ export async function updateSession(
 
           Object.entries(headers).forEach(
             ([name, value]) => {
-              supabaseResponse.headers.set(name, value);
+              authResponseHeaders.set(
+                name,
+                value,
+              );
+
+              supabaseResponse.headers.set(
+                name,
+                value,
+              );
             },
           );
         },
@@ -57,11 +134,60 @@ export async function updateSession(
   /*
    * Keep this call immediately after client creation.
    *
-   * getClaims() validates authentication claims.
-   * Server-side authorization must not trust getSession()
-   * as proof of identity.
+   * getClaims() validates the authentication
+   * principal. Protected routing never trusts
+   * getSession() as identity proof.
    */
-  await supabase.auth.getClaims();
+  const {
+    data: claimsData,
+    error: claimsError,
+  } = await supabase.auth.getClaims();
+
+  const authUserId =
+    claimsData?.claims?.sub;
+
+  const hasVerifiedPrincipal =
+    !claimsError &&
+    typeof authUserId === "string" &&
+    authUserId.length > 0;
+
+  if (
+    !hasVerifiedPrincipal &&
+    isProtectedOwnerPathname(
+      request.nextUrl.pathname,
+    )
+  ) {
+    const loginUrl =
+      request.nextUrl.clone();
+
+    loginUrl.pathname = "/login";
+    loginUrl.search = "";
+    loginUrl.hash = "";
+
+    const redirectResponse =
+      NextResponse.redirect(
+        loginUrl,
+        307,
+      );
+
+    copySupabaseSessionState(
+      supabaseResponse,
+      redirectResponse,
+      authResponseHeaders,
+    );
+
+    applyIntendedDestination(
+      redirectResponse,
+      request.nextUrl.pathname,
+    );
+
+    redirectResponse.headers.set(
+      "Cache-Control",
+      "private, no-store",
+    );
+
+    return redirectResponse;
+  }
 
   return supabaseResponse;
 }
