@@ -72,6 +72,7 @@ Locks 11.1–11.28 remain authoritative, including:
 - 12.2 Original zero-cash constraint — **HISTORICAL; hard ceiling superseded**.
 - 12.3 Free-first progressive scale / same-stack upgrade strategy — **LOCKED / CURRENT COST-SCALING AUTHORITY**.
 - 12.4 Production Technology Stack & Security Architecture — **LOCKED / CURRENT TECHNOLOGY-STACK AUTHORITY**.
+- 12.5 Authentication Session & Intended-Destination Contract — **LOCKED / CURRENT AUTH IMPLEMENTATION AUTHORITY**.
 
 ### Cost / scaling rule
 
@@ -147,6 +148,28 @@ Quality / Security
 - structured PII-minimized logging + OpenTelemetry/Sentry correlation;
 - independent backup + tested restore;
 - health/readiness, rollback, incident response, and secret-rotation procedures before public launch.
+
+### Authentication implementation authority
+
+The current Auth implementation authority is:
+
+[`technical-architecture/12.5-auth-session-intended-destination-contract.md`](./technical-architecture/12.5-auth-session-intended-destination-contract.md)
+
+This JIT lock resolves **OD-SEC-003 — Intended-Destination Storage / Transport / Safety**.
+
+Current locked Auth baseline:
+
+- Supabase Auth;
+- Email/Password;
+- Google OAuth;
+- `@supabase/ssr` cookie-based SSR;
+- request-scoped server clients;
+- Next.js Proxy session refresh;
+- safe short-lived internal intended-destination cookie;
+- owner-state resolver before navigation restoration;
+- server/data-layer authorization after authentication.
+
+Intended destination is navigation context only. It never grants authority, bypasses account state, or replaces server/data-layer authorization.
 
 ## User Flow status
 
