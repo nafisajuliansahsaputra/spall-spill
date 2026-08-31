@@ -77,6 +77,7 @@ Locks 11.1–11.28 remain authoritative, including:
 - 12.7 Owner-State Resolver Contract — **LOCKED / CURRENT OWNER-STATE RESOLUTION AUTHORITY**.
 - 12.8 Email/Password Sign Up & Confirmation Contract — **LOCKED / CURRENT EMAIL-PASSWORD SIGNUP AUTHORITY**.
 - 12.9 Onboarding Progress & Handle Claim Contract — **LOCKED / CURRENT O01 ONBOARDING-FOUNDATION IMPLEMENTATION AUTHORITY**.
+- 12.10 Onboarding Basic Identity Working & Starter Composition Contract — **LOCKED / CURRENT O01 S3-S4 IMPLEMENTATION AUTHORITY**.
 
 ### Cost / scaling rule
 
@@ -177,21 +178,16 @@ Intended destination is navigation context only. It never grants authority, bypa
 
 ### Onboarding implementation authority
 
-The current O01 onboarding-foundation implementation authority is:
+The current O01 implementation authorities are:
 
-[`technical-architecture/12.9-onboarding-progress-handle-claim-contract.md`](./technical-architecture/12.9-onboarding-progress-handle-claim-contract.md)
+- [`technical-architecture/12.9-onboarding-progress-handle-claim-contract.md`](./technical-architecture/12.9-onboarding-progress-handle-claim-contract.md) — account-side progress, O01-S1 Handle claim, O01-S2 Primary Use Case, Owner-scoped mutation boundaries, and onboarding revision protection.
+- [`technical-architecture/12.10-onboarding-basic-identity-starter-composition-contract.md`](./technical-architecture/12.10-onboarding-basic-identity-starter-composition-contract.md) — O01-S3 Basic Identity Working, O01-S4 Starter Composition, Working revision boundaries, and backward technical navigation without progress regression.
 
-12.9 materializes the first Stage 6 implementation boundary for:
+12.9 and 12.10 together currently materialize O01-S1 through O01-S4.
 
-- account-side resumable onboarding progress;
-- O01-S1 Handle claim;
-- O01-S2 Primary Use Case;
-- authenticated Owner-scoped read/write boundaries;
-- revision-based stale-write rejection.
+Implementation mechanics for O01-S5 Relevant First Job and O01-S6 Preview & Publish remain deferred until those checkpoints are reached.
 
-It intentionally defers O01-S3 through O01-S6 persistence mechanics until those implementation checkpoints are reached.
-
-This does not change the locked six-step O01 journey, capability model, or onboarding-completion rule. Successful first authoritative Identity publication remains the completion boundary.
+This does not change the locked six-step O01 journey, universal capability model, Working-versus-Published isolation, or onboarding-completion rule. Successful first authoritative Identity publication remains the completion boundary.
 
 ## User Flow status
 
