@@ -46,6 +46,33 @@ const onboardingPayloadSchema = z.union([
   statusOnlyPayloadSchema,
 ]);
 
+const identityWorkingSchema = z
+  .object({
+    display_name: z.string(),
+    bio: z.string().nullable(),
+    profile_asset_key:
+      z.string().nullable(),
+    revision: z
+      .number()
+      .int()
+      .positive(),
+  })
+  .strict();
+
+const basicIdentitySuccessPayloadSchema =
+  z
+    .object({
+      status: z.literal("success"),
+      identity_working:
+        identityWorkingSchema.nullable(),
+    })
+    .strict();
+
+const basicIdentityPayloadSchema = z.union([
+  basicIdentitySuccessPayloadSchema,
+  statusOnlyPayloadSchema,
+]);
+
 export type OnboardingStateResolution =
   | {
       status: "success";
@@ -67,6 +94,28 @@ export type OnboardingStateResolution =
         | "progress_missing";
     };
 
+export type BasicIdentityWorking = {
+  displayName: string;
+  bio: string | null;
+  profileAssetKey: string | null;
+  revision: number;
+};
+
+export type BasicIdentityStateResolution =
+  | {
+      status: "success";
+      identityWorking:
+        BasicIdentityWorking | null;
+    }
+  | {
+      status:
+        | "unauthenticated"
+        | "owner_missing"
+        | "owner_unavailable"
+        | "onboarding_complete"
+        | "progress_missing";
+    };
+
 export class OnboardingStateResolutionError extends Error {
   constructor(message: string) {
     super(message);
@@ -76,7 +125,9 @@ export class OnboardingStateResolutionError extends Error {
   }
 }
 
-export async function resolveCurrentOnboardingState(): Promise<OnboardingStateResolution> {
+async function verifyCurrentAuthUser(): Promise<
+  "authenticated" | "unauthenticated"
+> {
   const supabase = await createClient();
 
   const {
@@ -92,15 +143,25 @@ export async function resolveCurrentOnboardingState(): Promise<OnboardingStateRe
     typeof authUserId !== "string" ||
     authUserId.length === 0
   ) {
+    return "unauthenticated";
+  }
+
+  return "authenticated";
+}
+
+export async function resolveCurrentOnboardingState(): Promise<OnboardingStateResolution> {
+  const authStatus =
+    await verifyCurrentAuthUser();
+
+  if (authStatus === "unauthenticated") {
     return {
       status: "unauthenticated",
     };
   }
 
-  const {
-    data,
-    error,
-  } = await supabase
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
     .schema("api")
     .rpc(
       "resolve_current_onboarding_state",
@@ -147,5 +208,80 @@ export async function resolveCurrentOnboardingState(): Promise<OnboardingStateRe
     primaryUseCase:
       parsed.data.primary_use_case,
     revision: parsed.data.revision,
+  };
+}
+
+export async function resolveCurrentBasicIdentityState(): Promise<BasicIdentityStateResolution> {
+  const authStatus =
+    await verifyCurrentAuthUser();
+
+  if (authStatus === "unauthenticated") {
+    return {
+      status: "unauthenticated",
+    };
+  }
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .schema("api")
+    .rpc(
+      "resolve_current_basic_identity_state",
+    );
+
+  if (error) {
+    throw new OnboardingStateResolutionError(
+      "Basic Identity resolver request failed.",
+    );
+  }
+
+  const parsed =
+    basicIdentityPayloadSchema.safeParse(
+      data,
+    );
+
+  if (!parsed.success) {
+    throw new OnboardingStateResolutionError(
+      "Basic Identity resolver returned an invalid payload.",
+    );
+  }
+
+  if (
+    parsed.data.status ===
+    "unauthenticated"
+  ) {
+    throw new OnboardingStateResolutionError(
+      "Verified authentication and database Basic Identity state are inconsistent.",
+    );
+  }
+
+  if (parsed.data.status !== "success") {
+    return {
+      status: parsed.data.status,
+    };
+  }
+
+  if (!parsed.data.identity_working) {
+    return {
+      status: "success",
+      identityWorking: null,
+    };
+  }
+
+  return {
+    status: "success",
+    identityWorking: {
+      displayName:
+        parsed.data.identity_working
+          .display_name,
+      bio:
+        parsed.data.identity_working.bio,
+      profileAssetKey:
+        parsed.data.identity_working
+          .profile_asset_key,
+      revision:
+        parsed.data.identity_working
+          .revision,
+    },
   };
 }

@@ -15,3 +15,14 @@ export type PrimaryUseCaseActionState = {
     primaryUseCase?: string;
   };
 };
+
+export type BasicIdentityActionState = {
+  status: "idle" | "error";
+  message: string | null;
+  displayName: string;
+  bio: string;
+  fieldErrors: {
+    displayName?: string;
+    bio?: string;
+  };
+};

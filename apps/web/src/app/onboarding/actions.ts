@@ -4,12 +4,15 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 
 import {
+  bioInputSchema,
+  displayNameInputSchema,
   handleInputSchema,
   primaryUseCaseSchema,
 } from "@/lib/onboarding/validation";
 import { createClient } from "@/lib/supabase/server";
 
 import type {
+  BasicIdentityActionState,
   HandleActionState,
   PrimaryUseCaseActionState,
 } from "./state";
@@ -37,6 +40,38 @@ function getRpcStatus(
   return typeof status === "string"
     ? status
     : null;
+}
+
+function parseOptionalRevision(
+  value: FormDataEntryValue | null,
+):
+  | {
+      success: true;
+      data: number | null;
+    }
+  | {
+      success: false;
+    } {
+  if (value === null || value === "") {
+    return {
+      success: true,
+      data: null,
+    };
+  }
+
+  const parsed =
+    baseRevisionSchema.safeParse(value);
+
+  if (!parsed.success) {
+    return {
+      success: false,
+    };
+  }
+
+  return {
+    success: true,
+    data: parsed.data,
+  };
 }
 
 function resolveOwnerRoutingStatus(
@@ -101,10 +136,7 @@ export async function claimHandleAction(
 
   const supabase = await createClient();
 
-  const {
-    data,
-    error,
-  } = await supabase
+  const { data, error } = await supabase
     .schema("api")
     .rpc(
       "claim_current_owner_handle",
@@ -241,10 +273,7 @@ export async function setPrimaryUseCaseAction(
 
   const supabase = await createClient();
 
-  const {
-    data,
-    error,
-  } = await supabase
+  const { data, error } = await supabase
     .schema("api")
     .rpc(
       "set_current_owner_primary_use_case",
@@ -314,6 +343,200 @@ export async function setPrimaryUseCaseAction(
           "We couldn't safely save this choice. Reload the page and try again.",
         primaryUseCase:
           parsedPrimaryUseCase.data,
+        fieldErrors: {},
+      };
+  }
+}
+
+export async function saveBasicIdentityAction(
+  _previousState: BasicIdentityActionState,
+  formData: FormData,
+): Promise<BasicIdentityActionState> {
+  const rawDisplayName =
+    formData.get("displayName");
+
+  const rawBio =
+    formData.get("bio");
+
+  const displayName =
+    typeof rawDisplayName === "string"
+      ? rawDisplayName
+      : "";
+
+  const bio =
+    typeof rawBio === "string"
+      ? rawBio
+      : "";
+
+  const parsedDisplayName =
+    displayNameInputSchema.safeParse(
+      displayName,
+    );
+
+  const parsedBio =
+    bioInputSchema.safeParse(bio);
+
+  const fieldErrors: {
+    displayName?: string;
+    bio?: string;
+  } = {};
+
+  if (!parsedDisplayName.success) {
+    fieldErrors.displayName =
+      parsedDisplayName.error.issues[0]
+        ?.message ??
+      "Enter a valid Display Name.";
+  }
+
+  if (!parsedBio.success) {
+    fieldErrors.bio =
+      parsedBio.error.issues[0]
+        ?.message ??
+      "Enter a valid Bio.";
+  }
+
+  if (
+    !parsedDisplayName.success ||
+    !parsedBio.success
+  ) {
+    return {
+      status: "error",
+      message:
+        "Check your Basic Identity and try again.",
+      displayName,
+      bio,
+      fieldErrors,
+    };
+  }
+
+  const parsedIdentityRevision =
+    parseOptionalRevision(
+      formData.get(
+        "baseIdentityRevision",
+      ),
+    );
+
+  const parsedProgressRevision =
+    baseRevisionSchema.safeParse(
+      formData.get(
+        "baseProgressRevision",
+      ),
+    );
+
+  if (
+    !parsedIdentityRevision.success ||
+    !parsedProgressRevision.success
+  ) {
+    return {
+      status: "error",
+      message:
+        "Your saved Working state could not be verified. Reload the page and try again.",
+      displayName:
+        parsedDisplayName.data,
+      bio: parsedBio.data ?? "",
+      fieldErrors: {},
+    };
+  }
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .schema("api")
+    .rpc(
+      "save_current_owner_basic_identity",
+      {
+        input_display_name:
+          parsedDisplayName.data,
+        input_bio:
+          parsedBio.data,
+        base_identity_revision:
+          parsedIdentityRevision.data,
+        base_progress_revision:
+          parsedProgressRevision.data,
+      },
+    );
+
+  if (error) {
+    return {
+      status: "error",
+      message:
+        "We couldn't save your Basic Identity right now. Your last acknowledged Working state is unchanged.",
+      displayName:
+        parsedDisplayName.data,
+      bio: parsedBio.data ?? "",
+      fieldErrors: {},
+    };
+  }
+
+  const status = getRpcStatus(data);
+
+  resolveOwnerRoutingStatus(status);
+
+  switch (status) {
+    case "success":
+      redirect("/onboarding");
+
+    case "invalid_display_name":
+      return {
+        status: "error",
+        message:
+          "Check your Basic Identity and try again.",
+        displayName,
+        bio,
+        fieldErrors: {
+          displayName:
+            "Enter a valid Display Name.",
+        },
+      };
+
+    case "invalid_bio":
+      return {
+        status: "error",
+        message:
+          "Check your Basic Identity and try again.",
+        displayName:
+          parsedDisplayName.data,
+        bio,
+        fieldErrors: {
+          bio:
+            "Enter a valid Bio.",
+        },
+      };
+
+    case "stale_write":
+      return {
+        status: "error",
+        message:
+          "Your Basic Identity changed in another tab or session. Reload the page before making another change.",
+        displayName:
+          parsedDisplayName.data,
+        bio: parsedBio.data ?? "",
+        fieldErrors: {},
+      };
+
+    case "progress_stale":
+      return {
+        status: "error",
+        message:
+          "Your onboarding progress changed in another tab or session. Reload the page before continuing.",
+        displayName:
+          parsedDisplayName.data,
+        bio: parsedBio.data ?? "",
+        fieldErrors: {},
+      };
+
+    case "step_not_available":
+    case "prerequisite_missing":
+      redirect("/onboarding");
+
+    default:
+      return {
+        status: "error",
+        message:
+          "We couldn't safely save your Basic Identity. Reload the page and try again.",
+        displayName:
+          parsedDisplayName.data,
+        bio: parsedBio.data ?? "",
         fieldErrors: {},
       };
   }

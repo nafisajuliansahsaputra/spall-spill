@@ -1,15 +1,29 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { resolveCurrentOwnerState } from "@/lib/auth/owner-state";
-import { resolveCurrentOnboardingState } from "@/lib/onboarding/state";
-import { ONBOARDING_STEPS } from "@/lib/onboarding/validation";
+import {
+  resolveCurrentBasicIdentityState,
+  resolveCurrentOnboardingState,
+} from "@/lib/onboarding/state";
+import {
+  ONBOARDING_STEPS,
+  onboardingStepSchema,
+} from "@/lib/onboarding/validation";
 
+import { BasicIdentityForm } from "./basic-identity-form";
 import { HandleForm } from "./handle-form";
 import { PrimaryUseCaseForm } from "./primary-use-case-form";
 
 export const metadata: Metadata = {
   title: "Set Up Your Spall Spill",
+};
+
+type OnboardingPageProps = {
+  searchParams: Promise<{
+    step?: string | string[];
+  }>;
 };
 
 const STEP_LABELS = {
@@ -24,11 +38,60 @@ const STEP_LABELS = {
     "Preview & Publish",
 } as const;
 
+type OnboardingStep =
+  (typeof ONBOARDING_STEPS)[number];
+
+function getSingleValue(
+  value: string | string[] | undefined,
+): string | null {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (
+    Array.isArray(value) &&
+    typeof value[0] === "string"
+  ) {
+    return value[0];
+  }
+
+  return null;
+}
+
+function resolveDisplayedStep(
+  requestedStep: string | null,
+  frontierStep: OnboardingStep,
+): OnboardingStep {
+  const parsed =
+    onboardingStepSchema.safeParse(
+      requestedStep,
+    );
+
+  if (!parsed.success) {
+    return frontierStep;
+  }
+
+  const requestedIndex =
+    ONBOARDING_STEPS.indexOf(
+      parsed.data,
+    );
+
+  const frontierIndex =
+    ONBOARDING_STEPS.indexOf(
+      frontierStep,
+    );
+
+  if (requestedIndex > frontierIndex) {
+    return frontierStep;
+  }
+
+  return parsed.data;
+}
+
 function DeferredStep({
   step,
 }: {
   step:
-    | "basic_identity"
     | "starter_composition"
     | "relevant_first_job"
     | "preview_publish";
@@ -46,7 +109,9 @@ function DeferredStep({
   );
 }
 
-export default async function OnboardingPage() {
+export default async function OnboardingPage({
+  searchParams,
+}: OnboardingPageProps) {
   const ownerState =
     await resolveCurrentOwnerState();
 
@@ -75,10 +140,62 @@ export default async function OnboardingPage() {
     }
   }
 
-  const stepNumber =
+  const params = await searchParams;
+
+  const displayedStep =
+    resolveDisplayedStep(
+      getSingleValue(params.step),
+      onboarding.currentStep,
+    );
+
+  const frontierIndex =
     ONBOARDING_STEPS.indexOf(
       onboarding.currentStep,
-    ) + 1;
+    );
+
+  const displayedIndex =
+    ONBOARDING_STEPS.indexOf(
+      displayedStep,
+    );
+
+  const stepNumber =
+    displayedIndex + 1;
+
+  const frontierStepNumber =
+    frontierIndex + 1;
+
+  const reviewingEarlierStep =
+    displayedIndex < frontierIndex;
+
+  const previousStep =
+    displayedIndex > 0
+      ? ONBOARDING_STEPS[
+          displayedIndex - 1
+        ]
+      : null;
+
+  const basicIdentity =
+    displayedStep === "basic_identity"
+      ? await resolveCurrentBasicIdentityState()
+      : null;
+
+  if (
+    basicIdentity &&
+    basicIdentity.status !== "success"
+  ) {
+    switch (basicIdentity.status) {
+      case "unauthenticated":
+      case "owner_missing":
+      case "owner_unavailable":
+      case "onboarding_complete":
+        redirect("/auth/resolve");
+
+      case "progress_missing":
+        throw new Error(
+          "Authoritative onboarding progress is missing while resolving Basic Identity.",
+        );
+    }
+  }
 
   return (
     <main className="min-h-screen bg-neutral-50 px-5 py-8 text-neutral-950 sm:py-10">
@@ -96,7 +213,7 @@ export default async function OnboardingPage() {
 
         <div
           aria-hidden="true"
-          className="mb-8 h-1.5 overflow-hidden rounded-full bg-neutral-200"
+          className="mb-5 h-1.5 overflow-hidden rounded-full bg-neutral-200"
         >
           <div
             className="h-full rounded-full bg-neutral-950 transition-[width]"
@@ -106,11 +223,29 @@ export default async function OnboardingPage() {
           />
         </div>
 
+        {reviewingEarlierStep ? (
+          <div className="mb-5 flex items-center justify-between gap-4 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm">
+            <p className="leading-5 text-neutral-600">
+              Reviewing Step{" "}
+              {stepNumber}. Your saved
+              progress remains at Step{" "}
+              {frontierStepNumber}.
+            </p>
+
+            <Link
+              href="/onboarding"
+              className="shrink-0 font-semibold text-neutral-950 underline underline-offset-4"
+            >
+              Return
+            </Link>
+          </div>
+        ) : null}
+
         <section
           aria-labelledby="onboarding-title"
           className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8"
         >
-          {onboarding.currentStep ===
+          {displayedStep ===
           "claim_handle" ? (
             <>
               <div className="mb-7 space-y-2">
@@ -146,7 +281,7 @@ export default async function OnboardingPage() {
             </>
           ) : null}
 
-          {onboarding.currentStep ===
+          {displayedStep ===
           "primary_use_case" ? (
             <>
               <div className="mb-7 space-y-2">
@@ -194,13 +329,76 @@ export default async function OnboardingPage() {
             </>
           ) : null}
 
-          {onboarding.currentStep ===
-            "basic_identity" ||
-          onboarding.currentStep ===
+          {displayedStep ===
+            "basic_identity" &&
+          basicIdentity?.status ===
+            "success" ? (
+            <>
+              <div className="mb-7 space-y-2">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-500">
+                  Step 3
+                </p>
+
+                <h1
+                  id="onboarding-title"
+                  className="text-3xl font-semibold tracking-tight"
+                >
+                  Build your Basic Identity
+                </h1>
+
+                <p className="text-sm leading-6 text-neutral-600">
+                  Add the minimum identity
+                  people should recognize.
+                  Display Name is required;
+                  Bio and profile media are
+                  optional.
+                </p>
+
+                {onboarding.currentHandle ? (
+                  <p className="pt-1 text-sm text-neutral-500">
+                    Public Handle:{" "}
+                    <span className="font-medium text-neutral-800">
+                      @
+                      {
+                        onboarding.currentHandle
+                      }
+                    </span>
+                  </p>
+                ) : null}
+              </div>
+
+              <BasicIdentityForm
+                initialDisplayName={
+                  basicIdentity
+                    .identityWorking
+                    ?.displayName ?? ""
+                }
+                initialBio={
+                  basicIdentity
+                    .identityWorking
+                    ?.bio ?? null
+                }
+                baseIdentityRevision={
+                  basicIdentity
+                    .identityWorking
+                    ?.revision ?? null
+                }
+                baseProgressRevision={
+                  onboarding.revision
+                }
+                isFrontier={
+                  onboarding.currentStep ===
+                  "basic_identity"
+                }
+              />
+            </>
+          ) : null}
+
+          {displayedStep ===
             "starter_composition" ||
-          onboarding.currentStep ===
+          displayedStep ===
             "relevant_first_job" ||
-          onboarding.currentStep ===
+          displayedStep ===
             "preview_publish" ? (
             <>
               <div className="mb-7 space-y-2">
@@ -214,25 +412,35 @@ export default async function OnboardingPage() {
                 >
                   {
                     STEP_LABELS[
-                      onboarding.currentStep
+                      displayedStep
                     ]
                   }
                 </h1>
               </div>
 
               <DeferredStep
-                step={
-                  onboarding.currentStep
-                }
+                step={displayedStep}
               />
             </>
+          ) : null}
+
+          {previousStep ? (
+            <div className="mt-6 border-t border-neutral-200 pt-5">
+              <Link
+                href={`/onboarding?step=${previousStep}`}
+                className="text-sm font-medium text-neutral-700 underline underline-offset-4"
+              >
+                Back to{" "}
+                {STEP_LABELS[previousStep]}
+              </Link>
+            </div>
           ) : null}
         </section>
 
         <p className="mt-5 text-center text-xs leading-5 text-neutral-500">
-          Saved onboarding progress is
-          account-side and can be resumed
-          after a normal interruption.
+          Saved means acknowledged Working
+          state on the backend. It does not
+          mean Published.
         </p>
       </div>
     </main>
