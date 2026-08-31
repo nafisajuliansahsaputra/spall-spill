@@ -10,7 +10,32 @@ export const metadata: Metadata = {
   title: "Log In | Spall Spill",
 };
 
-export default async function LoginPage() {
+type LoginPageProps = {
+  searchParams: Promise<{
+    notice?: string | string[];
+  }>;
+};
+
+function getSingleValue(
+  value: string | string[] | undefined,
+): string | null {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (
+    Array.isArray(value) &&
+    typeof value[0] === "string"
+  ) {
+    return value[0];
+  }
+
+  return null;
+}
+
+export default async function LoginPage({
+  searchParams,
+}: LoginPageProps) {
   const supabase = await createClient();
 
   const {
@@ -27,6 +52,15 @@ export default async function LoginPage() {
   ) {
     redirect("/auth/resolve");
   }
+
+  const params = await searchParams;
+
+  const notice = getSingleValue(
+    params.notice,
+  );
+
+  const oauthFailed =
+    notice === "oauth_failed";
 
   return (
     <main className="min-h-screen bg-neutral-50 px-5 py-10 text-neutral-950">
@@ -57,6 +91,39 @@ export default async function LoginPage() {
               Spill owner account and continue
               from the correct workspace state.
             </p>
+          </div>
+
+          {oauthFailed ? (
+            <div
+              role="alert"
+              className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900"
+            >
+              We couldn&apos;t complete Google
+              sign-in. Try again or use your
+              email and password.
+            </div>
+          ) : null}
+
+          <form
+            action="/auth/google"
+            method="post"
+          >
+            <button
+              type="submit"
+              className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-50"
+            >
+              Continue with Google
+            </button>
+          </form>
+
+          <div className="my-6 flex items-center gap-3">
+            <div className="h-px flex-1 bg-neutral-200" />
+
+            <span className="text-xs font-medium uppercase tracking-[0.12em] text-neutral-500">
+              or
+            </span>
+
+            <div className="h-px flex-1 bg-neutral-200" />
           </div>
 
           <LoginForm />

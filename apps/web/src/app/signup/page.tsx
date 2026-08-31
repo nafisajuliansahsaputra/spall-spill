@@ -89,8 +89,8 @@ export default async function SignUpPage({
             <p className="text-sm leading-6 text-neutral-600">
               Create one Spall Spill owner
               account. Your public identity and
-              Spill setup come after email
-              confirmation.
+              Spill setup come after
+              authentication.
             </p>
           </div>
 
@@ -104,6 +104,28 @@ export default async function SignUpPage({
               expired.
             </div>
           ) : null}
+
+          <form
+            action="/auth/google"
+            method="post"
+          >
+            <button
+              type="submit"
+              className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-50"
+            >
+              Continue with Google
+            </button>
+          </form>
+
+          <div className="my-6 flex items-center gap-3">
+            <div className="h-px flex-1 bg-neutral-200" />
+
+            <span className="text-xs font-medium uppercase tracking-[0.12em] text-neutral-500">
+              or
+            </span>
+
+            <div className="h-px flex-1 bg-neutral-200" />
+          </div>
 
           <SignUpForm />
 
@@ -121,9 +143,9 @@ export default async function SignUpPage({
         </section>
 
         <p className="mt-5 text-center text-xs leading-5 text-neutral-500">
-          Use an email address you can access.
-          You&apos;ll need to confirm it before
-          continuing setup.
+          Continue with Google or use an email
+          address you can access to create your
+          account.
         </p>
       </div>
     </main>
