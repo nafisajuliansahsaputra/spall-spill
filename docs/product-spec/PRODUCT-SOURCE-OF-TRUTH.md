@@ -4,6 +4,27 @@
 
 This file is the canonical execution index for the clean rebuild. Historical decision provenance is pinned in [`MIGRATION-MANIFEST.md`](./MIGRATION-MANIFEST.md).
 
+## Mandatory Implementation Execution Protocol
+
+All production implementation work in this repository must follow [`IMPLEMENTATION-EXECUTION-PROTOCOL.md`](./IMPLEMENTATION-EXECUTION-PROTOCOL.md).
+
+The Implementation Execution Protocol is **LOCKED / MANDATORY CROSS-CHAT EXECUTION AUTHORITY** for implementation workflow, including:
+
+- local-first execution and deny-by-default remote writes;
+- fresh authority/branch/source audits before implementation;
+- just-in-time technical-contract locking before new production checkpoints;
+- bounded one-logical-batch execution;
+- one-file-per-PowerShell-block creation/full replacement;
+- security-by-construction and targeted runtime/manual security verification;
+- staged-diff review before commit;
+- local evidence before push;
+- remote CI/Security verification after push;
+- documentation closure and committed readback before `CLOSED / VERIFIED`.
+
+Generic continuation language such as `gas`, `lanjut`, `ok`, or `terusin` never authorizes direct remote mutation.
+
+Product behavior remains governed by this Source of Truth, locked User Flows, and the relevant locked technical contract. The execution protocol governs **how those authorities are implemented and verified**.
+
 ## Locked product layers
 
 - Product Foundation — **LOCKED**.
