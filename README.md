@@ -6,9 +6,9 @@ This repository intentionally does **not** inherit the legacy runtime codebase. 
 
 ## Current implementation checkpoint
 
-- Foundation, local Supabase, CI/security gates, authentication/session, Owner-state resolution, and O01 onboarding through Basic Identity are implemented.
-- Stage **6B.3 — Profile Media** is **CLOSED / VERIFIED**: private Cloudflare R2 upload/finalization, sanitized immutable Working media, O01-S3 integration, authenticated preview/refresh behavior, runtime verification, and targeted cross-Owner authorization checks have passed.
-- The next implementation checkpoint is **6B.4 — Starter Composition Working**.
+- Foundation, local Supabase, CI/security gates, authentication/session, Owner-state resolution, and O01 onboarding through Starter Composition are implemented.
+- Stage **6B.5 — S4 Application UI + 6B Regression Checkpoint** is **CLOSED / VERIFIED**: Starter Composition Working persistence, authenticated resolver/mutation boundaries, capability-neutral four-starter UI, backward editing without progress regression, stale-write failure truth, clean application/database regression, and remote CI/Security verification have passed.
+- The next implementation checkpoint is **O01-S5 — Relevant First Job**. Its persistence/mutation/application mechanics must be defined and locked just-in-time before S5 code begins; no new Stage label is invented ahead of that contract.
 - The canonical execution status lives in `docs/product-spec/PRODUCT-SOURCE-OF-TRUTH.md`; this README is only a repository entry point and must not override that authority.
 
 ## Canonical authority
@@ -20,6 +20,7 @@ Key files:
 - `docs/product-spec/PRODUCT-SOURCE-OF-TRUTH.md` — current canonical product/implementation index and execution checkpoint.
 - `docs/product-spec/MIGRATION-MANIFEST.md` — immutable provenance of the historical Product Source of Truth.
 - `docs/product-spec/technical-architecture/12.4-production-technology-stack-security-architecture.md` — locked production technology/security architecture.
+- `docs/product-spec/technical-architecture/12.10-onboarding-basic-identity-starter-composition-contract.md` — locked O01-S3/S4 Basic Identity Working + Starter Composition implementation authority.
 - `docs/product-spec/technical-architecture/12.11-profile-media-r2-storage-contract.md` — locked Profile Media / R2 implementation authority.
 
 ## Locked architecture direction
