@@ -21,6 +21,7 @@ import {
 import {
   finalizeProfileMediaUploadAction,
   initiateProfileMediaUploadAction,
+  refreshSavedProfileMediaPreviewAction,
 } from "./profile-media-actions";
 import type {
   BasicIdentityActionState,
@@ -43,7 +44,8 @@ type MediaStatus =
   | "uploading"
   | "processing"
   | "ready"
-  | "remove_pending";
+  | "remove_pending"
+  | "restoring";
 
 function SubmitButton({
   isFrontier,
@@ -66,7 +68,7 @@ function SubmitButton({
       {pending
         ? "Saving Working..."
         : mediaBusy
-          ? "Finish media upload first"
+          ? "Finish media operation first"
           : isFrontier
             ? "Continue"
             : "Save changes"}
@@ -95,6 +97,9 @@ function getMediaStatusText(
 
     case "remove_pending":
       return "Removal selected locally. Save changes to remove it from Identity Working.";
+
+    case "restoring":
+      return "Refreshing your Saved / Working preview...";
 
     case "none":
       return "No Profile Photo / Logo is selected. This is optional.";
@@ -152,6 +157,15 @@ function getUploadErrorMessage(
   }
 }
 
+function combineMediaMessages(
+  primary: string | null,
+  secondary: string,
+): string {
+  return primary
+    ? `${primary} ${secondary}`
+    : secondary;
+}
+
 export function BasicIdentityForm({
   initialDisplayName,
   initialBio,
@@ -178,6 +192,13 @@ export function BasicIdentityForm({
       saveBasicIdentityAction,
       initialState,
     );
+
+  const [
+    savedProfileAssetKey,
+    setSavedProfileAssetKey,
+  ] = useState<string | null>(
+    initialProfileAssetKey,
+  );
 
   const [
     selectedProfileAssetKey,
@@ -230,7 +251,8 @@ export function BasicIdentityForm({
   const mediaBusy =
     mediaStatus === "selected" ||
     mediaStatus === "uploading" ||
-    mediaStatus === "processing";
+    mediaStatus === "processing" ||
+    mediaStatus === "restoring";
 
   function revokeTrackedObjectUrl(
     url: string | null,
@@ -249,26 +271,141 @@ export function BasicIdentityForm({
     );
   }
 
-  function restoreInitialSavedMedia() {
+  async function restoreAuthoritativeSavedMedia(
+    leadingError:
+      string | null = null,
+  ) {
     revokeTrackedObjectUrl(
       previewUrl,
     );
 
+    /*
+     * Keep the last acknowledged key as the fail-safe
+     * intended selection while a fresh server-derived
+     * Saved preview is being resolved.
+     */
     setSelectedProfileAssetKey(
-      initialProfileAssetKey,
+      savedProfileAssetKey,
     );
 
-    setPreviewUrl(
-      initialProfilePreviewUrl,
-    );
+    setPreviewUrl(null);
+    setMediaStatus("restoring");
+    setMediaError(leadingError);
 
-    setMediaStatus(
-      initialProfileAssetKey
-        ? "saved"
-        : "none",
-    );
+    let result:
+      Awaited<
+        ReturnType<
+          typeof refreshSavedProfileMediaPreviewAction
+        >
+      >;
 
-    setMediaError(null);
+    try {
+      result =
+        await refreshSavedProfileMediaPreviewAction();
+    } catch {
+      setSelectedProfileAssetKey(
+        savedProfileAssetKey,
+      );
+
+      setPreviewUrl(null);
+
+      setMediaStatus(
+        savedProfileAssetKey
+          ? "saved"
+          : "none",
+      );
+
+      setMediaError(
+        combineMediaMessages(
+          leadingError,
+          "We couldn't refresh the Saved media preview. Your acknowledged media selection is unchanged.",
+        ),
+      );
+
+      return;
+    }
+
+    switch (result.status) {
+      case "success":
+        setSavedProfileAssetKey(
+          result.assetKey,
+        );
+
+        setSelectedProfileAssetKey(
+          result.assetKey,
+        );
+
+        setPreviewUrl(
+          result.previewUrl,
+        );
+
+        setMediaStatus("saved");
+        setMediaError(
+          leadingError,
+        );
+
+        return;
+
+      case "no_saved_media":
+        setSavedProfileAssetKey(
+          null,
+        );
+
+        setSelectedProfileAssetKey(
+          null,
+        );
+
+        setPreviewUrl(null);
+        setMediaStatus("none");
+        setMediaError(
+          leadingError,
+        );
+
+        return;
+
+      case "preview_unavailable":
+        setSavedProfileAssetKey(
+          result.assetKey,
+        );
+
+        setSelectedProfileAssetKey(
+          result.assetKey,
+        );
+
+        setPreviewUrl(null);
+        setMediaStatus("saved");
+
+        setMediaError(
+          combineMediaMessages(
+            leadingError,
+            "Your Saved media is still attached, but its preview is temporarily unavailable.",
+          ),
+        );
+
+        return;
+
+      case "internal_error":
+        setSelectedProfileAssetKey(
+          savedProfileAssetKey,
+        );
+
+        setPreviewUrl(null);
+
+        setMediaStatus(
+          savedProfileAssetKey
+            ? "saved"
+            : "none",
+        );
+
+        setMediaError(
+          combineMediaMessages(
+            leadingError,
+            "We couldn't refresh the Saved media preview. Your acknowledged media selection is unchanged.",
+          ),
+        );
+
+        return;
+    }
   }
 
   function handleRemoveMedia() {
@@ -287,7 +424,7 @@ export function BasicIdentityForm({
     setPreviewUrl(null);
 
     setMediaStatus(
-      initialProfileAssetKey
+      savedProfileAssetKey
         ? "remove_pending"
         : "none",
     );
@@ -410,6 +547,29 @@ export function BasicIdentityForm({
       localPreviewUrl,
     );
 
+    const uploadError =
+      getUploadErrorMessage(
+        result,
+      );
+
+    /*
+     * A prior Saved preview URL may have expired while
+     * the replacement attempt was in progress. When
+     * restoring Saved state, obtain a fresh URL from
+     * authoritative current-Owner state instead of
+     * reusing the old transport credential.
+     */
+    if (
+      previousStatus ===
+      "saved"
+    ) {
+      await restoreAuthoritativeSavedMedia(
+        uploadError,
+      );
+
+      return;
+    }
+
     setSelectedProfileAssetKey(
       previousAssetKey,
     );
@@ -423,9 +583,7 @@ export function BasicIdentityForm({
     );
 
     setMediaError(
-      getUploadErrorMessage(
-        result,
-      ),
+      uploadError,
     );
   }
 
@@ -658,9 +816,9 @@ export function BasicIdentityForm({
               {mediaStatus === "ready" ? (
                 <button
                   type="button"
-                  onClick={
-                    restoreInitialSavedMedia
-                  }
+                  onClick={() => {
+                    void restoreAuthoritativeSavedMedia();
+                  }}
                   className="rounded-lg border border-neutral-300 bg-white px-3 py-2 text-xs font-semibold text-neutral-800 transition hover:border-neutral-400 hover:bg-neutral-100"
                 >
                   Discard new upload
@@ -671,9 +829,9 @@ export function BasicIdentityForm({
               "remove_pending" ? (
                 <button
                   type="button"
-                  onClick={
-                    restoreInitialSavedMedia
-                  }
+                  onClick={() => {
+                    void restoreAuthoritativeSavedMedia();
+                  }}
                   className="rounded-lg border border-neutral-300 bg-white px-3 py-2 text-xs font-semibold text-neutral-800 transition hover:border-neutral-400 hover:bg-neutral-100"
                 >
                   Restore saved media
