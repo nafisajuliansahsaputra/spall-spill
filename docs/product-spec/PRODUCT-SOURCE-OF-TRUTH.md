@@ -225,6 +225,25 @@ Implementation mechanics for O01-S5 Relevant First Job, O01-S6 Preview & Publish
 
 This does not change the locked six-step O01 journey, universal capability model, Working-versus-Published isolation, or onboarding-completion rule. Successful first authoritative Identity publication remains the completion boundary.
 
+### Current implementation checkpoint
+
+Stage **6B.3 — Profile Media** is **CLOSED / VERIFIED**.
+
+The 12.11 contract is implemented through database authorization, server-only R2 orchestration, short-lived presigned upload/finalization, canonical sanitized WebP assets, O01-S3 form integration, authenticated Working preview, and authoritative preview refresh.
+
+Closure evidence includes:
+
+- local runtime upload/finalization/save through the Windows development host and Kali browser/security client;
+- explicit R2 CORS/runtime verification with private canonical Working media;
+- replacement/removal behavior preserving immutable prior assets;
+- expired-preview recovery without extending URL lifetime or creating a generic asset-signing oracle;
+- cross-Owner media-attachment tampering rejected with no Working mutation or revision bump;
+- foreign-existing and nonexistent asset references rejected with indistinguishable generic application semantics;
+- application/database regression suites passed after a clean local reset;
+- GitHub CI and Security workflows passed for implementation commit `dc2bb3c829df7359772a9e30a28d382ed0ae7d1e`.
+
+No J1–J9 User Flow topology change is required. The next implementation checkpoint is **6B.4 — Starter Composition Working**.
+
 ## User Flow status
 
 **J1–J9 remain unchanged by the repository/technology migration.** No Mermaid topology update is required because infrastructure and security boundaries do not change the locked user-visible journey sequence.
