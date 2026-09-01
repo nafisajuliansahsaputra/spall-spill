@@ -8,6 +8,7 @@ import {
 import {
   resolveCurrentBasicIdentityState,
   resolveCurrentOnboardingState,
+  resolveCurrentStarterCompositionState,
 } from "@/lib/onboarding/state";
 import {
   ONBOARDING_STEPS,
@@ -24,6 +25,9 @@ import { HandleForm } from "./handle-form";
 import {
   PrimaryUseCaseForm,
 } from "./primary-use-case-form";
+import {
+  StarterCompositionForm,
+} from "./starter-composition-form";
 
 export const metadata: Metadata = {
   title: "Set Up Your Spall Spill",
@@ -101,7 +105,6 @@ function DeferredStep({
   step,
 }: {
   step:
-    | "starter_composition"
     | "relevant_first_job"
     | "preview_publish";
 }) {
@@ -202,6 +205,33 @@ export default async function OnboardingPage({
       case "progress_missing":
         throw new Error(
           "Authoritative onboarding progress is missing while resolving Basic Identity.",
+        );
+    }
+  }
+
+  const starterComposition =
+    displayedStep ===
+    "starter_composition"
+      ? await resolveCurrentStarterCompositionState()
+      : null;
+
+  if (
+    starterComposition &&
+    starterComposition.status !==
+      "success"
+  ) {
+    switch (
+      starterComposition.status
+    ) {
+      case "unauthenticated":
+      case "owner_missing":
+      case "owner_unavailable":
+      case "onboarding_complete":
+        redirect("/auth/resolve");
+
+      case "progress_missing":
+        throw new Error(
+          "Authoritative onboarding progress is missing while resolving Starter Composition.",
         );
     }
   }
@@ -432,8 +462,66 @@ export default async function OnboardingPage({
           ) : null}
 
           {displayedStep ===
-            "starter_composition" ||
-          displayedStep ===
+            "starter_composition" &&
+          starterComposition?.status ===
+            "success" ? (
+            <>
+              <div className="mb-7 space-y-2">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-500">
+                  Step 4
+                </p>
+
+                <h1
+                  id="onboarding-title"
+                  className="text-3xl font-semibold tracking-tight"
+                >
+                  Choose your starting
+                  composition
+                </h1>
+
+                <p className="text-sm leading-6 text-neutral-600">
+                  Pick the layout emphasis
+                  you want to begin with.
+                  Every option keeps the same
+                  product capabilities and
+                  can be changed later.
+                </p>
+
+                <p className="pt-1 text-xs leading-5 text-neutral-500">
+                  A recommendation may be
+                  highlighted from your
+                  Primary Use Case, but it
+                  never removes the other
+                  choices.
+                </p>
+              </div>
+
+              <StarterCompositionForm
+                initialStarterKey={
+                  starterComposition
+                    .layoutWorking
+                    ?.starterKey ?? null
+                }
+                baseLayoutRevision={
+                  starterComposition
+                    .layoutWorking
+                    ?.revision ?? null
+                }
+                baseProgressRevision={
+                  onboarding.revision
+                }
+                primaryUseCase={
+                  onboarding.primaryUseCase
+                }
+                isFrontier={
+                  onboarding.currentStep ===
+                  "starter_composition"
+                }
+              />
+            </>
+          ) : null}
+
+          {displayedStep ===
             "relevant_first_job" ||
           displayedStep ===
             "preview_publish" ? (
