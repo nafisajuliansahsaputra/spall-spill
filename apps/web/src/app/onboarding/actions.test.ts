@@ -30,10 +30,12 @@ vi.mock(
 );
 
 import {
+  advanceRelevantFirstJobAction,
   saveBasicIdentityAction,
 } from "./actions";
 import type {
   BasicIdentityActionState,
+  RelevantFirstJobActionState,
 } from "./state";
 
 const ASSET_KEY =
@@ -234,6 +236,184 @@ describe(
               "That media selection is no longer available. Choose another image or reload the page.",
           },
         });
+      },
+    );
+  },
+);
+const relevantFirstJobPreviousState:
+  RelevantFirstJobActionState = {
+    status: "idle",
+    message: null,
+  };
+
+function createRelevantFirstJobFormData(
+  revision: string,
+): FormData {
+  const formData = new FormData();
+
+  formData.set(
+    "baseProgressRevision",
+    revision,
+  );
+
+  return formData;
+}
+
+describe(
+  "advanceRelevantFirstJobAction",
+  () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+
+      mocks.schema.mockReturnValue({
+        rpc: mocks.rpc,
+      });
+
+      mocks.createClient.mockResolvedValue({
+        schema: mocks.schema,
+      });
+
+      mocks.redirect.mockImplementation(
+        (destination: string) => {
+          throw new Error(
+            `REDIRECT:${destination}`,
+          );
+        },
+      );
+    });
+
+    it(
+      "rejects an invalid progress revision before touching the database",
+      async () => {
+        const result =
+          await advanceRelevantFirstJobAction(
+            relevantFirstJobPreviousState,
+            createRelevantFirstJobFormData(
+              "not-a-revision",
+            ),
+          );
+
+        expect(result).toEqual({
+          status: "error",
+          message:
+            "Your onboarding progress could not be verified. Reload the page and try again.",
+        });
+
+        expect(
+          mocks.createClient,
+        ).not.toHaveBeenCalled();
+
+        expect(
+          mocks.rpc,
+        ).not.toHaveBeenCalled();
+      },
+    );
+
+    it(
+      "returns failure truth when the RPC request fails",
+      async () => {
+        mocks.rpc.mockResolvedValue({
+          data: null,
+          error: {
+            message: "database failure",
+          },
+        });
+
+        const result =
+          await advanceRelevantFirstJobAction(
+            relevantFirstJobPreviousState,
+            createRelevantFirstJobFormData(
+              "5",
+            ),
+          );
+
+        expect(result).toEqual({
+          status: "error",
+          message:
+            "We couldn't continue your onboarding right now. Your saved progress is unchanged.",
+        });
+
+        expect(
+          mocks.redirect,
+        ).not.toHaveBeenCalled();
+      },
+    );
+
+    it(
+      "surfaces stale progress without silently retrying",
+      async () => {
+        mocks.rpc.mockResolvedValue({
+          data: {
+            status: "stale_write",
+          },
+          error: null,
+        });
+
+        const result =
+          await advanceRelevantFirstJobAction(
+            relevantFirstJobPreviousState,
+            createRelevantFirstJobFormData(
+              "5",
+            ),
+          );
+
+        expect(result).toEqual({
+          status: "error",
+          message:
+            "Your onboarding progress changed in another tab or session. Reload the page before continuing.",
+        });
+
+        expect(
+          mocks.redirect,
+        ).not.toHaveBeenCalled();
+      },
+    );
+
+    it(
+      "advances through the narrow S5 RPC and redirects after acknowledged success",
+      async () => {
+        mocks.rpc.mockResolvedValue({
+          data: {
+            status: "success",
+            advanced: true,
+            current_step:
+              "preview_publish",
+            progress_revision: 6,
+          },
+          error: null,
+        });
+
+        await expect(
+          advanceRelevantFirstJobAction(
+            relevantFirstJobPreviousState,
+            createRelevantFirstJobFormData(
+              "5",
+            ),
+          ),
+        ).rejects.toThrow(
+          "REDIRECT:/onboarding",
+        );
+
+        expect(
+          mocks.schema,
+        ).toHaveBeenCalledWith(
+          "api",
+        );
+
+        expect(
+          mocks.rpc,
+        ).toHaveBeenCalledWith(
+          "advance_current_owner_relevant_first_job",
+          {
+            base_progress_revision: 5,
+          },
+        );
+
+        expect(
+          mocks.redirect,
+        ).toHaveBeenCalledWith(
+          "/onboarding",
+        );
       },
     );
   },

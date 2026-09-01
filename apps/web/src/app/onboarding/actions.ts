@@ -19,6 +19,7 @@ import type {
   BasicIdentityActionState,
   HandleActionState,
   PrimaryUseCaseActionState,
+  RelevantFirstJobActionState,
   StarterCompositionActionState,
 } from "./state";
 
@@ -794,6 +795,74 @@ export async function saveStarterCompositionAction(
         starterKey:
           parsedStarterKey.data,
         fieldErrors: {},
+      };
+  }
+}
+export async function advanceRelevantFirstJobAction(
+  _previousState:
+    RelevantFirstJobActionState,
+  formData: FormData,
+): Promise<RelevantFirstJobActionState> {
+  const parsedProgressRevision =
+    baseRevisionSchema.safeParse(
+      formData.get(
+        "baseProgressRevision",
+      ),
+    );
+
+  if (!parsedProgressRevision.success) {
+    return {
+      status: "error",
+      message:
+        "Your onboarding progress could not be verified. Reload the page and try again.",
+    };
+  }
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .schema("api")
+    .rpc(
+      "advance_current_owner_relevant_first_job",
+      {
+        base_progress_revision:
+          parsedProgressRevision.data,
+      },
+    );
+
+  if (error) {
+    return {
+      status: "error",
+      message:
+        "We couldn't continue your onboarding right now. Your saved progress is unchanged.",
+    };
+  }
+
+  const status = getRpcStatus(data);
+
+  resolveOwnerRoutingStatus(status);
+
+  switch (status) {
+    case "success":
+      redirect("/onboarding");
+
+    case "stale_write":
+      return {
+        status: "error",
+        message:
+          "Your onboarding progress changed in another tab or session. Reload the page before continuing.",
+      };
+
+    case "step_not_available":
+    case "prerequisite_missing":
+    case "progress_missing":
+      redirect("/onboarding");
+
+    default:
+      return {
+        status: "error",
+        message:
+          "We couldn't safely continue your onboarding. Reload the page and try again.",
       };
   }
 }

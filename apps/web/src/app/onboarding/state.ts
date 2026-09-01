@@ -37,3 +37,7 @@ export type StarterCompositionActionState = {
     starterKey?: string;
   };
 };
+export type RelevantFirstJobActionState = {
+  status: "idle" | "error";
+  message: string | null;
+};

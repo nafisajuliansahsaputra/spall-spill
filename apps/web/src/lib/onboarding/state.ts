@@ -100,6 +100,67 @@ const starterCompositionPayloadSchema =
     statusOnlyPayloadSchema,
   ]);
 
+const relevantFirstJobRecommendationSchema =
+  z.enum([
+    "identity_connection",
+    "product",
+    "resource",
+    "neutral",
+  ]);
+
+const relevantFirstJobSuccessPayloadSchema =
+  z
+    .object({
+      status: z.literal("success"),
+      current_step: onboardingStepSchema,
+      primary_use_case:
+        primaryUseCaseSchema,
+      recommended_first_job:
+        relevantFirstJobRecommendationSchema,
+      progress_revision: z
+        .number()
+        .int()
+        .positive(),
+    })
+    .strict();
+
+const relevantFirstJobStepUnavailablePayloadSchema =
+  z
+    .object({
+      status: z.literal(
+        "step_not_available",
+      ),
+      current_step: onboardingStepSchema,
+      progress_revision: z
+        .number()
+        .int()
+        .positive(),
+    })
+    .strict();
+
+const relevantFirstJobPrerequisitePayloadSchema =
+  z
+    .object({
+      status: z.literal(
+        "prerequisite_missing",
+      ),
+      prerequisite: z.enum([
+        "primary_use_case",
+        "current_handle",
+        "identity_working",
+        "identity_layout_working",
+      ]),
+    })
+    .strict();
+
+const relevantFirstJobPayloadSchema =
+  z.union([
+    relevantFirstJobSuccessPayloadSchema,
+    relevantFirstJobStepUnavailablePayloadSchema,
+    relevantFirstJobPrerequisitePayloadSchema,
+    statusOnlyPayloadSchema,
+  ]);
+
 export type OnboardingStateResolution =
   | {
       status: "success";
@@ -154,6 +215,48 @@ export type StarterCompositionStateResolution =
       status: "success";
       layoutWorking:
         StarterCompositionWorking | null;
+    }
+  | {
+      status:
+        | "unauthenticated"
+        | "owner_missing"
+        | "owner_unavailable"
+        | "onboarding_complete"
+        | "progress_missing";
+    };
+
+export type RelevantFirstJobStateResolution =
+  | {
+      status: "success";
+      currentStep:
+        z.infer<
+          typeof onboardingStepSchema
+        >;
+      primaryUseCase:
+        z.infer<
+          typeof primaryUseCaseSchema
+        >;
+      recommendedFirstJob:
+        z.infer<
+          typeof relevantFirstJobRecommendationSchema
+        >;
+      progressRevision: number;
+    }
+  | {
+      status: "step_not_available";
+      currentStep:
+        z.infer<
+          typeof onboardingStepSchema
+        >;
+      progressRevision: number;
+    }
+  | {
+      status: "prerequisite_missing";
+      prerequisite:
+        | "primary_use_case"
+        | "current_handle"
+        | "identity_working"
+        | "identity_layout_working";
     }
   | {
       status:
@@ -401,5 +504,92 @@ export async function resolveCurrentStarterCompositionState(): Promise<StarterCo
         parsed.data.layout_working
           .revision,
     },
+  };
+}
+export async function resolveCurrentRelevantFirstJobState(): Promise<RelevantFirstJobStateResolution> {
+  const authStatus =
+    await verifyCurrentAuthUser();
+
+  if (authStatus === "unauthenticated") {
+    return {
+      status: "unauthenticated",
+    };
+  }
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .schema("api")
+    .rpc(
+      "resolve_current_relevant_first_job_state",
+    );
+
+  if (error) {
+    throw new OnboardingStateResolutionError(
+      "Relevant First Job resolver request failed.",
+    );
+  }
+
+  const parsed =
+    relevantFirstJobPayloadSchema.safeParse(
+      data,
+    );
+
+  if (!parsed.success) {
+    throw new OnboardingStateResolutionError(
+      "Relevant First Job resolver returned an invalid payload.",
+    );
+  }
+
+  if (
+    parsed.data.status ===
+    "unauthenticated"
+  ) {
+    throw new OnboardingStateResolutionError(
+      "Verified authentication and database Relevant First Job state are inconsistent.",
+    );
+  }
+
+  if (parsed.data.status === "success") {
+    return {
+      status: "success",
+      currentStep:
+        parsed.data.current_step,
+      primaryUseCase:
+        parsed.data.primary_use_case,
+      recommendedFirstJob:
+        parsed.data
+          .recommended_first_job,
+      progressRevision:
+        parsed.data.progress_revision,
+    };
+  }
+
+  if (
+    parsed.data.status ===
+    "step_not_available"
+  ) {
+    return {
+      status: "step_not_available",
+      currentStep:
+        parsed.data.current_step,
+      progressRevision:
+        parsed.data.progress_revision,
+    };
+  }
+
+  if (
+    parsed.data.status ===
+    "prerequisite_missing"
+  ) {
+    return {
+      status: "prerequisite_missing",
+      prerequisite:
+        parsed.data.prerequisite,
+    };
+  }
+
+  return {
+    status: parsed.data.status,
   };
 }

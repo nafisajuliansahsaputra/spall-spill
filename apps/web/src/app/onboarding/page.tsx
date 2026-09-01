@@ -8,6 +8,7 @@ import {
 import {
   resolveCurrentBasicIdentityState,
   resolveCurrentOnboardingState,
+  resolveCurrentRelevantFirstJobState,
   resolveCurrentStarterCompositionState,
 } from "@/lib/onboarding/state";
 import {
@@ -25,6 +26,9 @@ import { HandleForm } from "./handle-form";
 import {
   PrimaryUseCaseForm,
 } from "./primary-use-case-form";
+import {
+  RelevantFirstJobForm,
+} from "./relevant-first-job-form";
 import {
   StarterCompositionForm,
 } from "./starter-composition-form";
@@ -232,6 +236,38 @@ export default async function OnboardingPage({
       case "progress_missing":
         throw new Error(
           "Authoritative onboarding progress is missing while resolving Starter Composition.",
+        );
+    }
+  }
+
+  const relevantFirstJob =
+    displayedStep ===
+    "relevant_first_job"
+      ? await resolveCurrentRelevantFirstJobState()
+      : null;
+
+  if (
+    relevantFirstJob &&
+    relevantFirstJob.status !== "success"
+  ) {
+    switch (relevantFirstJob.status) {
+      case "unauthenticated":
+      case "owner_missing":
+      case "owner_unavailable":
+      case "onboarding_complete":
+        redirect("/auth/resolve");
+
+      case "step_not_available":
+        redirect("/onboarding");
+
+      case "progress_missing":
+        throw new Error(
+          "Authoritative onboarding progress is missing while resolving Relevant First Job.",
+        );
+
+      case "prerequisite_missing":
+        throw new Error(
+          `Required onboarding prerequisite is missing before Relevant First Job: ${relevantFirstJob.prerequisite}.`,
         );
     }
   }
@@ -522,29 +558,63 @@ export default async function OnboardingPage({
           ) : null}
 
           {displayedStep ===
-            "relevant_first_job" ||
-          displayedStep ===
-            "preview_publish" ? (
+            "relevant_first_job" &&
+          relevantFirstJob?.status ===
+            "success" ? (
             <>
               <div className="mb-7 space-y-2">
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-500">
-                  Step {stepNumber}
+                  Step 5
                 </p>
 
                 <h1
                   id="onboarding-title"
                   className="text-3xl font-semibold tracking-tight"
                 >
-                  {
-                    STEP_LABELS[
-                      displayedStep
-                    ]
-                  }
+                  Add something useful
+                </h1>
+
+                <p className="text-sm leading-6 text-neutral-600">
+                  Spall Spill recommends a
+                  first job from your Primary
+                  Use Case, but the
+                  recommendation does not
+                  restrict what your account
+                  can do.
+                </p>
+              </div>
+
+              <RelevantFirstJobForm
+                recommendation={
+                  relevantFirstJob
+                    .recommendedFirstJob
+                }
+                baseProgressRevision={
+                  relevantFirstJob
+                    .progressRevision
+                }
+              />
+            </>
+          ) : null}
+
+          {displayedStep ===
+          "preview_publish" ? (
+            <>
+              <div className="mb-7 space-y-2">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-neutral-500">
+                  Step 6
+                </p>
+
+                <h1
+                  id="onboarding-title"
+                  className="text-3xl font-semibold tracking-tight"
+                >
+                  Preview & Publish
                 </h1>
               </div>
 
               <DeferredStep
-                step={displayedStep}
+                step="preview_publish"
               />
             </>
           ) : null}

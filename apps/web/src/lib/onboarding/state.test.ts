@@ -22,6 +22,7 @@ vi.mock(
 );
 
 import {
+  resolveCurrentRelevantFirstJobState,
   resolveCurrentStarterCompositionState,
 } from "./state";
 
@@ -153,6 +154,151 @@ describe(
           resolveCurrentStarterCompositionState(),
         ).rejects.toThrow(
           "Starter Composition resolver returned an invalid payload.",
+        );
+      },
+    );
+  },
+);
+describe(
+  "resolveCurrentRelevantFirstJobState",
+  () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+
+      mocks.getClaims.mockResolvedValue({
+        data: {
+          claims: {
+            sub:
+              "70000000-0000-4000-8000-000000000001",
+          },
+        },
+        error: null,
+      });
+
+      mocks.schema.mockReturnValue({
+        rpc: mocks.rpc,
+      });
+
+      mocks.createClient.mockResolvedValue({
+        auth: {
+          getClaims:
+            mocks.getClaims,
+        },
+        schema:
+          mocks.schema,
+      });
+
+      mocks.rpc.mockResolvedValue({
+        data: {
+          status: "success",
+          current_step:
+            "relevant_first_job",
+          primary_use_case:
+            "affiliate",
+          recommended_first_job:
+            "product",
+          progress_revision: 5,
+        },
+        error: null,
+      });
+    });
+
+    it(
+      "returns validated adaptive S5 guidance",
+      async () => {
+        const result =
+          await resolveCurrentRelevantFirstJobState();
+
+        expect(result).toEqual({
+          status: "success",
+          currentStep:
+            "relevant_first_job",
+          primaryUseCase:
+            "affiliate",
+          recommendedFirstJob:
+            "product",
+          progressRevision: 5,
+        });
+
+        expect(
+          mocks.rpc,
+        ).toHaveBeenCalledWith(
+          "resolve_current_relevant_first_job_state",
+        );
+      },
+    );
+
+    it(
+      "fails closed before RPC when authentication cannot be verified",
+      async () => {
+        mocks.getClaims.mockResolvedValue({
+          data: {
+            claims: {},
+          },
+          error: null,
+        });
+
+        const result =
+          await resolveCurrentRelevantFirstJobState();
+
+        expect(result).toEqual({
+          status: "unauthenticated",
+        });
+
+        expect(
+          mocks.rpc,
+        ).not.toHaveBeenCalled();
+      },
+    );
+
+    it(
+      "preserves step-not-available truth",
+      async () => {
+        mocks.rpc.mockResolvedValue({
+          data: {
+            status:
+              "step_not_available",
+            current_step:
+              "starter_composition",
+            progress_revision: 4,
+          },
+          error: null,
+        });
+
+        const result =
+          await resolveCurrentRelevantFirstJobState();
+
+        expect(result).toEqual({
+          status:
+            "step_not_available",
+          currentStep:
+            "starter_composition",
+          progressRevision: 4,
+        });
+      },
+    );
+
+    it(
+      "rejects unknown recommendation values",
+      async () => {
+        mocks.rpc.mockResolvedValue({
+          data: {
+            status: "success",
+            current_step:
+              "relevant_first_job",
+            primary_use_case:
+              "affiliate",
+            recommended_first_job:
+              "admin_override",
+            progress_revision: 5,
+          },
+          error: null,
+        });
+
+        await expect(
+          resolveCurrentRelevantFirstJobState(),
+        ).rejects.toThrow(
+          "Relevant First Job resolver returned an invalid payload.",
         );
       },
     );
