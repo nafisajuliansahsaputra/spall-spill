@@ -18,6 +18,9 @@ export const PROFILE_MEDIA_MAX_SOURCE_BYTES =
 export const PROFILE_MEDIA_PRESIGNED_PUT_TTL_SECONDS =
   300;
 
+export const PROFILE_MEDIA_PRESIGNED_GET_TTL_SECONDS =
+  300;
+
 export const PROFILE_MEDIA_MAX_SOURCE_DIMENSION =
   4096;
 
@@ -42,3 +45,6 @@ export const profileMediaDeclaredByteSizeSchema =
     .int()
     .min(1)
     .max(PROFILE_MEDIA_MAX_SOURCE_BYTES);
+
+export const profileMediaAssetKeySchema =
+  z.string().uuid();

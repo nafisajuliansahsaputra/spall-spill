@@ -21,8 +21,10 @@ export type BasicIdentityActionState = {
   message: string | null;
   displayName: string;
   bio: string;
+  profileAssetKey: string | null;
   fieldErrors: {
     displayName?: string;
     bio?: string;
+    profileMedia?: string;
   };
 };

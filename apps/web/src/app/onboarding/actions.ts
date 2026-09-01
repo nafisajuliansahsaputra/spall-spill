@@ -9,6 +9,9 @@ import {
   handleInputSchema,
   primaryUseCaseSchema,
 } from "@/lib/onboarding/validation";
+import {
+  profileMediaAssetKeySchema,
+} from "@/lib/profile-media/contracts";
 import { createClient } from "@/lib/supabase/server";
 
 import type {
@@ -61,6 +64,56 @@ function parseOptionalRevision(
 
   const parsed =
     baseRevisionSchema.safeParse(value);
+
+  if (!parsed.success) {
+    return {
+      success: false,
+    };
+  }
+
+  return {
+    success: true,
+    data: parsed.data,
+  };
+}
+
+function parseOptionalProfileAssetKey(
+  value: FormDataEntryValue | null,
+):
+  | {
+      success: true;
+      data: string | null;
+    }
+  | {
+      success: false;
+    } {
+  if (value === null || value === "") {
+    return {
+      success: true,
+      data: null,
+    };
+  }
+
+  if (typeof value !== "string") {
+    return {
+      success: false,
+    };
+  }
+
+  const normalized =
+    value.trim().toLowerCase();
+
+  if (normalized.length === 0) {
+    return {
+      success: true,
+      data: null,
+    };
+  }
+
+  const parsed =
+    profileMediaAssetKeySchema.safeParse(
+      normalized,
+    );
 
   if (!parsed.success) {
     return {
@@ -376,9 +429,17 @@ export async function saveBasicIdentityAction(
   const parsedBio =
     bioInputSchema.safeParse(bio);
 
+  const parsedProfileAssetKey =
+    parseOptionalProfileAssetKey(
+      formData.get(
+        "profileAssetKey",
+      ),
+    );
+
   const fieldErrors: {
     displayName?: string;
     bio?: string;
+    profileMedia?: string;
   } = {};
 
   if (!parsedDisplayName.success) {
@@ -395,9 +456,15 @@ export async function saveBasicIdentityAction(
       "Enter a valid Bio.";
   }
 
+  if (!parsedProfileAssetKey.success) {
+    fieldErrors.profileMedia =
+      "The selected Profile Photo / Logo is invalid. Choose another image or reload the page.";
+  }
+
   if (
     !parsedDisplayName.success ||
-    !parsedBio.success
+    !parsedBio.success ||
+    !parsedProfileAssetKey.success
   ) {
     return {
       status: "error",
@@ -405,6 +472,10 @@ export async function saveBasicIdentityAction(
         "Check your Basic Identity and try again.",
       displayName,
       bio,
+      profileAssetKey:
+        parsedProfileAssetKey.success
+          ? parsedProfileAssetKey.data
+          : null,
       fieldErrors,
     };
   }
@@ -434,6 +505,8 @@ export async function saveBasicIdentityAction(
       displayName:
         parsedDisplayName.data,
       bio: parsedBio.data ?? "",
+      profileAssetKey:
+        parsedProfileAssetKey.data,
       fieldErrors: {},
     };
   }
@@ -449,6 +522,8 @@ export async function saveBasicIdentityAction(
           parsedDisplayName.data,
         input_bio:
           parsedBio.data,
+        input_profile_asset_key:
+          parsedProfileAssetKey.data,
         base_identity_revision:
           parsedIdentityRevision.data,
         base_progress_revision:
@@ -464,6 +539,8 @@ export async function saveBasicIdentityAction(
       displayName:
         parsedDisplayName.data,
       bio: parsedBio.data ?? "",
+      profileAssetKey:
+        parsedProfileAssetKey.data,
       fieldErrors: {},
     };
   }
@@ -483,6 +560,8 @@ export async function saveBasicIdentityAction(
           "Check your Basic Identity and try again.",
         displayName,
         bio,
+        profileAssetKey:
+          parsedProfileAssetKey.data,
         fieldErrors: {
           displayName:
             "Enter a valid Display Name.",
@@ -497,9 +576,27 @@ export async function saveBasicIdentityAction(
         displayName:
           parsedDisplayName.data,
         bio,
+        profileAssetKey:
+          parsedProfileAssetKey.data,
         fieldErrors: {
           bio:
             "Enter a valid Bio.",
+        },
+      };
+
+    case "invalid_profile_asset":
+      return {
+        status: "error",
+        message:
+          "We couldn't safely attach that Profile Photo / Logo. Your last acknowledged Working media is unchanged.",
+        displayName:
+          parsedDisplayName.data,
+        bio: parsedBio.data ?? "",
+        profileAssetKey:
+          parsedProfileAssetKey.data,
+        fieldErrors: {
+          profileMedia:
+            "That media selection is no longer available. Choose another image or reload the page.",
         },
       };
 
@@ -511,6 +608,8 @@ export async function saveBasicIdentityAction(
         displayName:
           parsedDisplayName.data,
         bio: parsedBio.data ?? "",
+        profileAssetKey:
+          parsedProfileAssetKey.data,
         fieldErrors: {},
       };
 
@@ -522,6 +621,8 @@ export async function saveBasicIdentityAction(
         displayName:
           parsedDisplayName.data,
         bio: parsedBio.data ?? "",
+        profileAssetKey:
+          parsedProfileAssetKey.data,
         fieldErrors: {},
       };
 
@@ -537,6 +638,8 @@ export async function saveBasicIdentityAction(
         displayName:
           parsedDisplayName.data,
         bio: parsedBio.data ?? "",
+        profileAssetKey:
+          parsedProfileAssetKey.data,
         fieldErrors: {},
       };
   }

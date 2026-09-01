@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { resolveCurrentOwnerState } from "@/lib/auth/owner-state";
+import {
+  resolveCurrentOwnerState,
+} from "@/lib/auth/owner-state";
 import {
   resolveCurrentBasicIdentityState,
   resolveCurrentOnboardingState,
@@ -11,10 +13,17 @@ import {
   ONBOARDING_STEPS,
   onboardingStepSchema,
 } from "@/lib/onboarding/validation";
+import {
+  createTrustedProfileMediaPreviewUrl,
+} from "@/lib/profile-media/preview";
 
-import { BasicIdentityForm } from "./basic-identity-form";
+import {
+  BasicIdentityForm,
+} from "./basic-identity-form";
 import { HandleForm } from "./handle-form";
-import { PrimaryUseCaseForm } from "./primary-use-case-form";
+import {
+  PrimaryUseCaseForm,
+} from "./primary-use-case-form";
 
 export const metadata: Metadata = {
   title: "Set Up Your Spall Spill",
@@ -197,6 +206,28 @@ export default async function OnboardingPage({
     }
   }
 
+  const savedProfileAssetKey =
+    basicIdentity?.status ===
+      "success"
+      ? basicIdentity
+          .identityWorking
+          ?.profileAssetKey ??
+        null
+      : null;
+
+  /*
+   * Only sign a preview for an asset key that came
+   * from the authenticated current-Owner resolver.
+   * There is deliberately no generic browser-supplied
+   * asset-key preview endpoint here.
+   */
+  const savedProfilePreviewUrl =
+    savedProfileAssetKey
+      ? await createTrustedProfileMediaPreviewUrl(
+          savedProfileAssetKey,
+        )
+      : null;
+
   return (
     <main className="min-h-screen bg-neutral-50 px-5 py-8 text-neutral-950 sm:py-10">
       <div className="mx-auto w-full max-w-xl">
@@ -377,6 +408,12 @@ export default async function OnboardingPage({
                   basicIdentity
                     .identityWorking
                     ?.bio ?? null
+                }
+                initialProfileAssetKey={
+                  savedProfileAssetKey
+                }
+                initialProfilePreviewUrl={
+                  savedProfilePreviewUrl
                 }
                 baseIdentityRevision={
                   basicIdentity

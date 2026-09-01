@@ -1,54 +1,175 @@
 "use client";
 
-import { useActionState } from "react";
+import {
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useFormStatus } from "react-dom";
 
-import { saveBasicIdentityAction } from "./actions";
-import type { BasicIdentityActionState } from "./state";
+import {
+  uploadProfileMediaFile,
+  validateProfileMediaBrowserFile,
+  type ProfileMediaInvalidFileReason,
+  type ProfileMediaUploadPhase,
+} from "@/lib/profile-media/client-upload";
+
+import {
+  saveBasicIdentityAction,
+} from "./actions";
+import {
+  finalizeProfileMediaUploadAction,
+  initiateProfileMediaUploadAction,
+} from "./profile-media-actions";
+import type {
+  BasicIdentityActionState,
+} from "./state";
 
 type BasicIdentityFormProps = {
   initialDisplayName: string;
   initialBio: string | null;
+  initialProfileAssetKey: string | null;
+  initialProfilePreviewUrl: string | null;
   baseIdentityRevision: number | null;
   baseProgressRevision: number;
   isFrontier: boolean;
 };
 
+type MediaStatus =
+  | "none"
+  | "saved"
+  | "selected"
+  | "uploading"
+  | "processing"
+  | "ready"
+  | "remove_pending";
+
 function SubmitButton({
   isFrontier,
+  mediaBusy,
 }: {
   isFrontier: boolean;
+  mediaBusy: boolean;
 }) {
   const { pending } = useFormStatus();
+
+  const disabled =
+    pending || mediaBusy;
 
   return (
     <button
       type="submit"
-      disabled={pending}
+      disabled={disabled}
       className="w-full rounded-xl bg-neutral-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
     >
       {pending
         ? "Saving Working..."
-        : isFrontier
-          ? "Continue"
-          : "Save changes"}
+        : mediaBusy
+          ? "Finish media upload first"
+          : isFrontier
+            ? "Continue"
+            : "Save changes"}
     </button>
   );
+}
+
+function getMediaStatusText(
+  status: MediaStatus,
+): string {
+  switch (status) {
+    case "saved":
+      return "Saved / Working. Changing this selection will not publish anything.";
+
+    case "selected":
+      return "Selected locally. Preparing a secure upload.";
+
+    case "uploading":
+      return "Uploading securely to temporary storage...";
+
+    case "processing":
+      return "Processing and validating the image...";
+
+    case "ready":
+      return "Ready, but not Saved yet. Continue or Save changes to attach it to Identity Working.";
+
+    case "remove_pending":
+      return "Removal selected locally. Save changes to remove it from Identity Working.";
+
+    case "none":
+      return "No Profile Photo / Logo is selected. This is optional.";
+  }
+}
+
+function getInvalidFileMessage(
+  reason:
+    ProfileMediaInvalidFileReason,
+): string {
+  return reason ===
+    "unsupported_type"
+    ? "Use a JPEG, PNG, or WebP image."
+    : "Choose an image no larger than 5 MiB.";
+}
+
+function getUploadErrorMessage(
+  result:
+    Awaited<
+      ReturnType<
+        typeof uploadProfileMediaFile
+      >
+    >,
+): string | null {
+  switch (result.status) {
+    case "success":
+      return null;
+
+    case "invalid_file":
+      return getInvalidFileMessage(
+        result.reason,
+      );
+
+    case "initiation_failed":
+      return "We couldn't start the secure upload. Your previous media selection is unchanged.";
+
+    case "upload_failed":
+      return "The image could not be uploaded to temporary storage. Your previous media selection is unchanged.";
+
+    case "finalization_failed":
+      switch (result.reason) {
+        case "rejected":
+          return "The image could not be safely processed. Use a valid static JPEG, PNG, or WebP image.";
+
+        case "expired":
+          return "The temporary upload session expired. Choose the image again to retry.";
+
+        case "processing_timeout":
+          return "Image processing did not finish in this request. Choose the image again to retry.";
+
+        case "missing":
+        case "internal":
+          return "The image could not be finalized safely. Your previous media selection is unchanged.";
+      }
+  }
 }
 
 export function BasicIdentityForm({
   initialDisplayName,
   initialBio,
+  initialProfileAssetKey,
+  initialProfilePreviewUrl,
   baseIdentityRevision,
   baseProgressRevision,
   isFrontier,
 }: BasicIdentityFormProps) {
-  const initialState: BasicIdentityActionState =
-    {
+  const initialState:
+    BasicIdentityActionState = {
       status: "idle",
       message: null,
-      displayName: initialDisplayName,
+      displayName:
+        initialDisplayName,
       bio: initialBio ?? "",
+      profileAssetKey:
+        initialProfileAssetKey,
       fieldErrors: {},
     };
 
@@ -57,6 +178,261 @@ export function BasicIdentityForm({
       saveBasicIdentityAction,
       initialState,
     );
+
+  const [
+    selectedProfileAssetKey,
+    setSelectedProfileAssetKey,
+  ] = useState<string | null>(
+    initialProfileAssetKey,
+  );
+
+  const [
+    previewUrl,
+    setPreviewUrl,
+  ] = useState<string | null>(
+    initialProfilePreviewUrl,
+  );
+
+  const [
+    mediaStatus,
+    setMediaStatus,
+  ] = useState<MediaStatus>(
+    initialProfileAssetKey
+      ? "saved"
+      : "none",
+  );
+
+  const [
+    mediaError,
+    setMediaError,
+  ] = useState<string | null>(
+    null,
+  );
+
+  const objectUrlsRef =
+    useRef<Set<string>>(
+      new Set(),
+    );
+
+  useEffect(() => {
+    const urls =
+      objectUrlsRef.current;
+
+    return () => {
+      for (const url of urls) {
+        URL.revokeObjectURL(url);
+      }
+
+      urls.clear();
+    };
+  }, []);
+
+  const mediaBusy =
+    mediaStatus === "selected" ||
+    mediaStatus === "uploading" ||
+    mediaStatus === "processing";
+
+  function revokeTrackedObjectUrl(
+    url: string | null,
+  ) {
+    if (
+      !url ||
+      !objectUrlsRef.current.has(url)
+    ) {
+      return;
+    }
+
+    URL.revokeObjectURL(url);
+
+    objectUrlsRef.current.delete(
+      url,
+    );
+  }
+
+  function restoreInitialSavedMedia() {
+    revokeTrackedObjectUrl(
+      previewUrl,
+    );
+
+    setSelectedProfileAssetKey(
+      initialProfileAssetKey,
+    );
+
+    setPreviewUrl(
+      initialProfilePreviewUrl,
+    );
+
+    setMediaStatus(
+      initialProfileAssetKey
+        ? "saved"
+        : "none",
+    );
+
+    setMediaError(null);
+  }
+
+  function handleRemoveMedia() {
+    if (mediaBusy) {
+      return;
+    }
+
+    revokeTrackedObjectUrl(
+      previewUrl,
+    );
+
+    setSelectedProfileAssetKey(
+      null,
+    );
+
+    setPreviewUrl(null);
+
+    setMediaStatus(
+      initialProfileAssetKey
+        ? "remove_pending"
+        : "none",
+    );
+
+    setMediaError(null);
+  }
+
+  async function handleFileChange(
+    event:
+      React.ChangeEvent<HTMLInputElement>,
+  ) {
+    const file =
+      event.currentTarget.files?.[0] ??
+      null;
+
+    event.currentTarget.value = "";
+
+    if (!file || mediaBusy) {
+      return;
+    }
+
+    /*
+     * Validate before creating any local object URL.
+     * Unsupported media must not enter even the
+     * temporary preview path.
+     *
+     * This is UX defense in depth only; authoritative
+     * validation still happens during server
+     * finalization.
+     */
+    const validation =
+      validateProfileMediaBrowserFile(
+        file,
+      );
+
+    if (
+      validation.status ===
+      "invalid_file"
+    ) {
+      setMediaError(
+        getInvalidFileMessage(
+          validation.reason,
+        ),
+      );
+
+      return;
+    }
+
+    const previousAssetKey =
+      selectedProfileAssetKey;
+
+    const previousPreviewUrl =
+      previewUrl;
+
+    const previousStatus =
+      mediaStatus;
+
+    const localPreviewUrl =
+      URL.createObjectURL(file);
+
+    objectUrlsRef.current.add(
+      localPreviewUrl,
+    );
+
+    setMediaError(null);
+
+    setPreviewUrl(
+      localPreviewUrl,
+    );
+
+    setMediaStatus(
+      "selected",
+    );
+
+    const result =
+      await uploadProfileMediaFile({
+        file,
+
+        initiate:
+          initiateProfileMediaUploadAction,
+
+        finalize:
+          finalizeProfileMediaUploadAction,
+
+        onPhase: (
+          phase:
+            ProfileMediaUploadPhase,
+        ) => {
+          setMediaStatus(
+            phase === "uploading"
+              ? "uploading"
+              : "processing",
+          );
+        },
+      });
+
+    if (result.status === "success") {
+      revokeTrackedObjectUrl(
+        previousPreviewUrl,
+      );
+
+      setSelectedProfileAssetKey(
+        result.assetKey,
+      );
+
+      setPreviewUrl(
+        localPreviewUrl,
+      );
+
+      setMediaStatus(
+        "ready",
+      );
+
+      setMediaError(null);
+
+      return;
+    }
+
+    revokeTrackedObjectUrl(
+      localPreviewUrl,
+    );
+
+    setSelectedProfileAssetKey(
+      previousAssetKey,
+    );
+
+    setPreviewUrl(
+      previousPreviewUrl,
+    );
+
+    setMediaStatus(
+      previousStatus,
+    );
+
+    setMediaError(
+      getUploadErrorMessage(
+        result,
+      ),
+    );
+  }
+
+  const previewLabel =
+    selectedProfileAssetKey
+      ? "Profile Photo / Logo preview"
+      : "No Profile Photo / Logo";
 
   return (
     <form
@@ -77,6 +453,15 @@ export function BasicIdentityForm({
         value={baseProgressRevision}
       />
 
+      <input
+        type="hidden"
+        name="profileAssetKey"
+        value={
+          selectedProfileAssetKey ??
+          ""
+        }
+      />
+
       <div className="space-y-2">
         <label
           htmlFor="displayName"
@@ -91,7 +476,9 @@ export function BasicIdentityForm({
           type="text"
           required
           autoComplete="name"
-          defaultValue={state.displayName}
+          defaultValue={
+            state.displayName
+          }
           aria-invalid={
             state.fieldErrors.displayName
               ? true
@@ -176,13 +563,147 @@ export function BasicIdentityForm({
         ) : null}
       </div>
 
-      <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-4 text-sm leading-6 text-neutral-600">
-        <span className="font-medium text-neutral-900">
-          Photo or logo is optional.
-        </span>{" "}
-        You can continue without one
-        and add it later.
-      </div>
+      <fieldset
+        disabled={mediaBusy}
+        className="space-y-3 rounded-2xl border border-neutral-200 bg-neutral-50 p-4 disabled:opacity-75"
+      >
+        <legend className="px-1 text-sm font-medium text-neutral-900">
+          Profile Photo / Logo{" "}
+          <span className="font-normal text-neutral-500">
+            (optional)
+          </span>
+        </legend>
+
+        <div className="flex items-start gap-4">
+          <div
+            role="img"
+            aria-label={previewLabel}
+            className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-neutral-200 bg-white bg-cover bg-center text-center text-xs leading-4 text-neutral-400"
+            style={
+              previewUrl
+                ? {
+                    backgroundImage:
+                      `url("${previewUrl}")`,
+                  }
+                : undefined
+            }
+          >
+            {!previewUrl
+              ? selectedProfileAssetKey
+                ? "Preview unavailable"
+                : "No media"
+              : null}
+          </div>
+
+          <div className="min-w-0 flex-1 space-y-3">
+            <div className="space-y-1">
+              <label
+                htmlFor="profileMedia"
+                className="block text-sm font-medium text-neutral-800"
+              >
+                Choose an image
+              </label>
+
+              <input
+                id="profileMedia"
+                type="file"
+                accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                disabled={mediaBusy}
+                onChange={
+                  handleFileChange
+                }
+                aria-describedby="profile-media-help profile-media-status"
+                className="block w-full text-sm text-neutral-600 file:mr-3 file:rounded-lg file:border-0 file:bg-neutral-900 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-neutral-700 disabled:cursor-not-allowed"
+              />
+
+              <p
+                id="profile-media-help"
+                className="text-xs leading-5 text-neutral-500"
+              >
+                JPEG, PNG, or WebP.
+                Maximum 5 MiB. Images
+                are validated and
+                converted to a sanitized
+                static WebP before they
+                can be attached.
+              </p>
+            </div>
+
+            <p
+              id="profile-media-status"
+              aria-live="polite"
+              className="text-xs leading-5 text-neutral-600"
+            >
+              {
+                getMediaStatusText(
+                  mediaStatus,
+                )
+              }
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+              {selectedProfileAssetKey &&
+              !mediaBusy ? (
+                <button
+                  type="button"
+                  onClick={
+                    handleRemoveMedia
+                  }
+                  className="rounded-lg border border-neutral-300 bg-white px-3 py-2 text-xs font-semibold text-neutral-800 transition hover:border-neutral-400 hover:bg-neutral-100"
+                >
+                  Remove on save
+                </button>
+              ) : null}
+
+              {mediaStatus === "ready" ? (
+                <button
+                  type="button"
+                  onClick={
+                    restoreInitialSavedMedia
+                  }
+                  className="rounded-lg border border-neutral-300 bg-white px-3 py-2 text-xs font-semibold text-neutral-800 transition hover:border-neutral-400 hover:bg-neutral-100"
+                >
+                  Discard new upload
+                </button>
+              ) : null}
+
+              {mediaStatus ===
+              "remove_pending" ? (
+                <button
+                  type="button"
+                  onClick={
+                    restoreInitialSavedMedia
+                  }
+                  className="rounded-lg border border-neutral-300 bg-white px-3 py-2 text-xs font-semibold text-neutral-800 transition hover:border-neutral-400 hover:bg-neutral-100"
+                >
+                  Restore saved media
+                </button>
+              ) : null}
+            </div>
+          </div>
+        </div>
+
+        {mediaError ? (
+          <p
+            role="alert"
+            className="text-sm leading-6 text-red-700"
+          >
+            {mediaError}
+          </p>
+        ) : null}
+
+        {state.fieldErrors.profileMedia ? (
+          <p
+            role="alert"
+            className="text-sm leading-6 text-red-700"
+          >
+            {
+              state.fieldErrors
+                .profileMedia
+            }
+          </p>
+        ) : null}
+      </fieldset>
 
       {state.message ? (
         <div
@@ -196,12 +717,15 @@ export function BasicIdentityForm({
 
       <SubmitButton
         isFrontier={isFrontier}
+        mediaBusy={mediaBusy}
       />
 
       <p className="text-center text-xs leading-5 text-neutral-500">
         Continue saves acknowledged
-        Identity Working. It does not
-        publish your public page.
+        Identity Working. Uploading or
+        processing a photo alone does
+        not save or publish your public
+        page.
       </p>
     </form>
   );
