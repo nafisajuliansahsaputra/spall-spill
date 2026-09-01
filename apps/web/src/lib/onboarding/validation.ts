@@ -17,6 +17,13 @@ export const PRIMARY_USE_CASES = [
   "other",
 ] as const;
 
+export const STARTER_KEYS = [
+  "clean",
+  "social_focus",
+  "featured",
+  "business",
+] as const;
+
 export const CANONICAL_HANDLE_PATTERN =
   /^[a-z0-9][a-z0-9._-]*[a-z0-9]$/;
 
@@ -38,6 +45,10 @@ export const onboardingStepSchema = z.enum(
 
 export const primaryUseCaseSchema = z.enum(
   PRIMARY_USE_CASES,
+);
+
+export const starterKeySchema = z.enum(
+  STARTER_KEYS,
 );
 
 const canonicalHandleSchema = z

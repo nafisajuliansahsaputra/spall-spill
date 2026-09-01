@@ -6,6 +6,7 @@ import {
   CANONICAL_HANDLE_PATTERN,
   onboardingStepSchema,
   primaryUseCaseSchema,
+  starterKeySchema,
 } from "./validation";
 
 const canonicalHandleOutputSchema = z
@@ -73,6 +74,32 @@ const basicIdentityPayloadSchema = z.union([
   statusOnlyPayloadSchema,
 ]);
 
+const starterCompositionWorkingSchema =
+  z
+    .object({
+      starter_key: starterKeySchema,
+      revision: z
+        .number()
+        .int()
+        .positive(),
+    })
+    .strict();
+
+const starterCompositionSuccessPayloadSchema =
+  z
+    .object({
+      status: z.literal("success"),
+      layout_working:
+        starterCompositionWorkingSchema.nullable(),
+    })
+    .strict();
+
+const starterCompositionPayloadSchema =
+  z.union([
+    starterCompositionSuccessPayloadSchema,
+    statusOnlyPayloadSchema,
+  ]);
+
 export type OnboardingStateResolution =
   | {
       status: "success";
@@ -106,6 +133,27 @@ export type BasicIdentityStateResolution =
       status: "success";
       identityWorking:
         BasicIdentityWorking | null;
+    }
+  | {
+      status:
+        | "unauthenticated"
+        | "owner_missing"
+        | "owner_unavailable"
+        | "onboarding_complete"
+        | "progress_missing";
+    };
+
+export type StarterCompositionWorking = {
+  starterKey:
+    z.infer<typeof starterKeySchema>;
+  revision: number;
+};
+
+export type StarterCompositionStateResolution =
+  | {
+      status: "success";
+      layoutWorking:
+        StarterCompositionWorking | null;
     }
   | {
       status:
@@ -281,6 +329,76 @@ export async function resolveCurrentBasicIdentityState(): Promise<BasicIdentityS
           .profile_asset_key,
       revision:
         parsed.data.identity_working
+          .revision,
+    },
+  };
+}
+
+export async function resolveCurrentStarterCompositionState(): Promise<StarterCompositionStateResolution> {
+  const authStatus =
+    await verifyCurrentAuthUser();
+
+  if (authStatus === "unauthenticated") {
+    return {
+      status: "unauthenticated",
+    };
+  }
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .schema("api")
+    .rpc(
+      "resolve_current_starter_composition_state",
+    );
+
+  if (error) {
+    throw new OnboardingStateResolutionError(
+      "Starter Composition resolver request failed.",
+    );
+  }
+
+  const parsed =
+    starterCompositionPayloadSchema.safeParse(
+      data,
+    );
+
+  if (!parsed.success) {
+    throw new OnboardingStateResolutionError(
+      "Starter Composition resolver returned an invalid payload.",
+    );
+  }
+
+  if (
+    parsed.data.status ===
+    "unauthenticated"
+  ) {
+    throw new OnboardingStateResolutionError(
+      "Verified authentication and database Starter Composition state are inconsistent.",
+    );
+  }
+
+  if (parsed.data.status !== "success") {
+    return {
+      status: parsed.data.status,
+    };
+  }
+
+  if (!parsed.data.layout_working) {
+    return {
+      status: "success",
+      layoutWorking: null,
+    };
+  }
+
+  return {
+    status: "success",
+    layoutWorking: {
+      starterKey:
+        parsed.data.layout_working
+          .starter_key,
+      revision:
+        parsed.data.layout_working
           .revision,
     },
   };

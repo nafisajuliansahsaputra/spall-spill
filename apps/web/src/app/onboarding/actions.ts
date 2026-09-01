@@ -8,6 +8,7 @@ import {
   displayNameInputSchema,
   handleInputSchema,
   primaryUseCaseSchema,
+  starterKeySchema,
 } from "@/lib/onboarding/validation";
 import {
   profileMediaAssetKeySchema,
@@ -18,6 +19,7 @@ import type {
   BasicIdentityActionState,
   HandleActionState,
   PrimaryUseCaseActionState,
+  StarterCompositionActionState,
 } from "./state";
 
 const baseRevisionSchema = z.coerce
@@ -640,6 +642,157 @@ export async function saveBasicIdentityAction(
         bio: parsedBio.data ?? "",
         profileAssetKey:
           parsedProfileAssetKey.data,
+        fieldErrors: {},
+      };
+  }
+}
+
+export async function saveStarterCompositionAction(
+  _previousState:
+    StarterCompositionActionState,
+  formData: FormData,
+): Promise<StarterCompositionActionState> {
+  const rawStarterKey =
+    formData.get("starterKey");
+
+  const starterKey =
+    typeof rawStarterKey === "string"
+      ? rawStarterKey
+      : "";
+
+  const parsedStarterKey =
+    starterKeySchema.safeParse(
+      starterKey,
+    );
+
+  if (!parsedStarterKey.success) {
+    return {
+      status: "error",
+      message:
+        "Choose one of the available Starter Compositions.",
+      starterKey,
+      fieldErrors: {
+        starterKey:
+          "Choose one of the available Starter Compositions.",
+      },
+    };
+  }
+
+  const parsedLayoutRevision =
+    parseOptionalRevision(
+      formData.get(
+        "baseLayoutRevision",
+      ),
+    );
+
+  const parsedProgressRevision =
+    baseRevisionSchema.safeParse(
+      formData.get(
+        "baseProgressRevision",
+      ),
+    );
+
+  if (
+    !parsedLayoutRevision.success ||
+    !parsedProgressRevision.success
+  ) {
+    return {
+      status: "error",
+      message:
+        "Your saved Working state could not be verified. Reload the page and try again.",
+      starterKey:
+        parsedStarterKey.data,
+      fieldErrors: {},
+    };
+  }
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .schema("api")
+    .rpc(
+      "save_current_owner_starter_composition",
+      {
+        input_starter_key:
+          parsedStarterKey.data,
+        base_layout_revision:
+          parsedLayoutRevision.data,
+        base_progress_revision:
+          parsedProgressRevision.data,
+      },
+    );
+
+  if (error) {
+    return {
+      status: "error",
+      message:
+        "We couldn't save your Starter Composition right now. Your last acknowledged Working layout is unchanged.",
+      starterKey:
+        parsedStarterKey.data,
+      fieldErrors: {},
+    };
+  }
+
+  const status = getRpcStatus(data);
+
+  resolveOwnerRoutingStatus(status);
+
+  switch (status) {
+    case "success":
+      redirect("/onboarding");
+
+    case "invalid_starter":
+      return {
+        status: "error",
+        message:
+          "Choose one of the available Starter Compositions.",
+        starterKey,
+        fieldErrors: {
+          starterKey:
+            "Choose one of the available Starter Compositions.",
+        },
+      };
+
+    case "stale_write":
+      return {
+        status: "error",
+        message:
+          "Your Starter Composition changed in another tab or session. Reload the page before making another change.",
+        starterKey:
+          parsedStarterKey.data,
+        fieldErrors: {},
+      };
+
+    case "progress_stale":
+      return {
+        status: "error",
+        message:
+          "Your onboarding progress changed in another tab or session. Reload the page before continuing.",
+        starterKey:
+          parsedStarterKey.data,
+        fieldErrors: {},
+      };
+
+    case "identity_required":
+      return {
+        status: "error",
+        message:
+          "Your saved Basic Identity could not be verified. Reload the page before continuing.",
+        starterKey:
+          parsedStarterKey.data,
+        fieldErrors: {},
+      };
+
+    case "step_not_available":
+      redirect("/onboarding");
+
+    default:
+      return {
+        status: "error",
+        message:
+          "We couldn't safely save your Starter Composition. Reload the page and try again.",
+        starterKey:
+          parsedStarterKey.data,
         fieldErrors: {},
       };
   }

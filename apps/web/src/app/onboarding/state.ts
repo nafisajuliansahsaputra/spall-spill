@@ -28,3 +28,12 @@ export type BasicIdentityActionState = {
     profileMedia?: string;
   };
 };
+
+export type StarterCompositionActionState = {
+  status: "idle" | "error";
+  message: string | null;
+  starterKey: string;
+  fieldErrors: {
+    starterKey?: string;
+  };
+};
