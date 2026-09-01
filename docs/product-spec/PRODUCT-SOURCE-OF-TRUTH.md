@@ -78,6 +78,7 @@ Locks 11.1–11.28 remain authoritative, including:
 - 12.8 Email/Password Sign Up & Confirmation Contract — **LOCKED / CURRENT EMAIL-PASSWORD SIGNUP AUTHORITY**.
 - 12.9 Onboarding Progress & Handle Claim Contract — **LOCKED / CURRENT O01 ONBOARDING-FOUNDATION IMPLEMENTATION AUTHORITY**.
 - 12.10 Onboarding Basic Identity Working & Starter Composition Contract — **LOCKED / CURRENT O01 S3-S4 IMPLEMENTATION AUTHORITY**.
+- 12.11 Profile Media / Logo R2 Storage Contract — **LOCKED / CURRENT PROFILE-MEDIA STORAGE IMPLEMENTATION AUTHORITY**.
 
 ### Cost / scaling rule
 
@@ -182,10 +183,11 @@ The current O01 implementation authorities are:
 
 - [`technical-architecture/12.9-onboarding-progress-handle-claim-contract.md`](./technical-architecture/12.9-onboarding-progress-handle-claim-contract.md) — account-side progress, O01-S1 Handle claim, O01-S2 Primary Use Case, Owner-scoped mutation boundaries, and onboarding revision protection.
 - [`technical-architecture/12.10-onboarding-basic-identity-starter-composition-contract.md`](./technical-architecture/12.10-onboarding-basic-identity-starter-composition-contract.md) — O01-S3 Basic Identity Working, O01-S4 Starter Composition, Working revision boundaries, and backward technical navigation without progress regression.
+- [`technical-architecture/12.11-profile-media-r2-storage-contract.md`](./technical-architecture/12.11-profile-media-r2-storage-contract.md) — optional O01-S3 Profile Photo / Logo storage, private R2 media lifecycle, upload-intent security, canonical immutable media, and Working media attachment boundaries.
 
-12.9 and 12.10 together currently materialize O01-S1 through O01-S4.
+12.9 and 12.10 materialize O01-S1 through O01-S4. 12.11 specializes the optional Profile Media storage boundary inside O01-S3 without changing the six-step journey.
 
-Implementation mechanics for O01-S5 Relevant First Job and O01-S6 Preview & Publish remain deferred until those checkpoints are reached.
+Implementation mechanics for O01-S5 Relevant First Job, O01-S6 Preview & Publish, and public-media publication remain deferred until those checkpoints are reached.
 
 This does not change the locked six-step O01 journey, universal capability model, Working-versus-Published isolation, or onboarding-completion rule. Successful first authoritative Identity publication remains the completion boundary.
 
