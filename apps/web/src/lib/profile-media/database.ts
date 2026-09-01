@@ -126,16 +126,20 @@ const resolveUploadIntentResultSchema =
         status:
           z.literal("success"),
         intent_status:
-          z.enum([
-            "pending",
-            "processing",
-          ]),
+          z.literal("processing"),
         expected_content_type:
           profileMediaSourceContentTypeSchema,
         declared_byte_size:
           byteSizeSchema,
         staging_object_key:
           z.string().min(1),
+        expires_at:
+          timestampSchema,
+      }),
+
+      z.object({
+        status:
+          z.literal("processing"),
         expires_at:
           timestampSchema,
       }),
