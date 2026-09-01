@@ -227,22 +227,25 @@ This does not change the locked six-step O01 journey, universal capability model
 
 ### Current implementation checkpoint
 
-Stage **6B.3 — Profile Media** is **CLOSED / VERIFIED**.
+Stage **6B.5 — S4 Application UI + 6B Regression Checkpoint** is **CLOSED / VERIFIED**.
 
-The 12.11 contract is implemented through database authorization, server-only R2 orchestration, short-lived presigned upload/finalization, canonical sanitized WebP assets, O01-S3 form integration, authenticated Working preview, and authoritative preview refresh.
+The full Stage 6B sequence defined by 12.10 is now implementation-complete through O01-S4 Starter Composition. Stage 6B.4 delivered the private Starter Composition Working model plus authenticated S4 resolver/mutation boundaries; Stage 6B.5 integrated the real S4 application UI and closed the 6B regression/runtime gate.
 
 Closure evidence includes:
 
-- local runtime upload/finalization/save through the Windows development host and Kali browser/security client;
-- explicit R2 CORS/runtime verification with private canonical Working media;
-- replacement/removal behavior preserving immutable prior assets;
-- expired-preview recovery without extending URL lifetime or creating a generic asset-signing oracle;
-- cross-Owner media-attachment tampering rejected with no Working mutation or revision bump;
-- foreign-existing and nonexistent asset references rejected with indistinguishable generic application semantics;
-- application/database regression suites passed after a clean local reset;
-- GitHub CI and Security workflows passed for implementation commit `dc2bb3c829df7359772a9e30a28d382ed0ae7d1e`.
+- entering/resolving O01-S4 does not create `core.identity_layout_working` before explicit Owner confirmation;
+- first explicit Starter save creates layout revision `1`, advances the onboarding frontier from `starter_composition` to `relevant_first_job`, and increments onboarding progress exactly once;
+- later Starter edits increment only the independent layout revision and do not regress the onboarding frontier, increment unrelated progress, alter Primary Use Case, or mutate Identity content/revision;
+- the four locked Starter keys (`clean`, `social_focus`, `featured`, `business`) remain capability-neutral and available regardless of recommendation guidance;
+- two-tab stale-write runtime verification rejected an outdated layout revision with visible failure truth and no authoritative overwrite;
+- Working-versus-Published isolation remained intact and S4 did not complete onboarding or create public state;
+- clean local application regression passed with **66/66** tests, typecheck, lint, and production build;
+- clean local database reset/lint passed with **544/544** pgTAP/database-policy tests;
+- GitHub CI Application, CI Database, and Security workflows passed for implementation commit `0418bccfc584f47dec07212b8f74a97e4b703f2d` (which contains the Stage 6B.4 foundation commit `3993402c318e100d0be7dfe42bc362a996619708`).
 
-No J1–J9 User Flow topology change is required. The next implementation checkpoint is **6B.4 — Starter Composition Working**.
+No J1–J9 User Flow topology change is required.
+
+The next implementation checkpoint is **O01-S5 — Relevant First Job**, but its persistence/mutation/application mechanics remain intentionally deferred. Before S5 code begins, its just-in-time technical contract must be defined and locked against the existing product journey, Primary Use Case guidance, capability-neutral model, Working-versus-Published isolation, revision/concurrency rules, authorization boundary, and first-publication semantics.
 
 ## User Flow status
 
