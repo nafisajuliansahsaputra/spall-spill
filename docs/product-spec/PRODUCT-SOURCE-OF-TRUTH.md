@@ -155,6 +155,40 @@ Quality / Security
 - independent backup + tested restore;
 - health/readiness, rollback, incident response, and secret-rotation procedures before public launch.
 
+### Security delivery & verification operating model
+
+Security is built continuously, but broad penetration testing is checkpointed so it does not waste effort against unstable implementation surfaces.
+
+Canonical execution model:
+
+1. **Security by construction during development.** Every security-sensitive feature is implemented with deny-by-default authorization, server-side ownership checks, validation, least privilege, secret isolation, race/concurrency safety, idempotency where required, privacy-aware logging, and automated regression/security tests as part of the feature itself.
+2. **Targeted manual/runtime verification at the end of each security-sensitive slice.** Before a sensitive slice is considered closed, manually verify the boundaries that materially belong to that slice, such as session denial, cross-Owner authorization/IDOR resistance, upload/CORS behavior, stale-write rejection, failure truth, retry/idempotency, and private-data isolation. Do not turn every feature checkpoint into a full-site penetration test.
+3. **Journey-level integration security verification.** When a major user journey becomes implementation-complete, verify the security behavior of that journey end-to-end across its relevant boundaries rather than only as isolated units.
+4. **Full security assessment after MVP feature completeness.** Once the MVP attack surface is sufficiently stable, perform a structured security assessment / penetration test covering authentication/session, authorization/BOLA/IDOR, CSRF, injection, XSS, SSRF, file-upload abuse, rate limiting, business-logic abuse, privilege escalation, information leakage, dependency exposure, security headers, and other applicable classes. Findings require severity, evidence, remediation, and retest.
+5. **Pre-production staging security gate.** Before public launch, repeat security/regression verification in a production-like staging environment, including controlled load/rate-limit testing, observability, recovery/rollback, backup/restore, secret handling, and release readiness. Production is not used as an environment for destructive experimentation.
+
+This model intentionally rejects both extremes:
+
+- security is not deferred until the product is "finished";
+- broad penetration testing is not repeated continuously while core UI, journeys, and attack surfaces are still changing.
+
+A security-sensitive implementation checkpoint is not closed merely because automated tests pass when material runtime/manual boundaries remain unverified.
+
+### Development / security lab operating model
+
+The current development workflow separates implementation and adversarial/client testing responsibilities:
+
+- **Windows is the primary development host** for source editing, Git, Next.js, local Supabase/Docker, migrations, automated tests, and normal build execution.
+- **Kali Linux is the dedicated preview/security client** for browser verification, Burp Suite, ZAP and other appropriate security tools, and controlled adversarial testing against environments owned and authorized for Spall Spill testing.
+- Windows and Kali communicate through an isolated VMware host-only path for local development/testing rather than exposing the development stack broadly to the surrounding LAN.
+- The browser-facing Next.js, Supabase HTTP API/Auth boundary, and local mail-testing surface may be forwarded narrowly into the Kali lab when required.
+- Direct PostgreSQL exposure to the Kali browser/security client is not part of the normal web-testing path.
+- R2 credentials, Supabase elevated credentials, and other server secrets remain on the server/development host and are never copied into browser tooling merely to make testing easier.
+- Burp/ZAP scope is narrowed to the Spall Spill lab targets required by the test; unrelated traffic is not intentionally intercepted or retained.
+- Manual security testing is performed only against Spall Spill systems/environments that are owned or explicitly authorized for the test.
+
+The Kali lab is durable infrastructure, but deep/broad security testing is parked when it no longer materially validates the implementation slice currently being built. After the required targeted security boundary for a slice passes, development proceeds to the next implementation checkpoint.
+
 ### Authentication implementation authority
 
 The current Auth implementation authority is:
