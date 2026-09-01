@@ -41,3 +41,17 @@ export type RelevantFirstJobActionState = {
   status: "idle" | "error";
   message: string | null;
 };
+export type IdentityConnectionActionState = {
+  status: "idle" | "error";
+  message: string | null;
+  connectionKind:
+    | "social"
+    | "generic_link";
+  socialPlatform: string;
+  destinationUrl: string;
+  fieldErrors: {
+    connectionKind?: string;
+    socialPlatform?: string;
+    destinationUrl?: string;
+  };
+};

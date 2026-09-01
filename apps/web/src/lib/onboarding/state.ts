@@ -161,6 +161,73 @@ const relevantFirstJobPayloadSchema =
     statusOnlyPayloadSchema,
   ]);
 
+const identityConnectionKindSchema =
+  z.enum([
+    "social",
+    "generic_link",
+  ]);
+
+const identityConnectionWorkingSchema =
+  z
+    .object({
+      connection_kind:
+        identityConnectionKindSchema,
+      social_platform:
+        z.string().nullable(),
+      destination_url:
+        z.string(),
+      revision: z
+        .number()
+        .int()
+        .positive(),
+    })
+    .strict();
+
+const identityConnectionSuccessPayloadSchema =
+  z
+    .object({
+      status: z.literal("success"),
+      current_step:
+        onboardingStepSchema,
+      connection_working:
+        identityConnectionWorkingSchema.nullable(),
+    })
+    .strict();
+
+const identityConnectionStepUnavailablePayloadSchema =
+  z
+    .object({
+      status: z.literal(
+        "step_not_available",
+      ),
+      current_step:
+        onboardingStepSchema,
+    })
+    .strict();
+
+const identityConnectionPrerequisitePayloadSchema =
+  z
+    .object({
+      status: z.literal(
+        "prerequisite_missing",
+      ),
+      prerequisite: z.enum([
+        "primary_use_case",
+        "current_handle",
+        "identity_working",
+        "identity_layout_working",
+      ]),
+    })
+    .strict();
+
+const identityConnectionPayloadSchema =
+  z.union([
+    identityConnectionSuccessPayloadSchema,
+    identityConnectionStepUnavailablePayloadSchema,
+    identityConnectionPrerequisitePayloadSchema,
+    statusOnlyPayloadSchema,
+  ]);
+
 export type OnboardingStateResolution =
   | {
       status: "success";
@@ -249,6 +316,50 @@ export type RelevantFirstJobStateResolution =
           typeof onboardingStepSchema
         >;
       progressRevision: number;
+    }
+  | {
+      status: "prerequisite_missing";
+      prerequisite:
+        | "primary_use_case"
+        | "current_handle"
+        | "identity_working"
+        | "identity_layout_working";
+    }
+  | {
+      status:
+        | "unauthenticated"
+        | "owner_missing"
+        | "owner_unavailable"
+        | "onboarding_complete"
+        | "progress_missing";
+    };
+
+export type IdentityConnectionWorking = {
+  connectionKind:
+    z.infer<
+      typeof identityConnectionKindSchema
+    >;
+  socialPlatform: string | null;
+  destinationUrl: string;
+  revision: number;
+};
+
+export type IdentityConnectionStateResolution =
+  | {
+      status: "success";
+      currentStep:
+        z.infer<
+          typeof onboardingStepSchema
+        >;
+      connectionWorking:
+        IdentityConnectionWorking | null;
+    }
+  | {
+      status: "step_not_available";
+      currentStep:
+        z.infer<
+          typeof onboardingStepSchema
+        >;
     }
   | {
       status: "prerequisite_missing";
@@ -584,6 +695,100 @@ export async function resolveCurrentRelevantFirstJobState(): Promise<RelevantFir
   ) {
     return {
       status: "prerequisite_missing",
+      prerequisite:
+        parsed.data.prerequisite,
+    };
+  }
+
+  return {
+    status: parsed.data.status,
+  };
+}
+export async function resolveCurrentIdentityConnectionState(): Promise<IdentityConnectionStateResolution> {
+  const authStatus =
+    await verifyCurrentAuthUser();
+
+  if (authStatus === "unauthenticated") {
+    return {
+      status: "unauthenticated",
+    };
+  }
+
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .schema("api")
+    .rpc(
+      "resolve_current_identity_connection_state",
+    );
+
+  if (error) {
+    throw new OnboardingStateResolutionError(
+      "Identity Connection resolver request failed.",
+    );
+  }
+
+  const parsed =
+    identityConnectionPayloadSchema.safeParse(
+      data,
+    );
+
+  if (!parsed.success) {
+    throw new OnboardingStateResolutionError(
+      "Identity Connection resolver returned an invalid payload.",
+    );
+  }
+
+  if (
+    parsed.data.status ===
+    "unauthenticated"
+  ) {
+    throw new OnboardingStateResolutionError(
+      "Verified authentication and database Identity Connection state are inconsistent.",
+    );
+  }
+
+  if (parsed.data.status === "success") {
+    const working =
+      parsed.data.connection_working;
+
+    return {
+      status: "success",
+      currentStep:
+        parsed.data.current_step,
+      connectionWorking: working
+        ? {
+            connectionKind:
+              working.connection_kind,
+            socialPlatform:
+              working.social_platform,
+            destinationUrl:
+              working.destination_url,
+            revision:
+              working.revision,
+          }
+        : null,
+    };
+  }
+
+  if (
+    parsed.data.status ===
+    "step_not_available"
+  ) {
+    return {
+      status: "step_not_available",
+      currentStep:
+        parsed.data.current_step,
+    };
+  }
+
+  if (
+    parsed.data.status ===
+    "prerequisite_missing"
+  ) {
+    return {
+      status:
+        "prerequisite_missing",
       prerequisite:
         parsed.data.prerequisite,
     };

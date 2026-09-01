@@ -18,6 +18,7 @@ import { createClient } from "@/lib/supabase/server";
 import type {
   BasicIdentityActionState,
   HandleActionState,
+  IdentityConnectionActionState,
   PrimaryUseCaseActionState,
   RelevantFirstJobActionState,
   StarterCompositionActionState,
@@ -863,6 +864,312 @@ export async function advanceRelevantFirstJobAction(
         status: "error",
         message:
           "We couldn't safely continue your onboarding. Reload the page and try again.",
+      };
+  }
+}
+const identityConnectionKindInputSchema =
+  z.enum([
+    "social",
+    "generic_link",
+  ]);
+
+const socialPlatformInputSchema =
+  z
+    .string()
+    .min(1)
+    .max(40)
+    .regex(
+      /^[a-z0-9][a-z0-9_-]{0,39}$/,
+    );
+
+const identityConnectionDestinationInputSchema =
+  z
+    .string()
+    .trim()
+    .min(8)
+    .max(2048)
+    .refine(
+      (value) => {
+        if (
+          /\s/.test(value) ||
+          value.includes("\\")
+        ) {
+          return false;
+        }
+
+        try {
+          const parsed =
+            new URL(value);
+
+          return (
+            (
+              parsed.protocol ===
+                "http:" ||
+              parsed.protocol ===
+                "https:"
+            ) &&
+            parsed.hostname.length > 0
+          );
+        } catch {
+          return false;
+        }
+      },
+      {
+        message:
+          "Enter a valid http:// or https:// destination.",
+      },
+    );
+
+export async function saveIdentityConnectionAction(
+  _previousState: IdentityConnectionActionState,
+  formData: FormData,
+): Promise<IdentityConnectionActionState> {
+  const rawConnectionKind =
+    formData.get("connectionKind");
+
+  const rawSocialPlatform =
+    formData.get("socialPlatform");
+
+  const rawDestinationUrl =
+    formData.get("destinationUrl");
+
+  const connectionKind =
+    typeof rawConnectionKind === "string"
+      ? rawConnectionKind
+          .trim()
+          .toLowerCase()
+      : "";
+
+  const socialPlatform =
+    typeof rawSocialPlatform === "string"
+      ? rawSocialPlatform
+          .trim()
+          .toLowerCase()
+      : "";
+
+  const destinationUrl =
+    typeof rawDestinationUrl === "string"
+      ? rawDestinationUrl.trim()
+      : "";
+
+  const parsedConnectionKind =
+    identityConnectionKindInputSchema
+      .safeParse(connectionKind);
+
+  const parsedDestination =
+    identityConnectionDestinationInputSchema
+      .safeParse(destinationUrl);
+
+  const fieldErrors:
+    IdentityConnectionActionState["fieldErrors"] =
+      {};
+
+  if (!parsedConnectionKind.success) {
+    fieldErrors.connectionKind =
+      "Choose Social or Generic Link.";
+  }
+
+  if (!parsedDestination.success) {
+    fieldErrors.destinationUrl =
+      parsedDestination.error
+        .issues[0]?.message ??
+      "Enter a valid http:// or https:// destination.";
+  }
+
+  if (
+    parsedConnectionKind.success &&
+    parsedConnectionKind.data ===
+      "social"
+  ) {
+    const parsedSocialPlatform =
+      socialPlatformInputSchema.safeParse(
+        socialPlatform,
+      );
+
+    if (!parsedSocialPlatform.success) {
+      fieldErrors.socialPlatform =
+        "Enter a supported platform key such as instagram, tiktok, youtube, x, or linkedin.";
+    }
+  }
+
+  if (
+    parsedConnectionKind.success &&
+    parsedConnectionKind.data ===
+      "generic_link" &&
+    socialPlatform.length > 0
+  ) {
+    fieldErrors.socialPlatform =
+      "Generic Link does not use a Social platform.";
+  }
+
+  if (
+    !parsedConnectionKind.success ||
+    !parsedDestination.success ||
+    Object.keys(fieldErrors).length > 0
+  ) {
+    return {
+      status: "error",
+      message:
+        "Check your Identity Connection and try again.",
+      connectionKind:
+        parsedConnectionKind.success
+          ? parsedConnectionKind.data
+          : "social",
+      socialPlatform,
+      destinationUrl,
+      fieldErrors,
+    };
+  }
+
+  const parsedConnectionRevision =
+    parseOptionalRevision(
+      formData.get(
+        "baseConnectionRevision",
+      ),
+    );
+
+  if (!parsedConnectionRevision.success) {
+    return {
+      status: "error",
+      message:
+        "Your saved Connection Working state could not be verified. Reload the page and try again.",
+      connectionKind:
+        parsedConnectionKind.data,
+      socialPlatform,
+      destinationUrl:
+        parsedDestination.data,
+      fieldErrors: {},
+    };
+  }
+
+  const normalizedSocialPlatform =
+    parsedConnectionKind.data ===
+      "social"
+      ? socialPlatform
+      : null;
+
+  const supabase =
+    await createClient();
+
+  const { data, error } =
+    await supabase
+      .schema("api")
+      .rpc(
+        "save_current_owner_identity_connection",
+        {
+          input_connection_kind:
+            parsedConnectionKind.data,
+          input_social_platform:
+            normalizedSocialPlatform,
+          input_destination_url:
+            parsedDestination.data,
+          base_connection_revision:
+            parsedConnectionRevision.data,
+        },
+      );
+
+  if (error) {
+    return {
+      status: "error",
+      message:
+        "We couldn't save this Identity Connection right now. Your last acknowledged Working state is unchanged.",
+      connectionKind:
+        parsedConnectionKind.data,
+      socialPlatform,
+      destinationUrl:
+        parsedDestination.data,
+      fieldErrors: {},
+    };
+  }
+
+  const status =
+    getRpcStatus(data);
+
+  resolveOwnerRoutingStatus(status);
+
+  switch (status) {
+    case "success":
+      redirect(
+        "/onboarding?step=relevant_first_job",
+      );
+
+    case "invalid_connection_kind":
+      return {
+        status: "error",
+        message:
+          "Check your Identity Connection and try again.",
+        connectionKind:
+          parsedConnectionKind.data,
+        socialPlatform,
+        destinationUrl:
+          parsedDestination.data,
+        fieldErrors: {
+          connectionKind:
+            "Choose Social or Generic Link.",
+        },
+      };
+
+    case "invalid_social_platform":
+      return {
+        status: "error",
+        message:
+          "Check your Identity Connection and try again.",
+        connectionKind:
+          parsedConnectionKind.data,
+        socialPlatform,
+        destinationUrl:
+          parsedDestination.data,
+        fieldErrors: {
+          socialPlatform:
+            "Enter a valid Social platform key.",
+        },
+      };
+
+    case "invalid_destination_url":
+      return {
+        status: "error",
+        message:
+          "Check your Identity Connection and try again.",
+        connectionKind:
+          parsedConnectionKind.data,
+        socialPlatform,
+        destinationUrl:
+          parsedDestination.data,
+        fieldErrors: {
+          destinationUrl:
+            "Enter a valid http:// or https:// destination.",
+        },
+      };
+
+    case "stale_write":
+      return {
+        status: "error",
+        message:
+          "This Identity Connection changed in another tab or session. Reload the page before saving again.",
+        connectionKind:
+          parsedConnectionKind.data,
+        socialPlatform,
+        destinationUrl:
+          parsedDestination.data,
+        fieldErrors: {},
+      };
+
+    case "step_not_available":
+    case "prerequisite_missing":
+    case "progress_missing":
+      redirect("/onboarding");
+
+    default:
+      return {
+        status: "error",
+        message:
+          "We couldn't safely save this Identity Connection. Reload the page and try again.",
+        connectionKind:
+          parsedConnectionKind.data,
+        socialPlatform,
+        destinationUrl:
+          parsedDestination.data,
+        fieldErrors: {},
       };
   }
 }

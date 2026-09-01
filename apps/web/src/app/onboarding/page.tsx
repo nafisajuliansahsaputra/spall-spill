@@ -7,6 +7,7 @@ import {
 } from "@/lib/auth/owner-state";
 import {
   resolveCurrentBasicIdentityState,
+  resolveCurrentIdentityConnectionState,
   resolveCurrentOnboardingState,
   resolveCurrentRelevantFirstJobState,
   resolveCurrentStarterCompositionState,
@@ -272,6 +273,40 @@ export default async function OnboardingPage({
     }
   }
 
+  const identityConnection =
+    displayedStep ===
+    "relevant_first_job"
+      ? await resolveCurrentIdentityConnectionState()
+      : null;
+
+  if (
+    identityConnection &&
+    identityConnection.status !==
+      "success"
+  ) {
+    switch (
+      identityConnection.status
+    ) {
+      case "unauthenticated":
+      case "owner_missing":
+      case "owner_unavailable":
+      case "onboarding_complete":
+        redirect("/auth/resolve");
+
+      case "step_not_available":
+        redirect("/onboarding");
+
+      case "progress_missing":
+        throw new Error(
+          "Authoritative onboarding progress is missing while resolving Identity Connection.",
+        );
+
+      case "prerequisite_missing":
+        throw new Error(
+          `Required onboarding prerequisite is missing before Identity Connection: ${identityConnection.prerequisite}.`,
+        );
+    }
+  }
   const savedProfileAssetKey =
     basicIdentity?.status ===
       "success"
@@ -592,6 +627,46 @@ export default async function OnboardingPage({
                 baseProgressRevision={
                   relevantFirstJob
                     .progressRevision
+                }
+                initialConnectionKind={
+                  identityConnection
+                    ?.status ===
+                  "success"
+                    ? identityConnection
+                        .connectionWorking
+                        ?.connectionKind ??
+                      null
+                    : null
+                }
+                initialSocialPlatform={
+                  identityConnection
+                    ?.status ===
+                  "success"
+                    ? identityConnection
+                        .connectionWorking
+                        ?.socialPlatform ??
+                      null
+                    : null
+                }
+                initialDestinationUrl={
+                  identityConnection
+                    ?.status ===
+                  "success"
+                    ? identityConnection
+                        .connectionWorking
+                        ?.destinationUrl ??
+                      ""
+                    : ""
+                }
+                baseConnectionRevision={
+                  identityConnection
+                    ?.status ===
+                  "success"
+                    ? identityConnection
+                        .connectionWorking
+                        ?.revision ??
+                      null
+                    : null
                 }
               />
             </>

@@ -6,6 +6,9 @@ import { useFormStatus } from "react-dom";
 import {
   advanceRelevantFirstJobAction,
 } from "./actions";
+import {
+  IdentityConnectionForm,
+} from "./identity-connection-form";
 import type {
   RelevantFirstJobActionState,
 } from "./state";
@@ -20,6 +23,15 @@ type RelevantFirstJobFormProps = {
   recommendation:
     RelevantFirstJobRecommendation;
   baseProgressRevision: number;
+  initialConnectionKind:
+    | "social"
+    | "generic_link"
+    | null;
+  initialSocialPlatform:
+    string | null;
+  initialDestinationUrl: string;
+  baseConnectionRevision:
+    number | null;
 };
 
 const RECOMMENDATION_COPY: Record<
@@ -86,6 +98,10 @@ function SkipButton() {
 export function RelevantFirstJobForm({
   recommendation,
   baseProgressRevision,
+  initialConnectionKind,
+  initialSocialPlatform,
+  initialDestinationUrl,
+  baseConnectionRevision,
 }: RelevantFirstJobFormProps) {
   const initialState:
     RelevantFirstJobActionState = {
@@ -119,6 +135,21 @@ export function RelevantFirstJobForm({
           {copy.description}
         </p>
       </div>
+
+      <IdentityConnectionForm
+        initialConnectionKind={
+          initialConnectionKind
+        }
+        initialSocialPlatform={
+          initialSocialPlatform
+        }
+        initialDestinationUrl={
+          initialDestinationUrl
+        }
+        baseConnectionRevision={
+          baseConnectionRevision
+        }
+      />
 
       {state.status === "error" &&
       state.message ? (
