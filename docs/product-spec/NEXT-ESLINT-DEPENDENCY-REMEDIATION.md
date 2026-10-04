@@ -29,7 +29,11 @@ override together; do not silently carry the old patch to a different version.
   `no-html-link-for-pages` rejection. CI executes these tests.
 - Typecheck, lint, 410 Vitest tests, 17 auth navigation tests, and all three
   production builds pass locally.
-- GitHub OSV/SAST/secret-scan results must also pass before merge/release.
+- [Security run 37218867679](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37218867679)
+  passed Dependency Scan, SAST, and Secret Scan for `5504842`.
+- [CI run 37218867718](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37218867718)
+  passed Application and Database for `5504842`, including all 779 pgTAP tests
+  across 14 files and database lint with no schema errors.
 
 This remediation does not close S5/S6 or live destination provider verification.
 

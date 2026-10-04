@@ -262,7 +262,11 @@ The current O01 implementation authorities are:
 
 12.9 and 12.10 materialize O01-S1 through O01-S4. 12.11 specializes the optional Profile Media storage boundary inside O01-S3 without changing the six-step journey.
 
-Implementation mechanics for O01-S5 Relevant First Job, O01-S6 Preview & Publish, and public-media publication remain deferred until those checkpoints are reached.
+[`technical-architecture/12.12-onboarding-relevant-first-job-foundation-contract.md`](./technical-architecture/12.12-onboarding-relevant-first-job-foundation-contract.md)
+locks S5 progress, recommendation, and focused optional-entry presentation after
+reconciling the preserved implementation with pinned O01/J1–J4. Complete
+Product/Resource lifecycle mechanics, O01-S6 Preview & Publish, and public-media
+publication remain separate JIT checkpoints.
 
 This does not change the locked six-step O01 journey, universal capability model, Working-versus-Published isolation, or onboarding-completion rule. Successful first authoritative Identity publication remains the completion boundary.
 
@@ -278,9 +282,10 @@ media-sanitizer service. This is an implementation inventory, not checkpoint
 closure or a new product/technical lock.
 
 The closed checkpoint and its historical evidence below remain unchanged.
-S5/S6 are **NOT CLOSED / VERIFIED**. Reconcile the existing S5 code with a JIT
-technical contract and pinned O01/J1–J4 records before implementing a new
-onboarding/publication boundary. Current integration checks and remaining
+S5/S6 are **NOT CLOSED / VERIFIED**. Contract 12.12 reconciles the existing S5
+progress and scoped presentation against pinned O01/J1–J4. Complete optional
+domain/publication boundaries still need their own JIT contracts. Current
+integration checks and remaining
 dependency, database, runtime, and CI evidence are tracked in `../../TODO.md`.
 The earlier Web Risk/provider deferral remains in force until replaced by live
 verification evidence. No journey topology or public-safety rule changes.
@@ -305,7 +310,10 @@ Closure evidence includes:
 
 No J1–J9 User Flow topology change is required.
 
-The next implementation checkpoint is **O01-S5 — Relevant First Job**, but its persistence/mutation/application mechanics remain intentionally deferred. Before S5 code begins, its just-in-time technical contract must be defined and locked against the existing product journey, Primary Use Case guidance, capability-neutral model, Working-versus-Published isolation, revision/concurrency rules, authorization boundary, and first-publication semantics.
+The active checkpoint is **O01-S5 — Relevant First Job**. Contract 12.12 now locks
+its progress and presentation foundation. Resource creation and full Product
+lifecycle remain incomplete; extending those domains and S6 still requires the
+relevant JIT contracts. S5/S6 are not CLOSED / VERIFIED.
 
 ## User Flow status
 

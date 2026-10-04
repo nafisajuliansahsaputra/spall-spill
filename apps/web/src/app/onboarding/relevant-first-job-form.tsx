@@ -57,7 +57,7 @@ const RECOMMENDATION_COPY: Record<
   product: {
     title: "Add your first Product",
     description:
-      "Your Affiliate setup recommends starting with a Product. Product persistence is not created until you explicitly add one.",
+      "Start with a Product you'd like to recommend. You can save it privately now or skip and continue with your Identity.",
   },
   resource: {
     title: "Add your first Resource",
@@ -194,17 +194,23 @@ export function RelevantFirstJobForm({
             }
           />
 
-          <ProductDraftForm
-            initialSourceUrl={
-              initialProductSourceUrl
-            }
-            initialTitle={
-              initialProductTitle
-            }
-            baseProductRevision={
-              baseProductRevision
-            }
-          />
+          <details
+            open={baseProductRevision !== null}
+            className="rounded-2xl border border-neutral-200 bg-white p-5"
+          >
+            <summary className="cursor-pointer text-sm font-semibold text-neutral-950">
+              {baseProductRevision !== null
+                ? "Your saved Product Draft"
+                : "Add a Product (optional)"}
+            </summary>
+            <div className="mt-4">
+              <ProductDraftForm
+                initialSourceUrl={initialProductSourceUrl}
+                initialTitle={initialProductTitle}
+                baseProductRevision={baseProductRevision}
+              />
+            </div>
+          </details>
         </>
       )}
 

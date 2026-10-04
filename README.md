@@ -9,7 +9,7 @@ This repository intentionally does **not** inherit the legacy runtime codebase. 
 - Foundation, local Supabase, CI/security gates, authentication/session, Owner-state resolution, and O01 onboarding through Starter Composition are implemented.
 - Stage **6B.5 — S4 Application UI + 6B Regression Checkpoint** is **CLOSED / VERIFIED**: Starter Composition Working persistence, authenticated resolver/mutation boundaries, capability-neutral four-starter UI, backward editing without progress regression, stale-write failure truth, clean application/database regression, and remote CI/Security verification have passed.
 - Later local work includes Relevant First Job, Identity Connection, Product Draft, destination-safety scanning, and a media sanitizer. That work has been preserved and integrated with the current documentation and dependency fixes on `codex/sync-local-foundation-20261004`.
-- **O01-S5 is implemented in part but not CLOSED / VERIFIED.** Its technical authority, runtime evidence, provider readiness, and CI/security gates must be reconciled before extending S5/S6. See `TODO.md` for current evidence and blockers; do not recreate the existing scaffold.
+- **O01-S5 is implemented in part but not CLOSED / VERIFIED.** Contract 12.12 locks its progress and focused optional-entry presentation. Resource creation, full Product lifecycle, S6, and live-provider verification remain incomplete. The braces dependency blocker is resolved with passing CI/Security at `5504842`; see `TODO.md` for evidence and remaining work.
 - The canonical execution status lives in `docs/product-spec/PRODUCT-SOURCE-OF-TRUTH.md`; this README is only a repository entry point and must not override that authority.
 
 ## Canonical authority
@@ -26,6 +26,7 @@ Key files:
 - `docs/product-spec/technical-architecture/12.4-production-technology-stack-security-architecture.md` — locked production technology/security architecture.
 - `docs/product-spec/technical-architecture/12.10-onboarding-basic-identity-starter-composition-contract.md` — locked O01-S3/S4 Basic Identity Working + Starter Composition implementation authority.
 - `docs/product-spec/technical-architecture/12.11-profile-media-r2-storage-contract.md` — locked Profile Media / R2 implementation authority.
+- `docs/product-spec/technical-architecture/12.12-onboarding-relevant-first-job-foundation-contract.md` — scoped S5 progress, recommendation, and presentation authority.
 
 ## Locked architecture direction
 
@@ -52,7 +53,7 @@ Security is built continuously. Security-sensitive slices receive targeted runti
 ## Local workspace
 
 Use Node.js 24 and pnpm 11 as pinned by `.nvmrc` and `package.json`.
-Run `pnpm install --frozen-lockfile`, then `pnpm test`, `pnpm typecheck`,
+Run `pnpm install --frozen-lockfile`, then `pnpm test:tooling`, `pnpm test`, `pnpm typecheck`,
 `pnpm lint`, and `pnpm build` from the repository root.
 
 `pnpm dev` starts the web app on port 3000, media sanitizer on 3001, and URL

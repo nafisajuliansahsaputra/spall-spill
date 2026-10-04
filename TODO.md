@@ -2,7 +2,7 @@
 
 **Status:** Execution backlog  
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
-**Last synchronized:** 2026-10-04
+**Last synchronized:** 2026-10-05
 
 ## Current local integration — 2026-10-04
 
@@ -40,12 +40,15 @@ before starting a new slice. The previous branch's evidence is retained below.
   scanner unsigned/invalid-signature denial, signed invalid JSON/payload denial,
   oversized-request denial, and sanitizer missing-configuration/size denial.
   The smoke checks used loopback servers and made no provider/storage requests.
-- [ ] Complete Security for the pushed integration commit. At `87cdeea`, Secret
-  Scan and SAST passed; Dependency Scan remained blocked by the braces finding.
-- [ ] Resolve the outstanding braces advisory recorded in the previous evidence.
-- [ ] Reconcile S5 technical authority with existing Identity Connection,
-  Product Draft, destination scanner, and media-sanitizer implementation before
-  adding a new onboarding/publication slice.
+- [x] Complete Security for `5504842`: Dependency Scan, SAST, and Secret Scan passed.
+- [x] Resolve the outstanding braces advisory without suppressing it; see
+  `docs/product-spec/NEXT-ESLINT-DEPENDENCY-REMEDIATION.md`.
+- [x] Reconcile S5 progress/recommendation/presentation with pinned O01/J1–J4
+  and lock scoped contract 12.12. Product/Resource lifecycle and S6 remain open.
+- [x] Make non-Affiliate Product entry an accessible optional disclosure while
+  retaining mounted inputs and automatically exposing an existing saved Draft.
+- [ ] Lock remaining Product/Resource JIT contracts and implement Resource Draft.
+- [ ] Verify the complete S5 journey in the browser before checkpoint closure.
 
 Scratch `*-read.txt` review notes and ignored local secrets remain local. They are
 not application source and were not included in the preservation commit.
@@ -68,8 +71,8 @@ Remote evidence for `136cd1c`:
   incomplete. The preservation commit and all remote branch history remain
   available; no reset or force push was used.
 
-**Immediate work:** resolve the dependency-security blocker and reconcile S5
-against the pinned O01/J1–J4 records, existing code, and missing JIT authority.
+**Immediate work:** extend S5 from scoped contract 12.12 by locking the remaining
+Product/Resource domain contracts, then implement the missing Resource Draft.
 Do not recreate the scaffold or claim S5/S6 closure from the older Phase 1
 inventory. Workspace integration has local and CI application/database evidence;
 live provider and full journey/manual verification remain incomplete.
@@ -492,7 +495,27 @@ GitHub clone fails, and the npm registry request fails with EACCES. The lockfile
 was generated through pnpm on a GitHub Actions runner, then read back and reviewed;
 it was not hand-edited. The draft is not approved for merge or release.
 
-## Dependency patch batch — 2026-10-04
+## Follow-up remediation and S5 presentation — 2026-10-05
+
+- Security fix `5504842` removes the vulnerable lint dependency tree through a
+  version-scoped plugin patch and removal of its unused fast-glob dependency.
+  No advisories or required gates are suppressed.
+- Frozen install and pnpm audit passed with zero findings; five tooling tests,
+  410 Vitest tests, 17 auth navigation tests, typecheck, lint, and three builds passed.
+- [Security 37218867679](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37218867679)
+  passed all three jobs for `5504842`.
+- [CI 37218867718](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37218867718)
+  passed Application and Database for `5504842`, including 779 pgTAP tests and
+  database lint with no schema errors.
+- Contract 12.12 and five rendered-form regressions cover focused optional
+  Product entry, Affiliate emphasis, genuine Skip, and saved-Draft visibility
+  after guidance changes. Product inputs remain mounted when the disclosure closes.
+- The updated workspace has 415 Vitest tests, 17 auth navigation tests, and
+  five tooling tests (437 total). Typecheck, lint, and all three builds pass locally.
+- Resource Draft, full Product lifecycle, S6/publication, full browser journey,
+  and live Web Risk/Gemini verification remain open. No S5/S6 closure is claimed.
+
+## Historical dependency patch batch — 2026-10-04
 
 Implementation commit: `d07d279a3f1469da37b6cc3d4a1f59b9e5957b33`.
 

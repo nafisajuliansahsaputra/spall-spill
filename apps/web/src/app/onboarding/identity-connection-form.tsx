@@ -94,9 +94,9 @@ export function IdentityConnectionForm({
 
         <p className="text-sm leading-6 text-neutral-600">
           Optional for every setup.
-          Saving creates private Working
-          state only and does not move you
-          to Preview &amp; Publish.
+          Save a connection privately,
+          then continue when you are ready
+          to review your Identity.
         </p>
       </div>
 

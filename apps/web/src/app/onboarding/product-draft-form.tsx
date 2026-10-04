@@ -74,10 +74,9 @@ export function ProductDraftForm({
         <p className="text-sm leading-6 text-neutral-600">
           Paste a marketplace,
           affiliate, or Product URL.
-          Saving creates private Draft
-          state only. Nothing is
-          published and no Spill
-          Reference is created yet.
+          Save your progress privately.
+          You can review it before
+          publishing.
         </p>
       </div>
 
@@ -116,9 +115,8 @@ export function ProductDraftForm({
           />
 
           <p className="mt-1.5 text-xs leading-5 text-neutral-500">
-            A valid http:// or https://
-            URL is enough to create the
-            first private Draft.
+            Start with an http:// or
+            https:// link to your Product.
           </p>
 
           {state.fieldErrors
@@ -157,10 +155,8 @@ export function ProductDraftForm({
           />
 
           <p className="mt-1.5 text-xs leading-5 text-neutral-500">
-            Provider / metadata
-            assistance is not active in
-            this slice. You can enter the
-            title manually or leave it
+            Add a name to help recognize
+            your Product, or leave it
             empty for now.
           </p>
 
