@@ -6,6 +6,8 @@ import {
   resolveCurrentOwnerState,
 } from "@/lib/auth/owner-state";
 import { resolveCurrentResourceDraftState } from "@/lib/onboarding/resource-draft";
+import { resolveCurrentOnboardingPreview } from "@/lib/onboarding/preview";
+import { PrivateOnboardingPreview } from "./private-preview";
 import {
   resolveCurrentBasicIdentityState,
   resolveCurrentIdentityConnectionState,
@@ -106,26 +108,6 @@ function resolveDisplayedStep(
   }
 
   return parsed.data;
-}
-
-function DeferredStep({
-  step,
-}: {
-  step:
-    | "relevant_first_job"
-    | "preview_publish";
-}) {
-  return (
-    <div className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-4 text-sm leading-6 text-neutral-700">
-      Your progress is safely saved.
-      <strong className="ml-1 font-semibold text-neutral-950">
-        {STEP_LABELS[step]}
-      </strong>{" "}
-      is the next implementation
-      checkpoint and is not being
-      simulated with temporary data.
-    </div>
-  );
 }
 
 export default async function OnboardingPage({
@@ -359,7 +341,21 @@ export default async function OnboardingPage({
     }
   }
 
-  const savedProfileAssetKey =
+  const preview = displayedStep === "preview_publish" ? await resolveCurrentOnboardingPreview() : null;
+  if (preview && preview.status !== "success") {
+    switch (preview.status) {
+      case "unauthenticated":
+      case "owner_missing":
+      case "owner_unavailable":
+      case "onboarding_complete":
+        redirect("/auth/resolve");
+      case "step_not_available": redirect("/onboarding");
+      case "progress_missing": throw new Error("Authoritative onboarding progress is missing during preview.");
+      case "prerequisite_missing": throw new Error(`Required onboarding preview prerequisite is missing: ${preview.prerequisite}.`);
+    }
+  }
+
+  const savedProfileAssetKey = preview?.status === "success" ? preview.identity_working.profile_asset_key :
     basicIdentity?.status ===
       "success"
       ? basicIdentity
@@ -768,9 +764,7 @@ export default async function OnboardingPage({
                 </h1>
               </div>
 
-              <DeferredStep
-                step="preview_publish"
-              />
+              {preview?.status === "success" ? <PrivateOnboardingPreview preview={preview} profileUrl={savedProfilePreviewUrl} /> : null}
             </>
           ) : null}
 

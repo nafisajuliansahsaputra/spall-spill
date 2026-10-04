@@ -277,6 +277,19 @@ remain open.
 
 This does not change the locked six-step O01 journey, universal capability model, Working-versus-Published isolation, or onboarding-completion rule. Successful first authoritative Identity publication remains the completion boundary.
 
+[`technical-architecture/12.14-resource-draft-contract.md`](./technical-architecture/12.14-resource-draft-contract.md)
+locks semantic-first Resource Draft persistence and universal S5 access. Draft
+creation reserves permanent Resource identity atomically and remains private.
+Resource implementation `adcdb4c` and login navigation repair `7e482c9` passed
+their full CI and Security workflows. This verifies those bounded slices, not
+complete Product lifecycle, S6 publication, or live provider integration.
+
+[`technical-architecture/12.15-onboarding-private-preview-contract.md`](./technical-architecture/12.15-onboarding-private-preview-contract.md)
+locks the bounded S6 private snapshot and responsive review. Local database,
+application and browser verification passes; remote CI awaits the usage-gated
+push. This snapshot grants no publication authority. First Publish, public media
+transport and complete S6 closure remain open.
+
 ### Current implementation checkpoint
 
 #### Local integration audit — 2026-10-04

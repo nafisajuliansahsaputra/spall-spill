@@ -60,7 +60,7 @@ before starting a new slice. The previous branch's evidence is retained below.
 - [x] Verify isolated S1–S5 Resource UI: empty-shell rejection, input retention,
   title-only save, source update, reload, and Business-to-Personal Draft retention.
   The source remains pending when the scanner is unavailable.
-- [ ] Verify CI/Security on the Resource implementation commit.
+- [x] Verify CI/Security on Resource `adcdb4c` and login repair `7e482c9`.
 - [x] Fix login Server Action redirect chain using the shared authoritative final
   destination resolver. Browser login now reaches `/onboarding`; its next Resource
   POST succeeds with no console errors. Eight destination regressions, web lint,
@@ -69,9 +69,22 @@ before starting a new slice. The previous branch's evidence is retained below.
 - Resource commit `adcdb4c` passed
   [Security 37221708726](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37221708726).
   [CI 37221708678](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37221708678)
-  was still running at the user-requested 2% usage stop; verify it and the final
-  login-fix commit's CI/Security before closure. No merge/release is claimed.
-- [ ] Lock the S6 preview/publication contract and implement the first Publish gate.
+  passed after the user-requested 2% usage stop.
+  Login repair `7e482c9` also passed
+  [CI 37221914474](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37221914474)
+  and [Security 37221914486](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37221914486).
+  No merge/release is claimed. Latest user instruction resumes local development
+  and delays further pushes until remaining usage enters the 10–2% range.
+- [x] Lock bounded S6 private preview contract 12.15: one current-Owner database
+  snapshot, explicit content/safety issues, and timezone-stable digest. No publication.
+- [x] Verify preview: 52 targeted pgTAP assertions plus the preceding clean
+  942-test DB suite pass (943 assertions with the added timezone regression).
+  487 Vitest, 17 navigation and five tooling tests pass, as do typecheck, lint,
+  web production build and error-level DB advisors. Browser S5-to-S6 and responsive
+  preview pass with no console errors. Primary DB migrations applied additively
+  after backup. Remote CI awaits the user-requested usage-gated push.
+- [ ] Implement durable preview receipt and atomic first Publish, explicit
+  Identity-only/Item intent, public read/media transport and first workspace.
 - [x] Reconcile preserved Product Draft/reference allocation with pinned 11.22:
   contract 12.13 and an additive migration reserve immutable Owner-scoped Item
   identity/reference at durable creation and backfill existing Drafts.
