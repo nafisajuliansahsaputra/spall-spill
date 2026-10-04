@@ -48,6 +48,9 @@ before starting a new slice. The previous branch's evidence is retained below.
 - [x] Make non-Affiliate Product entry an accessible optional disclosure while
   retaining mounted inputs and automatically exposing an existing saved Draft.
 - [ ] Lock remaining Product/Resource JIT contracts and implement Resource Draft.
+- [ ] Reconcile preserved Product Draft/reference allocation with pinned 11.22:
+  durable canonical Item creation allocates its persistent reference; 12.12
+  records the staging-versus-canonical boundary as unresolved implementation debt.
 - [ ] Verify the complete S5 journey in the browser before checkpoint closure.
 
 Scratch `*-read.txt` review notes and ignored local secrets remain local. They are
