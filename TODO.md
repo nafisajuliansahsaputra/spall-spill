@@ -34,11 +34,14 @@ do not recreate the existing foundation from that checklist.
 - [x] Verify the full frozen install/typecheck/lint/unit/build pipeline on
   candidate `730083e42eab0af3ee6181af5fba4f468b6306f6`: Application job passed;
   17 native Node tests and 84 Vitest tests passed.
-- [ ] Verify CI Database and Security on the exact candidate commit.
+- [x] Verify Database on `f5925c1a3670ff6be8fdd8a68beed4a62000b3eb`: reset, lint,
+  and 659 pgTAP tests passed (CI run `37215552832`).
+- [ ] Complete Security: dependency scan remains a release blocker; see below.
 - [ ] Close the candidate only after the applicable execution-protocol gates pass.
 
 No runtime navigation, database, publication, session, or permission behavior
-changes in this batch. No dependency changes or lockfile regeneration are needed.
+changes in the auth-navigation batch. The separate dependency-patch batch below
+updates manifests and regenerates the lockfile.
 
 ## Next onboarding batch
 
@@ -69,15 +72,61 @@ matches across 6 affected package/version entries: 1 Critical, 5 High, 4 Medium.
 These versions are evidence from this exact scan, not a promise that a package
 upgrade alone makes the full application secure.
 
-- [ ] Patch Next.js and its matching eslint-config-next dependency.
-- [ ] Patch Vitest and confirm the resolved mocker dependency is patched.
-- [ ] Trace and update the parents of vulnerable brace-expansion/braces entries.
+- [x] Patch Next.js and its matching eslint-config-next dependency to 16.3.6.
+- [x] Patch Vitest and its resolved mocker dependency to 4.1.11.
+- [x] Trace affected parents: minimatch 3/10 resolve brace-expansion;
+  eslint-config-next -> @next/eslint-plugin-next -> fast-glob -> micromatch
+  resolves braces. Pin compatible brace-expansion patch lines with scoped overrides.
+- [ ] Remediate the remaining braces dependency without suppressing its advisory.
 - [ ] Review the braces advisory and an upstream-supported remediation; do not
   suppress an unresolved finding to force a green scan.
-- [ ] Regenerate pnpm-lock.yaml through pnpm, then run frozen-install,
-  typecheck/lint/tests/build and the complete security scan.
-- [ ] Re-run database and applicable runtime verification before merge/release.
+- [x] Regenerate pnpm-lock.yaml through pnpm and run frozen-install,
+  typecheck/lint/tests/build and the complete security scan (results below).
+- [x] Re-run database reset/lint and all 659 database tests on patch commit.
+- [ ] Complete applicable runtime verification and all release gates before merge/release.
 
-Local dependency installation/regeneration is blocked in this session:
-pnpm is absent and the npm registry request fails with EACCES. The lockfile has
-not been hand-edited and the draft is not approved for merge or release.
+Local dependency installation/regeneration remains blocked: pnpm is absent,
+GitHub clone fails, and the npm registry request fails with EACCES. The lockfile
+was generated through pnpm on a GitHub Actions runner, then read back and reviewed;
+it was not hand-edited. The draft is not approved for merge or release.
+
+## Dependency patch batch — 2026-10-04
+
+Implementation commit: `d07d279a3f1469da37b6cc3d4a1f59b9e5957b33`.
+
+Changes:
+- Next.js and eslint-config-next: 16.3.3 -> 16.3.6, including matching Next internals.
+- Vitest and @vitest/mocker: 4.1.10 -> 4.1.11, including matching Vitest internals.
+- brace-expansion: 1.1.18 -> 1.1.21 and 5.0.9 -> 5.0.12 through major-scoped
+  workspace overrides; no major substitution.
+- pnpm 11.24.0 generated the lockfile with the existing release-age quarantine,
+  trust policy, strict builds, and frozen-install policy intact.
+- Local review found exactly three intended dependency files in this batch,
+  with no unrelated package updates; `git diff --no-index --check` passed.
+- The temporary dependency-resolution workflow exists only on
+  `chore/dependency-resolution-20261004` and is not included in PR #2.
+
+Verified evidence for that exact implementation commit:
+- [CI run 37216285290](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37216285290):
+  Application and Database passed.
+- Frozen install, typecheck, lint, 17 native Node tests, 84 Vitest tests, and
+  Next.js production build passed.
+- Database reset, lint (no schema errors), and 659 pgTAP tests across 11 files passed.
+- [Security run 37216285258](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37216285258):
+  Secret Scan and SAST passed; Dependency Scan failed with exactly one finding.
+- OSV went from 10 advisory matches to 1: 0 Critical, 1 High, 0 Medium.
+  The remaining finding is `braces@3.0.3`,
+  [GHSA-vfj7-8cjw-p6xm](https://osv.dev/GHSA-vfj7-8cjw-p6xm), CVSS 8.7;
+  scanner reports no fixed version.
+- The committed pnpm lockfile was fetched back and matched the runner output exactly.
+
+Remaining boundaries:
+- Release remains blocked by the braces finding. Its currently traced path is
+  development lint tooling; this is not blanket proof that every runtime/bundled
+  copy is unreachable or an accepted-risk decision.
+- Resolve through an upstream-supported dependency replacement or separately
+  reviewed remediation. Do not hide the advisory or weaken the security gate.
+- Local full regression and targeted runtime/browser verification remain
+  unavailable in this execution environment; no CLOSED / VERIFIED claim is made.
+- The S5 Source of Truth/JIT contract mismatch remains a separate prerequisite
+  for feature continuation. This dependency patch does not close S5 or S6.
