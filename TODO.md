@@ -22,7 +22,7 @@
 - [x] Add TODO.md execution backlog.
 - [x] Add SKILL.md implementation-agent rules.
 - [x] Add WORKFLOW.md delivery workflow.
-- [ ] Re-read all five execution files after commit and verify cross-document consistency.
+- [x] Re-read all five execution files after commit and verify cross-document consistency.
 
 ### Exit criteria
 - No execution document contradicts PRODUCT-SOURCE-OF-TRUTH.md or 12.4.
