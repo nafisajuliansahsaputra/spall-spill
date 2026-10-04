@@ -60,7 +60,8 @@ select throws_ok($$update core.spill_item_identity_registry set item_type = 'res
   '23514', null, 'Item type cannot change');
 select throws_ok($$delete from core.spill_item_identity_registry where item_id = (select item_id from initial_reservation)$$,
   '23514', null, 'Reservation cannot be deleted');
-select throws_ok($$truncate core.spill_item_identity_registry$$, '23514', null, 'Registry cannot be truncated');
+select throws_ok($$truncate core.spill_item_identity_registry$$, '0A000', null, 'Published Item foreign key prevents unqualified registry truncation');
+select throws_ok($$truncate core.spill_item_identity_registry cascade$$, '23514', null, 'Registry immutability also blocks cascading truncation');
 select throws_ok($$update core.spill_reference_counters set next_reference = 1 where owner_id = (select owner_id from initial_reservation)$$,
   '23514', null, 'Counter cannot rewind');
 select throws_ok($$delete from core.spill_reference_counters where owner_id = (select owner_id from initial_reservation)$$,

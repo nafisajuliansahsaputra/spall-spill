@@ -299,6 +299,12 @@ Contract 12.17 implements the scoped account-state notice already used by the
 resolver and explicit current-session exit. Local account-routing/Sign Out
 browser and application checks pass; full D10 enforcement/review remains open.
 
+Contract 12.18 stages atomic first-publication transactions and immutable,
+idempotent acknowledgments. Database and concurrency checks pass locally; RPC
+access is withheld until public/workspace/UI transport is verified. Product
+preview explicitly stays pending because mandatory primary-image/marketplace
+preparation is absent. No first-publication UI or full S6 closure is claimed.
+
 ### Current implementation checkpoint
 
 #### Local integration audit — 2026-10-04

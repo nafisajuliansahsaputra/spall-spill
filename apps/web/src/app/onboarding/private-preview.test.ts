@@ -41,4 +41,13 @@ describe("private S6 review", () => {
     expect(html).toContain("Photo preview is temporarily unavailable");
     expect(html).toContain("Publishing this photo is not ready yet");
   });
+  it("never calls a title/URL-only Product ready for publication", () => {
+    const preview = onboardingPreviewFixture();
+    preview.product_draft = { title: "Product title", source_url: "https://example.test/product", revision: 1, spill_reference: 1,
+      safety: { status: "safe", revision: 1, expires_at: new Date(Date.now()+60_000).toISOString() },
+      validation_issues: ["product_publication_preparation_pending"] };
+    const html = renderToStaticMarkup(createElement(PrivateOnboardingPreview, { preview, profileUrl: null }));
+    expect(html).toContain("primary-image and marketplace destination preparation");
+    expect(html).not.toContain("Ready for your publication review");
+  });
 });

@@ -38,6 +38,16 @@ describe("authoritative private onboarding preview", () => {
     mocks.rpc.mockResolvedValue({ data: null, error: new Error("unavailable") });
     await expect(resolveCurrentOnboardingPreview()).rejects.toThrow();
   });
+  it("requires Product preparation issue even when title and source are safe", async () => {
+    const preview = onboardingPreviewFixture();
+    preview.product_draft = { title: "Product title", source_url: "https://example.test/product", revision: 1, spill_reference: 1,
+      safety: { status: "safe", revision: 1, expires_at: new Date(Date.now()+60_000).toISOString() },
+      validation_issues: ["product_publication_preparation_pending"] };
+    mocks.rpc.mockResolvedValue({ data: preview, error: null });
+    expect(await resolveCurrentOnboardingPreview()).toEqual(preview);
+    preview.product_draft.validation_issues = [];
+    await expect(resolveCurrentOnboardingPreview()).rejects.toThrow();
+  });
   it.each(["owner_missing", "owner_unavailable", "onboarding_complete", "progress_missing"])("retains routing truth for %s", async (status) => {
     mocks.rpc.mockResolvedValue({ data: { status }, error: null });
     expect(await resolveCurrentOnboardingPreview()).toEqual({ status });

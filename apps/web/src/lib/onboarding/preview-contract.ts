@@ -11,7 +11,7 @@ export const previewSafetySchema = z.object({
   revision: revision.nullable(),
   expires_at: z.iso.datetime({ offset: true }).nullable(),
 }).strict().refine((safety) => safety.status === "pending" || (safety.revision !== null && safety.expires_at !== null));
-const itemIssues = z.array(z.enum(["title_missing", "source_missing", "source_not_safe", "identity_reservation_missing"]));
+const itemIssues = z.array(z.enum(["title_missing", "source_missing", "source_not_safe", "identity_reservation_missing", "product_publication_preparation_pending"]));
 const itemFields = {
   spill_reference: revision.nullable(), title: title.nullable(), revision,
   safety: previewSafetySchema, validation_issues: itemIssues,
@@ -52,6 +52,7 @@ export const onboardingPreviewSchema = z.object({
     if (draft.source_url === null) issues.push("source_missing");
     else if (draft.safety.status !== "safe") issues.push("source_not_safe");
     if (draft.spill_reference === null) issues.push("identity_reservation_missing");
+    if (key === "product_draft") issues.push("product_publication_preparation_pending");
     sameIssues(draft.validation_issues, issues, [key, "validation_issues"]);
   }
 });

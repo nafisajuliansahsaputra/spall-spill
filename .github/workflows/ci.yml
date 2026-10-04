@@ -112,3 +112,6 @@ jobs:
 
       - name: Verify concurrent Spill identity allocation
         run: node --test tests/spill-reference-concurrency.test.mjs
+
+      - name: Verify concurrent onboarding publication
+        run: node --test tests/onboarding-publication-concurrency.test.mjs

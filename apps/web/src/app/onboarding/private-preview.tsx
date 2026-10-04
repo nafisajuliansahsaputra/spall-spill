@@ -9,6 +9,7 @@ const ISSUE_COPY = {
   source_missing: "Add a Resource URL.",
   source_not_safe: "This source has not passed the current safety check.",
   identity_reservation_missing: "This Draft could not be verified. Reload before continuing.",
+  product_publication_preparation_pending: "Product publication still needs primary-image and marketplace destination preparation. Your Draft stays saved.",
   connection_not_safe: "Your social or link destination has not passed the current safety check.",
   profile_media_publication_pending: "Your photo is available privately. Publishing this photo is not ready yet.",
 } as const;

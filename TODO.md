@@ -91,6 +91,16 @@ before starting a new slice. The previous branch's evidence is retained below.
   receipt migration applied additively to the primary DB after backup.
 - [ ] Implement atomic first Publish, explicit
   Identity-only/Item intent, public read/media transport and first workspace.
+- [x] Lock staged transaction contract 12.18 and implement atomic Identity-only/
+  Resource persistence, immutable first acknowledgment, Owner-bound review/expiry,
+  fresh wall-clock safety, preserved Working/Drafts and idempotent retry. 64 pgTAP
+  assertions and three real concurrent-session races pass. Publication RPC grants
+  remain withheld until public/workspace/UI transport is verified.
+- [x] Correct Product preview readiness against pinned FR-PRD-004/009: title and
+  safe URL cannot replace mandatory primary image and marketplace preparation.
+  DB preview and two application regressions enforce the explicit pending issue.
+- [ ] Implement Product primary-image/marketplace publication preparation and
+  public Profile Media transport; never silently discard selected private media.
 - [x] Extend the authoritative final-destination repair to all onboarding and
   profile-media Server Actions. Await the account resolver and navigate directly
   to its final page; unverifiable account state fails closed. Ten new regressions

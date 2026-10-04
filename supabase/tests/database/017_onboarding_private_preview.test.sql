@@ -36,7 +36,7 @@ select is(api.resolve_current_onboarding_preview()->>'current_handle','preview-o
 select is(api.resolve_current_onboarding_preview()->'identity_working'->>'display_name','Private Preview','Working Identity shown');
 select is(api.resolve_current_onboarding_preview()->'layout_working'->>'starter_key','business','Working composition shown');
 select is(api.resolve_current_onboarding_preview()->'product_draft'->'validation_issues',
- '["title_missing","source_not_safe"]'::jsonb,'Incomplete Product explicitly invalid');
+ '["title_missing","source_not_safe","product_publication_preparation_pending"]'::jsonb,'Incomplete Product explicitly invalid');
 select is(api.resolve_current_onboarding_preview()->'resource_draft'->'validation_issues',
  '["source_missing"]'::jsonb,'Title-only Resource retained with missing source');
 select is(api.resolve_current_onboarding_preview()->'identity_validation_issues',
@@ -56,7 +56,7 @@ insert into core.external_destination_safety(normalized_url,url_hash,safety_stat
  ('https://example.test/preview-connection',encode(extensions.digest('https://example.test/preview-connection','sha256'),'hex'),'safe','preview-test',now(),now()+interval '5 minutes');
 set local role authenticated;
 select is(api.save_current_owner_product_draft('https://example.test/preview-product','Ready Product',1)->>'status','success','Fix Product at S6 without losing reference');
-select is(api.resolve_current_onboarding_preview()->'product_draft'->'validation_issues','[]'::jsonb,'Exact current safe source and title pass preview');
+select is(api.resolve_current_onboarding_preview()->'product_draft'->'validation_issues','["product_publication_preparation_pending"]'::jsonb,'Safe source/title still require primary image and marketplace preparation');
 select is(api.resolve_current_onboarding_preview()->'identity_validation_issues','[]'::jsonb,'Exact safe Connection resolves Identity issue');
 reset role;
 create temporary table preview_digest_before as select encode(extensions.digest(
