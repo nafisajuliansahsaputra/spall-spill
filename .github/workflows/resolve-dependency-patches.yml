@@ -42,6 +42,14 @@ jobs:
           cp apps/web/package.json dependency-patch/web-package.json
           cp pnpm-workspace.yaml pnpm-lock.yaml dependency-patch/
           sha256sum dependency-patch/* > dependency-patch/SHA256SUMS
+      - name: Emit dependency files for connector readback
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+          for (const name of ['web-package.json', 'pnpm-workspace.yaml', 'pnpm-lock.yaml']) {
+            console.log('DEPENDENCY_FILE:' + name + ':' + readFileSync('dependency-patch/' + name).toString('base64'));
+          }
+          NODE
       - name: Upload generated dependency files
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
