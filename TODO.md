@@ -31,8 +31,9 @@ do not recreate the existing foundation from that checklist.
 - [x] Add decoding-limit, deeply encoded unsafe-path, and canonical-idempotence
   regression cases.
 - [x] Run the native suite locally on Node.js 24.19.0: 17 tests passed.
-- [ ] Verify the full frozen install/typecheck/lint/unit/build pipeline on the
-  exact candidate commit.
+- [x] Verify the full frozen install/typecheck/lint/unit/build pipeline on
+  candidate `730083e42eab0af3ee6181af5fba4f468b6306f6`: Application job passed;
+  17 native Node tests and 84 Vitest tests passed.
 - [ ] Verify CI Database and Security on the exact candidate commit.
 - [ ] Close the candidate only after the applicable execution-protocol gates pass.
 
@@ -48,3 +49,35 @@ changes in this batch. No dependency changes or lockfile regeneration are needed
 - [ ] Verify relevant S5 success/failure, stale-write, Owner isolation, and
   Working/Published runtime boundaries.
 - [ ] Implement the next bounded slice only once its technical authority exists.
+
+## Dependency-security release blocker
+
+Security run [37215324440](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37215324440)
+scanned candidate `730083e42eab0af3ee6181af5fba4f468b6306f6` and failed OSV.
+Secret Scan and SAST passed. The unchanged baseline lockfile has 10 advisory
+matches across 6 affected package/version entries: 1 Critical, 5 High, 4 Medium.
+
+| Package in existing lockfile | Installed | Scanner-reported fixed version |
+| --- | --- | --- |
+| next | 16.3.3 | 16.3.6 |
+| vitest | 4.1.10 | 4.1.11 |
+| @vitest/mocker | 4.1.10 | 4.1.11 |
+| brace-expansion | 1.1.18 | 1.1.21 covers the three reported fixes |
+| brace-expansion | 5.0.9 | 5.0.12 covers the three reported fixes |
+| braces | 3.0.3 | No fixed version reported by this scan |
+
+These versions are evidence from this exact scan, not a promise that a package
+upgrade alone makes the full application secure.
+
+- [ ] Patch Next.js and its matching eslint-config-next dependency.
+- [ ] Patch Vitest and confirm the resolved mocker dependency is patched.
+- [ ] Trace and update the parents of vulnerable brace-expansion/braces entries.
+- [ ] Review the braces advisory and an upstream-supported remediation; do not
+  suppress an unresolved finding to force a green scan.
+- [ ] Regenerate pnpm-lock.yaml through pnpm, then run frozen-install,
+  typecheck/lint/tests/build and the complete security scan.
+- [ ] Re-run database and applicable runtime verification before merge/release.
+
+Local dependency installation/regeneration is blocked in this session:
+pnpm is absent and the npm registry request fails with EACCES. The lockfile has
+not been hand-edited and the draft is not approved for merge or release.
