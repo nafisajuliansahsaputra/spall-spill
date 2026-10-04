@@ -96,6 +96,12 @@ before starting a new slice. The previous branch's evidence is retained below.
   to its final page; unverifiable account state fails closed. Ten new regressions
   cover direct navigation and rejected Identity/Resource saves; web typecheck,
   lint and unit suite pass. No GET-only auth-handler redirect remains in these actions.
+- [x] Lock scoped account notice/session-exit contract 12.17. Restricted/suspended
+  Owners now reach the existing resolver's real `/dashboard/account-status`
+  destination. Explicit local-context Sign Out clears intent after provider
+  acknowledgment and goes directly to Login. Ten unit regressions, web typecheck
+  and lint pass; browser restricted-account routing and Sign Out pass with no
+  console errors. Detailed enforcement/review workflows remain open.
 - [x] Reconcile preserved Product Draft/reference allocation with pinned 11.22:
   contract 12.13 and an additive migration reserve immutable Owner-scoped Item
   identity/reference at durable creation and backfill existing Drafts.

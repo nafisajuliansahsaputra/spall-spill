@@ -295,6 +295,10 @@ locks explicit, Owner-bound preview confirmation with fixed expiry and stale
 snapshot rejection. Local RPC/application/browser checks pass. Receipts grant
 no publication authority; remote CI and full S6 publication remain open.
 
+Contract 12.17 implements the scoped account-state notice already used by the
+resolver and explicit current-session exit. Local account-routing/Sign Out
+browser and application checks pass; full D10 enforcement/review remains open.
+
 ### Current implementation checkpoint
 
 #### Local integration audit — 2026-10-04
