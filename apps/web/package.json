@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "vitest run"
+    "test": "pnpm run test:auth-navigation && pnpm run test:unit",
+    "test:auth-navigation": "node --test tests/intended-destination.test.mjs",
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "3.1121.0",

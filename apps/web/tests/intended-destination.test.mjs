@@ -300,3 +300,56 @@ test("control characters are rejected before or after decoding", () => {
     );
   }
 });
+test("decoding at the supported limit remains deterministic", () => {
+  let encoded = "/dashboard/%73pill";
+
+  for (let layer = 1; layer < 5; layer += 1) {
+    encoded = encoded.replaceAll("%", "%25");
+  }
+
+  assert.equal(
+    sanitizeIntendedDestination(encoded),
+    "/dashboard/spill",
+  );
+
+  assert.equal(
+    sanitizeIntendedDestination(encoded.replaceAll("%", "%25")),
+    null,
+  );
+});
+
+test("deeply encoded unsafe paths fail closed", () => {
+  const cases = [
+    "/dashboard/%2e%2e/external",
+    "/dashboard/%5cevil",
+    "/dashboard/%3Fsecret=value",
+    "/dashboard/%23fragment",
+    "/dashboard/%00spill",
+    "/dashboard/%2fspill",
+  ];
+
+  for (const original of cases) {
+    let encoded = original;
+
+    for (let layer = 0; layer <= 6; layer += 1) {
+      assert.equal(sanitizeIntendedDestination(encoded), null, encoded);
+      encoded = encoded.replaceAll("%", "%25");
+    }
+  }
+});
+
+test("safe canonical destinations are idempotent", () => {
+  const cases = [
+    "/dashboard",
+    "/dashboard/",
+    "/%64ashboard/%69dentity",
+    "/dashboard/spill/item-123",
+  ];
+
+  for (const input of cases) {
+    const canonical = sanitizeIntendedDestination(input);
+
+    assert.notEqual(canonical, null, input);
+    assert.equal(sanitizeIntendedDestination(canonical), canonical, input);
+  }
+});
