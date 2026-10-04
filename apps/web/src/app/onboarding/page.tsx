@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import {
   resolveCurrentOwnerState,
 } from "@/lib/auth/owner-state";
+import { resolveCurrentResourceDraftState } from "@/lib/onboarding/resource-draft";
 import {
   resolveCurrentBasicIdentityState,
   resolveCurrentIdentityConnectionState,
@@ -337,6 +338,24 @@ export default async function OnboardingPage({
         throw new Error(
           `Required onboarding prerequisite is missing before Product Draft: ${productDraft.prerequisite}.`,
         );
+    }
+  }
+
+  const resourceDraft = displayedStep === "relevant_first_job"
+    ? await resolveCurrentResourceDraftState() : null;
+  if (resourceDraft && resourceDraft.status !== "success") {
+    switch (resourceDraft.status) {
+      case "unauthenticated":
+      case "owner_missing":
+      case "owner_unavailable":
+      case "onboarding_complete":
+        redirect("/auth/resolve");
+      case "step_not_available":
+        redirect("/onboarding");
+      case "progress_missing":
+        throw new Error("Authoritative onboarding progress is missing while resolving Resource Draft.");
+      case "prerequisite_missing":
+        throw new Error(`Required onboarding prerequisite is missing before Resource Draft: ${resourceDraft.prerequisite}.`);
     }
   }
 
@@ -701,6 +720,7 @@ export default async function OnboardingPage({
                       null
                     : null
                 }
+                initialResourceDraft={resourceDraft?.status === "success" ? resourceDraft.resource_draft : null}
                 initialProductSourceUrl={
                   productDraft?.status ===
                   "success"

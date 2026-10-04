@@ -2,6 +2,8 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import type { ResourceDraft } from "@/lib/onboarding/resource-draft-contract";
+import { ResourceDraftForm } from "./resource-draft-form";
 
 import {
   advanceRelevantFirstJobAction,
@@ -23,6 +25,7 @@ type RelevantFirstJobRecommendation =
   | "neutral";
 
 type RelevantFirstJobFormProps = {
+  initialResourceDraft: ResourceDraft | null;
   recommendation:
     RelevantFirstJobRecommendation;
   baseProgressRevision: number;
@@ -104,6 +107,7 @@ function SkipButton() {
 }
 
 export function RelevantFirstJobForm({
+  initialResourceDraft,
   recommendation,
   baseProgressRevision,
   initialConnectionKind,
@@ -131,6 +135,14 @@ export function RelevantFirstJobForm({
       recommendation
     ];
 
+  const resourceForm = <ResourceDraftForm draft={initialResourceDraft} />;
+  const optionalResource = <details open={initialResourceDraft !== null} className="rounded-2xl border border-neutral-200 bg-white p-5">
+    <summary className="cursor-pointer text-sm font-semibold text-neutral-950">
+      {initialResourceDraft ? "Your saved Resource Draft" : "Add a Resource (optional)"}
+    </summary>
+    <div className="mt-4">{resourceForm}</div>
+  </details>;
+
   return (
     <div className="space-y-5">
       <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5">
@@ -146,6 +158,8 @@ export function RelevantFirstJobForm({
           {copy.description}
         </p>
       </div>
+
+      {recommendation === "resource" ? resourceForm : null}
 
       {recommendation ===
       "product" ? (
@@ -213,6 +227,8 @@ export function RelevantFirstJobForm({
           </details>
         </>
       )}
+
+      {recommendation !== "resource" ? optionalResource : null}
 
       {state.status === "error" &&
       state.message ? (

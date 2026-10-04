@@ -47,7 +47,23 @@ before starting a new slice. The previous branch's evidence is retained below.
   and lock scoped contract 12.12. Product/Resource lifecycle and S6 remain open.
 - [x] Make non-Affiliate Product entry an accessible optional disclosure while
   retaining mounted inputs and automatically exposing an existing saved Draft.
-- [ ] Lock remaining Product/Resource JIT contracts and implement Resource Draft.
+- [x] Lock Resource Draft contract 12.14 and implement semantic-first private
+  persistence, Resource-first Business entry, optional access for other personas,
+  retained saved Drafts, strict acknowledgment, and post-commit fail-closed scanning.
+- [x] Verify Resource implementation locally: 891 pgTAP tests across 16 files,
+  458 Vitest tests, 17 auth navigation tests, five tooling tests; typecheck, lint,
+  and all three builds pass. Database schema lint and error-level security
+  advisors pass. Concurrent Resource first saves and Product creation serialize
+  without duplicate Items, stale overwrites, or duplicate Owner references.
+- [x] Apply Resource migration additively after private backup without resetting
+  the existing development database or changing Product content/reservations.
+- [x] Verify isolated S1–S5 Resource UI: empty-shell rejection, input retention,
+  title-only save, source update, reload, and Business-to-Personal Draft retention.
+  The source remains pending when the scanner is unavailable.
+- [ ] Verify CI/Security on the Resource implementation commit.
+- [ ] Fix login Server Action redirect chain: onboarding renders at auth/resolve,
+  causing its first POST to return 405; then repeat the authenticated journey.
+- [ ] Lock the S6 preview/publication contract and implement the first Publish gate.
 - [x] Reconcile preserved Product Draft/reference allocation with pinned 11.22:
   contract 12.13 and an additive migration reserve immutable Owner-scoped Item
   identity/reference at durable creation and backfill existing Drafts.

@@ -58,3 +58,40 @@ test('concurrent first Product saves serialize and reserve exactly one identity'
     if (ownerId) await query(`delete from core.product_drafts where owner_id='${ownerId}';`);
   }
 });
+
+test('Resource first saves and parallel Product creation preserve one shared Owner sequence', async () => {
+  const authId = randomUUID();
+  const handle = `res-${authId.slice(0, 8)}`;
+  let ownerId;
+  try {
+    await query(`insert into auth.users(id,email) values ('${authId}','${handle}@example.test');`);
+    ownerId = await query(`select owner_id from core.owner_auth_bindings where auth_user_id='${authId}';`);
+    assert.match(ownerId, /^[a-f0-9-]{36}$/);
+    const auth = `set local role authenticated; set local request.jwt.claims='{"role":"authenticated","sub":"${authId}"}';`;
+    const setup = await query(`begin; ${auth}
+      select api.claim_current_owner_handle('${handle}',1);
+      select api.set_current_owner_primary_use_case('business',2);
+      select api.save_current_owner_basic_identity('Resource race',null,null,3);
+      select api.save_current_owner_starter_composition('clean',null,4); commit;`);
+    for (const line of setup.split('\n')) assert.equal(JSON.parse(line).status, 'success');
+    const resourceSave = (title) => query(`begin; ${auth}
+      select api.save_current_owner_resource_draft('menu',null,'${title}',null);
+      select pg_sleep(1); commit;`);
+    const productSave = () => query(`begin; ${auth}
+      select api.save_current_owner_product_draft('https://example.com/product',null,null);
+      select pg_sleep(1); commit;`);
+    const [one, two, product] = await Promise.all([resourceSave('Menu one'), resourceSave('Menu two'), productSave()]);
+    const status = (result) => JSON.parse(result.split('\n').find((line) => line.startsWith('{'))).status;
+    assert.deepEqual([status(one), status(two)].sort(), ['stale_write', 'success']);
+    assert.equal(status(product), 'success');
+    assert.equal(await query(`select count(*) from core.resource_drafts where owner_id='${ownerId}';`), '1');
+    assert.equal(await query(`select count(*) from core.product_drafts where owner_id='${ownerId}';`), '1');
+    assert.equal(await query(`select string_agg(spill_reference::text,',' order by spill_reference) from core.spill_item_identity_registry where owner_id='${ownerId}';`), '1,2');
+    assert.equal(await query(`select next_reference from core.spill_reference_counters where owner_id='${ownerId}';`), '3');
+  } finally {
+    await query(`delete from auth.users where id='${authId}';`);
+    if (ownerId) {
+      await query(`delete from core.product_drafts where owner_id='${ownerId}'; delete from core.resource_drafts where owner_id='${ownerId}';`);
+    }
+  }
+});
