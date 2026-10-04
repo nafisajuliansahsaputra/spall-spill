@@ -479,7 +479,7 @@ upgrade alone makes the full application secure.
 - [x] Trace affected parents: minimatch 3/10 resolve brace-expansion;
   eslint-config-next -> @next/eslint-plugin-next -> fast-glob -> micromatch
   resolves braces. Pin compatible brace-expansion patch lines with scoped overrides.
-- [ ] Remediate the remaining braces dependency without suppressing its advisory.
+- [x] Remediate the remaining braces dependency without suppressing its advisory.
 - [ ] Review the braces advisory and an upstream-supported remediation; do not
   suppress an unresolved finding to force a green scan.
 - [x] Regenerate pnpm-lock.yaml through pnpm and run frozen-install,
