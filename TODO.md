@@ -101,6 +101,18 @@ before starting a new slice. The previous branch's evidence is retained below.
   DB preview and two application regressions enforce the explicit pending issue.
 - [ ] Implement Product primary-image/marketplace publication preparation and
   public Profile Media transport; never silently discard selected private media.
+- [x] Lock staged public-snapshot reader contract 12.19. Handle/alias resolution,
+  current account/lifecycle gates, private-field exclusion and fresh exact-source
+  safety pass 48 pgTAP assertions. Anonymous/read endpoint grants remain withheld.
+  The recorded empty migration is preserved; actual readers use a later additive
+  migration. Primary application was backed up and never reset.
+- [x] Verify the complete local batch: 1,097 pgTAP assertions across 20 files,
+  five real DB concurrency tests, 529 Vitest tests, 17 navigation tests and five
+  tooling tests pass. Workspace typecheck/lint, three production builds, schema
+  lint and error-level security advisors pass. Latest pnpm audit reports zero
+  findings at every severity. Remote CI/Security await the usage-gated push.
+- [ ] Enable first Publish only after explicit bundle review, safe public routes/
+  click transport, public media and the universal D01 workspace handoff are ready.
 - [x] Extend the authoritative final-destination repair to all onboarding and
   profile-media Server Actions. Await the account resolver and navigate directly
   to its final page; unverifiable account state fails closed. Ten new regressions

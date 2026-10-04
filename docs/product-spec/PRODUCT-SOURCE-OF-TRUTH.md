@@ -305,6 +305,15 @@ access is withheld until public/workspace/UI transport is verified. Product
 preview explicitly stays pending because mandatory primary-image/marketplace
 preparation is absent. No first-publication UI or full S6 closure is claimed.
 
+Contract 12.19 stages published-only Identity/Resource readers with uniform
+unavailable state, protected Handle aliases, fresh source safety and private-field
+exclusion. Anonymous execution remains withheld. The combined local batch passes
+1,097 database assertions, five concurrency tests and 551 application/tooling
+tests, plus typecheck, lint, three builds, schema lint, error-level security
+advisors and a zero-finding dependency audit. Remote CI/Security are pending.
+The next active work is public/click/media transport, explicit first-Publish UI
+and universal D01 handoff; Product image/marketplace preparation remains open.
+
 ### Current implementation checkpoint
 
 #### Local integration audit — 2026-10-04
