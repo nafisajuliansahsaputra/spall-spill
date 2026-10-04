@@ -268,6 +268,25 @@ This does not change the locked six-step O01 journey, universal capability model
 
 ### Current implementation checkpoint
 
+#### Local integration audit — 2026-10-04
+
+Local implementation beyond the closed S4 checkpoint was preserved at `24a8905`
+and integrated with main documentation and remote dependency/navigation fixes
+on `codex/sync-local-foundation-20261004`. Existing code includes S5 progress,
+Identity Connection Working, Product Draft, external-destination safety, and a
+media-sanitizer service. This is an implementation inventory, not checkpoint
+closure or a new product/technical lock.
+
+The closed checkpoint and its historical evidence below remain unchanged.
+S5/S6 are **NOT CLOSED / VERIFIED**. Reconcile the existing S5 code with a JIT
+technical contract and pinned O01/J1–J4 records before implementing a new
+onboarding/publication boundary. Current integration checks and remaining
+dependency, database, runtime, and CI evidence are tracked in `../../TODO.md`.
+The earlier Web Risk/provider deferral remains in force until replaced by live
+verification evidence. No journey topology or public-safety rule changes.
+
+#### Last closed checkpoint
+
 Stage **6B.5 — S4 Application UI + 6B Regression Checkpoint** is **CLOSED / VERIFIED**.
 
 The full Stage 6B sequence defined by 12.10 is now implementation-complete through O01-S4 Starter Composition. Stage 6B.4 delivered the private Starter Composition Working model plus authenticated S4 resolver/mutation boundaries; Stage 6B.5 integrated the real S4 application UI and closed the 6B regression/runtime gate.

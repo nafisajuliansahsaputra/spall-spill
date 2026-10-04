@@ -4,6 +4,76 @@
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
 **Last synchronized:** 2026-10-04
 
+## Current local integration — 2026-10-04
+
+This branch combines the implementation preserved at `24a8905`, current main
+documentation at `885daae`, and remote dependency/navigation fixes at `4f6cfce`.
+The phase checklist below is the original planning inventory; unchecked entries
+are not proof that existing implementation is absent. Audit the code and evidence
+before starting a new slice. The previous branch's evidence is retained below.
+
+- [x] Preserve uncommitted local application, shared policy, and migration work
+  on `codex/local-preservation-20261004` and push before integration.
+- [x] Merge remote documentation and implementation fixes without force-pushing.
+- [x] Preserve both TODO inventories and both sides of dependency changes.
+- [x] Verify the preserved local baseline: 410 Vitest tests, typecheck, lint,
+  and all three application builds passed using installed Next.js 16.3.3 and
+  Vitest 4.1.10. This evidence does not verify the patched integration candidate.
+- [x] Verify the merged auth-navigation suite separately: 17 native Node tests.
+- [x] Read and materialize the pinned J1–J9 maps and full O01 specification
+  locally, without changing their locked content or importing legacy runtime.
+- [x] Verify a frozen install and full regression of application commit `136cd1c`:
+  pnpm 11.24.0 supply-chain checks and frozen install passed; 410 Vitest tests
+  plus 17 native Node tests passed; typecheck, lint, and all three Next.js 16.3.6
+  production builds passed. No local secrets were copied into the chat worktree.
+- [x] Resolve the scanner/sanitizer development-port conflict (3002/3001), add
+  per-service environment examples and test configuration, and patch Next.js,
+  eslint-config-next, and Vitest consistently across the workspace.
+- [x] Repair CI initialization at `87cdeea`: set up pinned Node before pnpm;
+  disable pnpm/setup's implicit install and retain the explicit frozen-install
+  gate. YAML parsing and step-order checks passed locally for both jobs.
+- [x] Verify CI Application and Database for `87cdeea`: both jobs passed,
+  including frozen installation, application checks/build, isolated database
+  reset, lint with no schema errors, and 779 pgTAP tests across 14 files.
+  Local Docker remained unavailable; no existing local database was reset.
+- [x] Verify production HTTP failure boundaries locally: 7 checks passed for
+  scanner unsigned/invalid-signature denial, signed invalid JSON/payload denial,
+  oversized-request denial, and sanitizer missing-configuration/size denial.
+  The smoke checks used loopback servers and made no provider/storage requests.
+- [ ] Complete Security for the pushed integration commit. At `87cdeea`, Secret
+  Scan and SAST passed; Dependency Scan remained blocked by the braces finding.
+- [ ] Resolve the outstanding braces advisory recorded in the previous evidence.
+- [ ] Reconcile S5 technical authority with existing Identity Connection,
+  Product Draft, destination scanner, and media-sanitizer implementation before
+  adding a new onboarding/publication slice.
+
+Scratch `*-read.txt` review notes and ignored local secrets remain local. They are
+not application source and were not included in the preservation commit.
+
+Remote evidence for `136cd1c`:
+
+- [Security run 37218167613](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37218167613)
+  Secret Scan passed. Dependency Scan failed with exactly one High finding:
+  `braces@3.0.3`, `GHSA-vfj7-8cjw-p6xm`, CVSS 8.7, no fixed version reported.
+  SAST also passed for this commit.
+- [Security run 37218254234](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37218254234)
+  for `87cdeea`: Secret Scan and SAST passed; Dependency Scan failed.
+- [CI run 37218254208](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37218254208)
+  for `87cdeea`: Application and Database passed. Database log reports
+  `No schema errors found`, `Files=14, Tests=779`, and `Result: PASS`.
+- Earlier integration CI failed with `ERR_PNPM_LOCKFILE_MISSING_DEPENDENCY` on
+  Next.js 16.3.3. The pnpm-generated lockfile and aligned importers in `136cd1c`
+  resolve that specific failure; local frozen installation proves the repair.
+- `main` remains unmerged while required security/live-runtime gates are
+  incomplete. The preservation commit and all remote branch history remain
+  available; no reset or force push was used.
+
+**Immediate work:** resolve the dependency-security blocker and reconcile S5
+against the pinned O01/J1–J4 records, existing code, and missing JIT authority.
+Do not recreate the scaffold or claim S5/S6 closure from the older Phase 1
+inventory. Workspace integration has local and CI application/database evidence;
+live provider and full journey/manual verification remain incomplete.
+
 ## How to use this file
 
 - This is the implementation checklist, not the product authority.
@@ -323,7 +393,8 @@ Spall Spill is production ready only when product behavior, authorization, datab
 
 ## Immediate next task
 
-**Start Phase 1: clean monorepo/application scaffold.**
+**Original documentation-only next task (superseded by current local integration):
+Start Phase 1: clean monorepo/application scaffold.**
 
 Do not begin by rebuilding visible feature pages from the legacy app. The first runtime milestone is a clean, testable foundation with correct TypeScript, workspace, build, CI, and database direction.
 
@@ -331,7 +402,7 @@ Do not begin by rebuilding visible feature pages from the legacy app. The first 
 
 # Spall Spill — Active Implementation TODO
 
-**Branch baseline:** `m0/foundation@013b23744668c2ee13b7c4a4910ee237a9080ea7`  
+**Branch baseline:** `m0/foundation@013b23744668c2ee13b7c4a4910ee237a9080ea7`
 **Last audited:** 2026-10-04
 
 This checklist tracks the active implementation branch. Product authority remains

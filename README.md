@@ -8,7 +8,8 @@ This repository intentionally does **not** inherit the legacy runtime codebase. 
 
 - Foundation, local Supabase, CI/security gates, authentication/session, Owner-state resolution, and O01 onboarding through Starter Composition are implemented.
 - Stage **6B.5 — S4 Application UI + 6B Regression Checkpoint** is **CLOSED / VERIFIED**: Starter Composition Working persistence, authenticated resolver/mutation boundaries, capability-neutral four-starter UI, backward editing without progress regression, stale-write failure truth, clean application/database regression, and remote CI/Security verification have passed.
-- The next implementation checkpoint is **O01-S5 — Relevant First Job**. Its persistence/mutation/application mechanics must be defined and locked just-in-time before S5 code begins; no new Stage label is invented ahead of that contract.
+- Later local work includes Relevant First Job, Identity Connection, Product Draft, destination-safety scanning, and a media sanitizer. That work has been preserved and integrated with the current documentation and dependency fixes on `codex/sync-local-foundation-20261004`.
+- **O01-S5 is implemented in part but not CLOSED / VERIFIED.** Its technical authority, runtime evidence, provider readiness, and CI/security gates must be reconciled before extending S5/S6. See `TODO.md` for current evidence and blockers; do not recreate the existing scaffold.
 - The canonical execution status lives in `docs/product-spec/PRODUCT-SOURCE-OF-TRUTH.md`; this README is only a repository entry point and must not override that authority.
 
 ## Canonical authority
@@ -19,6 +20,9 @@ Key files:
 
 - `docs/product-spec/PRODUCT-SOURCE-OF-TRUTH.md` — current canonical product/implementation index and execution checkpoint.
 - `docs/product-spec/MIGRATION-MANIFEST.md` — immutable provenance of the historical Product Source of Truth.
+- `docs/product-spec/user-flows/README.md` — local locked J1–J9 journey maps.
+- `docs/product-spec/wireframe-spec/9.15-o01-initial-setup-onboarding.md` — full locked six-step onboarding specification.
+- `docs/product-spec/HISTORICAL-SPEC-READBACK.md` — provenance of the unchanged local journey/O01 imports.
 - `docs/product-spec/technical-architecture/12.4-production-technology-stack-security-architecture.md` — locked production technology/security architecture.
 - `docs/product-spec/technical-architecture/12.10-onboarding-basic-identity-starter-composition-contract.md` — locked O01-S3/S4 Basic Identity Working + Starter Composition implementation authority.
 - `docs/product-spec/technical-architecture/12.11-profile-media-r2-storage-contract.md` — locked Profile Media / R2 implementation authority.
@@ -44,3 +48,16 @@ Key files:
 The owner executes setup, coding, configuration, and deployment locally while ChatGPT acts as technical lead/pair programmer/reviewer. Direct changes to GitHub, Supabase, Vercel, or other services happen only when explicitly requested.
 
 Security is built continuously. Security-sensitive slices receive targeted runtime/manual verification before closure, while broad penetration testing is reserved for stable journey/MVP and pre-production gates as defined by the canonical Source of Truth.
+
+## Local workspace
+
+Use Node.js 24 and pnpm 11 as pinned by `.nvmrc` and `package.json`.
+Run `pnpm install --frozen-lockfile`, then `pnpm test`, `pnpm typecheck`,
+`pnpm lint`, and `pnpm build` from the repository root.
+
+`pnpm dev` starts the web app on port 3000, media sanitizer on 3001, and URL
+safety scanner on 3002. Copy each application's `.env.example` to its ignored
+`.env.local` and supply local configuration. Use separate shared secrets for
+the sanitizer and scanner, matching each secret between the web app and its
+service. Provider credentials remain server-only. Missing provider configuration
+does not authorize safe/public destination use.
