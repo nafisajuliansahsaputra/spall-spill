@@ -105,17 +105,12 @@ export default async function SignUpPage({
             </div>
           ) : null}
 
-          <form
-            action="/auth/google"
-            method="post"
+          <a
+            href="/auth/google"
+            className="block w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-center text-sm font-semibold text-neutral-950 transition hover:bg-neutral-50"
           >
-            <button
-              type="submit"
-              className="w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-sm font-semibold text-neutral-950 transition hover:bg-neutral-50"
-            >
-              Continue with Google
-            </button>
-          </form>
+            Continue with Google
+          </a>
 
           <div className="my-6 flex items-center gap-3">
             <div className="h-px flex-1 bg-neutral-200" />

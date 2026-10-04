@@ -13,11 +13,11 @@ const mocks = vi.hoisted(() => ({
   resolve: vi.fn(),
   complete: vi.fn(),
 
-  load: vi.fn(),
+  createSourceUrl: vi.fn(),
   put: vi.fn(),
   deleteStaging: vi.fn(),
 
-  process: vi.fn(),
+  sanitize: vi.fn(),
 }));
 
 vi.mock(
@@ -42,8 +42,8 @@ vi.mock(
 vi.mock(
   "@/lib/profile-media/object-store",
   () => ({
-    loadProfileMediaStagingObject:
-      mocks.load,
+    createProfileMediaStagingDownloadUrl:
+      mocks.createSourceUrl,
 
     putCanonicalProfileMediaObject:
       mocks.put,
@@ -54,10 +54,10 @@ vi.mock(
 );
 
 vi.mock(
-  "@/lib/profile-media/processor",
+  "@/lib/profile-media/sanitizer-client",
   () => ({
-    processProfileMediaSource:
-      mocks.process,
+    sanitizeProfileMediaStagingObject:
+      mocks.sanitize,
   }),
 );
 
@@ -134,31 +134,20 @@ function installSuccessfulPipeline():
     },
   );
 
-  mocks.load.mockImplementation(
+  mocks.createSourceUrl.mockImplementation(
     async () => {
       mocks.events.push(
-        "load",
+        "sourceUrl",
       );
 
-      return {
-        bytes:
-          Buffer.from([
-            1,
-            2,
-            3,
-            4,
-          ]),
-        contentType:
-          "image/png",
-        byteSize: 4,
-      };
+      return "https://profile-media-test-bucket.example.test/staging/object?signature=test";
     },
   );
 
-  mocks.process.mockImplementation(
+  mocks.sanitize.mockImplementation(
     async () => {
       mocks.events.push(
-        "process",
+        "sanitize",
       );
 
       const bytes =
@@ -266,7 +255,7 @@ describe(
         ).not.toHaveBeenCalled();
 
         expect(
-          mocks.load,
+          mocks.createSourceUrl,
         ).not.toHaveBeenCalled();
 
         expect(
@@ -302,7 +291,7 @@ describe(
         ).not.toHaveBeenCalled();
 
         expect(
-          mocks.load,
+          mocks.createSourceUrl,
         ).not.toHaveBeenCalled();
       },
     );
@@ -335,11 +324,11 @@ describe(
         });
 
         expect(
-          mocks.load,
+          mocks.createSourceUrl,
         ).not.toHaveBeenCalled();
 
         expect(
-          mocks.process,
+          mocks.sanitize,
         ).not.toHaveBeenCalled();
 
         expect(
@@ -395,11 +384,11 @@ describe(
         });
 
         expect(
-          mocks.load,
+          mocks.createSourceUrl,
         ).not.toHaveBeenCalled();
 
         expect(
-          mocks.process,
+          mocks.sanitize,
         ).not.toHaveBeenCalled();
 
         expect(
@@ -443,11 +432,11 @@ describe(
         });
 
         expect(
-          mocks.load,
+          mocks.createSourceUrl,
         ).not.toHaveBeenCalled();
 
         expect(
-          mocks.process,
+          mocks.sanitize,
         ).not.toHaveBeenCalled();
 
         expect(
@@ -480,8 +469,8 @@ describe(
         ).toEqual([
           "auth",
           "resolve",
-          "load",
-          "process",
+          "sourceUrl",
+          "sanitize",
           "put",
           "complete",
           "delete",
@@ -592,10 +581,10 @@ describe(
     it(
       "does not process or register anything when authoritative staging load fails",
       async () => {
-        mocks.load.mockImplementation(
+        mocks.createSourceUrl.mockImplementation(
           async () => {
             mocks.events.push(
-              "load",
+              "sourceUrl",
             );
 
             throw new Error(
@@ -616,7 +605,7 @@ describe(
         );
 
         expect(
-          mocks.process,
+          mocks.sanitize,
         ).not.toHaveBeenCalled();
 
         expect(
@@ -636,10 +625,10 @@ describe(
     it(
       "does not create a canonical object when image processing rejects the source",
       async () => {
-        mocks.process.mockImplementation(
+        mocks.sanitize.mockImplementation(
           async () => {
             mocks.events.push(
-              "process",
+              "sanitize",
             );
 
             throw new Error(
@@ -809,7 +798,7 @@ describe(
         );
 
         expect(
-          mocks.load,
+          mocks.createSourceUrl,
         ).not.toHaveBeenCalled();
 
         expect(

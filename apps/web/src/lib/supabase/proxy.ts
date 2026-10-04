@@ -63,9 +63,14 @@ function applyIntendedDestination(
 
 export async function updateSession(
   request: NextRequest,
+  forwardedRequestHeaders: Headers =
+    new Headers(request.headers),
 ): Promise<NextResponse> {
   let supabaseResponse = NextResponse.next({
-    request,
+    request: {
+      headers:
+        forwardedRequestHeaders,
+    },
   });
 
   const authResponseHeaders = new Headers();
@@ -91,12 +96,20 @@ export async function updateSession(
                 name,
                 value,
               );
+
+              forwardedRequestHeaders.set(
+                "cookie",
+                request.cookies.toString(),
+              );
             },
           );
 
           supabaseResponse =
             NextResponse.next({
-              request,
+              request: {
+                headers:
+                  forwardedRequestHeaders,
+              },
             });
 
           cookiesToSet.forEach(

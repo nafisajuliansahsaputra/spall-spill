@@ -228,6 +228,63 @@ const identityConnectionPayloadSchema =
     statusOnlyPayloadSchema,
   ]);
 
+const productDraftSchema =
+  z
+    .object({
+      source_url: z.string(),
+      title: z.string().nullable(),
+      revision: z
+        .number()
+        .int()
+        .positive(),
+    })
+    .strict();
+
+const productDraftSuccessPayloadSchema =
+  z
+    .object({
+      status: z.literal("success"),
+      current_step:
+        onboardingStepSchema,
+      product_draft:
+        productDraftSchema.nullable(),
+    })
+    .strict();
+
+const productDraftStepUnavailablePayloadSchema =
+  z
+    .object({
+      status: z.literal(
+        "step_not_available",
+      ),
+      current_step:
+        onboardingStepSchema,
+    })
+    .strict();
+
+const productDraftPrerequisitePayloadSchema =
+  z
+    .object({
+      status: z.literal(
+        "prerequisite_missing",
+      ),
+      prerequisite: z.enum([
+        "primary_use_case",
+        "current_handle",
+        "identity_working",
+        "identity_layout_working",
+      ]),
+    })
+    .strict();
+
+const productDraftPayloadSchema =
+  z.union([
+    productDraftSuccessPayloadSchema,
+    productDraftStepUnavailablePayloadSchema,
+    productDraftPrerequisitePayloadSchema,
+    statusOnlyPayloadSchema,
+  ]);
+
 export type OnboardingStateResolution =
   | {
       status: "success";
@@ -353,6 +410,46 @@ export type IdentityConnectionStateResolution =
         >;
       connectionWorking:
         IdentityConnectionWorking | null;
+    }
+  | {
+      status: "step_not_available";
+      currentStep:
+        z.infer<
+          typeof onboardingStepSchema
+        >;
+    }
+  | {
+      status: "prerequisite_missing";
+      prerequisite:
+        | "primary_use_case"
+        | "current_handle"
+        | "identity_working"
+        | "identity_layout_working";
+    }
+  | {
+      status:
+        | "unauthenticated"
+        | "owner_missing"
+        | "owner_unavailable"
+        | "onboarding_complete"
+        | "progress_missing";
+    };
+
+export type ProductDraft = {
+  sourceUrl: string;
+  title: string | null;
+  revision: number;
+};
+
+export type ProductDraftStateResolution =
+  | {
+      status: "success";
+      currentStep:
+        z.infer<
+          typeof onboardingStepSchema
+        >;
+      productDraft:
+        ProductDraft | null;
     }
   | {
       status: "step_not_available";
@@ -777,6 +874,101 @@ export async function resolveCurrentIdentityConnectionState(): Promise<IdentityC
   ) {
     return {
       status: "step_not_available",
+      currentStep:
+        parsed.data.current_step,
+    };
+  }
+
+  if (
+    parsed.data.status ===
+    "prerequisite_missing"
+  ) {
+    return {
+      status:
+        "prerequisite_missing",
+      prerequisite:
+        parsed.data.prerequisite,
+    };
+  }
+
+  return {
+    status: parsed.data.status,
+  };
+}
+export async function resolveCurrentProductDraftState(): Promise<ProductDraftStateResolution> {
+  const authStatus =
+    await verifyCurrentAuthUser();
+
+  if (authStatus === "unauthenticated") {
+    return {
+      status: "unauthenticated",
+    };
+  }
+
+  const supabase =
+    await createClient();
+
+  const { data, error } =
+    await supabase
+      .schema("api")
+      .rpc(
+        "resolve_current_product_draft_state",
+      );
+
+  if (error) {
+    throw new OnboardingStateResolutionError(
+      "Product Draft resolver request failed.",
+    );
+  }
+
+  const parsed =
+    productDraftPayloadSchema.safeParse(
+      data,
+    );
+
+  if (!parsed.success) {
+    throw new OnboardingStateResolutionError(
+      "Product Draft resolver returned an invalid payload.",
+    );
+  }
+
+  if (
+    parsed.data.status ===
+    "unauthenticated"
+  ) {
+    throw new OnboardingStateResolutionError(
+      "Verified authentication and database Product Draft state are inconsistent.",
+    );
+  }
+
+  if (parsed.data.status === "success") {
+    const draft =
+      parsed.data.product_draft;
+
+    return {
+      status: "success",
+      currentStep:
+        parsed.data.current_step,
+      productDraft: draft
+        ? {
+            sourceUrl:
+              draft.source_url,
+            title:
+              draft.title,
+            revision:
+              draft.revision,
+          }
+        : null,
+    };
+  }
+
+  if (
+    parsed.data.status ===
+    "step_not_available"
+  ) {
+    return {
+      status:
+        "step_not_available",
       currentStep:
         parsed.data.current_step,
     };

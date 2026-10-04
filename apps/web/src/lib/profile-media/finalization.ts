@@ -13,11 +13,13 @@ import {
   resolveProfileMediaUploadIntent,
 } from "@/lib/profile-media/database";
 import {
+  createProfileMediaStagingDownloadUrl,
   deleteProfileMediaStagingObjectBestEffort,
-  loadProfileMediaStagingObject,
   putCanonicalProfileMediaObject,
 } from "@/lib/profile-media/object-store";
-import { processProfileMediaSource } from "@/lib/profile-media/processor";
+import {
+  sanitizeProfileMediaStagingObject,
+} from "@/lib/profile-media/sanitizer-client";
 
 const uploadIntentIdSchema =
   z.string().uuid();
@@ -194,33 +196,36 @@ export async function finalizeProfileMediaUpload(
   }
 
   /*
-   * HEAD + GET the exact staging object selected by
-   * the authoritative database intent.
+   * Create a short-lived read capability for only
+   * the exact staging object selected by the
+   * authoritative Owner-scoped database intent.
    *
-   * Browser-supplied filenames, paths, MIME values,
-   * and byte sizes are never trusted here.
+   * The main application never downloads or decodes
+   * the hostile source bytes.
    */
-  const stagingObject =
-    await loadProfileMediaStagingObject(
+  const stagingDownloadUrl =
+    await createProfileMediaStagingDownloadUrl(
       {
         objectKey:
           intent.staging_object_key,
-        expectedContentType:
-          intent.expected_content_type,
       },
     );
 
   /*
-   * Decode the untrusted staging bytes and create a
-   * sanitized static canonical WebP.
+   * The isolated sanitizer has no Supabase or
+   * permanent R2 credentials. It receives only the
+   * one-time staging capability plus authoritative
+   * MIME and byte-size expectations.
    */
   const processed =
-    await processProfileMediaSource(
+    await sanitizeProfileMediaStagingObject(
       {
-        bytes:
-          stagingObject.bytes,
+        sourceUrl:
+          stagingDownloadUrl,
         expectedContentType:
-          stagingObject.contentType,
+          intent.expected_content_type,
+        expectedByteSize:
+          intent.declared_byte_size,
       },
     );
 

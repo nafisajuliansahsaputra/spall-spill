@@ -33,7 +33,15 @@ function redirectToLoginFailure(
   );
 }
 
-export async function POST(
+/*
+ * OAuth initiation is a top-level navigation,
+ * not a form submission.
+ *
+ * Keeping this route on GET lets CSP retain the
+ * strict `form-action 'self'` boundary while the
+ * browser may follow the resulting OAuth redirect.
+ */
+export async function GET(
   request: NextRequest,
 ) {
   const supabase = await createClient();

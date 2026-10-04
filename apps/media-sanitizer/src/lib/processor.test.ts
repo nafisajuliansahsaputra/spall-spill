@@ -11,11 +11,11 @@ import {
   PROFILE_MEDIA_MAX_SOURCE_BYTES,
   PROFILE_MEDIA_MAX_SOURCE_DIMENSION,
   type ProfileMediaSourceContentType,
-} from "@/lib/profile-media/contracts";
+} from "@spall-spill/profile-media-policy";
 import {
-  processProfileMediaSource,
-  ProfileMediaProcessingError,
-} from "@/lib/profile-media/processor";
+  sanitizeMedia,
+  MediaSanitizerProcessingError,
+} from "./processor";
 
 type FixtureFormat =
   | "jpeg"
@@ -93,12 +93,12 @@ async function expectProcessingFailure(
   await expect(
     operation,
   ).rejects.toBeInstanceOf(
-    ProfileMediaProcessingError,
+    MediaSanitizerProcessingError,
   );
 }
 
 describe(
-  "processProfileMediaSource",
+  "sanitizeMedia",
   () => {
     it.each(
       [
@@ -115,7 +115,7 @@ describe(
           );
 
         const result =
-          await processProfileMediaSource(
+          await sanitizeMedia(
             {
               bytes: source,
               expectedContentType:
@@ -175,7 +175,7 @@ describe(
       "rejects an empty source",
       async () => {
         await expectProcessingFailure(
-          processProfileMediaSource(
+          sanitizeMedia(
             {
               bytes:
                 Buffer.alloc(0),
@@ -197,7 +197,7 @@ describe(
           );
 
         await expectProcessingFailure(
-          processProfileMediaSource(
+          sanitizeMedia(
             {
               bytes: oversized,
               expectedContentType:
@@ -218,7 +218,7 @@ describe(
           );
 
         await expectProcessingFailure(
-          processProfileMediaSource(
+          sanitizeMedia(
             {
               bytes: malformed,
               expectedContentType:
@@ -238,7 +238,7 @@ describe(
           );
 
         await expectProcessingFailure(
-          processProfileMediaSource(
+          sanitizeMedia(
             {
               bytes: png,
               expectedContentType:
@@ -269,7 +269,7 @@ describe(
             .toBuffer();
 
         await expectProcessingFailure(
-          processProfileMediaSource(
+          sanitizeMedia(
             {
               bytes: avif,
               expectedContentType:
@@ -351,7 +351,7 @@ describe(
         ).toBe(2);
 
         await expectProcessingFailure(
-          processProfileMediaSource(
+          sanitizeMedia(
             {
               bytes:
                 animatedWebp,
@@ -391,7 +391,7 @@ describe(
         );
 
         await expectProcessingFailure(
-          processProfileMediaSource(
+          sanitizeMedia(
             {
               bytes:
                 oversizedDimension,
@@ -435,7 +435,7 @@ describe(
         );
 
         await expectProcessingFailure(
-          processProfileMediaSource(
+          sanitizeMedia(
             {
               bytes:
                 pixelBombBoundaryFixture,
@@ -490,7 +490,7 @@ describe(
         ).toBeDefined();
 
         const result =
-          await processProfileMediaSource(
+          await sanitizeMedia(
             {
               bytes: source,
               expectedContentType:
@@ -546,7 +546,7 @@ describe(
             .toBuffer();
 
         const result =
-          await processProfileMediaSource(
+          await sanitizeMedia(
             {
               bytes:
                 transparentPng,
@@ -590,7 +590,7 @@ describe(
             .toBuffer();
 
         const result =
-          await processProfileMediaSource(
+          await sanitizeMedia(
             {
               bytes:
                 largeSource,
@@ -625,7 +625,7 @@ describe(
           );
 
         const result =
-          await processProfileMediaSource(
+          await sanitizeMedia(
             {
               bytes:
                 smallSource,

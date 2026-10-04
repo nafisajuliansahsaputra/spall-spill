@@ -9,6 +9,9 @@ import {
 import {
   IdentityConnectionForm,
 } from "./identity-connection-form";
+import {
+  ProductDraftForm,
+} from "./product-draft-form";
 import type {
   RelevantFirstJobActionState,
 } from "./state";
@@ -31,6 +34,11 @@ type RelevantFirstJobFormProps = {
     string | null;
   initialDestinationUrl: string;
   baseConnectionRevision:
+    number | null;
+  initialProductSourceUrl: string;
+  initialProductTitle:
+    string | null;
+  baseProductRevision:
     number | null;
 };
 
@@ -102,6 +110,9 @@ export function RelevantFirstJobForm({
   initialSocialPlatform,
   initialDestinationUrl,
   baseConnectionRevision,
+  initialProductSourceUrl,
+  initialProductTitle,
+  baseProductRevision,
 }: RelevantFirstJobFormProps) {
   const initialState:
     RelevantFirstJobActionState = {
@@ -136,20 +147,66 @@ export function RelevantFirstJobForm({
         </p>
       </div>
 
-      <IdentityConnectionForm
-        initialConnectionKind={
-          initialConnectionKind
-        }
-        initialSocialPlatform={
-          initialSocialPlatform
-        }
-        initialDestinationUrl={
-          initialDestinationUrl
-        }
-        baseConnectionRevision={
-          baseConnectionRevision
-        }
-      />
+      {recommendation ===
+      "product" ? (
+        <>
+          <ProductDraftForm
+            initialSourceUrl={
+              initialProductSourceUrl
+            }
+            initialTitle={
+              initialProductTitle
+            }
+            baseProductRevision={
+              baseProductRevision
+            }
+          />
+
+          <IdentityConnectionForm
+            initialConnectionKind={
+              initialConnectionKind
+            }
+            initialSocialPlatform={
+              initialSocialPlatform
+            }
+            initialDestinationUrl={
+              initialDestinationUrl
+            }
+            baseConnectionRevision={
+              baseConnectionRevision
+            }
+          />
+        </>
+      ) : (
+        <>
+          <IdentityConnectionForm
+            initialConnectionKind={
+              initialConnectionKind
+            }
+            initialSocialPlatform={
+              initialSocialPlatform
+            }
+            initialDestinationUrl={
+              initialDestinationUrl
+            }
+            baseConnectionRevision={
+              baseConnectionRevision
+            }
+          />
+
+          <ProductDraftForm
+            initialSourceUrl={
+              initialProductSourceUrl
+            }
+            initialTitle={
+              initialProductTitle
+            }
+            baseProductRevision={
+              baseProductRevision
+            }
+          />
+        </>
+      )}
 
       {state.status === "error" &&
       state.message ? (

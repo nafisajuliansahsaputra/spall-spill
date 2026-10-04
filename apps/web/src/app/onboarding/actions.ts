@@ -1,5 +1,16 @@
 "use server";
 
+import {
+  normalizeExternalDestination,
+} from "@spall-spill/external-destination-policy";
+
+import {
+  ensureExternalDestinationPending,
+} from "@/lib/external-destination/safety";
+import {
+  scanAndRecordPendingExternalDestination,
+} from "@/lib/external-destination/trusted-recorder";
+
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
@@ -20,6 +31,7 @@ import type {
   HandleActionState,
   IdentityConnectionActionState,
   PrimaryUseCaseActionState,
+  ProductDraftActionState,
   RelevantFirstJobActionState,
   StarterCompositionActionState,
 } from "./state";
@@ -949,8 +961,22 @@ export async function saveIdentityConnectionAction(
 
   const destinationUrl =
     typeof rawDestinationUrl === "string"
-      ? rawDestinationUrl.trim()
+      ? rawDestinationUrl
       : "";
+
+  let normalizedDestinationUrl:
+    string | null =
+      null;
+
+  try {
+    normalizedDestinationUrl =
+      normalizeExternalDestination(
+        destinationUrl,
+      ).normalizedUrl;
+  } catch {
+    normalizedDestinationUrl =
+      null;
+  }
 
   const parsedConnectionKind =
     identityConnectionKindInputSchema
@@ -958,7 +984,10 @@ export async function saveIdentityConnectionAction(
 
   const parsedDestination =
     identityConnectionDestinationInputSchema
-      .safeParse(destinationUrl);
+      .safeParse(
+        normalizedDestinationUrl ??
+          destinationUrl,
+      );
 
   const fieldErrors:
     IdentityConnectionActionState["fieldErrors"] =
@@ -969,7 +998,15 @@ export async function saveIdentityConnectionAction(
       "Choose Social or Generic Link.";
   }
 
-  if (!parsedDestination.success) {
+  if (
+    normalizedDestinationUrl ===
+      null
+  ) {
+    fieldErrors.destinationUrl =
+      "Enter a safe external http:// or https:// destination.";
+  } else if (
+    !parsedDestination.success
+  ) {
     fieldErrors.destinationUrl =
       parsedDestination.error
         .issues[0]?.message ??
@@ -1004,6 +1041,8 @@ export async function saveIdentityConnectionAction(
 
   if (
     !parsedConnectionKind.success ||
+    normalizedDestinationUrl ===
+      null ||
     !parsedDestination.success ||
     Object.keys(fieldErrors).length > 0
   ) {
@@ -1089,6 +1128,39 @@ export async function saveIdentityConnectionAction(
 
   switch (status) {
     case "success":
+      try {
+        const pending =
+          await ensureExternalDestinationPending(
+            parsedDestination.data,
+          );
+
+        if (
+          pending.requiresScan
+        ) {
+          try {
+            await scanAndRecordPendingExternalDestination(
+              pending,
+            );
+          } catch {
+            /*
+             * Identity Working is already committed.
+             *
+             * Scanner, provider, stale-binding, or
+             * verdict-recording failure never promotes
+             * this destination to safe. Its effective
+             * safety state therefore remains fail-closed.
+             */
+          }
+        }
+      } catch {
+        /*
+         * Identity Working is already committed.
+         * Missing safety registration remains fail-closed:
+         * publication/clickability must never treat
+         * this destination as safe.
+         */
+      }
+
       redirect(
         "/onboarding?step=relevant_first_job",
       );
@@ -1169,6 +1241,294 @@ export async function saveIdentityConnectionAction(
         socialPlatform,
         destinationUrl:
           parsedDestination.data,
+        fieldErrors: {},
+      };
+  }
+}
+const productSourceUrlInputSchema =
+  z
+    .string()
+    .trim()
+    .min(8)
+    .max(2048)
+    .refine(
+      (value) => {
+        if (
+          /\s/.test(value) ||
+          value.includes("\\")
+        ) {
+          return false;
+        }
+
+        return /^https?:\/\/[a-z0-9][a-z0-9.-]*(?::[0-9]{1,5})?(?:[/?#].*)?$/i.test(
+          value,
+        );
+      },
+      {
+        message:
+          "Enter a valid http:// or https:// Product URL.",
+      },
+    );
+
+const productTitleInputSchema =
+  z
+    .string()
+    .trim()
+    .max(
+      160,
+      "Keep the Product title within 160 characters.",
+    )
+    .refine(
+      (value) =>
+        !/[\u0000-\u001f\u007f]/.test(
+          value,
+        ),
+      {
+        message:
+          "Product title contains unsupported characters.",
+      },
+    );
+
+export async function saveProductDraftAction(
+  _previousState: ProductDraftActionState,
+  formData: FormData,
+): Promise<ProductDraftActionState> {
+  const rawSourceUrl =
+    formData.get("sourceUrl");
+
+  const rawTitle =
+    formData.get("title");
+
+  const sourceUrl =
+    typeof rawSourceUrl === "string"
+      ? rawSourceUrl
+      : "";
+
+  let normalizedSourceUrl:
+    string | null =
+      null;
+
+  try {
+    normalizedSourceUrl =
+      normalizeExternalDestination(
+        sourceUrl,
+      ).normalizedUrl;
+  } catch {
+    normalizedSourceUrl =
+      null;
+  }
+
+  const title =
+    typeof rawTitle === "string"
+      ? rawTitle.trim()
+      : "";
+
+  const parsedSourceUrl =
+    productSourceUrlInputSchema.safeParse(
+      normalizedSourceUrl ??
+        sourceUrl,
+    );
+
+  const parsedTitle =
+    productTitleInputSchema.safeParse(
+      title,
+    );
+
+  const fieldErrors:
+    ProductDraftActionState["fieldErrors"] =
+      {};
+
+  if (
+    normalizedSourceUrl ===
+      null
+  ) {
+    fieldErrors.sourceUrl =
+      "Enter a safe external http:// or https:// Product URL.";
+  } else if (
+    !parsedSourceUrl.success
+  ) {
+    fieldErrors.sourceUrl =
+      parsedSourceUrl.error
+        .issues[0]?.message ??
+      "Enter a valid Product URL.";
+  }
+
+  if (!parsedTitle.success) {
+    fieldErrors.title =
+      parsedTitle.error
+        .issues[0]?.message ??
+      "Enter a valid Product title.";
+  }
+
+  if (
+    normalizedSourceUrl ===
+      null ||
+    !parsedSourceUrl.success ||
+    !parsedTitle.success
+  ) {
+    return {
+      status: "error",
+      message:
+        "Check your Product Draft and try again.",
+      sourceUrl,
+      title,
+      fieldErrors,
+    };
+  }
+
+  const parsedProductRevision =
+    parseOptionalRevision(
+      formData.get(
+        "baseProductRevision",
+      ),
+    );
+
+  if (!parsedProductRevision.success) {
+    return {
+      status: "error",
+      message:
+        "Your saved Product Draft could not be verified. Reload the page and try again.",
+      sourceUrl:
+        parsedSourceUrl.data,
+      title:
+        parsedTitle.data,
+      fieldErrors: {},
+    };
+  }
+
+  const supabase =
+    await createClient();
+
+  const { data, error } =
+    await supabase
+      .schema("api")
+      .rpc(
+        "save_current_owner_product_draft",
+        {
+          input_source_url:
+            parsedSourceUrl.data,
+          input_title:
+            parsedTitle.data.length > 0
+              ? parsedTitle.data
+              : null,
+          base_product_revision:
+            parsedProductRevision.data,
+        },
+      );
+
+  if (error) {
+    return {
+      status: "error",
+      message:
+        "We couldn't save this Product Draft right now. Your last acknowledged Draft is unchanged.",
+      sourceUrl:
+        parsedSourceUrl.data,
+      title:
+        parsedTitle.data,
+      fieldErrors: {},
+    };
+  }
+
+  const status =
+    getRpcStatus(data);
+
+  resolveOwnerRoutingStatus(status);
+
+  switch (status) {
+    case "success":
+      try {
+        const pending =
+          await ensureExternalDestinationPending(
+            parsedSourceUrl.data,
+          );
+
+        if (
+          pending.requiresScan
+        ) {
+          try {
+            await scanAndRecordPendingExternalDestination(
+              pending,
+            );
+          } catch {
+            /*
+             * Product Draft is already committed.
+             *
+             * Scanner, provider, stale-binding, or
+             * verdict-recording failure never promotes
+             * this destination to safe. Its effective
+             * safety state therefore remains fail-closed.
+             */
+          }
+        }
+      } catch {
+        /*
+         * Product Draft is already committed.
+         * Registration failure cannot make it safe;
+         * missing safety state remains fail-closed and
+         * publication must fail closed.
+         */
+      }
+
+      redirect(
+        "/onboarding?step=relevant_first_job",
+      );
+
+    case "invalid_source_url":
+      return {
+        status: "error",
+        message:
+          "Check your Product Draft and try again.",
+        sourceUrl:
+          parsedSourceUrl.data,
+        title:
+          parsedTitle.data,
+        fieldErrors: {
+          sourceUrl:
+            "Enter a valid http:// or https:// Product URL.",
+        },
+      };
+
+    case "invalid_title":
+      return {
+        status: "error",
+        message:
+          "Check your Product Draft and try again.",
+        sourceUrl:
+          parsedSourceUrl.data,
+        title:
+          parsedTitle.data,
+        fieldErrors: {
+          title:
+            "Enter a valid Product title within 160 characters.",
+        },
+      };
+
+    case "stale_write":
+      return {
+        status: "error",
+        message:
+          "This Product Draft changed in another tab or session. Reload the page before saving again.",
+        sourceUrl:
+          parsedSourceUrl.data,
+        title:
+          parsedTitle.data,
+        fieldErrors: {},
+      };
+
+    case "step_not_available":
+    case "prerequisite_missing":
+    case "progress_missing":
+      redirect("/onboarding");
+
+    default:
+      return {
+        status: "error",
+        message:
+          "We couldn't safely save this Product Draft. Reload the page and try again.",
+        sourceUrl:
+          parsedSourceUrl.data,
+        title:
+          parsedTitle.data,
         fieldErrors: {},
       };
   }

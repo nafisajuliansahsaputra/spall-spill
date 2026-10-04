@@ -195,6 +195,26 @@ This model intentionally rejects both extremes:
 
 A security-sensitive implementation checkpoint is not closed merely because automated tests pass when material runtime/manual boundaries remain unverified.
 
+### External destination safety provider verification status
+
+As of **2026-09-02**, the external-destination safety architecture is being hardened as part of O01-S5 work.
+
+The following verification state is authoritative until superseded by later committed evidence:
+
+- Google Web Risk integration is implemented locally, but **live provider verification is DEFERRED / NOT CLOSED**.
+- The live Web Risk probe currently cannot complete because the Google Cloud project reports `BILLING_DISABLED`. This is an external provider/account-readiness blocker, not evidence that the local scanner implementation has passed live verification.
+- The intended revisit window is approximately **2026-09-16**. Reaching that date does not automatically change status; live evidence must still be rerun and recorded.
+- Google Web Risk must not be represented as `VERIFIED`, `CLOSED`, or production-ready until a successful live provider probe and relevant end-to-end scanner verification have been completed.
+- Gemini semantic-classification live verification across the complete provider chain also remains unverified while the upstream Web Risk gate prevents the full scanner path from completing.
+- Provider unavailability, scanner failure, malformed provider output, stale binding, or other incomplete safety evidence must remain **fail-closed**.
+- Private Owner Working/Draft persistence may remain available when safety infrastructure is unavailable, but the corresponding external destination must remain effectively `pending` or otherwise non-safe.
+- No user-supplied external destination may become publicly trusted, Published as a safe destination, or exposed as a public clickable destination solely because its private Working/Draft record was saved.
+- A destination may become trusted for public use only after the required safety pipeline completes and produces a valid, current, bound safety verdict according to the active destination-safety contract.
+- O01-S5 currently has no publication boundary, so temporary provider deferral does not authorize weaker safety semantics and does not alter the locked Working-versus-Published isolation.
+- This provider deferral does **not** change J1–J9 User Flow topology.
+
+This status entry exists specifically so future implementation sessions and fresh repository reads do not mistake local implementation evidence for completed live-provider verification.
+
 ### Development / security lab operating model
 
 The current development workflow separates implementation and adversarial/client testing responsibilities:

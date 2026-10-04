@@ -9,6 +9,7 @@ import {
   resolveCurrentBasicIdentityState,
   resolveCurrentIdentityConnectionState,
   resolveCurrentOnboardingState,
+  resolveCurrentProductDraftState,
   resolveCurrentRelevantFirstJobState,
   resolveCurrentStarterCompositionState,
 } from "@/lib/onboarding/state";
@@ -307,6 +308,38 @@ export default async function OnboardingPage({
         );
     }
   }
+  const productDraft =
+    displayedStep ===
+    "relevant_first_job"
+      ? await resolveCurrentProductDraftState()
+      : null;
+
+  if (
+    productDraft &&
+    productDraft.status !== "success"
+  ) {
+    switch (productDraft.status) {
+      case "unauthenticated":
+      case "owner_missing":
+      case "owner_unavailable":
+      case "onboarding_complete":
+        redirect("/auth/resolve");
+
+      case "step_not_available":
+        redirect("/onboarding");
+
+      case "progress_missing":
+        throw new Error(
+          "Authoritative onboarding progress is missing while resolving Product Draft.",
+        );
+
+      case "prerequisite_missing":
+        throw new Error(
+          `Required onboarding prerequisite is missing before Product Draft: ${productDraft.prerequisite}.`,
+        );
+    }
+  }
+
   const savedProfileAssetKey =
     basicIdentity?.status ===
       "success"
@@ -664,6 +697,33 @@ export default async function OnboardingPage({
                   "success"
                     ? identityConnection
                         .connectionWorking
+                        ?.revision ??
+                      null
+                    : null
+                }
+                initialProductSourceUrl={
+                  productDraft?.status ===
+                  "success"
+                    ? productDraft
+                        .productDraft
+                        ?.sourceUrl ??
+                      ""
+                    : ""
+                }
+                initialProductTitle={
+                  productDraft?.status ===
+                  "success"
+                    ? productDraft
+                        .productDraft
+                        ?.title ??
+                      null
+                    : null
+                }
+                baseProductRevision={
+                  productDraft?.status ===
+                  "success"
+                    ? productDraft
+                        .productDraft
                         ?.revision ??
                       null
                     : null

@@ -1,7 +1,5 @@
 import {
   DeleteObjectCommand,
-  GetObjectCommand,
-  HeadObjectCommand,
   PutObjectCommand,
 } from "@aws-sdk/client-s3";
 import {
@@ -14,12 +12,14 @@ import {
 
 import {
   PROFILE_MEDIA_CANONICAL_CONTENT_TYPE,
-  PROFILE_MEDIA_MAX_SOURCE_BYTES,
-} from "@/lib/profile-media/contracts";
+  PROFILE_MEDIA_MAX_CANONICAL_BYTES,
+} from "@spall-spill/profile-media-policy";
 
-const mocks = vi.hoisted(() => ({
-  send: vi.fn(),
-}));
+const mocks = vi.hoisted(
+  () => ({
+    send: vi.fn(),
+  }),
+);
 
 vi.mock(
   "@/lib/profile-media/r2",
@@ -27,8 +27,10 @@ vi.mock(
     createProfileMediaR2Connection:
       () => ({
         client: {
-          send: mocks.send,
+          send:
+            mocks.send,
         },
+
         bucket:
           "profile-media-test-bucket",
       }),
@@ -37,20 +39,32 @@ vi.mock(
 
 import {
   deleteProfileMediaStagingObjectBestEffort,
-  loadProfileMediaStagingObject,
   putCanonicalProfileMediaObject,
 } from "@/lib/profile-media/object-store";
 
-function createMockBody(
-  bytes: Buffer,
-) {
-  return {
-    transformToByteArray:
-      vi.fn(
-        async () =>
-          Uint8Array.from(bytes),
-      ),
-  };
+function createMinimalWebp():
+  Buffer {
+  const bytes =
+    Buffer.alloc(12);
+
+  bytes.write(
+    "RIFF",
+    0,
+    "ascii",
+  );
+
+  bytes.writeUInt32LE(
+    4,
+    4,
+  );
+
+  bytes.write(
+    "WEBP",
+    8,
+    "ascii",
+  );
+
+  return bytes;
 }
 
 describe(
@@ -61,319 +75,36 @@ describe(
     });
 
     it(
-      "loads the exact staging object using authoritative HEAD and GET metadata",
+      "creates canonical WebP with immutable conditional PutObject semantics",
       async () => {
-        const sourceBytes =
-          Buffer.from([
-            1,
-            2,
-            3,
-            4,
-          ]);
+        const bytes =
+          createMinimalWebp();
 
-        mocks.send.mockImplementation(
-          async (
-            command: unknown,
-          ) => {
-            if (
-              command instanceof
-              HeadObjectCommand
-            ) {
-              return {
-                ContentLength:
-                  sourceBytes.byteLength,
-                ContentType:
-                  "image/png",
-              };
-            }
-
-            if (
-              command instanceof
-              GetObjectCommand
-            ) {
-              return {
-                ContentLength:
-                  sourceBytes.byteLength,
-                ContentType:
-                  "image/png",
-                Body:
-                  createMockBody(
-                    sourceBytes,
-                  ),
-              };
-            }
-
-            throw new Error(
-              "Unexpected command.",
-            );
-          },
-        );
-
-        const result =
-          await loadProfileMediaStagingObject(
-            {
-              objectKey:
-                "staging/profile/11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222",
-              expectedContentType:
-                "image/png",
-            },
-          );
-
-        expect(
-          result.contentType,
-        ).toBe("image/png");
-
-        expect(
-          result.byteSize,
-        ).toBe(
-          sourceBytes.byteLength,
-        );
-
-        expect(
-          Buffer.compare(
-            result.bytes,
-            sourceBytes,
-          ),
-        ).toBe(0);
-
-        expect(
-          mocks.send,
-        ).toHaveBeenCalledTimes(2);
-
-        expect(
-          mocks.send.mock.calls[0]?.[0],
-        ).toBeInstanceOf(
-          HeadObjectCommand,
-        );
-
-        expect(
-          mocks.send.mock.calls[1]?.[0],
-        ).toBeInstanceOf(
-          GetObjectCommand,
-        );
-      },
-    );
-
-    it(
-      "rejects an authoritative HEAD size above 5 MiB before downloading the object",
-      async () => {
-        mocks.send.mockResolvedValueOnce(
-          {
-            ContentLength:
-              PROFILE_MEDIA_MAX_SOURCE_BYTES +
-              1,
-            ContentType:
-              "image/jpeg",
-          },
-        );
-
-        await expect(
-          loadProfileMediaStagingObject(
-            {
-              objectKey:
-                "staging/profile/test/oversized",
-              expectedContentType:
-                "image/jpeg",
-            },
-          ),
-        ).rejects.toThrow();
-
-        expect(
-          mocks.send,
-        ).toHaveBeenCalledTimes(1);
-
-        expect(
-          mocks.send.mock.calls[0]?.[0],
-        ).toBeInstanceOf(
-          HeadObjectCommand,
-        );
-      },
-    );
-
-    it(
-      "rejects authoritative HEAD Content-Type mismatch before GET",
-      async () => {
-        mocks.send.mockResolvedValueOnce(
-          {
-            ContentLength: 100,
-            ContentType:
-              "image/png",
-          },
-        );
-
-        await expect(
-          loadProfileMediaStagingObject(
-            {
-              objectKey:
-                "staging/profile/test/mismatch",
-              expectedContentType:
-                "image/jpeg",
-            },
-          ),
-        ).rejects.toThrow();
-
-        expect(
-          mocks.send,
-        ).toHaveBeenCalledTimes(1);
-      },
-    );
-
-    it(
-      "rejects GET Content-Type that disagrees with the authoritative intent",
-      async () => {
-        const sourceBytes =
-          Buffer.from([
-            1,
-            2,
-            3,
-          ]);
-
-        mocks.send.mockImplementation(
-          async (
-            command: unknown,
-          ) => {
-            if (
-              command instanceof
-              HeadObjectCommand
-            ) {
-              return {
-                ContentLength: 3,
-                ContentType:
-                  "image/png",
-              };
-            }
-
-            if (
-              command instanceof
-              GetObjectCommand
-            ) {
-              return {
-                ContentLength: 3,
-                ContentType:
-                  "image/jpeg",
-                Body:
-                  createMockBody(
-                    sourceBytes,
-                  ),
-              };
-            }
-
-            throw new Error(
-              "Unexpected command.",
-            );
-          },
-        );
-
-        await expect(
-          loadProfileMediaStagingObject(
-            {
-              objectKey:
-                "staging/profile/test/get-mismatch",
-              expectedContentType:
-                "image/png",
-            },
-          ),
-        ).rejects.toThrow();
-      },
-    );
-
-    it(
-      "rejects downloaded bytes whose length disagrees with authoritative object metadata",
-      async () => {
-        const actualBytes =
-          Buffer.from([
-            1,
-            2,
-          ]);
-
-        mocks.send.mockImplementation(
-          async (
-            command: unknown,
-          ) => {
-            if (
-              command instanceof
-              HeadObjectCommand
-            ) {
-              return {
-                ContentLength: 3,
-                ContentType:
-                  "image/webp",
-              };
-            }
-
-            if (
-              command instanceof
-              GetObjectCommand
-            ) {
-              return {
-                ContentLength: 3,
-                ContentType:
-                  "image/webp",
-                Body:
-                  createMockBody(
-                    actualBytes,
-                  ),
-              };
-            }
-
-            throw new Error(
-              "Unexpected command.",
-            );
-          },
-        );
-
-        await expect(
-          loadProfileMediaStagingObject(
-            {
-              objectKey:
-                "staging/profile/test/truncated",
-              expectedContentType:
-                "image/webp",
-            },
-          ),
-        ).rejects.toThrow();
-      },
-    );
-
-    it(
-      "creates canonical media with immutable conditional PutObject semantics",
-      async () => {
-        const canonicalBytes =
-          Buffer.from([
-            10,
-            20,
-            30,
-            40,
-          ]);
-
-        mocks.send.mockResolvedValue(
-          {},
-        );
+        mocks.send
+          .mockResolvedValue({});
 
         const objectKey =
           "working/profile/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa.webp";
 
-        await putCanonicalProfileMediaObject(
-          {
-            objectKey,
-            bytes:
-              canonicalBytes,
-          },
-        );
+        await putCanonicalProfileMediaObject({
+          objectKey,
+          bytes,
+        });
 
         expect(
           mocks.send,
-        ).toHaveBeenCalledTimes(1);
+        ).toHaveBeenCalledTimes(
+          1,
+        );
 
         const command =
           mocks.send.mock
             .calls[0]?.[0];
 
-        expect(
-          command,
-        ).toBeInstanceOf(
-          PutObjectCommand,
-        );
+        expect(command)
+          .toBeInstanceOf(
+            PutObjectCommand,
+          );
 
         const input =
           (
@@ -400,37 +131,26 @@ describe(
         expect(
           input.ContentLength,
         ).toBe(
-          canonicalBytes.byteLength,
+          bytes.byteLength,
         );
 
         expect(
           input.IfNoneMatch,
         ).toBe("*");
-
-        expect(
-          Buffer.compare(
-            Buffer.from(
-              input.Body as
-                Uint8Array,
-            ),
-            canonicalBytes,
-          ),
-        ).toBe(0);
       },
     );
 
     it(
-      "rejects empty canonical bytes before PutObject",
+      "rejects writes outside the canonical namespace",
       async () => {
         await expect(
-          putCanonicalProfileMediaObject(
-            {
-              objectKey:
-                "working/profile/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa.webp",
-              bytes:
-                Buffer.alloc(0),
-            },
-          ),
+          putCanonicalProfileMediaObject({
+            objectKey:
+              "staging/profile/evil.webp",
+
+            bytes:
+              createMinimalWebp(),
+          }),
         ).rejects.toThrow();
 
         expect(
@@ -440,29 +160,91 @@ describe(
     );
 
     it(
-      "treats staging deletion failure as best-effort cleanup",
+      "rejects malformed canonical bytes before R2",
+      async () => {
+        await expect(
+          putCanonicalProfileMediaObject({
+            objectKey:
+              "working/profile/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa.webp",
+
+            bytes:
+              Buffer.from(
+                "<script>evil()</script>",
+              ),
+          }),
+        ).rejects.toThrow();
+
+        expect(
+          mocks.send,
+        ).not.toHaveBeenCalled();
+      },
+    );
+
+    it(
+      "rejects canonical bytes above the authoritative ceiling",
+      async () => {
+        const oversized =
+          Buffer.alloc(
+            PROFILE_MEDIA_MAX_CANONICAL_BYTES +
+              1,
+          );
+
+        await expect(
+          putCanonicalProfileMediaObject({
+            objectKey:
+              "working/profile/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa.webp",
+
+            bytes:
+              oversized,
+          }),
+        ).rejects.toThrow();
+
+        expect(
+          mocks.send,
+        ).not.toHaveBeenCalled();
+      },
+    );
+
+    it(
+      "treats valid staging deletion failure as best effort",
       async () => {
         mocks.send.mockRejectedValue(
           new Error(
-            "Simulated R2 delete failure.",
+            "Simulated delete failure.",
           ),
         );
 
         await expect(
           deleteProfileMediaStagingObjectBestEffort(
-            "staging/profile/test/delete",
+            "staging/profile/11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222",
           ),
         ).resolves.toBeUndefined();
 
         expect(
           mocks.send,
-        ).toHaveBeenCalledTimes(1);
+        ).toHaveBeenCalledTimes(
+          1,
+        );
 
         expect(
-          mocks.send.mock.calls[0]?.[0],
+          mocks.send.mock
+            .calls[0]?.[0],
         ).toBeInstanceOf(
           DeleteObjectCommand,
         );
+      },
+    );
+
+    it(
+      "refuses to let staging cleanup delete canonical objects",
+      async () => {
+        await deleteProfileMediaStagingObjectBestEffort(
+          "working/profile/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa.webp",
+        );
+
+        expect(
+          mocks.send,
+        ).not.toHaveBeenCalled();
       },
     );
   },

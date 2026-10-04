@@ -55,3 +55,13 @@ export type IdentityConnectionActionState = {
     destinationUrl?: string;
   };
 };
+export type ProductDraftActionState = {
+  status: "idle" | "error";
+  message: string | null;
+  sourceUrl: string;
+  title: string;
+  fieldErrors: {
+    sourceUrl?: string;
+    title?: string;
+  };
+};

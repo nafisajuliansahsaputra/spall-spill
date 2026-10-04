@@ -3,199 +3,129 @@ import "server-only";
 import {
   DeleteObjectCommand,
   GetObjectCommand,
-  HeadObjectCommand,
   PutObjectCommand,
 } from "@aws-sdk/client-s3";
-
+import {
+  getSignedUrl,
+} from "@aws-sdk/s3-request-presigner";
 import {
   PROFILE_MEDIA_CANONICAL_CONTENT_TYPE,
-  PROFILE_MEDIA_MAX_SOURCE_BYTES,
-  type ProfileMediaSourceContentType,
-} from "@/lib/profile-media/contracts";
-import { createProfileMediaR2Connection } from "@/lib/profile-media/r2";
+  PROFILE_MEDIA_MAX_CANONICAL_BYTES,
+  PROFILE_MEDIA_SANITIZER_SOURCE_GET_TTL_SECONDS,
+} from "@spall-spill/profile-media-policy";
 
-export type ProfileMediaStagingObject =
-  Readonly<{
-    bytes: Buffer;
-    contentType:
-      ProfileMediaSourceContentType;
-    byteSize: number;
-  }>;
+import {
+  createProfileMediaR2Connection,
+} from "@/lib/profile-media/r2";
 
-export class ProfileMediaObjectStoreError extends Error {
+const UUID_PATTERN =
+  "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
+
+const STAGING_OBJECT_KEY_PATTERN =
+  new RegExp(
+    `^staging/profile/${UUID_PATTERN}/${UUID_PATTERN}$`,
+  );
+
+const CANONICAL_OBJECT_KEY_PATTERN =
+  new RegExp(
+    `^working/profile/${UUID_PATTERN}\\.webp$`,
+  );
+
+export class ProfileMediaObjectStoreError
+  extends Error {
   constructor(message: string) {
     super(message);
+
     this.name =
       "ProfileMediaObjectStoreError";
   }
 }
 
-function normalizeContentType(
-  value: string | undefined,
-): string | null {
-  const normalized =
-    value?.trim().toLowerCase();
-
-  return normalized
-    ? normalized
-    : null;
-}
-
-function assertValidSourceByteSize(
-  value: number | undefined,
-): number {
+function assertStagingObjectKey(
+  objectKey: string,
+): void {
   if (
-    value === undefined ||
-    !Number.isSafeInteger(value) ||
-    value < 1 ||
-    value >
-      PROFILE_MEDIA_MAX_SOURCE_BYTES
+    !STAGING_OBJECT_KEY_PATTERN.test(
+      objectKey,
+    )
   ) {
     throw new ProfileMediaObjectStoreError(
-      "Profile Media staging object has an invalid authoritative byte size.",
+      "Profile Media staging object key is outside the allowed namespace.",
     );
   }
-
-  return value;
 }
 
-export async function loadProfileMediaStagingObject(
+function assertCanonicalObjectKey(
+  objectKey: string,
+): void {
+  if (
+    !CANONICAL_OBJECT_KEY_PATTERN.test(
+      objectKey,
+    )
+  ) {
+    throw new ProfileMediaObjectStoreError(
+      "Canonical Profile Media object key is outside the allowed namespace.",
+    );
+  }
+}
+
+function assertCanonicalWebp(
+  bytes: Buffer,
+): void {
+  if (
+    bytes.byteLength < 12 ||
+    bytes.byteLength >
+      PROFILE_MEDIA_MAX_CANONICAL_BYTES ||
+    bytes
+      .subarray(0, 4)
+      .toString("ascii") !==
+      "RIFF" ||
+    bytes
+      .subarray(8, 12)
+      .toString("ascii") !==
+      "WEBP" ||
+    bytes.readUInt32LE(4) +
+      8 !==
+      bytes.byteLength
+  ) {
+    throw new ProfileMediaObjectStoreError(
+      "Canonical Profile Media bytes are not a valid bounded WebP container.",
+    );
+  }
+}
+
+export async function createProfileMediaStagingDownloadUrl(
   input: Readonly<{
     objectKey: string;
-    expectedContentType:
-      ProfileMediaSourceContentType;
   }>,
-): Promise<ProfileMediaStagingObject> {
+): Promise<string> {
+  assertStagingObjectKey(
+    input.objectKey,
+  );
+
   const {
     client,
     bucket,
   } =
     createProfileMediaR2Connection();
 
-  let authoritativeByteSize: number;
-  let authoritativeContentType: string | null;
-
   try {
-    const head =
-      await client.send(
-        new HeadObjectCommand({
-          Bucket: bucket,
-          Key: input.objectKey,
-        }),
-      );
-
-    authoritativeByteSize =
-      assertValidSourceByteSize(
-        head.ContentLength,
-      );
-
-    authoritativeContentType =
-      normalizeContentType(
-        head.ContentType,
-      );
-  } catch (error) {
-    if (
-      error instanceof
-      ProfileMediaObjectStoreError
-    ) {
-      throw error;
-    }
-
-    throw new ProfileMediaObjectStoreError(
-      "Profile Media staging object could not be inspected.",
+    return await getSignedUrl(
+      client,
+      new GetObjectCommand({
+        Bucket: bucket,
+        Key: input.objectKey,
+      }),
+      {
+        expiresIn:
+          PROFILE_MEDIA_SANITIZER_SOURCE_GET_TTL_SECONDS,
+      },
     );
-  }
-
-  if (
-    authoritativeContentType !==
-    input.expectedContentType
-  ) {
-    throw new ProfileMediaObjectStoreError(
-      "Profile Media staging object Content-Type does not match its upload intent.",
-    );
-  }
-
-  let response;
-
-  try {
-    response =
-      await client.send(
-        new GetObjectCommand({
-          Bucket: bucket,
-          Key: input.objectKey,
-        }),
-      );
   } catch {
     throw new ProfileMediaObjectStoreError(
-      "Profile Media staging object could not be loaded.",
+      "Profile Media staging download capability could not be created.",
     );
   }
-
-  const responseContentType =
-    normalizeContentType(
-      response.ContentType,
-    );
-
-  if (
-    responseContentType !==
-    input.expectedContentType
-  ) {
-    throw new ProfileMediaObjectStoreError(
-      "Profile Media staging object changed between inspection and download.",
-    );
-  }
-
-  if (
-    response.ContentLength !==
-      undefined &&
-    response.ContentLength !==
-      authoritativeByteSize
-  ) {
-    throw new ProfileMediaObjectStoreError(
-      "Profile Media staging object size changed between inspection and download.",
-    );
-  }
-
-  if (!response.Body) {
-    throw new ProfileMediaObjectStoreError(
-      "Profile Media staging object returned no body.",
-    );
-  }
-
-  let bytes: Buffer;
-
-  try {
-    const byteArray =
-      await response.Body
-        .transformToByteArray();
-
-    bytes =
-      Buffer.from(byteArray);
-  } catch {
-    throw new ProfileMediaObjectStoreError(
-      "Profile Media staging object body could not be read.",
-    );
-  }
-
-  if (
-    bytes.byteLength !==
-      authoritativeByteSize ||
-    bytes.byteLength < 1 ||
-    bytes.byteLength >
-      PROFILE_MEDIA_MAX_SOURCE_BYTES
-  ) {
-    throw new ProfileMediaObjectStoreError(
-      "Profile Media staging object body size is invalid.",
-    );
-  }
-
-  return {
-    bytes,
-    contentType:
-      input.expectedContentType,
-    byteSize:
-      authoritativeByteSize,
-  };
 }
 
 export async function putCanonicalProfileMediaObject(
@@ -204,11 +134,13 @@ export async function putCanonicalProfileMediaObject(
     bytes: Buffer;
   }>,
 ): Promise<void> {
-  if (input.bytes.byteLength < 1) {
-    throw new ProfileMediaObjectStoreError(
-      "Canonical Profile Media bytes are empty.",
-    );
-  }
+  assertCanonicalObjectKey(
+    input.objectKey,
+  );
+
+  assertCanonicalWebp(
+    input.bytes,
+  );
 
   const {
     client,
@@ -222,14 +154,16 @@ export async function putCanonicalProfileMediaObject(
         Bucket: bucket,
         Key: input.objectKey,
         Body: input.bytes,
+
         ContentLength:
           input.bytes.byteLength,
+
         ContentType:
           PROFILE_MEDIA_CANONICAL_CONTENT_TYPE,
 
         /*
          * Canonical Profile Media is immutable.
-         * Never silently overwrite an existing key.
+         * Existing objects are never silently replaced.
          */
         IfNoneMatch: "*",
       }),
@@ -244,6 +178,18 @@ export async function putCanonicalProfileMediaObject(
 export async function deleteProfileMediaStagingObjectBestEffort(
   objectKey: string,
 ): Promise<void> {
+  /*
+   * Cleanup must never gain authority over the
+   * canonical Working namespace.
+   */
+  if (
+    !STAGING_OBJECT_KEY_PATTERN.test(
+      objectKey,
+    )
+  ) {
+    return;
+  }
+
   const {
     client,
     bucket,
@@ -260,11 +206,9 @@ export async function deleteProfileMediaStagingObjectBestEffort(
   } catch {
     /*
      * Successful canonicalization and database
-     * registration must not be rolled back merely
-     * because staging cleanup failed.
-     *
-     * The bucket lifecycle rule remains the
-     * secondary cleanup boundary.
+     * registration are not rolled back if cleanup
+     * fails. Bucket lifecycle cleanup remains the
+     * secondary boundary.
      */
   }
 }
