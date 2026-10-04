@@ -1,3 +1,4 @@
+vi.mock("@/lib/auth/resolved-destination", () => ({ resolveCurrentOwnerDestination: mocks.destination }));
 import {
   beforeEach,
   describe,
@@ -15,6 +16,7 @@ const mocks = vi.hoisted(() => ({
     vi.fn(),
   finalizeProfileMediaUpload:
     vi.fn(),
+  destination: vi.fn(),
   redirect:
     vi.fn(),
 }));
@@ -71,6 +73,7 @@ describe(
   () => {
     beforeEach(() => {
       vi.clearAllMocks();
+    mocks.destination.mockResolvedValue("/login");
 
       mocks.redirect.mockImplementation(
         (destination: string) => {
@@ -225,13 +228,13 @@ describe(
         await expect(
           refreshSavedProfileMediaPreviewAction(),
         ).rejects.toThrow(
-          "REDIRECT:/auth/resolve",
+          "REDIRECT:/login",
         );
 
         expect(
           mocks.redirect,
         ).toHaveBeenCalledWith(
-          "/auth/resolve",
+          "/login",
         );
 
         expect(

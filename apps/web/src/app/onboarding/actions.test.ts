@@ -1,3 +1,4 @@
+vi.mock("@/lib/auth/resolved-destination", () => ({ resolveCurrentOwnerDestination: mocks.destination }));
 import {
   beforeEach,
   describe,
@@ -10,7 +11,7 @@ const mocks = vi.hoisted(() => ({
   createClient: vi.fn(),
   schema: vi.fn(),
   rpc: vi.fn(),
-  redirect: vi.fn(),
+  destination: vi.fn(), redirect: vi.fn(),
 }));
 
 vi.mock(
@@ -91,6 +92,8 @@ describe(
   () => {
     beforeEach(() => {
       vi.clearAllMocks();
+      mocks.destination.mockResolvedValue("/login");
+      mocks.redirect.mockImplementation((path) => { throw new Error(`REDIRECT:${path}`); });
 
       mocks.schema.mockReturnValue(
         {
@@ -143,6 +146,17 @@ describe(
         expect(
           mocks.rpc,
         ).not.toHaveBeenCalled();
+      },
+    );
+
+    it.each(["unauthenticated", "owner_missing", "owner_not_eligible"])(
+      "awaits authoritative final destination after Identity save rejects %s", async (status) => {
+        mocks.rpc.mockResolvedValue({ data: { status }, error: null });
+        mocks.destination.mockResolvedValue("/dashboard/account-status");
+        await expect(saveBasicIdentityAction(previousState, createFormData(null)))
+          .rejects.toThrow("REDIRECT:/dashboard/account-status");
+        expect(mocks.destination).toHaveBeenCalledOnce();
+        expect(mocks.rpc).toHaveBeenCalledOnce();
       },
     );
 
@@ -264,6 +278,7 @@ describe(
   () => {
     beforeEach(() => {
       vi.clearAllMocks();
+    mocks.destination.mockResolvedValue("/login");
 
       mocks.schema.mockReturnValue({
         rpc: mocks.rpc,

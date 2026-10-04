@@ -12,6 +12,7 @@ import {
 } from "@/lib/external-destination/trusted-recorder";
 
 import { redirect } from "next/navigation";
+import { redirectToCurrentOwnerDestination } from "@/lib/auth/action-destination";
 import { z } from "zod";
 
 import {
@@ -143,15 +144,15 @@ function parseOptionalProfileAssetKey(
   };
 }
 
-function resolveOwnerRoutingStatus(
+async function resolveOwnerRoutingStatus(
   status: string | null,
-): never | void {
+): Promise<void> {
   if (
     status === "unauthenticated" ||
     status === "owner_missing" ||
     status === "owner_not_eligible"
   ) {
-    redirect("/auth/resolve");
+    return await redirectToCurrentOwnerDestination();
   }
 }
 
@@ -229,7 +230,7 @@ export async function claimHandleAction(
 
   const status = getRpcStatus(data);
 
-  resolveOwnerRoutingStatus(status);
+  await resolveOwnerRoutingStatus(status);
 
   switch (status) {
     case "success":
@@ -367,7 +368,7 @@ export async function setPrimaryUseCaseAction(
 
   const status = getRpcStatus(data);
 
-  resolveOwnerRoutingStatus(status);
+  await resolveOwnerRoutingStatus(status);
 
   switch (status) {
     case "success":
@@ -563,7 +564,7 @@ export async function saveBasicIdentityAction(
 
   const status = getRpcStatus(data);
 
-  resolveOwnerRoutingStatus(status);
+  await resolveOwnerRoutingStatus(status);
 
   switch (status) {
     case "success":
@@ -749,7 +750,7 @@ export async function saveStarterCompositionAction(
 
   const status = getRpcStatus(data);
 
-  resolveOwnerRoutingStatus(status);
+  await resolveOwnerRoutingStatus(status);
 
   switch (status) {
     case "success":
@@ -853,7 +854,7 @@ export async function advanceRelevantFirstJobAction(
 
   const status = getRpcStatus(data);
 
-  resolveOwnerRoutingStatus(status);
+  await resolveOwnerRoutingStatus(status);
 
   switch (status) {
     case "success":
@@ -1124,7 +1125,7 @@ export async function saveIdentityConnectionAction(
   const status =
     getRpcStatus(data);
 
-  resolveOwnerRoutingStatus(status);
+  await resolveOwnerRoutingStatus(status);
 
   switch (status) {
     case "success":
@@ -1432,7 +1433,7 @@ export async function saveProductDraftAction(
   const status =
     getRpcStatus(data);
 
-  resolveOwnerRoutingStatus(status);
+  await resolveOwnerRoutingStatus(status);
 
   switch (status) {
     case "success":

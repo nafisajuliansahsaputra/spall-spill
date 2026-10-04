@@ -1,5 +1,6 @@
+vi.mock("@/lib/auth/resolved-destination", () => ({ resolveCurrentOwnerDestination: mocks.destination }));
 import { beforeEach, describe, expect, it, vi } from "vitest";
-const mocks = vi.hoisted(() => ({ createClient: vi.fn(), rpc: vi.fn(), pending: vi.fn(), scan: vi.fn(), redirect: vi.fn() }));
+const mocks = vi.hoisted(() => ({ createClient: vi.fn(), rpc: vi.fn(), pending: vi.fn(), scan: vi.fn(), destination: vi.fn(), redirect: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.createClient }));
 vi.mock("@/lib/external-destination/safety", () => ({ ensureExternalDestinationPending: mocks.pending }));
 vi.mock("@/lib/external-destination/trusted-recorder", () => ({ scanAndRecordPendingExternalDestination: mocks.scan }));
@@ -20,6 +21,7 @@ function acknowledgment(source: string | null = null, revision = 1) {
 describe("Resource Draft save boundary", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mocks.destination.mockResolvedValue("/login");
     mocks.createClient.mockResolvedValue({ schema: () => ({ rpc: mocks.rpc }) });
     mocks.rpc.mockResolvedValue(acknowledgment());
     mocks.pending.mockResolvedValue({ requiresScan: true });
@@ -66,8 +68,16 @@ describe("Resource Draft save boundary", () => {
   });
   it.each(["unauthenticated", "owner_missing", "owner_not_eligible"])("routes %s to authoritative auth resolution", async (status) => {
     mocks.rpc.mockResolvedValue({ data: { status }, error: null });
-    await expect(saveResourceDraftAction(previous, form())).rejects.toThrow("redirect:/auth/resolve");
+    await expect(saveResourceDraftAction(previous, form())).rejects.toThrow("redirect:/login");
     expect(mocks.pending).not.toHaveBeenCalled();
+  });
+  it("does not scan or retry a save when final Owner navigation cannot be verified", async () => {
+    mocks.rpc.mockResolvedValue({ data: { status: "owner_not_eligible" }, error: null });
+    mocks.destination.mockResolvedValue(null);
+    await expect(saveResourceDraftAction(previous, form())).rejects.toThrow("could not be verified");
+    expect(mocks.redirect).not.toHaveBeenCalled();
+    expect(mocks.pending).not.toHaveBeenCalled();
+    expect(mocks.rpc).toHaveBeenCalledOnce();
   });
   it.each([
     null, { status: "success" }, { ...acknowledgment().data, resource_draft: null },

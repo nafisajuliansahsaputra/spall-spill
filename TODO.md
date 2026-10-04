@@ -85,6 +85,11 @@ before starting a new slice. The previous branch's evidence is retained below.
   after backup. Remote CI awaits the user-requested usage-gated push.
 - [ ] Implement durable preview receipt and atomic first Publish, explicit
   Identity-only/Item intent, public read/media transport and first workspace.
+- [x] Extend the authoritative final-destination repair to all onboarding and
+  profile-media Server Actions. Await the account resolver and navigate directly
+  to its final page; unverifiable account state fails closed. Ten new regressions
+  cover direct navigation and rejected Identity/Resource saves; web typecheck,
+  lint and unit suite pass. No GET-only auth-handler redirect remains in these actions.
 - [x] Reconcile preserved Product Draft/reference allocation with pinned 11.22:
   contract 12.13 and an additive migration reserve immutable Owner-scoped Item
   identity/reference at durable creation and backfill existing Drafts.

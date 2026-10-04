@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { redirectToCurrentOwnerDestination } from "@/lib/auth/action-destination";
 
 import {
   resolveCurrentBasicIdentityState,
@@ -67,7 +68,7 @@ export async function initiateProfileMediaUploadAction(
   switch (result.status) {
     case "unauthenticated":
     case "owner_unavailable":
-      redirect("/auth/resolve");
+      return await redirectToCurrentOwnerDestination();
 
     case "step_not_available":
       redirect("/onboarding");
@@ -106,7 +107,7 @@ export async function finalizeProfileMediaUploadAction(
   switch (result.status) {
     case "unauthenticated":
     case "owner_unavailable":
-      redirect("/auth/resolve");
+      return await redirectToCurrentOwnerDestination();
 
     default:
       return result;
@@ -145,7 +146,7 @@ export async function refreshSavedProfileMediaPreviewAction(): Promise<SavedProf
     case "owner_missing":
     case "owner_unavailable":
     case "onboarding_complete":
-      redirect("/auth/resolve");
+      return await redirectToCurrentOwnerDestination();
 
     case "progress_missing":
       return {

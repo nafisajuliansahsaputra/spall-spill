@@ -2,6 +2,7 @@
 
 import { normalizeExternalDestination } from "@spall-spill/external-destination-policy";
 import { redirect } from "next/navigation";
+import { redirectToCurrentOwnerDestination } from "@/lib/auth/action-destination";
 import { z } from "zod";
 import { ensureExternalDestinationPending } from "@/lib/external-destination/safety";
 import { scanAndRecordPendingExternalDestination } from "@/lib/external-destination/trusted-recorder";
@@ -54,7 +55,7 @@ export async function saveResourceDraftAction(
   if (error) return failure("We couldn't confirm this save. Reload to check your last saved Resource Draft.");
   const status = z.object({ status: z.string() }).safeParse(data);
   if (status.success && ["unauthenticated", "owner_missing", "owner_not_eligible"].includes(status.data.status)) {
-    redirect("/auth/resolve");
+    return await redirectToCurrentOwnerDestination();
   }
   if (status.success && status.data.status === "stale_write") {
     return failure("This Resource Draft changed in another tab or session. Reload before saving again.");
