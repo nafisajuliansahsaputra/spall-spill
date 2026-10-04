@@ -60,7 +60,12 @@ before starting a new slice. The previous branch's evidence is retained below.
   database after a private core/API/history backup. Its one existing Draft now
   has one identity reservation with zero missing mappings; database lint passes.
   No reset of the existing development database was performed.
-- [ ] Verify CI/Security for the new reference-foundation implementation commit.
+- [x] Verify reference-foundation implementation `9f086c5` remotely:
+  [CI 37220286784](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37220286784)
+  passes Application, database reset/lint, 845 pgTAP tests, and concurrent
+  allocation verification;
+  [Security 37220286807](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37220286807)
+  passes Dependency Scan, SAST, and Secret Scan.
 - [ ] Verify the complete S5 journey in the browser before checkpoint closure.
 
 Scratch `*-read.txt` review notes and ignored local secrets remain local. They are
