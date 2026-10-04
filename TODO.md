@@ -61,8 +61,16 @@ before starting a new slice. The previous branch's evidence is retained below.
   title-only save, source update, reload, and Business-to-Personal Draft retention.
   The source remains pending when the scanner is unavailable.
 - [ ] Verify CI/Security on the Resource implementation commit.
-- [ ] Fix login Server Action redirect chain: onboarding renders at auth/resolve,
-  causing its first POST to return 405; then repeat the authenticated journey.
+- [x] Fix login Server Action redirect chain using the shared authoritative final
+  destination resolver. Browser login now reaches `/onboarding`; its next Resource
+  POST succeeds with no console errors. Eight destination regressions, web lint,
+  typecheck, 202 web unit tests and production build pass (488 application/tooling
+  tests across the workspace). S6 remains open.
+- Resource commit `adcdb4c` passed
+  [Security 37221708726](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37221708726).
+  [CI 37221708678](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37221708678)
+  was still running at the user-requested 2% usage stop; verify it and the final
+  login-fix commit's CI/Security before closure. No merge/release is claimed.
 - [ ] Lock the S6 preview/publication contract and implement the first Publish gate.
 - [x] Reconcile preserved Product Draft/reference allocation with pinned 11.22:
   contract 12.13 and an additive migration reserve immutable Owner-scoped Item

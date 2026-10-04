@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 import { loginCredentialsSchema } from "@/lib/auth/login-validation";
 import { createClient } from "@/lib/supabase/server";
+import { resolveCurrentOwnerDestination } from "@/lib/auth/resolved-destination";
 
 import type { LoginActionState } from "./state";
 
@@ -74,5 +75,12 @@ export async function loginAction(
     };
   }
 
-  redirect("/auth/resolve");
+  const destination = await resolveCurrentOwnerDestination();
+  if (destination === null) {
+    return {
+      status: "error", email: parsed.data.email, fieldErrors: {},
+      message: "We couldn't safely resolve your account state. Please try again later.",
+    };
+  }
+  redirect(destination);
 }
