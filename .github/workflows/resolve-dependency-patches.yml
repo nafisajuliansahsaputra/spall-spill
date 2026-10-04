@@ -1,0 +1,61 @@
+name: Resolve dependency security patches
+on:
+  push:
+    branches:
+      - chore/dependency-resolution-20261004
+permissions:
+  contents: read
+env:
+  CI: "true"
+  NEXT_TELEMETRY_DISABLED: "1"
+jobs:
+  resolve:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b
+        with:
+          version: 11.24.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version-file: .nvmrc
+      - name: Resolve reviewed patch versions
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, writeFileSync } from 'node:fs';
+          const path = 'apps/web/package.json';
+          const pkg = JSON.parse(readFileSync(path, 'utf8'));
+          pkg.dependencies.next = '16.3.6';
+          pkg.devDependencies['eslint-config-next'] = '16.3.6';
+          pkg.devDependencies.vitest = '4.1.11';
+          writeFileSync(path, JSON.stringify(pkg, null, 2) + '\n');
+          const workspacePath = 'pnpm-workspace.yaml';
+          const workspace = readFileSync(workspacePath, 'utf8');
+          writeFileSync(workspacePath, workspace.replace('  "fastq@": "1.20.1"', '  "fastq@": "1.20.1"\n  "brace-expansion@>=1.0.0 <2.0.0": "1.1.21"\n  "brace-expansion@>=5.0.0 <6.0.0": "5.0.12"'));
+          NODE
+          pnpm install --lockfile-only
+          git diff --check
+          mkdir dependency-patch
+          cp apps/web/package.json dependency-patch/web-package.json
+          cp pnpm-workspace.yaml pnpm-lock.yaml dependency-patch/
+          sha256sum dependency-patch/* > dependency-patch/SHA256SUMS
+      - name: Upload generated dependency files
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: dependency-patch
+          path: dependency-patch/
+          if-no-files-found: error
+          retention-days: 7
+      - name: Frozen install
+        run: pnpm install --frozen-lockfile
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Lint
+        run: pnpm lint
+      - name: Tests
+        run: pnpm test
+      - name: Production build
+        run: pnpm build
