@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "dev": "next dev -p 3001",
+        "dev": "next dev -p 3002",
         "build": "next build",
         "lint": "eslint .",
         "typecheck": "next typegen && tsc --noEmit",
@@ -12,7 +12,7 @@
     "dependencies": {
         "@spall-spill/external-destination-policy": "workspace:*",
         "@spall-spill/profile-media-policy": "workspace:*",
-        "next": "16.3.3",
+        "next": "16.3.6",
         "parse5": "^8.0.1",
         "react": "19.2.8",
         "react-dom": "19.2.8"
@@ -22,8 +22,8 @@
         "@types/react": "19.2.18",
         "@types/react-dom": "19.2.5",
         "eslint": "^9",
-        "eslint-config-next": "16.3.3",
+        "eslint-config-next": "16.3.6",
         "typescript": "^5",
-        "vitest": "4.1.10"
+        "vitest": "4.1.11"
     }
 }
