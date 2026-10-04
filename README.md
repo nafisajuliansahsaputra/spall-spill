@@ -27,6 +27,7 @@ Key files:
 - `docs/product-spec/technical-architecture/12.10-onboarding-basic-identity-starter-composition-contract.md` — locked O01-S3/S4 Basic Identity Working + Starter Composition implementation authority.
 - `docs/product-spec/technical-architecture/12.11-profile-media-r2-storage-contract.md` — locked Profile Media / R2 implementation authority.
 - `docs/product-spec/technical-architecture/12.12-onboarding-relevant-first-job-foundation-contract.md` — scoped S5 progress, recommendation, and presentation authority.
+- `docs/product-spec/technical-architecture/12.13-spill-item-reference-foundation-contract.md` — private canonical Item/reference allocation and legacy-Draft backfill.
 
 ## Locked architecture direction
 

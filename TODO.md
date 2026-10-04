@@ -48,9 +48,19 @@ before starting a new slice. The previous branch's evidence is retained below.
 - [x] Make non-Affiliate Product entry an accessible optional disclosure while
   retaining mounted inputs and automatically exposing an existing saved Draft.
 - [ ] Lock remaining Product/Resource JIT contracts and implement Resource Draft.
-- [ ] Reconcile preserved Product Draft/reference allocation with pinned 11.22:
-  durable canonical Item creation allocates its persistent reference; 12.12
-  records the staging-versus-canonical boundary as unresolved implementation debt.
+- [x] Reconcile preserved Product Draft/reference allocation with pinned 11.22:
+  contract 12.13 and an additive migration reserve immutable Owner-scoped Item
+  identity/reference at durable creation and backfill existing Drafts.
+- [x] Verify reference reservation locally in an isolated Supabase lab: backfill
+  preserves legacy UUID/revision/content/timestamps; 845 pgTAP tests pass;
+  concurrent first saves create one Item and reject the other as stale; parallel
+  Product/Resource allocations use distinct numbers in the shared Owner sequence.
+  Database lint and security advisors report no errors/issues.
+- [x] Apply the additive reference migration to the existing local development
+  database after a private core/API/history backup. Its one existing Draft now
+  has one identity reservation with zero missing mappings; database lint passes.
+  No reset of the existing development database was performed.
+- [ ] Verify CI/Security for the new reference-foundation implementation commit.
 - [ ] Verify the complete S5 journey in the browser before checkpoint closure.
 
 Scratch `*-read.txt` review notes and ignored local secrets remain local. They are

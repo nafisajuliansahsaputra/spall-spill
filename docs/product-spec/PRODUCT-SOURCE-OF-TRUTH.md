@@ -268,6 +268,13 @@ reconciling the preserved implementation with pinned O01/J1–J4. Complete
 Product/Resource lifecycle mechanics, O01-S6 Preview & Publish, and public-media
 publication remain separate JIT checkpoints.
 
+[`technical-architecture/12.13-spill-item-reference-foundation-contract.md`](./technical-architecture/12.13-spill-item-reference-foundation-contract.md)
+locks private canonical Item/reference reservation at first durable Product Draft
+save, with immutable Owner-scoped numbering and an additive legacy-Draft backfill.
+This resolves the 11.22 creation-threshold/reference mismatch; it creates no public
+content or publication capability. Resource Draft and complete lifecycle contracts
+remain open.
+
 This does not change the locked six-step O01 journey, universal capability model, Working-versus-Published isolation, or onboarding-completion rule. Successful first authoritative Identity publication remains the completion boundary.
 
 ### Current implementation checkpoint

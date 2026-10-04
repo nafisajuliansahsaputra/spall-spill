@@ -109,3 +109,6 @@ jobs:
 
       - name: Run database security tests
         run: pnpm exec supabase test db --local
+
+      - name: Verify concurrent Spill identity allocation
+        run: node --test tests/spill-reference-concurrency.test.mjs
