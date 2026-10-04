@@ -83,7 +83,13 @@ before starting a new slice. The previous branch's evidence is retained below.
   web production build and error-level DB advisors. Browser S5-to-S6 and responsive
   preview pass with no console errors. Primary DB migrations applied additively
   after backup. Remote CI awaits the user-requested usage-gated push.
-- [ ] Implement durable preview receipt and atomic first Publish, explicit
+- [x] Lock and implement private preview receipt contract 12.16: explicit Owner
+  confirmation, fresh digest comparison, one row per Owner, fixed ten-minute TTL,
+  idempotent unchanged confirmation and rotation after changes/expiry. 41 pgTAP
+  and 20 action tests pass; web typecheck/lint pass. Browser confirmation, stale
+  tab rejection and reloaded confirmation pass with no console errors. Private
+  receipt migration applied additively to the primary DB after backup.
+- [ ] Implement atomic first Publish, explicit
   Identity-only/Item intent, public read/media transport and first workspace.
 - [x] Extend the authoritative final-destination repair to all onboarding and
   profile-media Server Actions. Await the account resolver and navigate directly

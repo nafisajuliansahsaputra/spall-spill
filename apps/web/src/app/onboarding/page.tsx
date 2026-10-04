@@ -8,6 +8,7 @@ import {
 import { resolveCurrentResourceDraftState } from "@/lib/onboarding/resource-draft";
 import { resolveCurrentOnboardingPreview } from "@/lib/onboarding/preview";
 import { PrivateOnboardingPreview } from "./private-preview";
+import { PreviewConfirmationForm } from "./preview-confirmation-form";
 import {
   resolveCurrentBasicIdentityState,
   resolveCurrentIdentityConnectionState,
@@ -765,6 +766,7 @@ export default async function OnboardingPage({
               </div>
 
               {preview?.status === "success" ? <PrivateOnboardingPreview preview={preview} profileUrl={savedProfilePreviewUrl} /> : null}
+              {preview?.status === "success" ? <div className="mt-5"><PreviewConfirmationForm key={preview.snapshot_hash} snapshotHash={preview.snapshot_hash} /></div> : null}
             </>
           ) : null}
 

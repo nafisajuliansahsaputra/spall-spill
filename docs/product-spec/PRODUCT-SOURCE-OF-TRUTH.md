@@ -290,6 +290,11 @@ application and browser verification passes; remote CI awaits the usage-gated
 push. This snapshot grants no publication authority. First Publish, public media
 transport and complete S6 closure remain open.
 
+[`technical-architecture/12.16-onboarding-preview-receipt-contract.md`](./technical-architecture/12.16-onboarding-preview-receipt-contract.md)
+locks explicit, Owner-bound preview confirmation with fixed expiry and stale
+snapshot rejection. Local RPC/application/browser checks pass. Receipts grant
+no publication authority; remote CI and full S6 publication remain open.
+
 ### Current implementation checkpoint
 
 #### Local integration audit — 2026-10-04
