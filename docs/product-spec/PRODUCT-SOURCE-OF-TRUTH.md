@@ -14,7 +14,7 @@ The Implementation Execution Protocol is **LOCKED / MANDATORY CROSS-CHAT EXECUTI
 - fresh authority/branch/source audits before implementation;
 - just-in-time technical-contract locking before new production checkpoints;
 - bounded one-logical-batch execution;
-- one-file-per-PowerShell-block creation/full replacement;
+- one-file-per-PowerShell-block creation/full replacement in default Owner-local delivery, with direct cloud-workspace editing allowed only inside the bounded Codex Cloud lane;
 - security-by-construction and targeted runtime/manual security verification;
 - staged-diff review before commit;
 - local evidence before push;
