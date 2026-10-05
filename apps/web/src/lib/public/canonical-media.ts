@@ -44,4 +44,3 @@ export async function downloadCanonicalPublishedMedia(descriptor: Descriptor): P
     body.destroy();
   }
 }
-
