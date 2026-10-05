@@ -24,6 +24,11 @@ and relevant locked technical contracts.
 - [x] Add `docs/operations/CODEX-CLOUD-RUNBOOK.md` with reproducible
   environment, read-only orientation, bounded-cycle, checkpoint, failure, and
   human-only-gate instructions.
+- [x] Verify integrated autonomous baseline `d515636`: CI Application +
+  Database passed in run 37272077522; Security Secret Scan + SAST + Dependency
+  Scan passed in run 37272077487; Autopilot Guard passed in run 37272077479.
+  Duplicate heavy PR-event CI/Security jobs are intentionally skipped for
+  `codex/autopilot`; full push-event gates remain required.
 - [ ] Publish and validate the reusable Codex Cloud environment against
   `codex/autopilot`.
 - [ ] Run the first read-only Codex Cloud orientation audit and confirm it
