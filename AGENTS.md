@@ -34,6 +34,7 @@ Read these files completely enough to understand their authority, current status
 7. `SKILL.md`
 8. `README.md`
 9. `docs/product-spec/user-flows/README.md`
+10. when running in Codex Cloud, `docs/operations/CODEX-CLOUD-RUNBOOK.md`
 
 Then inspect:
 
