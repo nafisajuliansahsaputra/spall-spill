@@ -71,7 +71,7 @@ and relevant locked technical contracts.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
 
-## Current canonical implementation frontier — 2026-10-05
+## Current canonical implementation frontier — 2026-10-06
 
 This section is the current task-selection bridge to the canonical Product Source
 of Truth. It supersedes older "Immediate work", "Immediate next task", and
@@ -98,7 +98,8 @@ Already present and governed by locked contracts:
 - 12.21 staged Published Identity image delivery;
 - 12.22 private Product preparation/image/destination/safety preview and receipt binding;
 - 12.23 staged exact Published Product image transport;
-- 12.24 staged Product detail projection with current per-destination availability.
+- 12.24 staged Product detail projection with current per-destination availability;
+- 12.25 staged unmounted Product visual/context confirmation renderer.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -122,6 +123,8 @@ Current safe work must be selected from the remaining dependency frontier:
   and snapshot under 12.23; no newer private fallback or outbound authority.
 - [x] Implement staged Product detail projection under 12.24 with exact Published
   context, ordered current destination availability and no private fields.
+- [x] Implement the staged Product visual/context confirmation region under 12.25
+  without public route assembly, data fetching or marketplace actions.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -288,6 +291,30 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Next dependency-safe task: lock and implement staged Product detail confirmation
   and exact Published safety-click transport before enabling public reader routes
   or first Publish. Retain the pending/public grant gates until required evidence.
+
+### Autonomous continuation — staged Product confirmation — 2026-10-06
+
+- Clean `work` refreshed to `700d3eb610977886e599d8677ff0b3381986bf6c` before
+  authority/source readback. Pending hosted-runner evidence did not stop this
+  independent presentation slice under the amended Protocol §2.4.
+- Reread J2/J4/J6/J9, 12.23/12.24 and pinned P03 recognition/degradation/responsive
+  semantics. Locked 12.25 before implementing the unmounted SSR-compatible region.
+- Strict public-payload validation produces generic denial for unavailable,
+  malformed or private inputs. Valid Published Owner/reference/image/title remain
+  visible through partial/all destination degradation; all-unavailable commerce
+  is communicated without lifecycle mutation. Exact same-origin unoptimized image
+  selection, escaped text and internal Owner/Browse navigation are preserved.
+- No external URL/action, RPC/data fetch, public route, grant, publication writer,
+  authentication gate or optional fabricated metadata was introduced. The complete
+  P03 page/action region and exact Published click transport remain unfinished.
+- Targeted SSR/DTO tests: 37 passed (14 new renderer tests). Local typecheck,
+  lint, five tooling tests, 715 Vitest tests plus 17 auth navigation tests (737
+  total), all three builds and diff checks passed. Latest-push CI/Security/Guard remain
+  PENDING until observed. Browser/responsive/live media/cache evidence remains open;
+  this implementation is not P03/S5/S6 closure or production readiness.
+- Next dependency-safe task: lock exact Published marketplace action/click-time
+  safety binding and attribution-preserving transport, then complete staged P03
+  action assembly without enabling withheld public readers or first Publish.
 
 ## Current local integration — 2026-10-04
 

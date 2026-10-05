@@ -382,7 +382,7 @@ stages a minimal exact Published Product detail projection. It retains image/tit
 Owner/reference context and ordered validated provider context while masking URLs
 without fresh safe URL/hash verdicts. Partial/all destination degradation changes
 availability only, not lifecycle or Published content. The Product reader has no
-Data API execution grants; detail/click rendering and locked publication integration
+Data API execution grants; complete detail/action/click assembly and publication integration
 remain unfinished. No Product publish-ready or S5/S6 closure claim is introduced.
 
 Exact projection commit `4babc5ecab499be57e397b5480d3fbbe6e748f43` passed push-event
@@ -392,9 +392,18 @@ Autopilot Guard (37362911347). Database reset, lint, error-level security adviso
 Application/tooling checks passed with 723 tests and three builds. Browser, live
 provider/storage, cache/abuse evidence and S5/S6 closure remain open.
 
+Contract [12.25](./technical-architecture/12.25-published-product-confirmation-renderer-contract.md)
+implements the staged, unmounted Product visual/context confirmation region.
+It validates only strict public DTOs, renders Published Owner/reference/title and
+the exact unoptimized same-origin image, escapes text and retains confirmation
+through destination degradation. All-unavailable commerce is communicated with
+safe Owner/Browse navigation retained. It fetches no data and emits no outbound
+URLs/actions. Public routing, marketplace action/click transport, provider/cache/
+browser evidence and first Publish remain unfinished; no grants are enabled.
+
 ### Current implementation checkpoint
 
-#### Integrated implementation frontier — 2026-10-05
+#### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
 `8d6f8c12c7161aace642342211e7f7d66867032f` before the Codex Cloud execution
@@ -415,7 +424,8 @@ foundation:
 - staged Published Identity media transport under 12.21;
 - private Product preparation preview/receipt binding under 12.22;
 - staged exact Published Product media transport under 12.23;
-- staged Product detail projection/per-destination availability under 12.24.
+- staged Product detail projection/per-destination availability under 12.24;
+- staged Product visual/context confirmation renderer under 12.25.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -470,7 +480,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.24 govern the staged work already present.
+public transport**. Contracts 12.12–12.25 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
