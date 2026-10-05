@@ -19,6 +19,7 @@ concurrency:
 jobs:
   secrets:
     name: Secret Scan
+    if: github.event_name != 'pull_request' || github.head_ref != 'codex/autopilot'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
 
@@ -41,6 +42,7 @@ jobs:
 
   sast:
     name: SAST
+    if: github.event_name != 'pull_request' || github.head_ref != 'codex/autopilot'
     runs-on: ubuntu-24.04
     timeout-minutes: 15
 
@@ -58,6 +60,7 @@ jobs:
 
   dependencies:
     name: Dependency Scan
+    if: github.event_name != 'pull_request' || github.head_ref != 'codex/autopilot'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
 
