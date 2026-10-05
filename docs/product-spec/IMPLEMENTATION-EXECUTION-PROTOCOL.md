@@ -117,6 +117,20 @@ Before an autonomous run ends because of usage budget, scheduler boundary, block
 
 If a partially implemented local change cannot safely be committed, leave it uncommitted only within the still-live cloud workspace and report that fact; never misrepresent it as durable progress.
 
+Temporary infrastructure delays (queued hosted runners, no assigned runner/steps,
+newer-push concurrency cancellation, transient network/provider outages) leave
+the affected evidence PENDING. They do not by themselves require the Owner or
+stop the entire Goal. Do not advance the directly dependent path or claim CLOSED /
+VERIFIED; continue independent dependency-safe authorized slices and recheck on
+scheduled returns. A superseded run is obsolete; verification targets the exact
+latest pushed commit. All required CI/Security/Autopilot Guard must pass on the
+exact final commit before a final verified checkpoint, public enablement, merge,
+or production-readiness claim. This does not authorize any production action.
+
+A human-only gate stops its dependent path. Pause the entire Goal/automation only
+when no independent safe work remains, repository authority explicitly requires
+the gate before any other work, or a real conflict/risk requires the Owner.
+
 ### 2.5 Revocation and fallback
 
 The Owner may revoke or pause the autonomous lane at any time.

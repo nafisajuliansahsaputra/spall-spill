@@ -217,15 +217,33 @@ corresponding product/technical decision is deliberately updated in Git.
 
 ## 11. Failure policy
 
-Fail closed and ask for the Owner when:
+Fail closed on the affected path and ask for the Owner when a real human-only
+action or decision is needed, including:
 
 - branch or HEAD is unexpected;
 - authority is contradictory;
-- required locked contract is missing;
+- a required locked contract cannot be established within the authorized JIT
+  workflow without an Owner decision;
 - a task requires a human-only gate;
 - credentials/access are missing;
-- the same blocker persists after materially different attempts;
-- the cloud environment cannot produce evidence required to close the slice.
+- a persistent blocker requires credentials/login, billing/payment, manual
+  approval, provider configuration, a product decision, production action, or
+  an irreversible decision that Cloud is not authorized to perform.
 
-Otherwise, preserve safe progress and continue another independent authorized
-task when one exists.
+Queued hosted runners, `runner_id = 0`, empty steps before runner allocation,
+newer-push/concurrency cancellation, and transient infrastructure/network/provider
+delays are PENDING evidence, not proof of a human-only blocker. Missing evidence
+does not close the slice, but does not by itself stop unrelated safe work. Do not
+spend the run polling unchanged non-actionable states; recheck automatically on
+scheduled returns and continue independent dependency-safe authorized slices.
+
+When a new push supersedes a run, treat that older run as obsolete and target
+the exact latest pushed commit. Require all mandated CI/Security/Guard results on
+the exact final commit before a final verified checkpoint, public enablement,
+merge, or production-readiness claim. Production permission remains unchanged.
+
+Even with a human-only blocker, preserve safe progress and continue independent
+authorized work. Pause the entire Goal/automation only when no independent safe
+work remains, explicit repository authority requires the gate before any other
+work, or an actual conflict/risk requires the Owner. Notify only on meaningful
+change or an actual required Owner action; do not repeat unchanged blockers.

@@ -191,12 +191,32 @@ Do not mark a checkpoint CLOSED / VERIFIED unless every required evidence gate i
 
 Do not spend an entire run repeating the same failed approach.
 
+Temporary infrastructure delays are PENDING evidence, not human-only gates.
+Examples include queued hosted runners, `runner_id = 0`, empty steps before
+runner allocation, cancellation caused by a newer push/concurrency, and transient
+network/provider outages. Do not infer missing credentials, billing trouble, or
+an Owner action from those states alone. Recheck automatically on the next
+scheduled return; keep the Goal/automation active while independent safe work exists.
+
+Do not advance a path that directly requires the pending gate or mark its
+checkpoint CLOSED / VERIFIED. Continue coherent independent dependency-safe
+work authorized by the repository and push only to `codex/autopilot`. A run
+superseded by a newer push is obsolete; use the exact latest pushed commit as
+the next evidence target. All required CI/Security/Guard checks must genuinely
+pass on the exact final commit before a final verified checkpoint, public
+enablement, merge, or production-readiness claim.
+
 After several materially different attempts at the same blocker:
 
 - preserve useful completed work;
 - record concrete evidence;
 - stop that blocked path;
 - continue another independent safe task when one exists and is authorized.
+
+Even for a human-only gate, stop only the dependent path. Pause the entire
+Goal/automation only when no independent safe task remains, repository authority
+explicitly requires that gate before any other work, or an actual conflict/risk
+requires the Owner. Pending infrastructure evidence alone is not such a conflict.
 
 Require user input before:
 

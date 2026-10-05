@@ -2,13 +2,35 @@
 
 **Status:** Execution backlog  
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
-**Last synchronized:** 2026-10-05
+**Last synchronized:** 2026-10-06
 
 ## Autonomous Codex Cloud lane — 2026-10-05
 
 This is an execution-mode checkpoint, not new product authority. Product behavior
 continues to come from the canonical Product Source of Truth, locked User Flows,
 and relevant locked technical contracts.
+
+### Temporary infrastructure evidence policy — 2026-10-06
+
+- Owner clarified that queued/unassigned hosted runners, empty pre-runner steps,
+  superseded concurrency cancellation and transient infrastructure delays leave
+  evidence PENDING rather than requiring Owner intervention. AGENTS, Protocol
+  §2.4 and Runbook §11 now preserve independent dependency-safe continuation.
+- Current-thread hourly automation resumed with this policy. No product semantics,
+  publication grants, CI configuration or security gates changed.
+- At `8ddc355e9720367147f7c02005deedbd5f55793d`, push-event Application/Database
+  CI (37364270734), Dependency Scan (37364489331) and Guard (37364270721) passed.
+  SAST/Secret Scan were cancelled before producing logs even after rerun; their
+  evidence remains PENDING, not a source regression or proven billing/access issue.
+  Later pushes must use their exact latest SHA as the evidence target.
+- Independent next Product work remains staged detail confirmation and exact
+  Published safety-click transport under a new bounded JIT contract. Do not
+  enable public readers/first Publish or claim S5/S6 closure before all required
+  automated, browser/runtime and provider gates are evidenced.
+- Documentation-only policy verification: typecheck, lint, tooling tests, unit
+  tests, production build and diff checks passed (Turbo results reused existing
+  unchanged-source cache where applicable). No migration/database behavior
+  changed. Latest-push remote gates remain PENDING until actually observed.
 
 - [x] Create `codex/autopilot` from the latest preserved implementation branch.
 - [x] Add root `AGENTS.md` with mandatory repository bootstrap, authority
