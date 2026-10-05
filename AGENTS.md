@@ -106,11 +106,11 @@ If two authoritative documents materially conflict, stop the conflicting impleme
 
 ## 2. Autonomous branch policy
 
-The intended autonomous development branch is `codex/autopilot`.
+The authorized autonomous development branch is `codex/autopilot`.
 
-However, **repository authority still wins**. The current locked Implementation Execution Protocol contains deny-by-default rules for remote mutation. Until the canonical execution documents explicitly authorize an autonomous Cloud lane, Codex must not treat this AGENTS.md file alone as permission to bypass those rules.
+The locked Implementation Execution Protocol §2 explicitly authorizes the bounded Codex Cloud lane for this branch. Codex may therefore perform ordinary non-destructive implementation, commit, and push work on `codex/autopilot` without per-turn Owner confirmation, but only within that canonical scope.
 
-Once a canonical autonomous-lane exception is explicitly committed, autonomous Codex work must obey that exception exactly and remain scoped to `codex/autopilot`.
+Repository authority still wins. This file does not expand the permissions granted by the protocol.
 
 Regardless of execution mode:
 
