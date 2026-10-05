@@ -318,8 +318,15 @@ CI Application + Database (run 37272077522), Security Secret Scan + SAST +
 Dependency Scan (run 37272077487), and Autopilot Guard (run 37272077479).
 This remote evidence verifies the integrated baseline; it does not substitute
 for still-open browser/manual/live-provider gates.
-The next active work is public/click/media transport, explicit first-Publish UI
-and universal D01 handoff; Product image/marketplace preparation remains open.
+Contract [12.20](./technical-architecture/12.20-private-product-preparation-contract.md)
+locks private primary-image and ordered marketplace-destination preparation on an
+existing saved onboarding Product Draft. Current-Owner RPCs enforce same-Owner
+finalized media, independent preparation revision and expected Product revision.
+Manual image/destination entry preserves attribution and incomplete Drafts.
+This private slice leaves Product publication pending; public media transport,
+Product-safe projections and exact preparation/safety binding into preview,
+receipt and first Publish remain separate gates. Live media/browser/provider
+evidence remains open. Bounded-cycle evidence is tracked in TODO.
 
 ### Current implementation checkpoint
 
@@ -339,7 +346,8 @@ foundation:
 - explicit Owner-bound preview receipt under 12.16;
 - scoped restricted-account/session-exit behavior under 12.17;
 - staged atomic first-publication transaction/acknowledgment behavior under 12.18;
-- staged published-only Identity/Resource reader foundation under 12.19.
+- staged published-only Identity/Resource reader foundation under 12.19;
+- private Product image/marketplace preparation under 12.20.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -351,7 +359,9 @@ first-publication and public transport**, not Resource Draft creation.
 
 Current open work includes, as applicable and in dependency order:
 
-- Product primary-image / marketplace publication preparation;
+- remaining Product publication preparation: public media/Product projection and
+  exact preparation-revision/image/destination/safety binding into preview,
+  receipt and publication (private entry/persistence is present under 12.20);
 - safe public route and external click transport;
 - public Profile Media transport;
 - explicit first-Publish UI/bundle wiring;
@@ -392,7 +402,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.19 govern the staged work already present.
+public transport**. Contracts 12.12–12.20 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

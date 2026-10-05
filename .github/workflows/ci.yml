@@ -117,3 +117,6 @@ jobs:
 
       - name: Verify concurrent onboarding publication
         run: node --test tests/onboarding-publication-concurrency.test.mjs
+
+      - name: Verify concurrent private Product preparation
+        run: node --test tests/product-preparation-concurrency.test.mjs

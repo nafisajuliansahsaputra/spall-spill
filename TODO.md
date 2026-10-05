@@ -69,7 +69,8 @@ Already present and governed by locked contracts:
 - 12.16 preview receipt;
 - 12.17 scoped account-status/session exit;
 - 12.18 staged atomic first publication;
-- 12.19 staged published-only Identity/Resource reads.
+- 12.19 staged published-only Identity/Resource reads;
+- 12.20 private Product primary-image / ordered marketplace preparation.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -78,7 +79,12 @@ items.
 
 Current safe work must be selected from the remaining dependency frontier:
 
-- [ ] Product primary-image / marketplace publication preparation.
+- [x] Lock and implement private Product primary-image / ordered marketplace
+  preparation under 12.20; existing saved Draft only, current Owner, independent
+  revision, finalized same-Owner media, creator attribution retained.
+- [ ] Complete Product publication preparation: public media/Product projection
+  and exact preparation/image/destination/safety binding into preview, receipt
+  and first Publish. Private entry alone does not make Product publish-ready.
 - [ ] Safe public routes and external click transport.
 - [ ] Public Profile Media transport.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -92,6 +98,30 @@ Current safe work must be selected from the remaining dependency frontier:
 Before implementing a new bounded checkpoint, follow the JIT contract gate in
 the Implementation Execution Protocol. Pick the highest-priority dependency-safe
 item after fresh-reading the relevant O01/J1–J4 authority and affected code.
+
+### Bounded Cloud Product preparation cycle — 2026-10-05
+
+- Clean synthetic `work` synchronized to authorized remote baseline
+  `1eb823e33ba11217e4eaf53337855806d990bc5c` before orientation or implementation.
+- Read pinned historical Product/destination/D04/creation-threshold authority;
+  locked 12.20 before coding. No journey topology or Published semantics changed.
+- Added private preparation persistence/resolver/save and focused S5 manual
+  sanitized image upload plus ordered structured destination entry. Preparation
+  retains Product identity/reference and creates no publication or completion.
+- Targeted action/provider/form tests passed; full typecheck, lint, tooling,
+  application tests and all three production builds passed in Cloud.
+- Local Supabase PostgreSQL image extraction exceeded the managed `vfs` Docker
+  filesystem capacity; retries stopped. Local reset/lint/pgTAP/concurrency are
+  unobserved; the committed GitHub Database job must supply that evidence before
+  this cycle's final verification. CI now includes real parallel preparation saves.
+- Exact pushed-commit CI/Security/Guard evidence is pending at this checkpoint.
+- Browser/runtime upload/CORS, manual authorization/stale-save/failure truth,
+  live R2 and Web Risk/Gemini provider evidence remain open. S5/S6 are not closed;
+  public/RPC grants remain withheld. Provider account/billing and Cloud-local
+  database capacity are current evidence blockers; no production credentials used.
+- Next dependency-safe task: lock and implement public-safe media transport for
+  existing canonical Identity/Product assets, before binding Product preparation
+  into preview/receipt/publication. Do not activate publication grants yet.
 
 ## Current local integration — 2026-10-04
 

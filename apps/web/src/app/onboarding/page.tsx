@@ -6,6 +6,7 @@ import {
   resolveCurrentOwnerState,
 } from "@/lib/auth/owner-state";
 import { resolveCurrentResourceDraftState } from "@/lib/onboarding/resource-draft";
+import { resolveCurrentProductPreparation } from "@/lib/onboarding/product-preparation";
 import { resolveCurrentOnboardingPreview } from "@/lib/onboarding/preview";
 import { PrivateOnboardingPreview } from "./private-preview";
 import { PreviewConfirmationForm } from "./preview-confirmation-form";
@@ -323,6 +324,11 @@ export default async function OnboardingPage({
         );
     }
   }
+
+  const productPreparation = productDraft?.status === "success" && productDraft.productDraft
+    ? await resolveCurrentProductPreparation() : null;
+  const productImagePreviewUrl = productPreparation?.preparation?.primary_asset_key
+    ? await createTrustedProfileMediaPreviewUrl(productPreparation.preparation.primary_asset_key) : null;
 
   const resourceDraft = displayedStep === "relevant_first_job"
     ? await resolveCurrentResourceDraftState() : null;
@@ -669,6 +675,8 @@ export default async function OnboardingPage({
               </div>
 
               <RelevantFirstJobForm
+                initialProductPreparation={productPreparation?.preparation ?? null}
+                productImagePreviewUrl={productImagePreviewUrl}
                 recommendation={
                   relevantFirstJob
                     .recommendedFirstJob
