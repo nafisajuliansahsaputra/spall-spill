@@ -255,6 +255,10 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   three builds and diff checks passed. Exact pushed-commit database/CI/Security/
   Guard evidence is pending until observed. Provider/browser/production gates
   and S5/S6 closure remain open.
+- Initial remote Database CI reached a fixture schema-usage denial before the
+  anonymous allow-path query. Added `USAGE api` only inside the rolled-back test
+  transaction, matching existing public-reader test isolation; production grants
+  remain unchanged. Database evidence requires a successful rerun after this fix.
 - Next dependency-safe task: lock and implement staged Product detail confirmation
   and exact Published safety-click transport before enabling public reader routes
   or first Publish. Retain the pending/public grant gates until required evidence.

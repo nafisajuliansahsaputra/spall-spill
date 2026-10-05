@@ -41,6 +41,8 @@ insert into core.profile_media_upload_intents(id,owner_id,expected_content_type,
 insert into core.profile_media_assets(asset_key,owner_id,object_key,stored_content_type,byte_size,width,height,source_upload_intent_id)
  select f.asset_key::text,o.owner_id,'working/profile/'||f.asset_key||'.webp','image/webp',12,100,100,f.asset_key
  from product_media_assets f join product_media_owners o on o.auth_user_id=f.auth_id;
+-- Test-only allow path; schema usage and RPC execution are rolled back together.
+grant usage on schema api to anon;
 grant execute on function api.resolve_public_product(text,bigint) to anon, authenticated;
 set local role anon;
 select is(api.resolve_public_product('product-media-one',1),'{"status":"unavailable"}'::jsonb,'Private Draft/asset/reservation never public');
