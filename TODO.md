@@ -18,6 +18,12 @@ and relevant locked technical contracts.
   README, and AGENTS guidance.
 - [x] Create draft PR #3 as the persistent review/CI surface from
   `codex/autopilot` to `main`; no automatic merge authority is implied.
+- [x] Add a machine-enforced Autopilot Guard workflow for branch scope,
+  mandatory authority files, autonomous authorization markers, tracked secret
+  environment files, and the expected repository/toolchain baseline.
+- [x] Add `docs/operations/CODEX-CLOUD-RUNBOOK.md` with reproducible
+  environment, read-only orientation, bounded-cycle, checkpoint, failure, and
+  human-only-gate instructions.
 - [ ] Publish and validate the reusable Codex Cloud environment against
   `codex/autopilot`.
 - [ ] Run the first read-only Codex Cloud orientation audit and confirm it
