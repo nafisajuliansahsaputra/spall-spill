@@ -14,14 +14,14 @@ autonomous execution mode from Git without relying on a previous chat.
 Authorized autonomous lane:
 
 - repository: `nafisajuliansahsaputra/spall-spill`;
-- branch: `codex/autopilot`;
+- authorized remote branch: `codex/autopilot`;
+- Cloud local task branch may be synthetic (for example `work`) after verified synchronization to `origin/codex/autopilot`;
 - review surface: draft PR from `codex/autopilot` to `main`;
 - production merge/deployment: human-controlled.
 
 ## 2. Environment bootstrap
 
-The reusable Codex Cloud environment must be attached to this repository and
-must use `codex/autopilot` as its implementation baseline.
+The reusable Codex Cloud environment must be attached to this repository. A new Cloud task may begin on a synthetic local task branch. Before orientation or implementation, that clean isolated workspace must be synchronized to `origin/codex/autopilot` and local `HEAD` must exactly match the fetched autonomous remote HEAD. Do not assume environment instructions have already performed this synchronization.
 
 Before publishing or trusting an environment, verify:
 
@@ -93,8 +93,7 @@ Do not edit files.
 Do not commit or push.
 Do not mutate GitHub, Supabase, Vercel, Cloudflare, or any external service.
 
-First verify repository identity, current branch, HEAD, status, remote tracking,
-and recent commits. The expected implementation lane is codex/autopilot.
+First verify repository identity, current synthetic branch, HEAD, status, remote tracking, and recent commits. Refresh `origin/codex/autopilot`, synchronize the clean isolated task workspace to that remote baseline, and verify local `HEAD` exactly matches the refreshed autonomous remote HEAD before reading project authority. The local branch name may remain synthetic.
 
 Read AGENTS.md and follow its Mandatory bootstrap before any material work.
 
@@ -139,7 +138,7 @@ The worker must:
 8. inspect the final diff;
 9. update TODO/canonical checkpoint only for real changed evidence;
 10. commit coherently;
-11. push only to `codex/autopilot`;
+11. push completed Cloud commits only to remote `codex/autopilot`; a synthetic local task branch must not be published as its own remote branch;
 12. verify GitHub CI, Security, and Autopilot Guard for the exact pushed commit;
 13. leave a truthful checkpoint and next action.
 
