@@ -30,7 +30,7 @@ $$;
 
 create function core.product_destinations_valid(destinations jsonb)
 returns boolean language plpgsql immutable security invoker set search_path = '' as $$
-declare destination jsonb; provider text; providers text[] := '{}'; urls text[] := '{}';
+declare destination jsonb; provider text; providers text[] := array[]::text[]; urls text[] := array[]::text[];
 begin
   if destinations is null or jsonb_typeof(destinations)<>'array' then return false; end if;
   if jsonb_array_length(destinations)>10 then return false; end if;

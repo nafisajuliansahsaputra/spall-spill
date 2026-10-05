@@ -326,7 +326,11 @@ Manual image/destination entry preserves attribution and incomplete Drafts.
 This private slice leaves Product publication pending; public media transport,
 Product-safe projections and exact preparation/safety binding into preview,
 receipt and first Publish remain separate gates. Live media/browser/provider
-evidence remains open. Bounded-cycle evidence is tracked in TODO.
+evidence remains open. Implementation `11e515da32fb2cead2e24fd380d068ceb36a6f80`
+passed exact-commit CI Application/Database (run 37280505809), all three Security
+jobs (37280505869) and Autopilot Guard (37280505805). Database evidence includes
+1,164 pgTAP assertions and six concurrency tests. Bounded-cycle limitations and
+evidence are tracked in TODO; this does not close S5/S6.
 
 ### Current implementation checkpoint
 

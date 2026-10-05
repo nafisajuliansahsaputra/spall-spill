@@ -40,8 +40,10 @@ and relevant locked technical contracts.
   clean, Node 24.19.0 / pnpm 11.24.0 dependency preparation passed, and the
   orientation correctly identified O01-S4 as the last fully CLOSED / VERIFIED
   checkpoint and O01-S6 first-publication/public-transport as the active frontier.
-- [ ] Run one bounded implementation cycle in Codex Cloud, verify commit/push
-  lands only on `codex/autopilot`, and verify CI/Security on that exact commit.
+- [x] Run one bounded implementation cycle in Codex Cloud, verify commit/push
+  lands only on `codex/autopilot`, and verify CI/Security/Guard on exact
+  implementation commit `11e515da32fb2cead2e24fd380d068ceb36a6f80` (runs below).
+  This proves the bounded Git/CI lane, not unattended readiness or S5/S6 closure.
 - [ ] Configure the long-running Goal / recurring Cloud continuation only after
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
@@ -108,13 +110,26 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Added private preparation persistence/resolver/save and focused S5 manual
   sanitized image upload plus ordered structured destination entry. Preparation
   retains Product identity/reference and creates no publication or completion.
-- Targeted action/provider/form tests passed; full typecheck, lint, tooling,
-  application tests and all three production builds passed in Cloud.
+- Targeted action/provider/form tests passed; full typecheck, lint, five tooling
+  tests, 585 Vitest tests, 17 auth navigation tests and all three production builds
+  passed in Cloud (607 application/tooling tests total).
 - Local Supabase PostgreSQL image extraction exceeded the managed `vfs` Docker
   filesystem capacity; retries stopped. Local reset/lint/pgTAP/concurrency are
-  unobserved; the committed GitHub Database job must supply that evidence before
-  this cycle's final verification. CI now includes real parallel preparation saves.
-- Exact pushed-commit CI/Security/Guard evidence is pending at this checkpoint.
+  unobserved locally. GitHub Database supplied fresh migration reset, schema lint,
+  1,164 pgTAP assertions across 21 files (67 new preparation assertions), and six
+  real concurrency tests, including parallel first/existing preparation saves.
+  Lint had no errors; log review found two new implicit empty-array initializer
+  warnings. Explicit typed arrays remove those warnings in the evidence follow-up.
+  Existing preview/public-reader warnings are outside this bounded slice.
+- Implementation commit `11e515da32fb2cead2e24fd380d068ceb36a6f80` was pushed
+  explicitly as `HEAD:codex/autopilot` after refetching and confirming the remote
+  had not advanced. Exact-commit evidence: [CI Application + Database
+  37280505809](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37280505809),
+  [Security Secret Scan + SAST + Dependency Scan
+  37280505869](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37280505869),
+  and [Autopilot Guard 37280505805](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37280505805)
+  all passed. Evidence/typed-initializer follow-up must also receive fresh exact-commit
+  gates; these implementation results are not inferred onto a different commit.
 - Browser/runtime upload/CORS, manual authorization/stale-save/failure truth,
   live R2 and Web Risk/Gemini provider evidence remain open. S5/S6 are not closed;
   public/RPC grants remain withheld. Provider account/billing and Cloud-local
