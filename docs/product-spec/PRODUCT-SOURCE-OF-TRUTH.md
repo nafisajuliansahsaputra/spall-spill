@@ -10,7 +10,7 @@ All production implementation work in this repository must follow [`IMPLEMENTATI
 
 The Implementation Execution Protocol is **LOCKED / MANDATORY CROSS-CHAT EXECUTION AUTHORITY** for implementation workflow, including:
 
-- local-first execution and deny-by-default remote writes;
+- local-first execution and deny-by-default remote writes by default, with the explicitly bounded `codex/autopilot` Codex Cloud lane authorized by Protocol §2;
 - fresh authority/branch/source audits before implementation;
 - just-in-time technical-contract locking before new production checkpoints;
 - bounded one-logical-batch execution;
@@ -21,7 +21,7 @@ The Implementation Execution Protocol is **LOCKED / MANDATORY CROSS-CHAT EXECUTI
 - remote CI/Security verification after push;
 - documentation closure and committed readback before `CLOSED / VERIFIED`.
 
-Generic continuation language such as `gas`, `lanjut`, `ok`, or `terusin` never authorizes direct remote mutation.
+Generic continuation language such as `gas`, `lanjut`, `ok`, or `terusin` never creates ad-hoc remote mutation authority. The only persistent remote-write exception is the repository-scoped Autonomous Codex Cloud Lane explicitly defined in the locked Implementation Execution Protocol; that exception does not authorize direct `main` writes, production deployment, destructive production operations, paid-service activation, or locked product-semantic changes.
 
 Product behavior remains governed by this Source of Truth, locked User Flows, and the relevant locked technical contract. The execution protocol governs **how those authorities are implemented and verified**.
 
