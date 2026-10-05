@@ -1,0 +1,123 @@
+name: Autopilot Guard
+
+on:
+  push:
+    branches:
+      - codex/autopilot
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: autopilot-guard-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  authority:
+    name: Authority and branch guard
+    if: github.event_name != 'pull_request' || github.head_ref == 'codex/autopilot'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Verify autonomous lane
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          REF_NAME: ${{ github.ref_name }}
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          set -euo pipefail
+
+          if [[ "${EVENT_NAME}" == "pull_request" ]]; then
+            [[ "${HEAD_REF}" == "codex/autopilot" ]] || {
+              echo "::error::Autopilot Guard only validates the codex/autopilot PR lane."
+              exit 1
+            }
+          else
+            [[ "${REF_NAME}" == "codex/autopilot" ]] || {
+              echo "::error::Autonomous pushes are only authorized on codex/autopilot."
+              exit 1
+            }
+          fi
+
+      - name: Verify mandatory authority files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required=(
+            "AGENTS.md"
+            "PRD.md"
+            "ARCHITECTURE.md"
+            "TODO.md"
+            "WORKFLOW.md"
+            "SKILL.md"
+            "docs/product-spec/PRODUCT-SOURCE-OF-TRUTH.md"
+            "docs/product-spec/IMPLEMENTATION-EXECUTION-PROTOCOL.md"
+            "docs/product-spec/user-flows/README.md"
+          )
+
+          for path in "${required[@]}"; do
+            [[ -s "${path}" ]] || {
+              echo "::error file=${path}::Mandatory autonomous authority file is missing or empty."
+              exit 1
+            }
+          done
+
+      - name: Verify autonomous authority contract
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          grep -Fq 'branch: `codex/autopilot`' docs/product-spec/IMPLEMENTATION-EXECUTION-PROTOCOL.md
+          grep -Fq 'Authorized Autonomous Codex Cloud Lane' docs/product-spec/IMPLEMENTATION-EXECUTION-PROTOCOL.md
+          grep -Fq 'Mandatory bootstrap before any material work' AGENTS.md
+          grep -Fq 'Never trust chat memory over Git' AGENTS.md
+
+      - name: Reject tracked secret environment files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          forbidden="$(
+            git ls-files |
+              grep -E '(^|/)\.env($|\.(local|development|production|staging|test)$)' ||
+              true
+          )"
+
+          if [[ -n "${forbidden}" ]]; then
+            echo "::error::Tracked secret-capable environment files are forbidden:"
+            printf '%s\n' "${forbidden}"
+            exit 1
+          fi
+
+          echo "No forbidden tracked environment files found."
+
+      - name: Verify repository toolchain contract
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -s package.json
+          test -s pnpm-lock.yaml
+          test -s pnpm-workspace.yaml
+          test -s .nvmrc
+          test -d apps
+          test -d packages
+          test -d supabase
+
+          grep -Fq '"packageManager": "pnpm@11.24.0"' package.json
+          grep -Fq '24.19' .nvmrc
+
+          echo "Autopilot repository baseline is intact."
