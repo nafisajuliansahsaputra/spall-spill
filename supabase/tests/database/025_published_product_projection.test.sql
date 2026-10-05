@@ -95,15 +95,15 @@ select is(api.resolve_public_product('product-media-one',1)->'destinations'->0,
 select is(api.resolve_public_product('product-media-one',1)->'destinations'->1,
  '{"provider_key":"external:store.example.test","available":true,"destination_url":"https://store.example.test/item?creator=original"}'::jsonb,'Safe neutral fallback remains ordered');
 reset role;
-update core.external_destination_safety set safety_status='blocked',revision=revision+1 where normalized_url='https://store.example.test/item?creator=original';
+update core.external_destination_safety set safety_status='blocked',reason_codes=array['malware'],revision=revision+1 where normalized_url='https://store.example.test/item?creator=original';
 select is(api.resolve_public_product('product-media-one',1)->'destinations'->1,
  '{"provider_key":"external:store.example.test","available":false,"destination_url":null}'::jsonb,'Blocked alternative masks URL');
 select is(api.resolve_public_product('product-media-one',1)->'destinations'->0->>'available','true','One blocked alternative never removes safe alternative');
-update core.external_destination_safety set safety_status='review',revision=revision+1 where normalized_url='https://shopee.co.id/item?affiliate=creator';
+update core.external_destination_safety set safety_status='review',reason_codes=array['malware'],revision=revision+1 where normalized_url='https://shopee.co.id/item?affiliate=creator';
 select is(api.resolve_public_product('product-media-one',1)->>'status','success','All non-safe verdicts retain Product context');
 select is(api.resolve_public_product('product-media-one',1)->'destinations'->0->'destination_url','null'::jsonb,'Review verdict never exposes URL');
 select is((select lifecycle_state from core.spill_item_publications where item_type='product'),'published','Degradation never auto-Hides Product');
-update core.external_destination_safety set safety_status='safe',revision=revision+1;
+update core.external_destination_safety set safety_status='safe',reason_codes=array[]::text[],revision=revision+1;
 select is(api.resolve_public_product('product-media-one',1)->'destinations'->0->>'available','true','Safety recovery restores same destination');
 select is((select snapshot from core.spill_item_publications where item_type='product'),(select snapshot from product_projection_snapshot),'Verdict changes never rewrite Published Product');
 update core.external_destination_safety set checked_at=now()-interval '10 minutes',expires_at=now()-interval '1 second' where normalized_url='https://store.example.test/item?creator=original';
