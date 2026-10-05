@@ -385,6 +385,13 @@ availability only, not lifecycle or Published content. The Product reader has no
 Data API execution grants; detail/click rendering and locked publication integration
 remain unfinished. No Product publish-ready or S5/S6 closure claim is introduced.
 
+Exact projection commit `4babc5ecab499be57e397b5480d3fbbe6e748f43` passed push-event
+Application/Database CI (37362911336), all three Security jobs (37362911320), and
+Autopilot Guard (37362911347). Database reset, lint, error-level security advisors,
+1,367 pgTAP assertions across 25 files and seven concurrency tests passed.
+Application/tooling checks passed with 723 tests and three builds. Browser, live
+provider/storage, cache/abuse evidence and S5/S6 closure remain open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-05

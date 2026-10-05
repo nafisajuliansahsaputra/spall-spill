@@ -252,14 +252,17 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Existing/new public-reader and first-Publish grants remain withheld. No public
   page/CTA or Product writer is enabled. Targeted tests: 68 passed; full typecheck,
   lint, tooling, 701 Vitest + 17 auth navigation + five tooling tests (723 total),
-  three builds and diff checks passed. Exact pushed-commit database/CI/Security/
-  Guard evidence is pending until observed. Provider/browser/production gates
-  and S5/S6 closure remain open.
+  three builds and diff checks passed. Exact commit
+  `4babc5ecab499be57e397b5480d3fbbe6e748f43` passed push-event Application and
+  Database CI (37362911336), all three Security jobs (37362911320), and Autopilot
+  Guard (37362911347). Database reset, lint, error-level security advisors,
+  1,367 pgTAP assertions across 25 files and seven concurrency tests passed.
+  Provider/browser/production gates and S5/S6 closure remain open.
 - Initial remote Database CI reached a fixture schema-usage denial before the
   anonymous allow-path query. Added `USAGE api` only inside the rolled-back test
   transaction, matching existing public-reader test isolation; production grants
   remain unchanged. Review/blocked fixtures also retain mandatory reason codes,
-  cleared on recovery. Database evidence requires a successful rerun after fixes.
+  cleared on recovery. The exact-commit successful rerun above verifies both fixes.
 - Next dependency-safe task: lock and implement staged Product detail confirmation
   and exact Published safety-click transport before enabling public reader routes
   or first Publish. Retain the pending/public grant gates until required evidence.
