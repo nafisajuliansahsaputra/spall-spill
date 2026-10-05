@@ -272,8 +272,8 @@ publication remain separate JIT checkpoints.
 locks private canonical Item/reference reservation at first durable Product Draft
 save, with immutable Owner-scoped numbering and an additive legacy-Draft backfill.
 This resolves the 11.22 creation-threshold/reference mismatch; it creates no public
-content or publication capability. Resource Draft and complete lifecycle contracts
-remain open.
+content or publication capability. Resource Draft was subsequently locked by 12.14;
+complete Product/publication lifecycle work remains governed by later JIT contracts.
 
 This does not change the locked six-step O01 journey, universal capability model, Working-versus-Published isolation, or onboarding-completion rule. Successful first authoritative Identity publication remains the completion boundary.
 
@@ -286,14 +286,16 @@ complete Product lifecycle, S6 publication, or live provider integration.
 
 [`technical-architecture/12.15-onboarding-private-preview-contract.md`](./technical-architecture/12.15-onboarding-private-preview-contract.md)
 locks the bounded S6 private snapshot and responsive review. Local database,
-application and browser verification passes; remote CI awaits the usage-gated
-push. This snapshot grants no publication authority. First Publish, public media
-transport and complete S6 closure remain open.
+application and browser verification passes. Combined remote evidence for the
+current integration branch is tracked in TODO rather than inferred from older
+usage-gated status. This snapshot grants no publication authority. First Publish,
+public media transport and complete S6 closure remain open.
 
 [`technical-architecture/12.16-onboarding-preview-receipt-contract.md`](./technical-architecture/12.16-onboarding-preview-receipt-contract.md)
 locks explicit, Owner-bound preview confirmation with fixed expiry and stale
 snapshot rejection. Local RPC/application/browser checks pass. Receipts grant
-no publication authority; remote CI and full S6 publication remain open.
+no publication authority; combined remote evidence is tracked in TODO and full
+S6 publication remains open.
 
 Contract 12.17 implements the scoped account-state notice already used by the
 resolver and explicit current-session exit. Local account-routing/Sign Out
@@ -316,23 +318,52 @@ and universal D01 handoff; Product image/marketplace preparation remains open.
 
 ### Current implementation checkpoint
 
-#### Local integration audit — 2026-10-04
+#### Integrated implementation frontier — 2026-10-05
 
-Local implementation beyond the closed S4 checkpoint was preserved at `24a8905`
-and integrated with main documentation and remote dependency/navigation fixes
-on `codex/sync-local-foundation-20261004`. Existing code includes S5 progress,
-Identity Connection Working, Product Draft, external-destination safety, and a
-media-sanitizer service. This is an implementation inventory, not checkpoint
-closure or a new product/technical lock.
+The preserved implementation was integrated through commit
+`8d6f8c12c7161aace642342211e7f7d66867032f` before the Codex Cloud execution
+setup documentation began.
 
-The closed checkpoint and its historical evidence below remain unchanged.
-S5/S6 are **NOT CLOSED / VERIFIED**. Contract 12.12 reconciles the existing S5
-progress and scoped presentation against pinned O01/J1–J4. Complete optional
-domain/publication boundaries still need their own JIT contracts. Current
-integration checks and remaining
-dependency, database, runtime, and CI evidence are tracked in `../../TODO.md`.
-The earlier Web Risk/provider deferral remains in force until replaced by live
-verification evidence. No journey topology or public-safety rule changes.
+The current integrated codebase now contains, in addition to the closed S4
+foundation:
+
+- S5 Relevant First Job presentation/progress foundation under 12.12;
+- permanent private Item/reference reservation under 12.13;
+- semantic-first Resource Draft persistence under 12.14;
+- bounded S6 private Preview under 12.15;
+- explicit Owner-bound preview receipt under 12.16;
+- scoped restricted-account/session-exit behavior under 12.17;
+- staged atomic first-publication transaction/acknowledgment behavior under 12.18;
+- staged published-only Identity/Resource reader foundation under 12.19.
+
+This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
+The last fully closed checkpoint remains S4 because later journey-level,
+provider, public-transport, publication-UI, and other required evidence/gates
+remain incomplete.
+
+The active implementation frontier is now **O01-S6 — Preview & Publish /
+first-publication and public transport**, not Resource Draft creation.
+
+Current open work includes, as applicable and in dependency order:
+
+- Product primary-image / marketplace publication preparation;
+- safe public route and external click transport;
+- public Profile Media transport;
+- explicit first-Publish UI/bundle wiring;
+- universal D01 workspace handoff;
+- enabling currently withheld public/RPC execution only after the relevant
+  safety/transport gates are satisfied;
+- complete S5/S6 browser/journey verification;
+- deferred live Web Risk/Gemini provider verification when the external
+  account/billing blocker is genuinely resolved.
+
+Existing S5/S6 work must not be rebuilt merely because older planning inventory
+below still contains unchecked historical items.
+
+Current verification/evidence and operational readiness are tracked in
+`../../TODO.md`. The earlier Web Risk/provider deferral remains in force until
+replaced by real live verification evidence. No J1–J9 journey topology or
+public-safety rule changes are introduced by this status reconciliation.
 
 #### Last closed checkpoint
 
@@ -354,10 +385,12 @@ Closure evidence includes:
 
 No J1–J9 User Flow topology change is required.
 
-The active checkpoint is **O01-S5 — Relevant First Job**. Contract 12.12 now locks
-its progress and presentation foundation. Resource creation and full Product
-lifecycle remain incomplete; extending those domains and S6 still requires the
-relevant JIT contracts. S5/S6 are not CLOSED / VERIFIED.
+The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
+implementation frontier is **O01-S6 — Preview & Publish / first-publication and
+public transport**. Contracts 12.12–12.19 govern the staged work already present.
+S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
+transport/publication, provider, runtime/manual, and remote evidence gates are
+actually satisfied.
 
 ## User Flow status
 
@@ -367,7 +400,7 @@ relevant JIT contracts. S5/S6 are not CLOSED / VERIFIED.
 
 Broad stack planning is complete. Production implementation is authorized to proceed in this repository.
 
-Immediate sequence:
+Broad production sequence (historical roadmap, **not** the current task list):
 
 1. clean monorepo scaffold;
 2. TypeScript/Next.js strict foundation;
@@ -381,5 +414,9 @@ Immediate sequence:
 10. Owner analytics/settings/moderation notice;
 11. Operator/moderation/audit/platform controls;
 12. hardening, recovery, E2E, release verification.
+
+For current task selection, use the Current implementation checkpoint above plus
+the top current-frontier section of `TODO.md`. Do not restart completed roadmap
+steps merely because this broad sequence is retained for historical planning.
 
 Remaining Open Decisions are resolved only when they materially constrain the implementation surface currently being built.
