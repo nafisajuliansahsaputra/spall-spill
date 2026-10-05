@@ -17,9 +17,9 @@ Run and inspect:
 - recent relevant commits;
 - remote tracking state.
 
-Expected autonomous development branch: `codex/autopilot`.
+Authorized remote autonomous branch: `origin/codex/autopilot`.
 
-If the active repository, branch, or HEAD is unexpected, stop and reconcile before writing.
+Codex Cloud may expose a synthetic local task branch such as `work`. In Cloud, the local branch name is not itself the authority boundary. Before reading project state or editing source, a clean isolated Cloud workspace must be synchronized so that local `HEAD` exactly equals `origin/codex/autopilot`. Outside that verified Cloud case, an unexpected repository, branch, or HEAD must stop and reconcile before writing.
 
 ### B. Mandatory first-read set
 
@@ -107,9 +107,9 @@ If two authoritative documents materially conflict, stop the conflicting impleme
 
 ## 2. Autonomous branch policy
 
-The authorized autonomous development branch is `codex/autopilot`.
+The authorized autonomous remote development branch is `codex/autopilot`.
 
-The locked Implementation Execution Protocol §2 explicitly authorizes the bounded Codex Cloud lane for this branch. Codex may therefore perform ordinary non-destructive implementation, commit, and push work on `codex/autopilot` without per-turn Owner confirmation, but only within that canonical scope.
+Codex Cloud may run on a synthetic local branch such as `work`. That is permitted only when the workspace was clean before synchronization and local `HEAD` has been explicitly synchronized to `origin/codex/autopilot`. The locked Implementation Execution Protocol §2 authorizes ordinary non-destructive implementation, commit, and push work only within that verified lane. Completed Cloud commits must be pushed explicitly as `HEAD:codex/autopilot`; the synthetic local branch itself must never be published as a new remote branch.
 
 Repository authority still wins. This file does not expand the permissions granted by the protocol.
 
@@ -122,7 +122,7 @@ Regardless of execution mode:
 - Keep commits coherent, descriptive, and recoverable.
 - Preserve completed work safely across task boundaries.
 
-If `codex/autopilot` diverges unexpectedly from its remote or a conflict cannot be resolved without choosing between meaningful user changes, stop and report the conflict instead of guessing.
+If local `HEAD` or the synthetic Cloud branch diverges unexpectedly from `origin/codex/autopilot`, or a conflict cannot be resolved without choosing between meaningful user changes, stop and report the conflict instead of guessing.
 
 ## 3. Task selection
 
