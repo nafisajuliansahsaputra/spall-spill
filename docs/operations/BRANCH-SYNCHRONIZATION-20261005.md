@@ -41,3 +41,16 @@ old recipe must not rerun during branch synchronization.
 The branch comparison is a historical snapshot. Future development branches may
 advance independently; use a fresh fetch and ancestry comparison for later
 synchronization decisions.
+
+## Historical secret-scan false positive
+
+The reconciliation merge expanded the push-event history scan. Security run
+`37275534423` detected the deterministic HMAC test fixture at line 12 of
+`apps/media-sanitizer/src/lib/request-auth.test.ts` in historical commit
+`24a89050f205ba83e537eed6f320e79a0a7974ea`. The fixture is the repeating sequence
+`0123456789abcdef`, used only to sign and verify unit-test request bodies. It is
+not read from configuration or used as a deployed/provider credential.
+
+`.gitleaksignore` records only that exact historical fingerprint, following
+[Gitleaks' documented per-finding mechanism](https://github.com/gitleaks/gitleaks#%EF%B8%8F-gitleaksignore).
+All other findings and the required Secret Scan job remain blocking.
