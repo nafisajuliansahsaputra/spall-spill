@@ -141,19 +141,25 @@ JIT contracts must not contradict locked product behavior.
 
 ---
 
-## 4. Local Coding Delivery
+## 4. Coding Delivery
 
-Default rules:
+Rules in every execution mode:
 
-- inspect the actual file first;
-- preserve existing architecture;
-- make the smallest authoritative change;
+- inspect the actual file before editing it;
+- preserve existing architecture and locked semantics;
+- make the smallest authoritative change that completes the coherent slice;
 - avoid unrelated refactors;
+- keep one logical batch at a time;
+- inspect the resulting diff before treating the edit as complete.
+
+### 4.1 Local-First delivery
+
+When the Owner is executing locally with ChatGPT guidance:
+
 - created/full-replaced files use complete file content;
 - provide one file per PowerShell block;
 - never use one giant multi-file generator;
-- one logical batch at a time;
-- wait for the Owner's exact output before continuing.
+- wait for the Owner's exact execution output before assuming a command succeeded.
 
 Canonical local replacement uses:
 
@@ -162,6 +168,17 @@ Canonical local replacement uses:
 - `[IO.File]::WriteAllText(...)`;
 - UTF-8 without BOM;
 - LF normalization.
+
+### 4.2 Autonomous Codex Cloud delivery
+
+When operating under Protocol §2.2 on `codex/autopilot`:
+
+- Codex may edit repository files directly inside its cloud workspace;
+- it must not require PowerShell-specific delivery mechanics;
+- it may execute multiple commands/files as needed for one coherent slice;
+- it must inspect source before modification and inspect the final diff before commit;
+- command/test results must be observed directly before being recorded as evidence;
+- cloud execution does not waive any product, security, testing, or documentation gate.
 
 ---
 
@@ -256,7 +273,7 @@ Production is not used for destructive experimentation.
 
 ---
 
-## 9. Required Local Evidence
+## 9. Required Execution Evidence
 
 Application checkpoints use applicable:
 
@@ -302,7 +319,7 @@ Normal sequence:
 
 1. implementation;
 2. focused automated verification;
-3. targeted runtime/security verification;
+3. targeted runtime/security verification where available and required;
 4. clean regression;
 5. stage intended files;
 6. staged diff review;
@@ -310,7 +327,9 @@ Normal sequence:
 8. push;
 9. remote CI/Security verification.
 
-The Owner performs normal commit/push locally unless explicit remote-write permission is given.
+In default Local-First mode, the Owner performs normal commit/push locally unless explicit remote-write permission is given.
+
+In the authorized Codex Cloud lane, Codex may perform steps 5–9 autonomously on `codex/autopilot` only, subject to Protocol §2.2. A cloud run must not fabricate runtime/manual/live evidence that the cloud environment cannot actually observe.
 
 ---
 
@@ -346,22 +365,34 @@ Source of Truth must never claim evidence that does not exist.
 
 Canonical documentation follows:
 
-`fresh read -> local edit -> review -> commit/push -> fresh readback`
+`fresh read -> authorized edit -> review -> commit/push -> fresh readback`
+
+The authorized edit may occur locally or inside the bounded Codex Cloud lane.
 
 Do not declare documentation canonical until the committed version has been read back.
 
 ---
 
-## 15. Windows / Kali Boundary
+## 15. Execution-Environment / Security-Lab Boundary
 
-- Windows = primary development host.
-- Windows handles source, Git, Next.js, Supabase/Docker, migrations, tests, and builds.
-- Kali = dedicated browser/security client.
-- Prefer isolated host-only networking.
+### Local development
+
+- Windows remains the primary Owner-controlled local development host.
+- Windows may handle source, Git, Next.js, Supabase/Docker, migrations, tests, and builds.
+- Kali may be used as a dedicated browser/security client.
+- Prefer isolated host-only networking for the local security lab.
 - Expose only required web/Auth/API surfaces.
 - Do not expose PostgreSQL directly for ordinary browser testing.
-- Server secrets remain on Windows/server side.
+- Server secrets remain server-side.
 - Burp/ZAP scope stays restricted to authorized Spall Spill targets.
+
+### Codex Cloud
+
+- Codex Cloud is an authorized development executor only for `codex/autopilot`.
+- Cloud tasks use repository-defined toolchain and tests where supported by the environment.
+- Cloud execution must not be treated as proof of local Windows/Kali manual evidence.
+- Provider/live/manual gates that require credentials, browser interaction, special networking, or the Owner's local security lab remain open until genuinely verified.
+- Production secrets are not added merely to make autonomous execution convenient.
 
 ---
 
@@ -376,7 +407,7 @@ Stop before further writes when:
 - test/runtime evidence contradicts an invariant;
 - scope broadens unexpectedly;
 - local state contains unexpected changes;
-- remote mutation is needed without explicit permission.
+- remote mutation is needed outside the explicit authority of Protocol §2.2 or another current explicit Owner authorization.
 
 Default rule:
 
@@ -419,4 +450,4 @@ Allowed only when:
 
 ## 18. Permanent Principle
 
-> Build locally first. Read authority before writing implementation. Lock material decisions before coding. Verify success and failure truth. Review staged scope before commit. Treat security as continuous engineering. Close checkpoints only from evidence.
+> Build and verify in the currently authorized execution environment first. Read authority before writing implementation. Lock material decisions before coding. Verify success and failure truth. Review staged scope before commit. Treat security as continuous engineering. Close checkpoints only from evidence.
