@@ -312,7 +312,12 @@ unavailable state, protected Handle aliases, fresh source safety and private-fie
 exclusion. Anonymous execution remains withheld. The combined local batch passes
 1,097 database assertions, five concurrency tests and 551 application/tooling
 tests, plus typecheck, lint, three builds, schema lint, error-level security
-advisors and a zero-finding dependency audit. Remote CI/Security are pending.
+advisors and a zero-finding dependency audit. The integrated autonomous baseline
+through `d5156360f2c748da0184eedb622b51686ea9b95b` subsequently passed GitHub
+CI Application + Database (run 37272077522), Security Secret Scan + SAST +
+Dependency Scan (run 37272077487), and Autopilot Guard (run 37272077479).
+This remote evidence verifies the integrated baseline; it does not substitute
+for still-open browser/manual/live-provider gates.
 The next active work is public/click/media transport, explicit first-Publish UI
 and universal D01 handoff; Product image/marketplace preparation remains open.
 
