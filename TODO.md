@@ -188,8 +188,11 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Targeted tests: 54 passed. Full typecheck, lint, five tooling tests, 630 Vitest
   tests, 17 auth navigation tests (652 total), three builds and diff checks passed.
   Added 52 pgTAP assertions and an isolated preparation-save/confirmation race.
-  Database and exact pushed-commit CI/Security/Guard evidence is pending until
-  observed; local Docker capacity limitation remains.
+  Exact commit `c65cbba758e64c36b98cb572c6c5edf85a38c9fe` passed Application/Database
+  CI (37320066050), all three Security jobs (37320066244) and Autopilot Guard
+  (37320066126). Database reset/lint/error-level security advisors, 23 pgTAP
+  files / 1,253 assertions and seven concurrency tests passed remotely.
+  Local Docker capacity limitation remains.
 - No browser/live provider evidence is claimed. S5/S6 remain not closed.
 - Next dependency-safe task: lock and stage exact Published Product projection
   and image binding, retaining withheld public/publication grants until all

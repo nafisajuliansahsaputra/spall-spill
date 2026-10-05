@@ -355,6 +355,13 @@ text do not activate outbound transport. Changed preparation invalidates old
 review; Product publication remains pending. Published Product projection/media
 and fresh locked publication checks remain separate unfinished dependencies.
 
+Exact commit `c65cbba758e64c36b98cb572c6c5edf85a38c9fe` passed Application/Database
+CI (37320066050), all three Security jobs (37320066244) and Autopilot Guard
+(37320066126), including 1,253 pgTAP assertions across 23 files and seven
+concurrency tests. Local application/tooling checks passed with 652 tests and
+three builds. This evidence does not close the missing browser/provider/public
+transport and production-readiness gates.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-05
