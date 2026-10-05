@@ -11,18 +11,24 @@ The job is not to recreate the legacy runtime blindly. The job is to implement t
 
 ## 2. Mandatory context load
 
-Before making a material implementation change, read in this order:
+Before making a material implementation change, load context in this order:
 
-1. docs/product-spec/PRODUCT-SOURCE-OF-TRUTH.md
-2. docs/product-spec/MIGRATION-MANIFEST.md when provenance matters
-3. docs/product-spec/technical-architecture/12.4-production-technology-stack-security-architecture.md
-4. PRD.md
-5. ARCHITECTURE.md
-6. TODO.md
-7. WORKFLOW.md
-8. the exact historical locked modular specification for the surface being implemented, when PRODUCT-SOURCE-OF-TRUTH.md says that detail remains in the pinned historical source
+1. `docs/product-spec/PRODUCT-SOURCE-OF-TRUTH.md`
+2. `docs/product-spec/IMPLEMENTATION-EXECUTION-PROTOCOL.md`
+3. `docs/product-spec/MIGRATION-MANIFEST.md` when provenance matters
+4. `docs/product-spec/technical-architecture/12.4-production-technology-stack-security-architecture.md`
+5. `PRD.md`
+6. `ARCHITECTURE.md`
+7. `TODO.md`
+8. `WORKFLOW.md`
+9. `AGENTS.md` when executing through Codex/another coding agent
+10. the exact historical locked modular specification for the surface being implemented when the Product Source of Truth says that detail remains in the pinned historical source
 
 For a user-flow change or implementation, read the relevant J1–J9 flow before coding.
+
+For every new implementation checkpoint, read the relevant locked technical contract before editing production code.
+
+A resumed Codex Cloud run must refresh branch/HEAD, the canonical checkpoint, recent commits, and any authority changed since the previous run. Do not assume thread memory is current.
 
 Do not guess a locked behavior from memory when the canonical file is available.
 
