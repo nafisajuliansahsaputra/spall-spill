@@ -37,6 +37,52 @@ and relevant locked technical contracts.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
 
+## Current canonical implementation frontier — 2026-10-05
+
+This section is the current task-selection bridge to the canonical Product Source
+of Truth. It supersedes older "Immediate work", "Immediate next task", and
+"Next onboarding batch" snapshots later in this file.
+
+**Integrated implementation baseline:** `8d6f8c12c7161aace642342211e7f7d66867032f`
+
+**Last fully CLOSED / VERIFIED checkpoint:** O01-S4.
+
+**Active implementation frontier:** O01-S6 Preview & Publish /
+first-publication and public transport. S5/S6 are not yet CLOSED / VERIFIED.
+
+Already present and governed by locked contracts:
+
+- 12.12 S5 Relevant First Job foundation;
+- 12.13 immutable private Item/reference foundation;
+- 12.14 Resource Draft;
+- 12.15 private S6 Preview;
+- 12.16 preview receipt;
+- 12.17 scoped account-status/session exit;
+- 12.18 staged atomic first publication;
+- 12.19 staged published-only Identity/Resource reads.
+
+Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
+preview receipt, first-publication transaction foundation, or published-reader
+foundation merely because historical inventories below still contain unchecked
+items.
+
+Current safe work must be selected from the remaining dependency frontier:
+
+- [ ] Product primary-image / marketplace publication preparation.
+- [ ] Safe public routes and external click transport.
+- [ ] Public Profile Media transport.
+- [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
+- [ ] Universal D01 workspace handoff.
+- [ ] Enable currently withheld public/RPC execution only when its locked
+  safety/transport prerequisites are satisfied.
+- [ ] Complete required S5/S6 browser/journey verification.
+- [ ] Complete deferred live Web Risk/Gemini verification only when the external
+  provider/account blocker is genuinely resolved.
+
+Before implementing a new bounded checkpoint, follow the JIT contract gate in
+the Implementation Execution Protocol. Pick the highest-priority dependency-safe
+item after fresh-reading the relevant O01/J1–J4 authority and affected code.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
@@ -200,11 +246,11 @@ Remote evidence for `136cd1c`:
   incomplete. The preservation commit and all remote branch history remain
   available; no reset or force push was used.
 
-**Immediate work:** extend S5 from scoped contract 12.12 by locking the remaining
-Product/Resource domain contracts, then implement the missing Resource Draft.
-Do not recreate the scaffold or claim S5/S6 closure from the older Phase 1
-inventory. Workspace integration has local and CI application/database evidence;
-live provider and full journey/manual verification remain incomplete.
+**Historical immediate-work snapshot (superseded by the Current canonical
+implementation frontier above):** this previously called for extending S5 and
+implementing Resource Draft. Resource Draft and later staged S6/publication work
+now exist under contracts 12.14–12.19. Preserve this paragraph only as execution
+history; do not use it for current task selection.
 
 ## How to use this file
 
@@ -577,14 +623,18 @@ No runtime navigation, database, publication, session, or permission behavior
 changes in the auth-navigation batch. The separate dependency-patch batch below
 updates manifests and regenerates the lockfile.
 
-## Next onboarding batch
+## Historical next onboarding batch — superseded
 
-- [ ] Reconcile the S5 code with the canonical Source of Truth and a JIT contract.
-- [ ] Read the pinned screen-level O01 and J1–J4 records for S5/S6.
-- [ ] Record existing S5 capabilities and what remains incomplete; do not infer
-  that Product/Resource creation or first publication exists.
-- [ ] Verify relevant S5 success/failure, stale-write, Owner isolation, and
-  Working/Published runtime boundaries.
+This checklist was created before contracts 12.12–12.19 and is retained only as
+history. Do not use it for current task selection.
+
+- [x] Reconcile the S5 code with the canonical Source of Truth and a JIT contract.
+- [x] Read the pinned screen-level O01 and J1–J4 records for S5/S6 as part of the
+  later bounded contract work.
+- [x] Record existing S5 capabilities and stage later Product/Resource/publication
+  boundaries under explicit contracts rather than inference.
+- [ ] Complete the remaining journey/runtime/provider evidence still listed in
+  the Current canonical implementation frontier.
 - [ ] Implement the next bounded slice only once its technical authority exists.
 
 ## Dependency-security release blocker
