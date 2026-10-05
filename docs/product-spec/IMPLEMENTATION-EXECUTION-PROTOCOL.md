@@ -32,32 +32,95 @@ If repository state contradicts conversation context, or branch/HEAD changes une
 
 ---
 
-## 2. Local-First Write Authority
+## 2. Write Authority and Execution Modes
 
-The Owner performs source, documentation, configuration, database, Git, and deployment changes locally on Windows.
+### 2.1 Default mode — Local-First
+
+Unless an explicitly authorized repository-scoped execution mode below applies, the Owner performs source, documentation, configuration, database, Git, and deployment changes locally on Windows.
 
 ChatGPT may inspect GitHub but must not directly create, update, delete, commit, push, rewrite history, or otherwise mutate remote repository state unless the Owner explicitly authorizes that specific remote operation in the current turn.
 
-Remote mutation is:
+Default remote mutation is:
 
 **DENY BY DEFAULT**
 
-These do NOT authorize remote writes:
+Generic continuation language such as `gas`, `lanjut`, `ok`, `jalan`, `terusin`, or `next` does not create remote-write authority.
 
-- `gas`
-- `lanjut`
-- `ok`
-- `jalan`
-- `terusin`
-- `next`
+Permission for one ad-hoc remote action does not authorize another.
 
-Remote authorization must explicitly name the intended write, for example:
+### 2.2 Authorized Autonomous Codex Cloud Lane
 
-- `edit file X langsung di GitHub`
-- `commit dan push perubahan ini`
-- `force reset branch X ke commit Y`
+The Owner has explicitly authorized one persistent autonomous development lane for this repository:
 
-Permission for one remote action does not authorize another.
+- repository: `nafisajuliansahsaputra/spall-spill`;
+- branch: `codex/autopilot`;
+- execution environment: Codex Cloud;
+- purpose: continue implementation according to committed canonical project authority without requiring the Owner to remain online.
+
+This committed section is the durable repository-scoped authorization for that lane. Codex does not require a new per-turn confirmation for ordinary non-destructive work that remains inside this scope.
+
+Within `codex/autopilot`, Codex Cloud may autonomously:
+
+- inspect and edit repository source, tests, migrations, and documentation;
+- create coherent commits;
+- push commits to `codex/autopilot`;
+- update the existing draft pull request for that branch through normal pushes;
+- run repository-defined local checks;
+- rely on GitHub CI/Security evidence;
+- update `TODO.md` and canonical checkpoint text only when real implementation/evidence has changed;
+- continue to the next safe, unblocked task when the current coherent slice is complete.
+
+This authorization does **not** permit Codex Cloud to:
+
+- push directly to `main`;
+- merge a pull request into `main`;
+- force-push, rewrite history, delete meaningful branches, or discard unrelated work;
+- deploy or promote production autonomously;
+- perform destructive or irreversible production database/storage operations;
+- weaken tests, authorization, validation, RLS/grants, security scans, or release gates to obtain a passing result;
+- expose, commit, print, or copy secrets/credentials/private user data;
+- create, rotate, or broaden privileged production credentials;
+- enable a paid service, purchase credits, or incur new charges;
+- change locked product semantics, locked User Flows, or locked technical decisions merely to unblock implementation;
+- claim live-provider, browser/manual, staging, production, restore, or other external evidence that was not actually observed.
+
+If a task requires one of those prohibited actions, Codex must checkpoint safe completed work and request the Owner.
+
+### 2.3 Autonomous bootstrap and resume requirements
+
+Before the first material edit in every fresh or resumed autonomous run, Codex must:
+
+1. confirm repository identity, branch, HEAD, status, and remote tracking;
+2. read `AGENTS.md`;
+3. fresh-read the current authority required by Section 1;
+4. read `PRD.md`, `ARCHITECTURE.md`, `TODO.md`, `WORKFLOW.md`, and `SKILL.md`;
+5. identify the current canonical implementation checkpoint;
+6. read the relevant J1–J9 User Flow, technical contract, and affected source/tests for the next slice;
+7. inspect commits made since the previous autonomous checkpoint.
+
+Chat/thread memory is context only and never overrides committed repository authority.
+
+If the branch, HEAD, canonical checkpoint, or governing contract changed unexpectedly, Codex must reconcile before editing.
+
+### 2.4 Autonomous checkpoint policy
+
+Before an autonomous run ends because of usage budget, scheduler boundary, blocker, or completion:
+
+- inspect the final diff;
+- do not intentionally leave a broken half-implementation as the durable remote checkpoint;
+- run the relevant verification that can reasonably complete in the current environment;
+- commit only coherent completed work;
+- push authorized commits to `codex/autopilot`;
+- record real progress/evidence in the existing canonical tracking documents when appropriate;
+- state remaining blockers and the next safe action truthfully.
+
+If a partially implemented local change cannot safely be committed, leave it uncommitted only within the still-live cloud workspace and report that fact; never misrepresent it as durable progress.
+
+### 2.5 Revocation and fallback
+
+The Owner may revoke or pause the autonomous lane at any time.
+
+Outside `codex/autopilot`, or if this autonomous authorization is removed/revoked, execution immediately falls back to the default Local-First / deny-by-default policy in Section 2.1.
 
 ---
 
