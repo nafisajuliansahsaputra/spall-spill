@@ -384,6 +384,10 @@ export default async function OnboardingPage({
         )
       : null;
 
+  const preparedProductImageKey = preview?.status === "success" ? preview.product_draft?.preparation?.primary_asset_key : null;
+  const preparedProductImageUrl = preparedProductImageKey
+    ? await createTrustedProfileMediaPreviewUrl(preparedProductImageKey) : null;
+
   return (
     <main className="min-h-screen bg-neutral-50 px-5 py-8 text-neutral-950 sm:py-10">
       <div className="mx-auto w-full max-w-xl">
@@ -773,7 +777,7 @@ export default async function OnboardingPage({
                 </h1>
               </div>
 
-              {preview?.status === "success" ? <PrivateOnboardingPreview preview={preview} profileUrl={savedProfilePreviewUrl} /> : null}
+              {preview?.status === "success" ? <PrivateOnboardingPreview preview={preview} profileUrl={savedProfilePreviewUrl} productImageUrl={preparedProductImageUrl} /> : null}
               {preview?.status === "success" ? <div className="mt-5"><PreviewConfirmationForm key={preview.snapshot_hash} snapshotHash={preview.snapshot_hash} /></div> : null}
             </>
           ) : null}

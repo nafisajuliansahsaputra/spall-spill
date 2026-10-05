@@ -73,7 +73,8 @@ Already present and governed by locked contracts:
 - 12.18 staged atomic first publication;
 - 12.19 staged published-only Identity/Resource reads;
 - 12.20 private Product primary-image / ordered marketplace preparation;
-- 12.21 staged Published Identity image delivery.
+- 12.21 staged Published Identity image delivery;
+- 12.22 private Product preparation/image/destination/safety preview and receipt binding.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -86,8 +87,10 @@ Current safe work must be selected from the remaining dependency frontier:
   preparation under 12.20; existing saved Draft only, current Owner, independent
   revision, finalized same-Owner media, creator attribution retained.
 - [ ] Complete Product publication preparation: public media/Product projection
-  and exact preparation/image/destination/safety binding into preview, receipt
-  and first Publish. Private entry alone does not make Product publish-ready.
+  and exact preparation/image/destination/safety binding into first Publish.
+  Private entry and review alone do not make Product publish-ready.
+- [x] Bind private Product preparation/image/ordered destination/safety state into
+  the S6 preview and receipt digest under 12.22, retaining publication-pending status.
 - [ ] Safe public routes and external click transport.
 - [x] Implement staged Published Identity image transport under 12.21 with
   server-only selection, bounded download and post-download visibility recheck.
@@ -160,14 +163,37 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   same-origin headers and no login requirement. This is denial-path evidence only.
 - Added 37 pgTAP assertions for aliases, Published/Working isolation, visibility,
   finalized same-Owner assets, private privileges and retained withheld grants.
-  CI now also runs error-level security advisors. Database and exact pushed-commit
-  CI/Security/Guard evidence is pending at this checkpoint; local Docker image
-  extraction remains capacity-blocked and is not represented as verified.
+  CI now also runs error-level security advisors. Exact commit `167df3a2d4f01a6e2d6c1f09ce500cf7e8c4711a`
+  passed Application/Database CI (37318466602), all three Security jobs
+  (37318466588) and Autopilot Guard (37318466772). Database reset/lint/advisors,
+  22 pgTAP files / 1,201 assertions and six concurrency tests passed remotely.
+  Local Docker image extraction remains capacity-blocked.
 - Live R2 success/revocation, browser delivery, production cache/invalidation,
   edge abuse/load and missing provider credentials remain open. S5/S6 not closed.
-- Next dependency-safe work: bind private Product preparation into the exact S6
-  preview/receipt digest while retaining publication-pending status, then stage
-  Product public projection/media only against exact Published snapshots.
+- The private preview/receipt dependency is implemented in the following cycle.
+
+### Additional autonomous cycle — Private Product S6 review — 2026-10-05
+
+- Fresh clean Cloud `work` synchronized to `167df3a` before material work.
+  Locked 12.22 after reconciling O01-S6, J2/J4/J6/J9, pinned Product semantics,
+  preview/receipt/publication contracts and existing preparation persistence.
+- Current-Owner preview now includes exact selected image, independent preparation
+  revision, ordered attribution-preserving destinations and per-source safety
+  revision/expiry in its UTC digest. Changed preparation invalidates old review.
+  Private rendering uses trusted image signing and escaped destination text;
+  unavailable images retain selection. No external outbound links are activated.
+- Product publication remains pending. No existing withheld publication/public
+  reader grants, journey topology, Working/Draft/Published semantics or reference
+  allocation changed. First Publish still rejects Product bundles.
+- Targeted tests: 54 passed. Full typecheck, lint, five tooling tests, 630 Vitest
+  tests, 17 auth navigation tests (652 total), three builds and diff checks passed.
+  Added 52 pgTAP assertions and an isolated preparation-save/confirmation race.
+  Database and exact pushed-commit CI/Security/Guard evidence is pending until
+  observed; local Docker capacity limitation remains.
+- No browser/live provider evidence is claimed. S5/S6 remain not closed.
+- Next dependency-safe task: lock and stage exact Published Product projection
+  and image binding, retaining withheld public/publication grants until all
+  transport and safety gates are evidenced.
 
 ## Current local integration — 2026-10-04
 

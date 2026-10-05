@@ -123,3 +123,6 @@ jobs:
 
       - name: Verify concurrent private Product preparation
         run: node --test tests/product-preparation-concurrency.test.mjs
+
+      - name: Verify concurrent Product preview binding
+        run: node --test tests/product-preview-concurrency.test.mjs
