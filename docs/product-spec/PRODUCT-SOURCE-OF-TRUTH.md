@@ -362,6 +362,15 @@ concurrency tests. Local application/tooling checks passed with 652 tests and
 three builds. This evidence does not close the missing browser/provider/public
 transport and production-readiness gates.
 
+Contract [12.23](./technical-architecture/12.23-published-product-media-transport-contract.md)
+stages Product image transport from exact Published Product/Identity snapshots,
+with public Handle/reference/type scoping, finalized same-Owner canonical media
+and a post-download publication-token check. Missing Published preparation fields
+never use private fallback. Image delivery does not grant marketplace outbound
+authority or change lifecycle on destination degradation. Product detail projection,
+fresh locked publication binding, live media/provider and production cache/abuse
+gates remain open; existing publication/public reader grants remain withheld.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-05
@@ -383,7 +392,8 @@ foundation:
 - staged published-only Identity/Resource reader foundation under 12.19;
 - private Product image/marketplace preparation under 12.20;
 - staged Published Identity media transport under 12.21;
-- private Product preparation preview/receipt binding under 12.22.
+- private Product preparation preview/receipt binding under 12.22;
+- staged exact Published Product media transport under 12.23.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -438,7 +448,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.22 govern the staged work already present.
+public transport**. Contracts 12.12–12.23 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

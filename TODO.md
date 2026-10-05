@@ -74,7 +74,8 @@ Already present and governed by locked contracts:
 - 12.19 staged published-only Identity/Resource reads;
 - 12.20 private Product primary-image / ordered marketplace preparation;
 - 12.21 staged Published Identity image delivery;
-- 12.22 private Product preparation/image/destination/safety preview and receipt binding.
+- 12.22 private Product preparation/image/destination/safety preview and receipt binding;
+- 12.23 staged exact Published Product image transport.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -94,8 +95,10 @@ Current safe work must be selected from the remaining dependency frontier:
 - [ ] Safe public routes and external click transport.
 - [x] Implement staged Published Identity image transport under 12.21 with
   server-only selection, bounded download and post-download visibility recheck.
+- [x] Bind staged Product image transport to exact Published Owner/reference/type
+  and snapshot under 12.23; no newer private fallback or outbound authority.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
-  enabling media publication/public readers. Add Product Published-image binding.
+  enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
 - [ ] Universal D01 workspace handoff.
 - [ ] Enable currently withheld public/RPC execution only when its locked
@@ -197,6 +200,36 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Next dependency-safe task: lock and stage exact Published Product projection
   and image binding, retaining withheld public/publication grants until all
   transport and safety gates are evidenced.
+
+### Autonomous continuation — Published Product media — 2026-10-05
+
+- Clean Cloud `work` refreshed and synchronized to `5f69c16` before orientation.
+  Current environment observations confirm running/connected revision 26 with
+  enforced package-manager network policy, no runtime credentials or identities.
+- Reread current canonical frontier, J2/J4/J6/J9, pinned FR-PRD/P03 and relevant
+  publication/media contracts. Locked 12.23 before source implementation.
+- Added service-only Product descriptor keyed only by public Handle/reference,
+  exact Published Product/Identity visibility and finalized same-Owner asset.
+  Snapshot title/preparation revision/image/structured destinations are required;
+  newer private preparation never fills a missing Published field. Product and
+  Identity publication tokens are rechecked after bounded canonical download.
+- Added technical Product image HTTP route with uniform unavailable, no viewer
+  session refresh and conservative no-store headers. Shared existing bounded
+  streaming/framing validation with Identity, preserving its regression tests.
+  This image boundary authorizes no marketplace redirect or safety verdict;
+  runtime destination degradation does not silently change Product lifecycle.
+- Targeted tests: 82 passed. Full typecheck/lint/tooling/test/build passed with
+  678 Vitest + 17 auth navigation + five tooling tests (700 total), three builds
+  and clean diff checks. Production-server HTTP probes returned identical generic
+  404 unavailable for unknown Owner and invalid reference, with no login, no-store,
+  nosniff and same-origin headers. This observes denial only, not live R2 success.
+- Added 61 pgTAP assertions. Exact pushed-commit database/CI/Security/Guard evidence
+  remains pending until observed. Local database Docker capacity limitation remains;
+  remote database CI is required for this slice.
+- Product Publish remains preparation-pending; existing publication/public-reader
+  grants remain withheld. No production/provider/browser evidence or S5/S6
+  closure is inferred. Exact Product detail projection and fresh locked Product
+  publication integration remain unfinished dependencies.
 
 ## Current local integration — 2026-10-04
 

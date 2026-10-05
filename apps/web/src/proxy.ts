@@ -16,7 +16,7 @@ export async function proxy(
 ) {
   // Public image delivery has its own Published-only authorization and headers.
   // Viewer cookies never grant media access or require a session refresh.
-  if (request.nextUrl.pathname.startsWith("/media/identity/")) return NextResponse.next();
+  if (request.nextUrl.pathname.startsWith("/media/identity/") || request.nextUrl.pathname.startsWith("/media/product/")) return NextResponse.next();
   const nonce =
     createRequestNonce();
 
