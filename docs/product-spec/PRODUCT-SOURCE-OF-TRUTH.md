@@ -371,6 +371,20 @@ authority or change lifecycle on destination degradation. Product detail project
 fresh locked publication binding, live media/provider and production cache/abuse
 gates remain open; existing publication/public reader grants remain withheld.
 
+Exact media commit `363de7469ba6ea16a094be12b5bd06ef71c7fd99` passed Application/
+Database CI (37325548751), all three Security jobs (37325548508) and Autopilot
+Guard (37325548510), including 1,314 pgTAP assertions and seven concurrency tests.
+Application/tooling checks passed with 700 tests and three builds. Observed local
+HTTP evidence covers generic denial only, not live storage success or revocation.
+
+Contract [12.24](./technical-architecture/12.24-published-product-projection-contract.md)
+stages a minimal exact Published Product detail projection. It retains image/title/
+Owner/reference context and ordered validated provider context while masking URLs
+without fresh safe URL/hash verdicts. Partial/all destination degradation changes
+availability only, not lifecycle or Published content. The Product reader has no
+Data API execution grants; detail/click rendering and locked publication integration
+remain unfinished. No Product publish-ready or S5/S6 closure claim is introduced.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-05
@@ -393,7 +407,8 @@ foundation:
 - private Product image/marketplace preparation under 12.20;
 - staged Published Identity media transport under 12.21;
 - private Product preparation preview/receipt binding under 12.22;
-- staged exact Published Product media transport under 12.23.
+- staged exact Published Product media transport under 12.23;
+- staged Product detail projection/per-destination availability under 12.24.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -448,7 +463,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.23 govern the staged work already present.
+public transport**. Contracts 12.12–12.24 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

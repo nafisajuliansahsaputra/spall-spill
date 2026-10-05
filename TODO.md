@@ -75,7 +75,8 @@ Already present and governed by locked contracts:
 - 12.20 private Product primary-image / ordered marketplace preparation;
 - 12.21 staged Published Identity image delivery;
 - 12.22 private Product preparation/image/destination/safety preview and receipt binding;
-- 12.23 staged exact Published Product image transport.
+- 12.23 staged exact Published Product image transport;
+- 12.24 staged Product detail projection with current per-destination availability.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -97,6 +98,8 @@ Current safe work must be selected from the remaining dependency frontier:
   server-only selection, bounded download and post-download visibility recheck.
 - [x] Bind staged Product image transport to exact Published Owner/reference/type
   and snapshot under 12.23; no newer private fallback or outbound authority.
+- [x] Implement staged Product detail projection under 12.24 with exact Published
+  context, ordered current destination availability and no private fields.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -223,13 +226,38 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   and clean diff checks. Production-server HTTP probes returned identical generic
   404 unavailable for unknown Owner and invalid reference, with no login, no-store,
   nosniff and same-origin headers. This observes denial only, not live R2 success.
-- Added 61 pgTAP assertions. Exact pushed-commit database/CI/Security/Guard evidence
-  remains pending until observed. Local database Docker capacity limitation remains;
-  remote database CI is required for this slice.
+- Added 61 pgTAP assertions. Exact commit `363de7469ba6ea16a094be12b5bd06ef71c7fd99`
+  passed Application/Database CI (37325548751), all three Security jobs
+  (37325548508) and Autopilot Guard (37325548510), including database reset/lint/
+  advisors, 24 pgTAP files / 1,314 assertions and seven concurrency tests.
+  Local database Docker capacity limitation remains.
 - Product Publish remains preparation-pending; existing publication/public-reader
   grants remain withheld. No production/provider/browser evidence or S5/S6
-  closure is inferred. Exact Product detail projection and fresh locked Product
-  publication integration remain unfinished dependencies.
+  closure is inferred. Product projection is implemented in the following slice;
+  renderer/click transport and fresh locked publication integration remain open.
+
+### Autonomous continuation — Published Product projection — 2026-10-05
+
+- Refreshed clean `work` to verified `363de74` before selecting the next slice.
+  Reread changed canonical status and 12.23; reconfirmed pinned P03 partial/all
+  destination degradation and J2/J4/J6/J9 before locking 12.24.
+- Added withheld public-locator Product DTO resolver bound to exact Published
+  Product/Identity token, selected same-Owner canonical image and existing reference.
+  It exposes only Published recognition context and ordered destination context;
+  exact creator URLs are present only for fresh safe URL/hash matches.
+- Partial degradation retains safe alternatives. All unavailable destinations
+  retain Product context while masking every URL; no lifecycle/snapshot mutation,
+  private fallback, new reference, publication intent or outbound permission.
+  Added strict application DTO validation and 53 pgTAP assertions.
+- Existing/new public-reader and first-Publish grants remain withheld. No public
+  page/CTA or Product writer is enabled. Targeted tests: 68 passed; full typecheck,
+  lint, tooling, 701 Vitest + 17 auth navigation + five tooling tests (723 total),
+  three builds and diff checks passed. Exact pushed-commit database/CI/Security/
+  Guard evidence is pending until observed. Provider/browser/production gates
+  and S5/S6 closure remain open.
+- Next dependency-safe task: lock and implement staged Product detail confirmation
+  and exact Published safety-click transport before enabling public reader routes
+  or first Publish. Retain the pending/public grant gates until required evidence.
 
 ## Current local integration — 2026-10-04
 
