@@ -332,6 +332,16 @@ jobs (37280505869) and Autopilot Guard (37280505805). Database evidence includes
 1,164 pgTAP assertions and six concurrency tests. Bounded-cycle limitations and
 evidence are tracked in TODO; this does not close S5/S6.
 
+Contract [12.21](./technical-architecture/12.21-published-identity-media-transport-contract.md)
+stages public Identity image delivery from an exact Published snapshot. A narrow
+server-only resolver checks active/completed/Published visibility and finalized
+same-Owner canonical media; bounded R2 streaming rechecks the exact publication
+before delivery. HTTP returns bytes or uniform unavailable, with no storage keys,
+signed URLs or viewer account requirement and conservative no-store caching.
+Working selections remain private. Live R2/browser revocation, production cache/
+abuse gates, Product image projection, existing public reader grants and media
+publication enabling remain open; no S5/S6 closure is claimed.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-05
@@ -351,7 +361,8 @@ foundation:
 - scoped restricted-account/session-exit behavior under 12.17;
 - staged atomic first-publication transaction/acknowledgment behavior under 12.18;
 - staged published-only Identity/Resource reader foundation under 12.19;
-- private Product image/marketplace preparation under 12.20.
+- private Product image/marketplace preparation under 12.20;
+- staged Published Identity media transport under 12.21.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -406,7 +417,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.20 govern the staged work already present.
+public transport**. Contracts 12.12–12.21 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

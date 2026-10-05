@@ -72,7 +72,8 @@ Already present and governed by locked contracts:
 - 12.17 scoped account-status/session exit;
 - 12.18 staged atomic first publication;
 - 12.19 staged published-only Identity/Resource reads;
-- 12.20 private Product primary-image / ordered marketplace preparation.
+- 12.20 private Product primary-image / ordered marketplace preparation;
+- 12.21 staged Published Identity image delivery.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -88,7 +89,10 @@ Current safe work must be selected from the remaining dependency frontier:
   and exact preparation/image/destination/safety binding into preview, receipt
   and first Publish. Private entry alone does not make Product publish-ready.
 - [ ] Safe public routes and external click transport.
-- [ ] Public Profile Media transport.
+- [x] Implement staged Published Identity image transport under 12.21 with
+  server-only selection, bounded download and post-download visibility recheck.
+- [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
+  enabling media publication/public readers. Add Product Published-image binding.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
 - [ ] Universal D01 workspace handoff.
 - [ ] Enable currently withheld public/RPC execution only when its locked
@@ -128,8 +132,9 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   [Security Secret Scan + SAST + Dependency Scan
   37280505869](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37280505869),
   and [Autopilot Guard 37280505805](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37280505805)
-  all passed. Evidence/typed-initializer follow-up must also receive fresh exact-commit
-  gates; these implementation results are not inferred onto a different commit.
+  all passed. Final follow-up `ce6b45c0dc674366c2b38cda5e909bc0c581aa9a` also
+  passed exact-commit CI 37280925633, Security 37280925615 and Guard 37280925596;
+  the two new initializer warnings were absent. Results were observed separately.
 - Browser/runtime upload/CORS, manual authorization/stale-save/failure truth,
   live R2 and Web Risk/Gemini provider evidence remain open. S5/S6 are not closed;
   public/RPC grants remain withheld. Provider account/billing and Cloud-local
@@ -137,6 +142,32 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Next dependency-safe task: lock and implement public-safe media transport for
   existing canonical Identity/Product assets, before binding Product preparation
   into preview/receipt/publication. Do not activate publication grants yet.
+
+### Additional autonomous cycle — Published Identity media — 2026-10-05
+
+- Fresh clean Cloud `work` synchronized to `ce6b45c` before material work.
+  The Owner explicitly authorized additional autonomous cycles; no unattended
+  environment/provider readiness or production release approval is inferred.
+- Locked 12.21 before implementation after rereading current authority, relevant
+  J1–J4/J6/J9 rules, pinned FR-IDN/P01 and existing storage/publication contracts.
+- Implemented service-only Published image resolver and technical HTTP transport;
+  private table privileges and existing publication/public-reader grants remain
+  withheld. Product media/publication preparation remains a separate dependency.
+- Targeted media/HTTP/proxy tests: 34 passed. Full typecheck, lint, five tooling
+  tests, 619 Vitest tests, 17 auth navigation tests (641 total) and three builds
+  passed in Cloud. Production-server HTTP observation returned matching generic
+  404 bodies for unavailable and invalid Handle locators, with no-store/nosniff/
+  same-origin headers and no login requirement. This is denial-path evidence only.
+- Added 37 pgTAP assertions for aliases, Published/Working isolation, visibility,
+  finalized same-Owner assets, private privileges and retained withheld grants.
+  CI now also runs error-level security advisors. Database and exact pushed-commit
+  CI/Security/Guard evidence is pending at this checkpoint; local Docker image
+  extraction remains capacity-blocked and is not represented as verified.
+- Live R2 success/revocation, browser delivery, production cache/invalidation,
+  edge abuse/load and missing provider credentials remain open. S5/S6 not closed.
+- Next dependency-safe work: bind private Product preparation into the exact S6
+  preview/receipt digest while retaining publication-pending status, then stage
+  Product public projection/media only against exact Published snapshots.
 
 ## Current local integration — 2026-10-04
 
