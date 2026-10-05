@@ -1,7 +1,7 @@
 # Spall Spill — WORKFLOW
 
 **Purpose:** standard workflow from task selection to production release.  
-**Default collaboration model:** owner executes locally while ChatGPT acts as technical lead / pair programmer / reviewer. Direct repository or service mutation by ChatGPT happens only when the owner explicitly requests it.
+**Default collaboration model:** owner executes locally while ChatGPT acts as technical lead / pair programmer / reviewer. A separately authorized Codex Cloud autonomous lane may operate only on `codex/autopilot` under the locked Implementation Execution Protocol; all other direct repository or service mutation remains deny-by-default unless explicitly authorized.
 
 ## 1. Workflow principles
 
@@ -28,6 +28,8 @@ If the task conflicts with a locked decision, stop the conflicting implementatio
 ## 3. Branching
 
 Unless the owner explicitly requests direct main work, use a focused branch.
+
+For the persistent Codex Cloud autonomous mode, the only authorized long-lived working branch is `codex/autopilot`. Autonomous work must not push or merge directly to `main`. The draft PR from `codex/autopilot` to `main` is a review/CI surface, not automatic merge authority.
 
 Recommended naming:
 
