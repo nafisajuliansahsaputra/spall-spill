@@ -31,10 +31,15 @@ and relevant locked technical contracts.
   `codex/autopilot`; full push-event gates remain required.
 - [ ] Publish and validate the reusable Codex Cloud environment against
   `codex/autopilot`.
-- [ ] Run the first read-only Codex Cloud orientation audit and confirm it
+- [x] Run the first read-only Codex Cloud orientation audit and confirm it
   reconstructs product purpose, current checkpoint, completed evidence,
   remaining work, relevant J1–J9 flow/contracts, blockers, and next safe task
-  from committed Git authority without relying on chat memory.
+  from committed Git authority without relying on chat memory. Verified in a
+  Cloud synthetic `work` task after explicit synchronization to
+  `origin/codex/autopilot`; local and remote HEAD matched, the working tree was
+  clean, Node 24.19.0 / pnpm 11.24.0 dependency preparation passed, and the
+  orientation correctly identified O01-S4 as the last fully CLOSED / VERIFIED
+  checkpoint and O01-S6 first-publication/public-transport as the active frontier.
 - [ ] Run one bounded implementation cycle in Codex Cloud, verify commit/push
   lands only on `codex/autopilot`, and verify CI/Security on that exact commit.
 - [ ] Configure the long-running Goal / recurring Cloud continuation only after
