@@ -4,6 +4,33 @@
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
 **Last synchronized:** 2026-10-05
 
+## Autonomous Codex Cloud lane — 2026-10-05
+
+This is an execution-mode checkpoint, not new product authority. Product behavior
+continues to come from the canonical Product Source of Truth, locked User Flows,
+and relevant locked technical contracts.
+
+- [x] Create `codex/autopilot` from the latest preserved implementation branch.
+- [x] Add root `AGENTS.md` with mandatory repository bootstrap, authority
+  hierarchy, resume rules, safety boundaries, verification rules, and checkpoint policy.
+- [x] Authorize the bounded autonomous lane in the locked Implementation
+  Execution Protocol and reconcile Product Source of Truth, WORKFLOW, SKILL,
+  README, and AGENTS guidance.
+- [x] Create draft PR #3 as the persistent review/CI surface from
+  `codex/autopilot` to `main`; no automatic merge authority is implied.
+- [ ] Publish and validate the reusable Codex Cloud environment against
+  `codex/autopilot`.
+- [ ] Run the first read-only Codex Cloud orientation audit and confirm it
+  reconstructs product purpose, current checkpoint, completed evidence,
+  remaining work, relevant J1–J9 flow/contracts, blockers, and next safe task
+  from committed Git authority without relying on chat memory.
+- [ ] Run one bounded implementation cycle in Codex Cloud, verify commit/push
+  lands only on `codex/autopilot`, and verify CI/Security on that exact commit.
+- [ ] Configure the long-running Goal / recurring Cloud continuation only after
+  the environment and bounded cycle above are proven healthy.
+- [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
+  before treating unattended operation as ready.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
@@ -73,8 +100,10 @@ before starting a new slice. The previous branch's evidence is retained below.
   Login repair `7e482c9` also passed
   [CI 37221914474](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37221914474)
   and [Security 37221914486](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37221914486).
-  No merge/release is claimed. Latest user instruction resumes local development
-  and delays further pushes until remaining usage enters the 10–2% range.
+  No merge/release is claimed. The earlier usage-gated local-push instruction is
+  historical and is superseded for `codex/autopilot` by the bounded Autonomous
+  Codex Cloud lane authorized on 2026-10-05. It does not grant direct `main`
+  writes or production release authority.
 - [x] Lock bounded S6 private preview contract 12.15: one current-Owner database
   snapshot, explicit content/safety issues, and timezone-stable digest. No publication.
 - [x] Verify preview: 52 targeted pgTAP assertions plus the preceding clean
