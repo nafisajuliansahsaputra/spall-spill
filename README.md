@@ -47,7 +47,7 @@ Key files:
 
 ## Execution workflow
 
-The owner executes setup, coding, configuration, and deployment locally while ChatGPT acts as technical lead/pair programmer/reviewer. Direct changes to GitHub, Supabase, Vercel, or other services happen only when explicitly requested.
+The default collaboration model remains Owner-local execution with ChatGPT as technical lead/pair programmer/reviewer. In addition, the locked Implementation Execution Protocol authorizes a bounded Codex Cloud development lane on `codex/autopilot`. That lane may implement, test, commit, and push to its own branch, but it does not authorize direct `main` writes, production deployment, destructive production operations, paid-service activation, or locked product-semantic changes.
 
 Security is built continuously. Security-sensitive slices receive targeted runtime/manual verification before closure, while broad penetration testing is reserved for stable journey/MVP and pre-production gates as defined by the canonical Source of Truth.
 
