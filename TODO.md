@@ -488,6 +488,14 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   review and checks passed before commit. New rolled-back database context tests are committed-CI evidence
   PENDING until observed; local Docker capacity remains insufficient. Exact latest
   pushed CI/Security/Guard must pass before an automated verification claim.
+- Initial `756b982` push passed Application, all Security scans and Guard.
+  Database reset/lint/advisors passed, but the new safety fixture violated the
+  existing unsafe-verdict reason constraint after 36 successful new-file assertions.
+  Fixture now sets valid reason codes/revisions and clears reasons on recovery.
+  Media-denial fixture uses a schema-valid undersized asset instead of a MIME
+  value already prohibited by the table constraint;
+  no constraint/assertion was weakened. Final exact-push Database evidence remains
+  PENDING until observed.
 - Next safe dependency work: server/database clock alignment and bounded retention
   scheduling under a new contract, then staged P03 provider-action/HTTP transport
   with cache/abuse/origin controls. Real authorized RPC, browser/provider delivery,

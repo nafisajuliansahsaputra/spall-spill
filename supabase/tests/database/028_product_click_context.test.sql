@@ -74,13 +74,13 @@ select is(api.resolve_published_product_click_context_server(h,r,p),'{"status":"
  ('product-media-renamed',9007199254740992,'shopee'),('product-media-renamed',2,'shopee'),('product-media-two',1,'shopee'),
  ('product-media-renamed',1,'tokopedia'),('product-media-renamed',1,null),('product-media-renamed',1,repeat('x',263))) v(h,r,p);
 create temporary table click_publication_baseline as select item_id,snapshot,working_revision from core.spill_item_publications;
-update core.external_destination_safety set safety_status='blocked' where normalized_url='https://store.example.test/item?creator=original';
+update core.external_destination_safety set safety_status='blocked',reason_codes=array['malware'],revision=revision+1 where normalized_url='https://store.example.test/item?creator=original';
 select is(api.resolve_published_product_click_context_server('product-media-renamed',1,'shopee')->'confirmation'->'destinations'->1->'destination_url','null'::jsonb,'Partial degradation masks only unsafe alternate URL');
 select is(api.resolve_published_product_click_context_server('product-media-renamed',1,'external:store.example.test'),'{"status":"unavailable"}'::jsonb,'Unsafe alternate cannot issue');
-update core.external_destination_safety set safety_status='blocked';
+update core.external_destination_safety set safety_status='blocked',reason_codes=array['malware'],revision=revision+1;
 select is(api.resolve_published_product_click_context_server('product-media-renamed',1,'shopee'),'{"status":"unavailable"}'::jsonb,'All-unsafe intent denial');
 select is(api.resolve_public_product('product-media-renamed',1)->>'status','success','All-unsafe Product confirmation remains Published');
-update core.external_destination_safety set safety_status='safe',expires_at=now()+interval '1 hour';
+update core.external_destination_safety set safety_status='safe',reason_codes=array[]::text[],revision=revision+1,expires_at=now()+interval '1 hour';
 select is(api.resolve_published_product_click_context_server('product-media-renamed',1,'shopee'),(select value from click_context_baseline),'Safety recovery retains exact original context');
 select ok(not exists(select 1 from core.spill_item_publications p join click_publication_baseline b using(item_id) where p.snapshot<>b.snapshot or p.working_revision<>b.working_revision),'Context reads and safety degradation do not mutate publication');
 update core.product_drafts set title='NEW PRIVATE TITLE';
@@ -91,9 +91,9 @@ select is(api.resolve_published_product_click_context_server('product-media-rena
 select is(api.resolve_published_product_destination_server('product-media-renamed',1,'shopee',
  (select value->'binding'->>'publication_token' from click_context_baseline),(select value->'binding'->>'destination_hash' from click_context_baseline)),
  '{"status":"unavailable"}'::jsonb,'Old confirmation binding cannot inherit new publication');
-update core.profile_media_assets set stored_content_type='image/png' where asset_key='84000000-0000-4000-8000-000000000001';
+update core.profile_media_assets set byte_size=1 where asset_key='84000000-0000-4000-8000-000000000001';
 select is(api.resolve_published_product_click_context_server('product-media-renamed',1,'shopee'),'{"status":"unavailable"}'::jsonb,'Invalid canonical media denies context');
-update core.profile_media_assets set stored_content_type='image/webp';
+update core.profile_media_assets set byte_size=12;
 update core.spill_item_publications set lifecycle_state='hidden' where item_type='product';
 select is(api.resolve_published_product_click_context_server('product-media-renamed',1,'shopee'),'{"status":"unavailable"}'::jsonb,'Hidden Product denies context');
 update core.spill_item_publications set lifecycle_state='published';
