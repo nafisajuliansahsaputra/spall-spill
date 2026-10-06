@@ -74,5 +74,15 @@ jobs:
         uses: google/osv-scanner-action/osv-scanner-action@baa4139e56d6312335d899e6ba045fa16d1d3d0b # v2.5.1
         with:
           scan-args: |-
+            --format=json
+            --output-file=osv-results.json
             --recursive
             ./
+
+      - name: Upload OSV results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: osv-results
+          path: osv-results.json
+          if-no-files-found: error
