@@ -126,3 +126,6 @@ jobs:
 
       - name: Verify concurrent Product preview binding
         run: node --test tests/product-preview-concurrency.test.mjs
+
+      - name: Verify concurrent Product click intent consumption
+        run: node --test tests/product-click-intent-concurrency.test.mjs

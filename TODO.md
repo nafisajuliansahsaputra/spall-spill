@@ -101,7 +101,8 @@ Already present and governed by locked contracts:
 - 12.24 staged Product detail projection with current per-destination availability;
 - 12.25 staged unmounted Product visual/context confirmation renderer;
 - 12.26 staged exact Published destination resolution with all execution withheld;
-- 12.27 staged opaque one-use Product click-intent core with injectable storage.
+- 12.27 staged opaque one-use Product click-intent core with injectable storage;
+- 12.28 withheld durable hashed intent persistence/consume/bounded cleanup.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -131,6 +132,8 @@ Current safe work must be selected from the remaining dependency frontier:
   browser context-intent authority and outbound transport remain unfinished.
 - [x] Stage server-only opaque one-use intent core under 12.27; durable store,
   exact Published issuance provenance and route/browser assembly remain unfinished.
+- [x] Implement withheld durable intent store under 12.28; actual database and
+  concurrency CI evidence remains required before verification/transport enabling.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -390,9 +393,42 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   diff checks passed. Exact latest-push CI/Security/Guard remain PENDING until
   observed. No new database behavior was introduced; committed Database regression
   CI still runs. S5/S6 remain NOT CLOSED / VERIFIED.
+- Exact implementation `4547321ac2842c130adcbc6383a48abd04e8d419` passed
+  push-event [Application/Database CI 37399658222](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37399658222),
+  [all Security scans 37399658213](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37399658213),
+  and [Autopilot Guard 37399658244](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37399658244).
+  Database regression passed 1,424 pgTAP assertions and seven concurrency tests;
+  these existing tests do not prove the later durable intent adapter.
 - Next dependency-safe task: lock and implement the withheld durable atomic intent
   store and exact Published confirmation/binding issuance adapter, including database
   replay/concurrency/retention evidence, before staged P03 action/HTTP assembly.
+
+### Autonomous continuation — withheld durable intent store — 2026-10-06
+
+- Refreshed clean `work` to exact `4547321ac2842c130adcbc6383a48abd04e8d419`;
+  reread 12.27/current authority and existing database/concurrency patterns.
+  Locked 12.28 before migration implementation; current Supabase RLS/function
+  documentation readback confirmed explicit grants/revokes and private schema boundaries.
+- Added private hashed-token record persistence with strict purpose/binding/hash/
+  fixed 120-second epoch-time validation and RLS/no policies. Create validates
+  current exact Published safety and database clock, inserts without overwrite;
+  consume atomically burns and returns one current record; expired/future records
+  burn without a response. Indexed cleanup locks/skips at most 500 expired rows.
+- All table/helper/RPC execution/access remains withheld from public/anon/
+  authenticated/service_role. No raw token/URL storage, application RPC adapter,
+  public route/CTA, new credentials, cleanup schedule or Publish enabling.
+- Added privileged rolled-back pgTAP boundary/collision/replay/expiry/cleanup tests
+  and isolated multi-connection create/consume races to Database CI. No gate was
+  weakened. Actual migration reset/lint/advisors/pgTAP/concurrency evidence is
+  PENDING until committed CI runs; local Docker capacity prevents observation here.
+- Local typecheck/lint/tooling/full tests (812 total), three builds, Node syntax
+  check for the concurrency harness and diff checks passed. Unchanged application
+  results used Turbo cache where appropriate. Exact latest-push remote evidence
+  remains PENDING until observed; no CLOSED / VERIFIED or production claim.
+- Next dependency-safe task: exact same-snapshot Published confirmation/binding
+  issuance plus concrete server RPC store adapter, and evidence for bounded cleanup
+  wiring/clock alignment, before staged public action/HTTP assembly. Browser/live
+  provider/cache/abuse/first-Publish gates and S5/S6 closure remain open.
 
 ## Current local integration — 2026-10-04
 

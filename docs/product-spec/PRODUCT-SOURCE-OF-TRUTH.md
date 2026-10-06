@@ -428,6 +428,18 @@ redemption, without follower login or private context in the token. No concrete
 persistence, schema/grant, route, CTA, redirect or publication is enabled. Unit
 memory-store evidence does not prove durable database atomicity or browser
 confirmation provenance. Those adapter/transport gates and S5/S6 remain open.
+Exact core commit `4547321ac2842c130adcbc6383a48abd04e8d419` passed push-event
+Application/Database CI (37399658222), all Security scans (37399658213) and
+Autopilot Guard (37399658244). Existing Database regression passed 1,424 pgTAP
+assertions and seven concurrency tests, not durable intent atomicity evidence.
+
+Contract [12.28](./technical-architecture/12.28-product-click-intent-store-contract.md)
+adds withheld durable hashed-token persistence, atomic create/consume and indexed
+bounded expiry cleanup. RLS and all table/helper/RPC revokes retain the private
+boundary. Database/concurrency verification remains PENDING until observed; no
+raw token/URL storage or public action is enabled. Exact confirmation issuance,
+application RPC adapter, cleanup wiring/clock alignment and public transport
+remain unfinished; S5/S6 are not CLOSED / VERIFIED.
 
 ### Current implementation checkpoint
 
@@ -455,7 +467,8 @@ foundation:
 - staged Product detail projection/per-destination availability under 12.24;
 - staged Product visual/context confirmation renderer under 12.25;
 - staged exact Published marketplace destination resolution under 12.26;
-- staged opaque one-use Product click-intent core under 12.27.
+- staged opaque one-use Product click-intent core under 12.27;
+- withheld durable Product click-intent store under 12.28.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -510,7 +523,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.27 govern the staged work already present.
+public transport**. Contracts 12.12–12.28 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
