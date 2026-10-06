@@ -19,10 +19,10 @@ export function createProductClickUpstashBudgetTransport(config: { origin: strin
       if (origin.origin !== c.origin || origin.protocol !== "https:" || origin.port || origin.username || origin.password
         || !/^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.upstash\.io$/.test(origin.hostname)) return null;
       if (script !== productClickBudgetScript || keys.length !== 2 || args.length !== 4) return null;
-      const match = keys[0]!.match(new RegExp(`^spall-click:${c.namespace}:\\{([a-f0-9]{64})\\}:(issue|redeem)$`));
-      if (!match || keys[1] !== `spall-click:${c.namespace}:{${match[1]}}:work`
+      const match = keys[0]!.match(/^spall-click:([a-z][a-z0-9-]{0,47}):\{([a-f0-9]{64})\}:(issue|redeem)$/);
+      if (!match || match[1] !== c.namespace || keys[1] !== `spall-click:${c.namespace}:{${match[2]}}:work`
         || !integer(args[0]!, 1000, 3600000) || !integer(args[1]!, 1, 1000000) || !integer(args[2]!, 1, 1000000)
-        || !(match[2] === "redeem" ? args[3] === "3" : ["4", "32"].includes(args[3]!)) || Number(args[2]) < Number(args[3])) return null;
+        || !(match[3] === "redeem" ? args[3] === "3" : ["4", "32"].includes(args[3]!)) || Number(args[2]) < Number(args[3])) return null;
       const started = performance.now(); const timely = () => { const now = performance.now(); return Number.isFinite(now) && now >= started && now < started + 1500; };
       if (!Number.isFinite(started)) return null;
       const url = `${c.origin}/`;

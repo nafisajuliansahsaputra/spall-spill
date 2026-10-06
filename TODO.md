@@ -858,8 +858,8 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   4,097-read bounds, strict framing/UTF-8 and one literal numeric result key.
   Error/status/duplicate/private/late responses deny without leaking or retrying;
   abandoned bodies are cancelled without waiting for cancellation completion.
-- 67 targeted tests (40 REST / 27 permit), six isolated Redis tests, frozen install
-  from unchanged dependency baseline, typecheck/lint, five tooling tests, 1,193
+- 68 targeted tests (41 REST / 27 permit), six isolated Redis tests, frozen install
+  from unchanged dependency baseline, typecheck/lint, five tooling tests, 1,194
   application/runtime tests, three builds and final diff review/checks passed.
   Fixtures integrate trusted subject → permit → exact REST EVAL → literal grant /
   denial. Latest exact-push evidence remains PENDING until observed.
@@ -867,6 +867,10 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   S5/S6 NOT CLOSED / VERIFIED. Next safe task: lock private handler-specific
   HTTP/permit composition so bundle always budgets 32 and issue/redeem 4/3, with
   injected trusted identity/policy/transport; verify full SDK/REST fixture flow.
+  Initial 12.41 SAST identified dynamic RegExp construction; replaced it with a
+  static bounded regex plus explicit namespace equality, with no suppression/rule change.
+  Redis runtime tests remain a separate mandatory Application CI command, preserving
+  native Windows pnpm test without requiring a Unix Redis binary; no silent skip.
   Actual provider EVAL/TIME/replication/TTL/cluster compatibility, approved capacity
   and trusted deployment identity/browser/cache/retention/publication gates remain open.
 

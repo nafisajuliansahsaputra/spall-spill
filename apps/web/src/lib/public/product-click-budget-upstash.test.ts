@@ -27,7 +27,7 @@ describe("bounded private Upstash budget transport", () => {
   it.each(["short", "bearer\r\nInjected:yes", "x".repeat(4097)])("denies invalid credential syntax before network", async token => {
     const f = fixture(); expect(await createProductClickUpstashBudgetTransport({ ...config, token }, f.fetcher).eval(productClickBudgetScript, keys, args)).toBeNull(); expect(f.fetcher).not.toHaveBeenCalled();
   });
-  it.each([["return 1", keys, args], [productClickBudgetScript, [keys[0]!, "another:work"], args],
+  it.each([["return 1", keys, args], [productClickBudgetScript, keys.map(key => key.replace(":test:", ":other:")), args], [productClickBudgetScript, [keys[0]!, "another:work"], args],
     [productClickBudgetScript, keys, ["060000", "10", "100", "32"]], [productClickBudgetScript, keys, ["60000", "10", "31", "32"]],
     [productClickBudgetScript, keys, ["60000", "10", "100", "3"]]])("confines commands/keys/canonical budget arguments", async (script, selectedKeys, selectedArgs) => {
       const f = fixture(); expect(await f.transport.eval(script as string, selectedKeys as string[], selectedArgs as string[])).toBeNull(); expect(f.fetcher).not.toHaveBeenCalled();

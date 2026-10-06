@@ -66,6 +66,7 @@ jobs:
         run: |
           pnpm test:tooling
           pnpm test
+          pnpm --filter @spall-spill/web test:click-budget-redis
 
       - name: Production build
         run: pnpm build

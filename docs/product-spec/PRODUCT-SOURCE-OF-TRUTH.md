@@ -632,8 +632,12 @@ stages a private bounded Upstash REST transport confined to the exact budget scr
 namespace/cluster-slot keys and canonical work arguments. Injected server origin/token,
 no redirects/retries, 1.5-second abort/monotonic deadline and strict 4,096-byte /
 4,097-read numeric-result response validation keep errors/late replies fail-closed.
-67 targeted and 1,193 application/runtime tests, five tooling tests, typecheck/lint
+68 targeted and 1,194 application/runtime tests, five tooling tests, typecheck/lint
 and three builds passed. Exact latest-push evidence remains PENDING until observed.
+Initial 12.41 SAST flagged dynamic regex construction; key validation now uses
+a static bounded regex with explicit namespace equality, without rule suppression.
+Redis runtime verification remains a separate mandatory Application CI command,
+preserving native Windows unit tests without weakening the required Redis gate.
 No live provider call, credentials, route/grant, publication or production change.
 Handler-specific private HTTP/permit composition is next; actual live Upstash /
 trusted identity/capacity/browser/cache/retention/publication evidence remains open.
