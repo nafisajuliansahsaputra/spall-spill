@@ -5007,7 +5007,7 @@ snapshots:
       '@img/sharp-win32-arm64': 0.35.5
       '@img/sharp-win32-ia32': 0.35.5
       '@img/sharp-win32-x64': 0.35.5
-      '@types/node': 26.6.3
+      '@types/node': 24.13.3
   shebang-command@2.0.0:
     dependencies:
       shebang-regex: 3.0.0
