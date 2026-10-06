@@ -318,12 +318,205 @@ CI Application + Database (run 37272077522), Security Secret Scan + SAST +
 Dependency Scan (run 37272077487), and Autopilot Guard (run 37272077479).
 This remote evidence verifies the integrated baseline; it does not substitute
 for still-open browser/manual/live-provider gates.
-The next active work is public/click/media transport, explicit first-Publish UI
-and universal D01 handoff; Product image/marketplace preparation remains open.
+Contract [12.20](./technical-architecture/12.20-private-product-preparation-contract.md)
+locks private primary-image and ordered marketplace-destination preparation on an
+existing saved onboarding Product Draft. Current-Owner RPCs enforce same-Owner
+finalized media, independent preparation revision and expected Product revision.
+Manual image/destination entry preserves attribution and incomplete Drafts.
+This private slice leaves Product publication pending; public media transport,
+Product-safe projections and exact preparation/safety binding into preview,
+receipt and first Publish remain separate gates. Live media/browser/provider
+evidence remains open. Implementation `11e515da32fb2cead2e24fd380d068ceb36a6f80`
+passed exact-commit CI Application/Database (run 37280505809), all three Security
+jobs (37280505869) and Autopilot Guard (37280505805). Database evidence includes
+1,164 pgTAP assertions and six concurrency tests. Bounded-cycle limitations and
+evidence are tracked in TODO; this does not close S5/S6.
+
+Contract [12.21](./technical-architecture/12.21-published-identity-media-transport-contract.md)
+stages public Identity image delivery from an exact Published snapshot. A narrow
+server-only resolver checks active/completed/Published visibility and finalized
+same-Owner canonical media; bounded R2 streaming rechecks the exact publication
+before delivery. HTTP returns bytes or uniform unavailable, with no storage keys,
+signed URLs or viewer account requirement and conservative no-store caching.
+Working selections remain private. Live R2/browser revocation, production cache/
+abuse gates, Product image projection, existing public reader grants and media
+publication enabling remain open; no S5/S6 closure is claimed.
+
+Exact commit `167df3a2d4f01a6e2d6c1f09ce500cf7e8c4711a` passed Application/Database
+CI (37318466602), all three Security jobs (37318466588) and Autopilot Guard
+(37318466772), including 1,201 pgTAP assertions, reset/lint/error-level security
+advisors and six concurrency tests. Provider/browser/production gates remain open.
+
+Contract [12.22](./technical-architecture/12.22-product-private-preview-binding-contract.md)
+binds the saved Product image, preparation revision, ordered exact marketplace
+destinations and current per-source safety revision/expiry into private S6 review
+and its receipt digest. Trusted private image preview and escaped destination
+text do not activate outbound transport. Changed preparation invalidates old
+review; Product publication remains pending. Published Product projection/media
+and fresh locked publication checks remain separate unfinished dependencies.
+
+Exact commit `c65cbba758e64c36b98cb572c6c5edf85a38c9fe` passed Application/Database
+CI (37320066050), all three Security jobs (37320066244) and Autopilot Guard
+(37320066126), including 1,253 pgTAP assertions across 23 files and seven
+concurrency tests. Local application/tooling checks passed with 652 tests and
+three builds. This evidence does not close the missing browser/provider/public
+transport and production-readiness gates.
+
+Contract [12.23](./technical-architecture/12.23-published-product-media-transport-contract.md)
+stages Product image transport from exact Published Product/Identity snapshots,
+with public Handle/reference/type scoping, finalized same-Owner canonical media
+and a post-download publication-token check. Missing Published preparation fields
+never use private fallback. Image delivery does not grant marketplace outbound
+authority or change lifecycle on destination degradation. Product detail projection,
+fresh locked publication binding, live media/provider and production cache/abuse
+gates remain open; existing publication/public reader grants remain withheld.
+
+Exact media commit `363de7469ba6ea16a094be12b5bd06ef71c7fd99` passed Application/
+Database CI (37325548751), all three Security jobs (37325548508) and Autopilot
+Guard (37325548510), including 1,314 pgTAP assertions and seven concurrency tests.
+Application/tooling checks passed with 700 tests and three builds. Observed local
+HTTP evidence covers generic denial only, not live storage success or revocation.
+
+Contract [12.24](./technical-architecture/12.24-published-product-projection-contract.md)
+stages a minimal exact Published Product detail projection. It retains image/title/
+Owner/reference context and ordered validated provider context while masking URLs
+without fresh safe URL/hash verdicts. Partial/all destination degradation changes
+availability only, not lifecycle or Published content. The Product reader has no
+Data API execution grants; complete detail/action/click assembly and publication integration
+remain unfinished. No Product publish-ready or S5/S6 closure claim is introduced.
+
+Exact projection commit `4babc5ecab499be57e397b5480d3fbbe6e748f43` passed push-event
+Application/Database CI (37362911336), all three Security jobs (37362911320), and
+Autopilot Guard (37362911347). Database reset, lint, error-level security advisors,
+1,367 pgTAP assertions across 25 files and seven concurrency tests passed.
+Application/tooling checks passed with 723 tests and three builds. Browser, live
+provider/storage, cache/abuse evidence and S5/S6 closure remain open.
+
+Contract [12.25](./technical-architecture/12.25-published-product-confirmation-renderer-contract.md)
+implements the staged, unmounted Product visual/context confirmation region.
+It validates only strict public DTOs, renders Published Owner/reference/title and
+the exact unoptimized same-origin image, escapes text and retains confirmation
+through destination degradation. All-unavailable commerce is communicated with
+safe Owner/Browse navigation retained. It fetches no data and emits no outbound
+URLs/actions. Public routing, marketplace action/click transport, provider/cache/
+browser evidence and first Publish remain unfinished; no grants are enabled.
+
+Contract [12.26](./technical-architecture/12.26-published-product-destination-resolution-contract.md)
+stages exact Published marketplace destination resolution with current safety,
+Identity/Product publication-token and provider/original-URL-hash binding. The
+read-only resolver preserves creator attribution and has no execution grants to
+public/anon/authenticated/service_role. A strict server-only validator adds no
+browser authority, redirect, intent or public action. Context-intent transport,
+P03 action assembly and publication integration remain unfinished; database and
+exact latest-push CI/Security/Guard evidence remain PENDING until observed.
+Exact resolver implementation `43363369ca86b3773e132449863e3a144f0c27f9` passed
+isolated Database reset/lint/error-level advisors, 1,424 pgTAP assertions across
+26 files and seven concurrency tests. Its Dependency Scan detected transitive
+`source-map-js` advisory GHSA-68fv-2mgg-jv7q; the patched dependency and exact final
+push still require all remote gates. This evidence does not enable public transport
+or close S5/S6.
+Patched final commit `7141fdce7af33c6aab26b685dd9bd4f6eadc882f` passed exact
+push-event Application/Database CI (37398772253), all three Security scans
+(37398772255) and Autopilot Guard (37398772256). Database again passed 1,424
+pgTAP assertions and seven concurrency tests; no High dependency finding remains.
+
+Contract [12.27](./technical-architecture/12.27-product-click-intent-core-contract.md)
+stages a server-only opaque one-use click-intent core with mandatory injectable
+atomic storage. It binds validated server confirmation/Published selection,
+selected provider and original URL hash, fixed expiry and current safety on
+redemption, without follower login or private context in the token. No concrete
+persistence, schema/grant, route, CTA, redirect or publication is enabled. Unit
+memory-store evidence does not prove durable database atomicity or browser
+confirmation provenance. Those adapter/transport gates and S5/S6 remain open.
+Exact core commit `4547321ac2842c130adcbc6383a48abd04e8d419` passed push-event
+Application/Database CI (37399658222), all Security scans (37399658213) and
+Autopilot Guard (37399658244). Existing Database regression passed 1,424 pgTAP
+assertions and seven concurrency tests, not durable intent atomicity evidence.
+
+Contract [12.28](./technical-architecture/12.28-product-click-intent-store-contract.md)
+adds withheld durable hashed-token persistence, atomic create/consume and indexed
+bounded expiry cleanup. RLS and all table/helper/RPC revokes retain the private
+boundary. Database/concurrency verification remains PENDING until observed; no
+raw token/URL storage or public action is enabled. Exact confirmation issuance,
+application RPC adapter, cleanup wiring/clock alignment and public transport
+remain unfinished; S5/S6 are not CLOSED / VERIFIED.
+Store implementation `ee8173dbd51cee6b6bba40454de7f90328d73e84` passed isolated
+reset/lint/error-level advisors, 1,503 pgTAP assertions and seven existing races.
+The new race fixture needed explicit pgTAP extension setup outside the CLI's
+transactional test runner; final durable concurrency/exact-push evidence is still
+required. No test assertion or private access boundary was weakened.
+
+Final store fixture commit `17127f940327191588ac8ae87532c720a00b88c7` passed
+push-event Application/Database CI (37401010749), all Security scans (37401010787)
+and Guard (37401010652). Database passed 1,503 assertions across 27 files and
+nine real concurrency tests, including duplicate intent create and competing
+committed consume. This completes that automated store evidence; public transport
+and journey closure remain withheld.
+
+Contract [12.29](./technical-architecture/12.29-product-click-intent-rpc-adapter-contract.md)
+stages the injected server-only application adapter for existing private intent
+RPCs. Strict create/consume responses and bounded single-call cleanup deny malformed
+inputs, errors and exceptions without retry/fallback. All grants remain withheld;
+no credentials, public route, issuance provenance or cleanup schedule is enabled.
+Exact latest-push evidence remains PENDING until observed. Same-snapshot Published
+confirmation/binding issuance and real authorized transport integration remain open.
+
+Exact adapter commit `d029075136d1bd02bebc0134009cd4aa36517efe` passed all six
+push-event gates: Application/Database CI (37423061706), Security (37423061823)
+and Guard (37423061697). Database regression passed 1,503 assertions and nine
+real concurrency tests; actual SDK POST/schema/no-retry fixture checks passed.
+This does not establish live RPC/browser integration or public enablement.
+
+Contract [12.30](./technical-architecture/12.30-product-click-issuance-context-contract.md)
+stages a withheld same-Published-row confirmation/binding resolver and locator-only
+private intent issuance assembly. Exact finalized media and current safety are
+rechecked; private caller bindings and Working/Draft fallback are denied. Public
+confirmation plus opaque token is returned only after fresh resolution/durable
+create acknowledgment. No grants, credentials, routes, CTA, schedule or publication
+are enabled. Database and exact latest-push evidence remain PENDING until observed;
+clock alignment, scheduled retention, browser/cache/abuse/provider gates remain open.
+
+Final issuance fixture commit `496493324fdb7521412bac23d34e095f31cd9034` passed
+push-event CI (37428446588), all Security scans (37428446664) and Guard
+(37428446766), including 1,553 pgTAP assertions and nine real concurrency tests.
+Fixture repairs preserved existing safety/media constraints and denial assertions.
+
+Contract [12.31](./technical-architecture/12.31-product-click-database-clock-contract.md)
+stages withheld database epoch and strict-record expiry-aware resolution plus
+bounded SDK/monotonic calibration with separate lower/upper bounds. The fixed
+120-second record lifetime and all RPC grants remain unchanged. These primitives
+are not yet wired into core/issuance, do not authenticate a supplied record, and
+are not end-to-end clock alignment or public enabling evidence. Latest Database/
+exact-push gates remain PENDING until observed. Future core wiring, committed
+consumption, bounded retention and browser/provider/transport gates remain open.
+
+Final 12.31 fixture commit `a029b7151d0f802119f1799d9c845e4d57a94691` passed
+push-event CI (37429773966), all Security scans (37429773975) and Guard
+(37429773959), including 1,595 pgTAP assertions and nine real concurrency tests.
+
+Contract [12.32](./technical-architecture/12.32-product-click-clock-wiring-contract.md)
+wires operation-local database calibration into private issuance/redemption,
+using lower issuance time and upper deadlines. Committed consumption precedes
+stored-record database expiry resolution; failures do not restore authority or
+fall back to application wall time/binding-only redemption. This is staged wiring,
+not live authorized RPC or public-enablement evidence. Exact-push gates remain
+PENDING until observed; bounded retention and browser/provider/transport remain open.
+
+Final 12.32 commit `b7887ca866d200ebbf8371b2beefd648531731cb` passed push-event
+CI (37435260252), all Security scans (37435260217) and Guard (37435260204),
+including 1,595 pgTAP assertions and nine real concurrency tests.
+
+Contract [12.33](./technical-architecture/12.33-product-click-retention-scheduler-contract.md)
+stages an inactive database-only minute-cadence retention job and withheld bounded
+tick. Expired intent and own old terminal cron history cleanup is limited to 500
+each, with transaction try-lock and no public/application-role grants. Actual
+isolated scheduler/exact-push evidence is PENDING until observed. This is not
+production activation or a retention guarantee; controlled activation, capacity,
+monitoring, browser/provider and transport prerequisites remain open.
 
 ### Current implementation checkpoint
 
-#### Integrated implementation frontier — 2026-10-05
+#### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
 `8d6f8c12c7161aace642342211e7f7d66867032f` before the Codex Cloud execution
@@ -339,7 +532,21 @@ foundation:
 - explicit Owner-bound preview receipt under 12.16;
 - scoped restricted-account/session-exit behavior under 12.17;
 - staged atomic first-publication transaction/acknowledgment behavior under 12.18;
-- staged published-only Identity/Resource reader foundation under 12.19.
+- staged published-only Identity/Resource reader foundation under 12.19;
+- private Product image/marketplace preparation under 12.20;
+- staged Published Identity media transport under 12.21;
+- private Product preparation preview/receipt binding under 12.22;
+- staged exact Published Product media transport under 12.23;
+- staged Product detail projection/per-destination availability under 12.24;
+- staged Product visual/context confirmation renderer under 12.25;
+- staged exact Published marketplace destination resolution under 12.26;
+- staged opaque one-use Product click-intent core under 12.27;
+- withheld durable Product click-intent store under 12.28;
+- staged private Product click-intent RPC adapter under 12.29;
+- staged exact Published Product intent issuance under 12.30;
+- staged database clock/deadline calibration primitives under 12.31;
+- staged calibrated private intent assembly under 12.32;
+- staged inactive bounded retention scheduler under 12.33.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -351,7 +558,9 @@ first-publication and public transport**, not Resource Draft creation.
 
 Current open work includes, as applicable and in dependency order:
 
-- Product primary-image / marketplace publication preparation;
+- remaining Product publication preparation: public media/Product projection and
+  exact preparation-revision/image/destination/safety binding into publication
+  (private persistence/review/receipt binding is present under 12.20/12.22);
 - safe public route and external click transport;
 - public Profile Media transport;
 - explicit first-Publish UI/bundle wiring;
@@ -392,7 +601,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.19 govern the staged work already present.
+public transport**. Contracts 12.12–12.33 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

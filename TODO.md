@@ -2,13 +2,35 @@
 
 **Status:** Execution backlog  
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
-**Last synchronized:** 2026-10-05
+**Last synchronized:** 2026-10-06
 
 ## Autonomous Codex Cloud lane — 2026-10-05
 
 This is an execution-mode checkpoint, not new product authority. Product behavior
 continues to come from the canonical Product Source of Truth, locked User Flows,
 and relevant locked technical contracts.
+
+### Temporary infrastructure evidence policy — 2026-10-06
+
+- Owner clarified that queued/unassigned hosted runners, empty pre-runner steps,
+  superseded concurrency cancellation and transient infrastructure delays leave
+  evidence PENDING rather than requiring Owner intervention. AGENTS, Protocol
+  §2.4 and Runbook §11 now preserve independent dependency-safe continuation.
+- Current-thread hourly automation resumed with this policy. No product semantics,
+  publication grants, CI configuration or security gates changed.
+- At `8ddc355e9720367147f7c02005deedbd5f55793d`, push-event Application/Database
+  CI (37364270734), Dependency Scan (37364489331) and Guard (37364270721) passed.
+  SAST/Secret Scan were cancelled before producing logs even after rerun; their
+  evidence remains PENDING, not a source regression or proven billing/access issue.
+  Later pushes must use their exact latest SHA as the evidence target.
+- Independent next Product work remains staged detail confirmation and exact
+  Published safety-click transport under a new bounded JIT contract. Do not
+  enable public readers/first Publish or claim S5/S6 closure before all required
+  automated, browser/runtime and provider gates are evidenced.
+- Documentation-only policy verification: typecheck, lint, tooling tests, unit
+  tests, production build and diff checks passed (Turbo results reused existing
+  unchanged-source cache where applicable). No migration/database behavior
+  changed. Latest-push remote gates remain PENDING until actually observed.
 
 - [x] Create `codex/autopilot` from the latest preserved implementation branch.
 - [x] Add root `AGENTS.md` with mandatory repository bootstrap, authority
@@ -31,18 +53,25 @@ and relevant locked technical contracts.
   `codex/autopilot`; full push-event gates remain required.
 - [ ] Publish and validate the reusable Codex Cloud environment against
   `codex/autopilot`.
-- [ ] Run the first read-only Codex Cloud orientation audit and confirm it
+- [x] Run the first read-only Codex Cloud orientation audit and confirm it
   reconstructs product purpose, current checkpoint, completed evidence,
   remaining work, relevant J1–J9 flow/contracts, blockers, and next safe task
-  from committed Git authority without relying on chat memory.
-- [ ] Run one bounded implementation cycle in Codex Cloud, verify commit/push
-  lands only on `codex/autopilot`, and verify CI/Security on that exact commit.
+  from committed Git authority without relying on chat memory. Verified in a
+  Cloud synthetic `work` task after explicit synchronization to
+  `origin/codex/autopilot`; local and remote HEAD matched, the working tree was
+  clean, Node 24.19.0 / pnpm 11.24.0 dependency preparation passed, and the
+  orientation correctly identified O01-S4 as the last fully CLOSED / VERIFIED
+  checkpoint and O01-S6 first-publication/public-transport as the active frontier.
+- [x] Run one bounded implementation cycle in Codex Cloud, verify commit/push
+  lands only on `codex/autopilot`, and verify CI/Security/Guard on exact
+  implementation commit `11e515da32fb2cead2e24fd380d068ceb36a6f80` (runs below).
+  This proves the bounded Git/CI lane, not unattended readiness or S5/S6 closure.
 - [ ] Configure the long-running Goal / recurring Cloud continuation only after
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
 
-## Current canonical implementation frontier — 2026-10-05
+## Current canonical implementation frontier — 2026-10-06
 
 This section is the current task-selection bridge to the canonical Product Source
 of Truth. It supersedes older "Immediate work", "Immediate next task", and
@@ -64,7 +93,21 @@ Already present and governed by locked contracts:
 - 12.16 preview receipt;
 - 12.17 scoped account-status/session exit;
 - 12.18 staged atomic first publication;
-- 12.19 staged published-only Identity/Resource reads.
+- 12.19 staged published-only Identity/Resource reads;
+- 12.20 private Product primary-image / ordered marketplace preparation;
+- 12.21 staged Published Identity image delivery;
+- 12.22 private Product preparation/image/destination/safety preview and receipt binding;
+- 12.23 staged exact Published Product image transport;
+- 12.24 staged Product detail projection with current per-destination availability;
+- 12.25 staged unmounted Product visual/context confirmation renderer;
+- 12.26 staged exact Published destination resolution with all execution withheld;
+- 12.27 staged opaque one-use Product click-intent core with injectable storage;
+- 12.28 withheld durable hashed intent persistence/consume/bounded cleanup;
+- 12.29 staged private application RPC store/cleanup adapter;
+- 12.30 staged same-Published-snapshot confirmation/binding and private issuance;
+- 12.31 withheld database clock/deadline and bounded calibration primitives;
+- 12.32 operation-local calibrated private intent issuance/redemption wiring;
+- 12.33 inactive bounded database retention scheduler foundation.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -73,9 +116,41 @@ items.
 
 Current safe work must be selected from the remaining dependency frontier:
 
-- [ ] Product primary-image / marketplace publication preparation.
+- [x] Lock and implement private Product primary-image / ordered marketplace
+  preparation under 12.20; existing saved Draft only, current Owner, independent
+  revision, finalized same-Owner media, creator attribution retained.
+- [ ] Complete Product publication preparation: public media/Product projection
+  and exact preparation/image/destination/safety binding into first Publish.
+  Private entry and review alone do not make Product publish-ready.
+- [x] Bind private Product preparation/image/ordered destination/safety state into
+  the S6 preview and receipt digest under 12.22, retaining publication-pending status.
 - [ ] Safe public routes and external click transport.
-- [ ] Public Profile Media transport.
+- [x] Implement staged Published Identity image transport under 12.21 with
+  server-only selection, bounded download and post-download visibility recheck.
+- [x] Bind staged Product image transport to exact Published Owner/reference/type
+  and snapshot under 12.23; no newer private fallback or outbound authority.
+- [x] Implement staged Product detail projection under 12.24 with exact Published
+  context, ordered current destination availability and no private fields.
+- [x] Implement the staged Product visual/context confirmation region under 12.25
+  without public route assembly, data fetching or marketplace actions.
+- [x] Stage exact Published provider/URL-hash destination resolution under 12.26;
+  browser context-intent authority and outbound transport remain unfinished.
+- [x] Stage server-only opaque one-use intent core under 12.27; durable store,
+  exact Published issuance provenance and route/browser assembly remain unfinished.
+- [x] Implement withheld durable intent store under 12.28; exact `17127f9`
+  Database CI passed 1,503 pgTAP assertions and nine real concurrency tests.
+- [x] Stage the private RPC store/one-call cleanup adapter under 12.29; no grants
+  or schedule enabled. Exact latest-push evidence remains PENDING until observed.
+- [x] Stage same-snapshot Published context and locator-only private issuance
+  under 12.30; exact-push database/CI evidence remains PENDING until observed.
+- [x] Stage database epoch/deadline RPCs and conservative clock calibration
+  under 12.31; exact `a029b71` passed all automated gates; private wiring follows below.
+- [x] Wire lower issuance/upper deadline bounds and committed-record database
+  resolution under 12.32; actual authorized integration/public transport remain open.
+- [x] Register inactive bounded intent/history retention under 12.33; actual
+  scheduler CI evidence pending, controlled activation/capacity/monitoring open.
+- [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
+  enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
 - [ ] Universal D01 workspace handoff.
 - [ ] Enable currently withheld public/RPC execution only when its locked
@@ -87,6 +162,434 @@ Current safe work must be selected from the remaining dependency frontier:
 Before implementing a new bounded checkpoint, follow the JIT contract gate in
 the Implementation Execution Protocol. Pick the highest-priority dependency-safe
 item after fresh-reading the relevant O01/J1–J4 authority and affected code.
+
+### Bounded Cloud Product preparation cycle — 2026-10-05
+
+- Clean synthetic `work` synchronized to authorized remote baseline
+  `1eb823e33ba11217e4eaf53337855806d990bc5c` before orientation or implementation.
+- Read pinned historical Product/destination/D04/creation-threshold authority;
+  locked 12.20 before coding. No journey topology or Published semantics changed.
+- Added private preparation persistence/resolver/save and focused S5 manual
+  sanitized image upload plus ordered structured destination entry. Preparation
+  retains Product identity/reference and creates no publication or completion.
+- Targeted action/provider/form tests passed; full typecheck, lint, five tooling
+  tests, 585 Vitest tests, 17 auth navigation tests and all three production builds
+  passed in Cloud (607 application/tooling tests total).
+- Local Supabase PostgreSQL image extraction exceeded the managed `vfs` Docker
+  filesystem capacity; retries stopped. Local reset/lint/pgTAP/concurrency are
+  unobserved locally. GitHub Database supplied fresh migration reset, schema lint,
+  1,164 pgTAP assertions across 21 files (67 new preparation assertions), and six
+  real concurrency tests, including parallel first/existing preparation saves.
+  Lint had no errors; log review found two new implicit empty-array initializer
+  warnings. Explicit typed arrays remove those warnings in the evidence follow-up.
+  Existing preview/public-reader warnings are outside this bounded slice.
+- Implementation commit `11e515da32fb2cead2e24fd380d068ceb36a6f80` was pushed
+  explicitly as `HEAD:codex/autopilot` after refetching and confirming the remote
+  had not advanced. Exact-commit evidence: [CI Application + Database
+  37280505809](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37280505809),
+  [Security Secret Scan + SAST + Dependency Scan
+  37280505869](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37280505869),
+  and [Autopilot Guard 37280505805](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37280505805)
+  all passed. Final follow-up `ce6b45c0dc674366c2b38cda5e909bc0c581aa9a` also
+  passed exact-commit CI 37280925633, Security 37280925615 and Guard 37280925596;
+  the two new initializer warnings were absent. Results were observed separately.
+- Browser/runtime upload/CORS, manual authorization/stale-save/failure truth,
+  live R2 and Web Risk/Gemini provider evidence remain open. S5/S6 are not closed;
+  public/RPC grants remain withheld. Provider account/billing and Cloud-local
+  database capacity are current evidence blockers; no production credentials used.
+- Next dependency-safe task: lock and implement public-safe media transport for
+  existing canonical Identity/Product assets, before binding Product preparation
+  into preview/receipt/publication. Do not activate publication grants yet.
+
+### Additional autonomous cycle — Published Identity media — 2026-10-05
+
+- Fresh clean Cloud `work` synchronized to `ce6b45c` before material work.
+  The Owner explicitly authorized additional autonomous cycles; no unattended
+  environment/provider readiness or production release approval is inferred.
+- Locked 12.21 before implementation after rereading current authority, relevant
+  J1–J4/J6/J9 rules, pinned FR-IDN/P01 and existing storage/publication contracts.
+- Implemented service-only Published image resolver and technical HTTP transport;
+  private table privileges and existing publication/public-reader grants remain
+  withheld. Product media/publication preparation remains a separate dependency.
+- Targeted media/HTTP/proxy tests: 34 passed. Full typecheck, lint, five tooling
+  tests, 619 Vitest tests, 17 auth navigation tests (641 total) and three builds
+  passed in Cloud. Production-server HTTP observation returned matching generic
+  404 bodies for unavailable and invalid Handle locators, with no-store/nosniff/
+  same-origin headers and no login requirement. This is denial-path evidence only.
+- Added 37 pgTAP assertions for aliases, Published/Working isolation, visibility,
+  finalized same-Owner assets, private privileges and retained withheld grants.
+  CI now also runs error-level security advisors. Exact commit `167df3a2d4f01a6e2d6c1f09ce500cf7e8c4711a`
+  passed Application/Database CI (37318466602), all three Security jobs
+  (37318466588) and Autopilot Guard (37318466772). Database reset/lint/advisors,
+  22 pgTAP files / 1,201 assertions and six concurrency tests passed remotely.
+  Local Docker image extraction remains capacity-blocked.
+- Live R2 success/revocation, browser delivery, production cache/invalidation,
+  edge abuse/load and missing provider credentials remain open. S5/S6 not closed.
+- The private preview/receipt dependency is implemented in the following cycle.
+
+### Additional autonomous cycle — Private Product S6 review — 2026-10-05
+
+- Fresh clean Cloud `work` synchronized to `167df3a` before material work.
+  Locked 12.22 after reconciling O01-S6, J2/J4/J6/J9, pinned Product semantics,
+  preview/receipt/publication contracts and existing preparation persistence.
+- Current-Owner preview now includes exact selected image, independent preparation
+  revision, ordered attribution-preserving destinations and per-source safety
+  revision/expiry in its UTC digest. Changed preparation invalidates old review.
+  Private rendering uses trusted image signing and escaped destination text;
+  unavailable images retain selection. No external outbound links are activated.
+- Product publication remains pending. No existing withheld publication/public
+  reader grants, journey topology, Working/Draft/Published semantics or reference
+  allocation changed. First Publish still rejects Product bundles.
+- Targeted tests: 54 passed. Full typecheck, lint, five tooling tests, 630 Vitest
+  tests, 17 auth navigation tests (652 total), three builds and diff checks passed.
+  Added 52 pgTAP assertions and an isolated preparation-save/confirmation race.
+  Exact commit `c65cbba758e64c36b98cb572c6c5edf85a38c9fe` passed Application/Database
+  CI (37320066050), all three Security jobs (37320066244) and Autopilot Guard
+  (37320066126). Database reset/lint/error-level security advisors, 23 pgTAP
+  files / 1,253 assertions and seven concurrency tests passed remotely.
+  Local Docker capacity limitation remains.
+- No browser/live provider evidence is claimed. S5/S6 remain not closed.
+- Next dependency-safe task: lock and stage exact Published Product projection
+  and image binding, retaining withheld public/publication grants until all
+  transport and safety gates are evidenced.
+
+### Autonomous continuation — Published Product media — 2026-10-05
+
+- Clean Cloud `work` refreshed and synchronized to `5f69c16` before orientation.
+  Current environment observations confirm running/connected revision 26 with
+  enforced package-manager network policy, no runtime credentials or identities.
+- Reread current canonical frontier, J2/J4/J6/J9, pinned FR-PRD/P03 and relevant
+  publication/media contracts. Locked 12.23 before source implementation.
+- Added service-only Product descriptor keyed only by public Handle/reference,
+  exact Published Product/Identity visibility and finalized same-Owner asset.
+  Snapshot title/preparation revision/image/structured destinations are required;
+  newer private preparation never fills a missing Published field. Product and
+  Identity publication tokens are rechecked after bounded canonical download.
+- Added technical Product image HTTP route with uniform unavailable, no viewer
+  session refresh and conservative no-store headers. Shared existing bounded
+  streaming/framing validation with Identity, preserving its regression tests.
+  This image boundary authorizes no marketplace redirect or safety verdict;
+  runtime destination degradation does not silently change Product lifecycle.
+- Targeted tests: 82 passed. Full typecheck/lint/tooling/test/build passed with
+  678 Vitest + 17 auth navigation + five tooling tests (700 total), three builds
+  and clean diff checks. Production-server HTTP probes returned identical generic
+  404 unavailable for unknown Owner and invalid reference, with no login, no-store,
+  nosniff and same-origin headers. This observes denial only, not live R2 success.
+- Added 61 pgTAP assertions. Exact commit `363de7469ba6ea16a094be12b5bd06ef71c7fd99`
+  passed Application/Database CI (37325548751), all three Security jobs
+  (37325548508) and Autopilot Guard (37325548510), including database reset/lint/
+  advisors, 24 pgTAP files / 1,314 assertions and seven concurrency tests.
+  Local database Docker capacity limitation remains.
+- Product Publish remains preparation-pending; existing publication/public-reader
+  grants remain withheld. No production/provider/browser evidence or S5/S6
+  closure is inferred. Product projection is implemented in the following slice;
+  renderer/click transport and fresh locked publication integration remain open.
+
+### Autonomous continuation — Published Product projection — 2026-10-05
+
+- Refreshed clean `work` to verified `363de74` before selecting the next slice.
+  Reread changed canonical status and 12.23; reconfirmed pinned P03 partial/all
+  destination degradation and J2/J4/J6/J9 before locking 12.24.
+- Added withheld public-locator Product DTO resolver bound to exact Published
+  Product/Identity token, selected same-Owner canonical image and existing reference.
+  It exposes only Published recognition context and ordered destination context;
+  exact creator URLs are present only for fresh safe URL/hash matches.
+- Partial degradation retains safe alternatives. All unavailable destinations
+  retain Product context while masking every URL; no lifecycle/snapshot mutation,
+  private fallback, new reference, publication intent or outbound permission.
+  Added strict application DTO validation and 53 pgTAP assertions.
+- Existing/new public-reader and first-Publish grants remain withheld. No public
+  page/CTA or Product writer is enabled. Targeted tests: 68 passed; full typecheck,
+  lint, tooling, 701 Vitest + 17 auth navigation + five tooling tests (723 total),
+  three builds and diff checks passed. Exact commit
+  `4babc5ecab499be57e397b5480d3fbbe6e748f43` passed push-event Application and
+  Database CI (37362911336), all three Security jobs (37362911320), and Autopilot
+  Guard (37362911347). Database reset, lint, error-level security advisors,
+  1,367 pgTAP assertions across 25 files and seven concurrency tests passed.
+  Provider/browser/production gates and S5/S6 closure remain open.
+- Initial remote Database CI reached a fixture schema-usage denial before the
+  anonymous allow-path query. Added `USAGE api` only inside the rolled-back test
+  transaction, matching existing public-reader test isolation; production grants
+  remain unchanged. Review/blocked fixtures also retain mandatory reason codes,
+  cleared on recovery. The exact-commit successful rerun above verifies both fixes.
+- Next dependency-safe task: lock and implement staged Product detail confirmation
+  and exact Published safety-click transport before enabling public reader routes
+  or first Publish. Retain the pending/public grant gates until required evidence.
+
+### Autonomous continuation — staged Product confirmation — 2026-10-06
+
+- Clean `work` refreshed to `700d3eb610977886e599d8677ff0b3381986bf6c` before
+  authority/source readback. Pending hosted-runner evidence did not stop this
+  independent presentation slice under the amended Protocol §2.4.
+- Reread J2/J4/J6/J9, 12.23/12.24 and pinned P03 recognition/degradation/responsive
+  semantics. Locked 12.25 before implementing the unmounted SSR-compatible region.
+- Strict public-payload validation produces generic denial for unavailable,
+  malformed or private inputs. Valid Published Owner/reference/image/title remain
+  visible through partial/all destination degradation; all-unavailable commerce
+  is communicated without lifecycle mutation. Exact same-origin unoptimized image
+  selection, escaped text and internal Owner/Browse navigation are preserved.
+- No external URL/action, RPC/data fetch, public route, grant, publication writer,
+  authentication gate or optional fabricated metadata was introduced. The complete
+  P03 page/action region and exact Published click transport remain unfinished.
+- Targeted SSR/DTO tests: 37 passed (14 new renderer tests). Local typecheck,
+  lint, five tooling tests, 715 Vitest tests plus 17 auth navigation tests (737
+  total), all three builds and diff checks passed. Latest-push CI/Security/Guard remain
+  PENDING until observed. Browser/responsive/live media/cache evidence remains open;
+  this implementation is not P03/S5/S6 closure or production readiness.
+- Next dependency-safe task: lock exact Published marketplace action/click-time
+  safety binding and attribution-preserving transport, then complete staged P03
+  action assembly without enabling withheld public readers or first Publish.
+
+### Autonomous continuation — staged Product destination resolution — 2026-10-06
+
+- Started from clean synchronized `5802935602a9034b63e62ea033d297d2a849747e`.
+  That exact push passed Application CI and Security Dependency Scan; Database,
+  Secret Scan, SAST and Guard were cancelled before steps ran. Those infrastructure
+  gates remain PENDING, not code failures or human-only blockers.
+- Locked 12.26 after current authority, J2/J4/J6/J9, pinned P03/FR-PRD and
+  existing media/projection/source/test readback. Staged a read-only server resolver
+  binding exact Published Identity/Product token, provider and original URL hash
+  to current fresh URL/hash-bound safety. It preserves creator attribution and
+  denies stale context, unsafe alternatives and private Working substitution.
+- All resolver execution remains withheld from public/anon/authenticated/service_role.
+  The strict server-only result validator checks provider URL policy and original
+  hash; it does not authorize browser input, fetch, redirect or mint an intent.
+  No public route/action, publication writer, lifecycle mutation or credential change.
+- Local targeted tests: 44 passed (21 new validator tests). Typecheck, lint,
+  test:tooling (5), test (736 Vitest + 17 auth navigation; 758 including tooling),
+  three builds and diff review/check passed. New privileged rolled-back pgTAP
+  fixtures cover selection/attribution, stale context/hash, safety degradation and
+  recovery, lifecycle/ownership/media denial, withheld grants and no writes.
+- Database reset/lint/error-level advisors/pgTAP/seven existing concurrency tests
+  require committed isolated Database CI; local Docker capacity prevents that
+  evidence here. Exact latest-push CI/Security/Guard remain PENDING until observed.
+  Browser/manual/live provider/cache/abuse evidence and S5/S6 closure remain open.
+- Exact implementation push `43363369ca86b3773e132449863e3a144f0c27f9`
+  passed Application, Database, Secret Scan, SAST and Autopilot Guard. Database
+  reset/lint/error-level advisors, 1,424 pgTAP assertions across 26 files (57 new)
+  and all seven concurrency tests passed. Dependency Scan
+  found High `GHSA-68fv-2mgg-jv7q` in transitive `source-map-js@1.2.1`.
+  Applied an exact version-scoped override to patched `1.2.2` and regenerated
+  the lockfile with pnpm; the release predates the 24-hour quarantine threshold.
+  Trust/quarantine/scanner policies remain intact. After the patch, frozen install,
+  typecheck/lint, all 758 application/tooling tests, three builds and diff checks
+  passed again. Final-push evidence must be
+  reverified; this is not a security-gate waiver or checkpoint closure.
+- Patched final commit `7141fdce7af33c6aab26b685dd9bd4f6eadc882f` passed
+  exact push-event [Application/Database CI 37398772253](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37398772253),
+  [Secret Scan/SAST/Dependency Scan 37398772255](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37398772255),
+  and [Autopilot Guard 37398772256](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37398772256).
+  Database again passed all 1,424 pgTAP assertions and seven concurrency tests.
+- Next dependency-safe task: lock server-authenticated rendered-context click intent
+  transport with expiry/tamper/replay/cross-context denial, then stage P03 marketplace
+  action assembly. Do not enable outbound routes/grants or first Publish prematurely.
+
+### Autonomous continuation — staged Product click-intent core — 2026-10-06
+
+- Clean `work` synchronized to `7141fdce7af33c6aab26b685dd9bd4f6eadc882f`.
+  Fresh canonical frontier, J2/J4/J6/J9, pinned P03 and 12.23–12.26/source/tests
+  readback identified intent core as the next bounded server dependency. Locked
+  12.27 before code; no follower login or journey topology change.
+- Core issues random 256-bit opaque capabilities for validated matching server
+  confirmation/binding after safety resolution. Storage receives only token hash,
+  purpose, private binding, confirmation digest and fixed 120-second lifetime.
+- Mandatory injectable store must create atomically without overwrite and consume
+  atomically once. Redemption validates strict public context/stored record/time,
+  consumes before resolving exact current Published safety, preserves original
+  attribution and rechecks time after asynchronous resolution. Failure is null;
+  no private reason, redirect, publication/lifecycle mutation or analytics.
+- Added no schema/migration, concrete store/RPC adapter, route/CTA, grant, credentials
+  or Publish integration. Test-only memory storage is not production persistence.
+  Durable database replay/concurrency/retention and exact snapshot issuance provenance
+  require the later adapter contract; browser/cache/abuse/provider gates remain open.
+- Targeted tests: 75 passed (54 new intent-core tests). Typecheck, lint, tooling,
+  full tests (790 Vitest + 17 auth navigation + 5 tooling = 812), three builds and
+  diff checks passed. Exact latest-push CI/Security/Guard remain PENDING until
+  observed. No new database behavior was introduced; committed Database regression
+  CI still runs. S5/S6 remain NOT CLOSED / VERIFIED.
+- Exact implementation `4547321ac2842c130adcbc6383a48abd04e8d419` passed
+  push-event [Application/Database CI 37399658222](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37399658222),
+  [all Security scans 37399658213](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37399658213),
+  and [Autopilot Guard 37399658244](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37399658244).
+  Database regression passed 1,424 pgTAP assertions and seven concurrency tests;
+  these existing tests do not prove the later durable intent adapter.
+- Next dependency-safe task: lock and implement the withheld durable atomic intent
+  store and exact Published confirmation/binding issuance adapter, including database
+  replay/concurrency/retention evidence, before staged P03 action/HTTP assembly.
+
+### Autonomous continuation — withheld durable intent store — 2026-10-06
+
+- Refreshed clean `work` to exact `4547321ac2842c130adcbc6383a48abd04e8d419`;
+  reread 12.27/current authority and existing database/concurrency patterns.
+  Locked 12.28 before migration implementation; current Supabase RLS/function
+  documentation readback confirmed explicit grants/revokes and private schema boundaries.
+- Added private hashed-token record persistence with strict purpose/binding/hash/
+  fixed 120-second epoch-time validation and RLS/no policies. Create validates
+  current exact Published safety and database clock, inserts without overwrite;
+  consume atomically burns and returns one current record; expired/future records
+  burn without a response. Indexed cleanup locks/skips at most 500 expired rows.
+- All table/helper/RPC execution/access remains withheld from public/anon/
+  authenticated/service_role. No raw token/URL storage, application RPC adapter,
+  public route/CTA, new credentials, cleanup schedule or Publish enabling.
+- Added privileged rolled-back pgTAP boundary/collision/replay/expiry/cleanup tests
+  and isolated multi-connection create/consume races to Database CI. No gate was
+  weakened. Actual migration reset/lint/advisors/pgTAP/concurrency evidence is
+  PENDING until committed CI runs; local Docker capacity prevents observation here.
+- Local typecheck/lint/tooling/full tests (812 total), three builds, Node syntax
+  check for the concurrency harness and diff checks passed. Unchanged application
+  results used Turbo cache where appropriate. Exact latest-push remote evidence
+  remains PENDING until observed; no CLOSED / VERIFIED or production claim.
+- First store push `ee8173dbd51cee6b6bba40454de7f90328d73e84` passed Application,
+  all Security scans and Guard. Database reset/lint/error-level advisors, 1,503
+  pgTAP assertions across 27 files (79 new) and seven existing races passed.
+  New race setup failed because pgTAP's transaction-installed `no_plan()` was
+  unavailable on separate Node connections. The isolated concurrency fixture
+  now explicitly installs the already available pgTAP extension; no assertions,
+  database permissions or production paths were relaxed. New exact-push evidence
+  remains required before the durable concurrency claim.
+- Next dependency-safe task: exact same-snapshot Published confirmation/binding
+  issuance plus concrete server RPC store adapter, and evidence for bounded cleanup
+  wiring/clock alignment, before staged public action/HTTP assembly. Browser/live
+  provider/cache/abuse/first-Publish gates and S5/S6 closure remain open.
+
+### Autonomous continuation — staged private intent RPC adapter — 2026-10-06
+
+- Clean `work` refreshed to exact `17127f940327191588ac8ae87532c720a00b88c7`.
+  All six push-event gates passed: CI 37401010749, Security 37401010787 and
+  Guard 37401010652. Database logs confirm 1,503 pgTAP assertions across 27
+  files and nine actual races, including both new intent races. This supersedes
+  the final-store evidence pending state above, not the original fixture failure.
+- Locked 12.29 before code. Added an injected, server-only Supabase RPC adapter
+  for strict create acknowledgment, standalone consume and one bounded cleanup
+  call. Shared the existing record schema; canonical records, malformed data,
+  errors and exceptions fail closed. No mutation retries, fallback persistence,
+  credentials, grants, route/CTA, schedule, publication or journey change.
+- Targeted adapter/core tests passed: 103 tests (49 new adapter cases). Full
+  typecheck, lint, five tooling tests and 856 application tests passed (839 Vitest
+  plus 17 native auth-navigation tests). Three production builds and final diff
+  checks passed. Exact latest-push gates remain PENDING until
+  observed. The actual Supabase SDK also passed POST/schema/parameter and no-retry checks
+  with a test fetch; this is not live RPC/browser evidence.
+- Existing Database CI supplies unchanged-schema regression. Same-snapshot
+  Published confirmation/binding issuance is the next dependency-safe slice;
+  actual authorized RPC integration, clock alignment, scheduled bounded cleanup,
+  public transport/cache/abuse/origin controls and browser/live-provider gates
+  remain open. S5/S6 remain NOT CLOSED / VERIFIED.
+
+### Autonomous continuation — exact Published intent issuance — 2026-10-06
+
+- Refreshed clean `work` to `d029075136d1bd02bebc0134009cd4aa36517efe`.
+  All six exact push-event gates passed on that adapter baseline: CI 37423061706,
+  Security 37423061823, Guard 37423061697. Database passed 1,503 pgTAP assertions
+  and nine actual concurrency tests; this supersedes adapter evidence pending above.
+- Locked 12.30 before code. Added a withheld server context RPC selecting the
+  exact Published Identity/Product rows for both public confirmation and selected
+  provider binding, rechecking same-Owner finalized canonical media and current
+  safety. Protected aliases resolve canonical Handle. No private-state fallback.
+- Added locator-only private issuance assembly using 12.27 core and 12.29 store,
+  with standalone current resolver and durable acknowledgment before returning
+  public confirmation plus opaque token. Raw DTO/digest/URL/Owner input denied.
+  No grants, credentials, HTTP route/redirect, CTA, schedule, publication or
+  journey change. Returned context is not evidence a human viewed the page.
+- Targeted tests passed: 131 core/adapter/issuance cases (28 new issuance tests).
+  Full typecheck/lint, five tooling tests, 884 application tests
+  (867 Vitest plus 17 native auth-navigation) and three builds passed. Final diff
+  review and checks passed before commit. New rolled-back database context tests are committed-CI evidence
+  PENDING until observed; local Docker capacity remains insufficient. Exact latest
+  pushed CI/Security/Guard must pass before an automated verification claim.
+- Initial `756b982` push passed Application, all Security scans and Guard.
+  Database reset/lint/advisors passed, but the new safety fixture violated the
+  existing unsafe-verdict reason constraint after 36 successful new-file assertions.
+  Fixture now sets valid reason codes/revisions and clears reasons on recovery.
+  Media-denial fixture uses a schema-valid undersized asset instead of a MIME
+  value already prohibited by the table constraint;
+  no constraint/assertion was weakened. Final exact-push Database evidence remains
+  PENDING until observed.
+- Next safe dependency work: server/database clock alignment and bounded retention
+  scheduling under a new contract, then staged P03 provider-action/HTTP transport
+  with cache/abuse/origin controls. Real authorized RPC, browser/provider delivery,
+  first-Publish binding/UI, D01 handoff and S5/S6 closure remain open.
+
+### Autonomous continuation — database intent clock primitives — 2026-10-06
+
+- Clean `work` refreshed to exact `496493324fdb7521412bac23d34e095f31cd9034`.
+  All six push-event gates passed on the final issuance fixture commit: CI
+  37428446588, Security 37428446664, Guard 37428446766. Database reset/lint/
+  advisors, 1,553 pgTAP assertions across 28 files and nine real races passed.
+  This supersedes the final 12.30 evidence pending state above.
+- Locked 12.31 before implementation. Added withheld database epoch RPC and
+  strict-record deadline resolver checking database time before/after fresh exact
+  destination resolution. Neither helper consumes or authenticates a token;
+  future assembly must first commit consumption of the stored record.
+- Added bounded read-only SDK calibration with five-second abort/round-trip
+  ceiling, separate conservative lower/upper monotonic epoch bounds, permanent
+  invalidation after counter rollback/nonfinite values or overflow. No Date.now
+  dependency, new credential, grant, route, CTA, scheduler or TTL extension.
+- 24 targeted calibration tests passed using actual SDK/fetch fixtures. Typecheck,
+  lint, five tooling tests, 908 application tests and all three builds passed.
+  Final diff review and whitespace check passed. Rolled-back
+  pgTAP includes malformed/future/expired/stale records and a controlled delayed
+  resolver proving the final expiry check; actual Database/exact-push evidence
+  remains PENDING until observed. Local Docker capacity remains insufficient.
+- Initial `7734867` passed Application, all Security scans and Guard. Database
+  reset/lint/advisors passed; pgTAP stopped after 35 new-file assertions because
+  the expired safety fixture had expiry before its checked-at timestamp. The
+  fixture now uses an earlier checked-at value and advances verdict revision on
+  expiry/recovery; table constraints and denial assertions remain unchanged.
+  Final exact-push Database/CI/Security/Guard evidence remains PENDING.
+- Calibration is not wired into existing issuance/core by this bounded slice:
+  current clock alignment is still incomplete. Next safe task is a bounded core/
+  issuance integration contract using lower time for issuance, upper time for
+  deadlines and the database expiry resolver after committed consumption.
+  Scheduled retention, real RPC/browser/provider/cache/abuse and S5/S6 remain open.
+
+### Autonomous continuation — calibrated private intent assembly — 2026-10-06
+
+- Clean `work` refreshed to exact `a029b7151d0f802119f1799d9c845e4d57a94691`.
+  All six push-event gates passed: CI 37429773966, Security 37429773975,
+  Guard 37429773959. Database reset/lint/advisors, 1,595 pgTAP assertions across
+  29 files and nine real races passed, superseding the 12.31 pending evidence above.
+- Locked 12.32 before code. Private issue/redeem calibrates separately per call,
+  with lower issuance timestamp and upper deadline decisions, fixed 120-second
+  TTL, no application wall-clock fallback and no cross-operation clock cache.
+- Redemption awaits durable consume, then passes only its strict stored record
+  to the database expiry-aware resolver and rechecks the upper deadline afterward.
+  Denial burns consumed authority without binding-only fallback or restoration.
+  Calibration failure before consumption leaves the stored intent untouched.
+- 118 targeted tests, typecheck/lint, five tooling tests, 920 application tests,
+  all three builds and final diff checks/review passed. Exact latest-push
+  CI/Security/Guard evidence remains PENDING until observed.
+  SDK fetch fixtures are not live authorized RPC proof.
+  No migrations, grants, routes, credentials, scheduler or publication changes.
+- Next safe work: bounded retention scheduling under its own JIT contract.
+  Real authorized RPC integration, browser action, cache/abuse/origin/provider
+  evidence and first-Publish wiring remain open. S5/S6 are NOT CLOSED / VERIFIED.
+
+### Autonomous continuation — inactive bounded retention scheduler — 2026-10-06
+
+- Clean `work` refreshed to exact `b7887ca866d200ebbf8371b2beefd648531731cb`.
+  All six exact push-event gates passed: CI 37435260252, Security 37435260217,
+  Guard 37435260204, with 1,595 pgTAP assertions and nine real races.
+  This supersedes the pending 12.32 evidence above, not S5/S6 journey closure.
+- Locked 12.33 before code, following the existing 12.4 Supabase Cron decision.
+  Migration registers one inactive minute-cadence postgres job and a withheld
+  tick: transaction try-lock, one 500-expired-intent cleanup, at most 500 own
+  terminal cron history records older than seven days. No application-role grants,
+  HTTP/provider/credentials, TTL extension or publication/private-state changes.
+- Rolled-back pgTAP covers bounded remainder cleanup, unexpired/recent/running/
+  null-end-time/unrelated preservation and inactive configuration. CI adds real
+  multi-connection lock competition and temporary isolated cron activation with
+  successful run/deletion observation, always restoring inactive minute cadence.
+  These database/runtime results are PENDING until observed; local Docker capacity
+  remains insufficient. Typecheck/lint, five tooling tests, 920 application tests,
+  three builds, Node syntax validation and final diff checks/review passed.
+  Unchanged application gates reused the verified Turbo cache where applicable.
+- This is an inactive scheduler foundation, not guaranteed production retention.
+  Controlled activation, minute-cadence observation, capacity versus abuse limits
+  and monitoring remain gates before public intent issuance. Next independent
+  safe task: bounded staged HTTP/action boundary with no-store/origin/abuse checks,
+  no public routes/grants until all transport/provider gates are met. Real authorized
+  integration, browser/provider/publication and S5/S6 closure remain open.
 
 ## Current local integration — 2026-10-04
 

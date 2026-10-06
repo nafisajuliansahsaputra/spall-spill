@@ -53,17 +53,18 @@ Permission for one ad-hoc remote action does not authorize another.
 The Owner has explicitly authorized one persistent autonomous development lane for this repository:
 
 - repository: `nafisajuliansahsaputra/spall-spill`;
-- branch: `codex/autopilot`;
+- authorized remote branch: `codex/autopilot`;
+- Cloud local branch: may be a synthetic task branch such as `work`, but only after a clean isolated workspace is synchronized so local `HEAD` exactly equals `origin/codex/autopilot`;
 - execution environment: Codex Cloud;
 - purpose: continue implementation according to committed canonical project authority without requiring the Owner to remain online.
 
 This committed section is the durable repository-scoped authorization for that lane. Codex does not require a new per-turn confirmation for ordinary non-destructive work that remains inside this scope.
 
-Within `codex/autopilot`, Codex Cloud may autonomously:
+Within the verified autonomous Cloud lane described above, Codex Cloud may autonomously:
 
 - inspect and edit repository source, tests, migrations, and documentation;
 - create coherent commits;
-- push commits to `codex/autopilot`;
+- push completed commits to remote `codex/autopilot`; from a synthetic Cloud branch use `git push origin HEAD:codex/autopilot`;
 - update the existing draft pull request for that branch through normal pushes;
 - run repository-defined local checks;
 - rely on GitHub CI/Security evidence;
@@ -90,7 +91,7 @@ If a task requires one of those prohibited actions, Codex must checkpoint safe c
 
 Before the first material edit in every fresh or resumed autonomous run, Codex must:
 
-1. confirm repository identity, branch, HEAD, status, and remote tracking;
+1. confirm repository identity, local branch, HEAD, status, and remote tracking; in Codex Cloud, fetch `origin/codex/autopilot` and verify local `HEAD` exactly matches it before reading implementation authority or editing;
 2. read `AGENTS.md`;
 3. fresh-read the current authority required by Section 1;
 4. read `PRD.md`, `ARCHITECTURE.md`, `TODO.md`, `WORKFLOW.md`, and `SKILL.md`;
@@ -116,11 +117,25 @@ Before an autonomous run ends because of usage budget, scheduler boundary, block
 
 If a partially implemented local change cannot safely be committed, leave it uncommitted only within the still-live cloud workspace and report that fact; never misrepresent it as durable progress.
 
+Temporary infrastructure delays (queued hosted runners, no assigned runner/steps,
+newer-push concurrency cancellation, transient network/provider outages) leave
+the affected evidence PENDING. They do not by themselves require the Owner or
+stop the entire Goal. Do not advance the directly dependent path or claim CLOSED /
+VERIFIED; continue independent dependency-safe authorized slices and recheck on
+scheduled returns. A superseded run is obsolete; verification targets the exact
+latest pushed commit. All required CI/Security/Autopilot Guard must pass on the
+exact final commit before a final verified checkpoint, public enablement, merge,
+or production-readiness claim. This does not authorize any production action.
+
+A human-only gate stops its dependent path. Pause the entire Goal/automation only
+when no independent safe work remains, repository authority explicitly requires
+the gate before any other work, or a real conflict/risk requires the Owner.
+
 ### 2.5 Revocation and fallback
 
 The Owner may revoke or pause the autonomous lane at any time.
 
-Outside `codex/autopilot`, or if this autonomous authorization is removed/revoked, execution immediately falls back to the default Local-First / deny-by-default policy in Section 2.1.
+Outside the verified remote lane targeting `codex/autopilot`, or if this autonomous authorization is removed/revoked, execution immediately falls back to the default Local-First / deny-by-default policy in Section 2.1. A synthetic Cloud branch name alone never grants authority.
 
 ---
 
@@ -171,7 +186,7 @@ Canonical local replacement uses:
 
 ### 4.2 Autonomous Codex Cloud delivery
 
-When operating under Protocol §2.2 on `codex/autopilot`:
+When operating under Protocol §2.2 on the verified Cloud lane whose remote target is `codex/autopilot`:
 
 - Codex may edit repository files directly inside its cloud workspace;
 - it must not require PowerShell-specific delivery mechanics;
@@ -329,7 +344,7 @@ Normal sequence:
 
 In default Local-First mode, the Owner performs normal commit/push locally unless explicit remote-write permission is given.
 
-In the authorized Codex Cloud lane, Codex may perform steps 5–9 autonomously on `codex/autopilot` only, subject to Protocol §2.2. A cloud run must not fabricate runtime/manual/live evidence that the cloud environment cannot actually observe.
+In the authorized Codex Cloud lane, Codex may perform steps 5–9 autonomously only when the remote target remains `codex/autopilot`, subject to Protocol §2.2. A cloud run must not fabricate runtime/manual/live evidence that the cloud environment cannot actually observe.
 
 ---
 
@@ -388,7 +403,7 @@ Do not declare documentation canonical until the committed version has been read
 
 ### Codex Cloud
 
-- Codex Cloud is an authorized development executor only for `codex/autopilot`.
+- Codex Cloud is an authorized development executor only for work synchronized to remote `codex/autopilot`; the local task branch may be synthetic.
 - Cloud tasks use repository-defined toolchain and tests where supported by the environment.
 - Cloud execution must not be treated as proof of local Windows/Kali manual evidence.
 - Provider/live/manual gates that require credentials, browser interaction, special networking, or the Owner's local security lab remain open until genuinely verified.

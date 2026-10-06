@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import type { OnboardingPreview } from "@/lib/onboarding/preview-contract";
 
 const ISSUE_COPY = {
@@ -14,16 +15,35 @@ const ISSUE_COPY = {
   profile_media_publication_pending: "Your photo is available privately. Publishing this photo is not ready yet.",
 } as const;
 
-function ItemReview({ label, draft }: {
+function ItemReview({ label, draft, imageUrl = null }: {
   label: "Product" | "Resource";
   draft: NonNullable<OnboardingPreview["product_draft"]> | NonNullable<OnboardingPreview["resource_draft"]>;
+  imageUrl?: string | null;
 }) {
+  const preparation = "preparation" in draft ? draft.preparation : null;
   return <section className="rounded-2xl border border-neutral-200 bg-white p-5" aria-label={`${label} review`}>
     <h3 className="font-semibold">{label} Draft{draft.spill_reference ? ` #${draft.spill_reference}` : ""}</h3>
     <p className="mt-2 break-words text-sm">{draft.title ?? "Untitled Draft"}</p>
+    {label === "Product" ? <div className="mt-3 space-y-3">
+      {preparation ? <>
+        {preparation.primary_asset_key ? imageUrl ? <Image src={imageUrl} alt="Saved Product primary image" width={320} height={320} unoptimized referrerPolicy="no-referrer" className="max-h-64 w-auto rounded-xl object-contain" />
+          : <p className="text-sm text-neutral-600">Product image preview is temporarily unavailable. Your saved selection is retained.</p>
+          : <p className="text-sm text-neutral-600">Primary image not selected yet.</p>}
+        <p className="text-sm font-medium">Saved marketplace destinations</p>
+        {preparation.destinations.length ? <ol className="space-y-2 text-sm">
+          {preparation.destinations.map((destination) => <li key={destination.provider_key} className="rounded-xl border border-neutral-200 p-3">
+            <p>{destination.provider_key.startsWith("external:") ? destination.provider_key.slice(9) : destination.provider_key}</p>
+            <p className="mt-1 break-all text-xs">{destination.destination_url}</p>
+            <p className="mt-1 text-xs text-neutral-600">Preview only · {destination.safety.status === "safe" ? "Safety checked" : "Safety check needed"}</p>
+          </li>)}
+        </ol> : <p className="text-sm text-neutral-600">No marketplace destinations saved yet.</p>}
+      </> : <p className="text-sm text-neutral-600">Product image and marketplace preparation have not been saved yet.</p>}
+    </div> : null}
     {draft.validation_issues.length ? <>
       <ul className="my-3 space-y-1 text-sm text-amber-900">
-        {draft.validation_issues.map((issue) => <li key={issue}>{ISSUE_COPY[issue]}</li>)}
+        {draft.validation_issues.map((issue) => <li key={issue}>{issue === "product_publication_preparation_pending" && preparation
+          ? "Your preparation is saved privately. Product publication still needs public delivery and final safety checks."
+          : ISSUE_COPY[issue]}</li>)}
       </ul>
       <Link href="/onboarding?step=relevant_first_job" className="text-sm font-medium underline">Fix {label}</Link>
       <p className="mt-3 text-xs leading-5 text-neutral-600">You will be able to choose Identity only at Publish. This Draft will stay saved privately.</p>
@@ -31,7 +51,9 @@ function ItemReview({ label, draft }: {
   </section>;
 }
 
-export function PrivateOnboardingPreview({ preview, profileUrl }: { preview: OnboardingPreview; profileUrl: string | null }) {
+export function PrivateOnboardingPreview({ preview, profileUrl, productImageUrl = null }: {
+  preview: OnboardingPreview; profileUrl: string | null; productImageUrl?: string | null;
+}) {
   const [mode, setMode] = useState<"desktop" | "mobile">("mobile");
   const identity = preview.identity_working;
   const connection = preview.connection_working;
@@ -68,7 +90,7 @@ export function PrivateOnboardingPreview({ preview, profileUrl }: { preview: Onb
       <ul className="space-y-1 text-sm leading-6 text-amber-950">{preview.identity_validation_issues.map((issue) => <li key={issue}>{ISSUE_COPY[issue]}</li>)}</ul>
       {preview.identity_validation_issues.includes("connection_not_safe") ? <Link href="/onboarding?step=relevant_first_job" className="mt-2 inline-block text-sm underline">Fix social or link</Link> : null}
     </section> : null}
-    {preview.product_draft ? <ItemReview label="Product" draft={preview.product_draft} /> : null}
+    {preview.product_draft ? <ItemReview label="Product" draft={preview.product_draft} imageUrl={productImageUrl} /> : null}
     {preview.resource_draft ? <ItemReview label="Resource" draft={preview.resource_draft} /> : null}
     <p className="rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm leading-6">Your work is saved privately. First publication is being completed; you can keep reviewing and editing your setup.</p>
   </div>;

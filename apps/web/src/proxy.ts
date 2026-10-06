@@ -1,6 +1,7 @@
 import type {
   NextRequest,
 } from "next/server";
+import { NextResponse } from "next/server";
 
 import {
   createContentSecurityPolicy,
@@ -13,6 +14,9 @@ import {
 export async function proxy(
   request: NextRequest,
 ) {
+  // Public image delivery has its own Published-only authorization and headers.
+  // Viewer cookies never grant media access or require a session refresh.
+  if (request.nextUrl.pathname.startsWith("/media/identity/") || request.nextUrl.pathname.startsWith("/media/product/")) return NextResponse.next();
   const nonce =
     createRequestNonce();
 

@@ -109,6 +109,9 @@ jobs:
       - name: Lint database
         run: pnpm exec supabase db lint --local --fail-on error
 
+      - name: Check database security advisors
+        run: pnpm exec supabase db advisors --local --type security --level error --fail-on error
+
       - name: Run database security tests
         run: pnpm exec supabase test db --local
 
@@ -117,3 +120,15 @@ jobs:
 
       - name: Verify concurrent onboarding publication
         run: node --test tests/onboarding-publication-concurrency.test.mjs
+
+      - name: Verify concurrent private Product preparation
+        run: node --test tests/product-preparation-concurrency.test.mjs
+
+      - name: Verify concurrent Product preview binding
+        run: node --test tests/product-preview-concurrency.test.mjs
+
+      - name: Verify concurrent Product click intent consumption
+        run: node --test tests/product-click-intent-concurrency.test.mjs
+
+      - name: Verify isolated Product intent retention scheduler
+        run: node --test tests/product-click-retention.test.mjs

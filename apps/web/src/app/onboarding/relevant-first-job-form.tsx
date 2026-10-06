@@ -4,6 +4,8 @@ import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import type { ResourceDraft } from "@/lib/onboarding/resource-draft-contract";
 import { ResourceDraftForm } from "./resource-draft-form";
+import { ProductPreparationForm } from "./product-preparation-form";
+import type { ProductPreparation } from "@/lib/onboarding/product-preparation-contract";
 
 import {
   advanceRelevantFirstJobAction,
@@ -25,6 +27,8 @@ type RelevantFirstJobRecommendation =
   | "neutral";
 
 type RelevantFirstJobFormProps = {
+  initialProductPreparation?: ProductPreparation | null;
+  productImagePreviewUrl?: string | null;
   initialResourceDraft: ResourceDraft | null;
   recommendation:
     RelevantFirstJobRecommendation;
@@ -107,6 +111,8 @@ function SkipButton() {
 }
 
 export function RelevantFirstJobForm({
+  initialProductPreparation = null,
+  productImagePreviewUrl = null,
   initialResourceDraft,
   recommendation,
   baseProgressRevision,
@@ -176,6 +182,9 @@ export function RelevantFirstJobForm({
             }
           />
 
+          {baseProductRevision !== null ? <ProductPreparationForm preparation={initialProductPreparation}
+            productRevision={baseProductRevision} sourceUrl={initialProductSourceUrl} previewUrl={productImagePreviewUrl} /> : null}
+
           <IdentityConnectionForm
             initialConnectionKind={
               initialConnectionKind
@@ -223,6 +232,8 @@ export function RelevantFirstJobForm({
                 initialTitle={initialProductTitle}
                 baseProductRevision={baseProductRevision}
               />
+              {baseProductRevision !== null ? <div className="mt-4"><ProductPreparationForm preparation={initialProductPreparation}
+                productRevision={baseProductRevision} sourceUrl={initialProductSourceUrl} previewUrl={productImagePreviewUrl} /></div> : null}
             </div>
           </details>
         </>

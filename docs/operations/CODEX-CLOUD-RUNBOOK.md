@@ -14,14 +14,14 @@ autonomous execution mode from Git without relying on a previous chat.
 Authorized autonomous lane:
 
 - repository: `nafisajuliansahsaputra/spall-spill`;
-- branch: `codex/autopilot`;
+- authorized remote branch: `codex/autopilot`;
+- Cloud local task branch may be synthetic (for example `work`) after verified synchronization to `origin/codex/autopilot`;
 - review surface: draft PR from `codex/autopilot` to `main`;
 - production merge/deployment: human-controlled.
 
 ## 2. Environment bootstrap
 
-The reusable Codex Cloud environment must be attached to this repository and
-must use `codex/autopilot` as its implementation baseline.
+The reusable Codex Cloud environment must be attached to this repository. A new Cloud task may begin on a synthetic local task branch. Before orientation or implementation, that clean isolated workspace must be synchronized to `origin/codex/autopilot` and local `HEAD` must exactly match the fetched autonomous remote HEAD. Do not assume environment instructions have already performed this synchronization.
 
 Before publishing or trusting an environment, verify:
 
@@ -93,8 +93,7 @@ Do not edit files.
 Do not commit or push.
 Do not mutate GitHub, Supabase, Vercel, Cloudflare, or any external service.
 
-First verify repository identity, current branch, HEAD, status, remote tracking,
-and recent commits. The expected implementation lane is codex/autopilot.
+First verify repository identity, current synthetic branch, HEAD, status, remote tracking, and recent commits. Refresh `origin/codex/autopilot`, synchronize the clean isolated task workspace to that remote baseline, and verify local `HEAD` exactly matches the refreshed autonomous remote HEAD before reading project authority. The local branch name may remain synthetic.
 
 Read AGENTS.md and follow its Mandatory bootstrap before any material work.
 
@@ -139,7 +138,7 @@ The worker must:
 8. inspect the final diff;
 9. update TODO/canonical checkpoint only for real changed evidence;
 10. commit coherently;
-11. push only to `codex/autopilot`;
+11. push completed Cloud commits only to remote `codex/autopilot`; a synthetic local task branch must not be published as its own remote branch;
 12. verify GitHub CI, Security, and Autopilot Guard for the exact pushed commit;
 13. leave a truthful checkpoint and next action.
 
@@ -218,15 +217,33 @@ corresponding product/technical decision is deliberately updated in Git.
 
 ## 11. Failure policy
 
-Fail closed and ask for the Owner when:
+Fail closed on the affected path and ask for the Owner when a real human-only
+action or decision is needed, including:
 
 - branch or HEAD is unexpected;
 - authority is contradictory;
-- required locked contract is missing;
+- a required locked contract cannot be established within the authorized JIT
+  workflow without an Owner decision;
 - a task requires a human-only gate;
 - credentials/access are missing;
-- the same blocker persists after materially different attempts;
-- the cloud environment cannot produce evidence required to close the slice.
+- a persistent blocker requires credentials/login, billing/payment, manual
+  approval, provider configuration, a product decision, production action, or
+  an irreversible decision that Cloud is not authorized to perform.
 
-Otherwise, preserve safe progress and continue another independent authorized
-task when one exists.
+Queued hosted runners, `runner_id = 0`, empty steps before runner allocation,
+newer-push/concurrency cancellation, and transient infrastructure/network/provider
+delays are PENDING evidence, not proof of a human-only blocker. Missing evidence
+does not close the slice, but does not by itself stop unrelated safe work. Do not
+spend the run polling unchanged non-actionable states; recheck automatically on
+scheduled returns and continue independent dependency-safe authorized slices.
+
+When a new push supersedes a run, treat that older run as obsolete and target
+the exact latest pushed commit. Require all mandated CI/Security/Guard results on
+the exact final commit before a final verified checkpoint, public enablement,
+merge, or production-readiness claim. Production permission remains unchanged.
+
+Even with a human-only blocker, preserve safe progress and continue independent
+authorized work. Pause the entire Goal/automation only when no independent safe
+work remains, explicit repository authority requires the gate before any other
+work, or an actual conflict/risk requires the Owner. Notify only on meaningful
+change or an actual required Owner action; do not repeat unchanged blockers.

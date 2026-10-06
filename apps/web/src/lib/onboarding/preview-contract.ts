@@ -2,6 +2,7 @@ import { z } from "zod";
 import { CANONICAL_HANDLE_PATTERN, onboardingStepSchema, starterKeySchema } from "./validation";
 import { resourceTypeSchema } from "./resource-draft-contract";
 import { profileMediaAssetKeySchema } from "@/lib/profile-media/contracts";
+import { productDestinationSchema, productImageKeySchema } from "./product-preparation-contract";
 
 const revision = z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 const source = z.string().url().max(2048).regex(/^https?:\/\//i);
@@ -16,6 +17,12 @@ const itemFields = {
   spill_reference: revision.nullable(), title: title.nullable(), revision,
   safety: previewSafetySchema, validation_issues: itemIssues,
 };
+export const productPreviewPreparationSchema = z.object({
+  primary_asset_key: productImageKeySchema.nullable(), revision,
+  destinations: z.array(productDestinationSchema.safeExtend({ safety: previewSafetySchema })).max(10)
+    .refine((destinations) => new Set(destinations.map((d) => d.provider_key)).size === destinations.length
+      && new Set(destinations.map((d) => d.destination_url)).size === destinations.length),
+}).strict();
 export const onboardingPreviewSchema = z.object({
   status: z.literal("success"), current_step: z.literal("preview_publish"),
   progress_revision: revision,
@@ -31,7 +38,7 @@ export const onboardingPreviewSchema = z.object({
     destination_url: source, revision, safety: previewSafetySchema,
   }).strict().refine((connection) => connection.connection_kind === "social"
     ? connection.social_platform !== null : connection.social_platform === null).nullable(),
-  product_draft: z.object({ ...itemFields, source_url: source }).strict().nullable(),
+  product_draft: z.object({ ...itemFields, source_url: source, preparation: productPreviewPreparationSchema.nullable() }).strict().nullable(),
   resource_draft: z.object({ ...itemFields, resource_type: resourceTypeSchema, source_url: source.nullable() })
     .strict().refine((draft) => draft.title !== null || draft.source_url !== null).nullable(),
   snapshot_hash: z.string().regex(/^[0-9a-f]{64}$/),
