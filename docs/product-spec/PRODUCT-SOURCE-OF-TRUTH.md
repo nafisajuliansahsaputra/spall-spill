@@ -446,6 +446,21 @@ The new race fixture needed explicit pgTAP extension setup outside the CLI's
 transactional test runner; final durable concurrency/exact-push evidence is still
 required. No test assertion or private access boundary was weakened.
 
+Final store fixture commit `17127f940327191588ac8ae87532c720a00b88c7` passed
+push-event Application/Database CI (37401010749), all Security scans (37401010787)
+and Guard (37401010652). Database passed 1,503 assertions across 27 files and
+nine real concurrency tests, including duplicate intent create and competing
+committed consume. This completes that automated store evidence; public transport
+and journey closure remain withheld.
+
+Contract [12.29](./technical-architecture/12.29-product-click-intent-rpc-adapter-contract.md)
+stages the injected server-only application adapter for existing private intent
+RPCs. Strict create/consume responses and bounded single-call cleanup deny malformed
+inputs, errors and exceptions without retry/fallback. All grants remain withheld;
+no credentials, public route, issuance provenance or cleanup schedule is enabled.
+Exact latest-push evidence remains PENDING until observed. Same-snapshot Published
+confirmation/binding issuance and real authorized transport integration remain open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -473,7 +488,8 @@ foundation:
 - staged Product visual/context confirmation renderer under 12.25;
 - staged exact Published marketplace destination resolution under 12.26;
 - staged opaque one-use Product click-intent core under 12.27;
-- withheld durable Product click-intent store under 12.28.
+- withheld durable Product click-intent store under 12.28;
+- staged private Product click-intent RPC adapter under 12.29.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -528,7 +544,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.28 govern the staged work already present.
+public transport**. Contracts 12.12–12.29 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

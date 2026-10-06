@@ -13,7 +13,7 @@ const contextSchema = z.object({
   spill_reference: z.number().int().positive().max(Number.MAX_SAFE_INTEGER),
   provider_key: providerKeySchema,
 }).strict();
-const recordSchema = z.object({
+export const productClickIntentRecordSchema = z.object({
   purpose: z.literal("published-product-click-v1"),
   binding: publishedProductDestinationRequestSchema,
   confirmation_hash: z.string().regex(/^[0-9a-f]{64}$/),
@@ -21,7 +21,7 @@ const recordSchema = z.object({
   expires_at: timeSchema,
 }).strict().refine((record) => record.expires_at === record.issued_at + ttl);
 type Binding = z.infer<typeof publishedProductDestinationRequestSchema>;
-export type ProductClickIntentRecord = z.infer<typeof recordSchema>;
+export type ProductClickIntentRecord = z.infer<typeof productClickIntentRecordSchema>;
 
 /** Requires durable, shared atomic storage before any route can use this staged core. */
 export interface ProductClickIntentStore {
@@ -49,7 +49,7 @@ export function createPublishedProductClickIntentCore({ store, resolve, now = Da
         const result = await resolve({ ...binding.data });
         if (validatePublishedProductDestinationResult(binding.data, result) === null) return null;
         const issuedAt = now();
-        const record = recordSchema.safeParse({
+        const record = productClickIntentRecordSchema.safeParse({
           purpose: "published-product-click-v1", binding: binding.data,
           confirmation_hash: hash(JSON.stringify(product.data)),
           issued_at: issuedAt, expires_at: issuedAt + ttl,
@@ -70,7 +70,7 @@ export function createPublishedProductClickIntentCore({ store, resolve, now = Da
         if (!context.success || typeof token !== "string" || !/^[A-Za-z0-9_-]{43}$/.test(token)
           || Buffer.from(token, "base64url").toString("base64url") !== token) return null;
         // Consume before any await of the destination resolver; failures never restore authority.
-        const record = recordSchema.safeParse(await store.consume(hash(token)));
+        const record = productClickIntentRecordSchema.safeParse(await store.consume(hash(token)));
         if (!record.success) return null;
         const binding = record.data.binding;
         const checkedAt = now();

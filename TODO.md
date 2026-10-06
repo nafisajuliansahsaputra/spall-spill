@@ -102,7 +102,8 @@ Already present and governed by locked contracts:
 - 12.25 staged unmounted Product visual/context confirmation renderer;
 - 12.26 staged exact Published destination resolution with all execution withheld;
 - 12.27 staged opaque one-use Product click-intent core with injectable storage;
-- 12.28 withheld durable hashed intent persistence/consume/bounded cleanup.
+- 12.28 withheld durable hashed intent persistence/consume/bounded cleanup;
+- 12.29 staged private application RPC store/cleanup adapter.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -132,8 +133,10 @@ Current safe work must be selected from the remaining dependency frontier:
   browser context-intent authority and outbound transport remain unfinished.
 - [x] Stage server-only opaque one-use intent core under 12.27; durable store,
   exact Published issuance provenance and route/browser assembly remain unfinished.
-- [x] Implement withheld durable intent store under 12.28; actual database and
-  concurrency CI evidence remains required before verification/transport enabling.
+- [x] Implement withheld durable intent store under 12.28; exact `17127f9`
+  Database CI passed 1,503 pgTAP assertions and nine real concurrency tests.
+- [x] Stage the private RPC store/one-call cleanup adapter under 12.29; no grants
+  or schedule enabled. Exact latest-push evidence remains PENDING until observed.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -325,7 +328,6 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   safety binding and attribution-preserving transport, then complete staged P03
   action assembly without enabling withheld public readers or first Publish.
 
-
 ### Autonomous continuation — staged Product destination resolution — 2026-10-06
 
 - Started from clean synchronized `5802935602a9034b63e62ea033d297d2a849747e`.
@@ -437,6 +439,29 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   issuance plus concrete server RPC store adapter, and evidence for bounded cleanup
   wiring/clock alignment, before staged public action/HTTP assembly. Browser/live
   provider/cache/abuse/first-Publish gates and S5/S6 closure remain open.
+
+### Autonomous continuation — staged private intent RPC adapter — 2026-10-06
+
+- Clean `work` refreshed to exact `17127f940327191588ac8ae87532c720a00b88c7`.
+  All six push-event gates passed: CI 37401010749, Security 37401010787 and
+  Guard 37401010652. Database logs confirm 1,503 pgTAP assertions across 27
+  files and nine actual races, including both new intent races. This supersedes
+  the final-store evidence pending state above, not the original fixture failure.
+- Locked 12.29 before code. Added an injected, server-only Supabase RPC adapter
+  for strict create acknowledgment, standalone consume and one bounded cleanup
+  call. Shared the existing record schema; canonical records, malformed data,
+  errors and exceptions fail closed. No mutation retries, fallback persistence,
+  credentials, grants, route/CTA, schedule, publication or journey change.
+- Targeted adapter/core tests passed: 102 tests (48 new adapter cases). Full
+  typecheck, lint, five tooling tests and 855 application tests passed (838 Vitest
+  plus 17 native auth-navigation tests). Three production builds and final diff
+  checks passed. Exact latest-push gates remain PENDING until
+  observed. Adapter mocks are not live RPC/browser evidence.
+- Existing Database CI supplies unchanged-schema regression. Same-snapshot
+  Published confirmation/binding issuance is the next dependency-safe slice;
+  actual authorized RPC integration, clock alignment, scheduled bounded cleanup,
+  public transport/cache/abuse/origin controls and browser/live-provider gates
+  remain open. S5/S6 remain NOT CLOSED / VERIFIED.
 
 ## Current local integration — 2026-10-04
 
