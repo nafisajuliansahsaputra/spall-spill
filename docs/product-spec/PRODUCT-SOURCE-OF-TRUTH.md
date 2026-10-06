@@ -476,6 +476,20 @@ create acknowledgment. No grants, credentials, routes, CTA, schedule or publicat
 are enabled. Database and exact latest-push evidence remain PENDING until observed;
 clock alignment, scheduled retention, browser/cache/abuse/provider gates remain open.
 
+Final issuance fixture commit `496493324fdb7521412bac23d34e095f31cd9034` passed
+push-event CI (37428446588), all Security scans (37428446664) and Guard
+(37428446766), including 1,553 pgTAP assertions and nine real concurrency tests.
+Fixture repairs preserved existing safety/media constraints and denial assertions.
+
+Contract [12.31](./technical-architecture/12.31-product-click-database-clock-contract.md)
+stages withheld database epoch and strict-record expiry-aware resolution plus
+bounded SDK/monotonic calibration with separate lower/upper bounds. The fixed
+120-second record lifetime and all RPC grants remain unchanged. These primitives
+are not yet wired into core/issuance, do not authenticate a supplied record, and
+are not end-to-end clock alignment or public enabling evidence. Latest Database/
+exact-push gates remain PENDING until observed. Future core wiring, committed
+consumption, bounded retention and browser/provider/transport gates remain open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -505,7 +519,8 @@ foundation:
 - staged opaque one-use Product click-intent core under 12.27;
 - withheld durable Product click-intent store under 12.28;
 - staged private Product click-intent RPC adapter under 12.29;
-- staged exact Published Product intent issuance under 12.30.
+- staged exact Published Product intent issuance under 12.30;
+- staged database clock/deadline calibration primitives under 12.31.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -560,7 +575,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.30 govern the staged work already present.
+public transport**. Contracts 12.12–12.31 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

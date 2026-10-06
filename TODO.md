@@ -104,7 +104,8 @@ Already present and governed by locked contracts:
 - 12.27 staged opaque one-use Product click-intent core with injectable storage;
 - 12.28 withheld durable hashed intent persistence/consume/bounded cleanup;
 - 12.29 staged private application RPC store/cleanup adapter;
-- 12.30 staged same-Published-snapshot confirmation/binding and private issuance.
+- 12.30 staged same-Published-snapshot confirmation/binding and private issuance;
+- 12.31 withheld database clock/deadline and bounded calibration primitives.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -140,6 +141,8 @@ Current safe work must be selected from the remaining dependency frontier:
   or schedule enabled. Exact latest-push evidence remains PENDING until observed.
 - [x] Stage same-snapshot Published context and locator-only private issuance
   under 12.30; exact-push database/CI evidence remains PENDING until observed.
+- [x] Stage database epoch/deadline RPCs and conservative clock calibration
+  under 12.31; core/issuance clock wiring and exact-push evidence remain open.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -500,6 +503,33 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   scheduling under a new contract, then staged P03 provider-action/HTTP transport
   with cache/abuse/origin controls. Real authorized RPC, browser/provider delivery,
   first-Publish binding/UI, D01 handoff and S5/S6 closure remain open.
+
+### Autonomous continuation — database intent clock primitives — 2026-10-06
+
+- Clean `work` refreshed to exact `496493324fdb7521412bac23d34e095f31cd9034`.
+  All six push-event gates passed on the final issuance fixture commit: CI
+  37428446588, Security 37428446664, Guard 37428446766. Database reset/lint/
+  advisors, 1,553 pgTAP assertions across 28 files and nine real races passed.
+  This supersedes the final 12.30 evidence pending state above.
+- Locked 12.31 before implementation. Added withheld database epoch RPC and
+  strict-record deadline resolver checking database time before/after fresh exact
+  destination resolution. Neither helper consumes or authenticates a token;
+  future assembly must first commit consumption of the stored record.
+- Added bounded read-only SDK calibration with five-second abort/round-trip
+  ceiling, separate conservative lower/upper monotonic epoch bounds, permanent
+  invalidation after counter rollback/nonfinite values or overflow. No Date.now
+  dependency, new credential, grant, route, CTA, scheduler or TTL extension.
+- 24 targeted calibration tests passed using actual SDK/fetch fixtures. Typecheck,
+  lint, five tooling tests, 908 application tests and all three builds passed.
+  Final diff review and whitespace check passed. Rolled-back
+  pgTAP includes malformed/future/expired/stale records and a controlled delayed
+  resolver proving the final expiry check; actual Database/exact-push evidence
+  remains PENDING until observed. Local Docker capacity remains insufficient.
+- Calibration is not wired into existing issuance/core by this bounded slice:
+  current clock alignment is still incomplete. Next safe task is a bounded core/
+  issuance integration contract using lower time for issuance, upper time for
+  deadlines and the database expiry resolver after committed consumption.
+  Scheduled retention, real RPC/browser/provider/cache/abuse and S5/S6 remain open.
 
 ## Current local integration — 2026-10-04
 
