@@ -112,7 +112,8 @@ Already present and governed by locked contracts:
 - 12.35 unmounted strict private HTTP/core response assembly;
 - 12.36 unmounted strict native-form POST redemption adapter;
 - 12.37 unmounted confirmation-before-provider native form renderer;
-- 12.38 private snapshot-bound multi-provider confirmation/intent bundle.
+- 12.38 private snapshot-bound multi-provider confirmation/intent bundle;
+- 12.39 unmounted guarded locator-only private HTTP bundle handler.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -164,6 +165,8 @@ Current safe work must be selected from the remaining dependency frontier:
   remains open, with private bundle foundations below.
 - [x] Assemble private multi-provider confirmation/intent bundles under 12.38,
   checking shared publication binding before writes; guarded HTTP bundle integration remains open.
+- [x] Stage guarded locator-only HTTP bundle responses under 12.39, preserving
+  origin/permit/body/deadline/no-store gates; routes and actual distributed enforcement remain withheld.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -768,6 +771,31 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   1,104 application tests, three builds and final diff review/checks passed.
   Exact latest-push CI/Security/Guard is PENDING until observed. S5/S6 remain
   NOT CLOSED / VERIFIED; private HTTP bundle assembly is still the next safe task.
+
+### Autonomous continuation — private HTTP confirmation bundle — 2026-10-06
+
+- Clean work synchronized to patch baseline
+  `9eda271bef2dfce44ac5b87be8781b779366018f`; exact push-event Security
+  (37509461475) passed all three scans, including the repaired sharp finding,
+  and Guard (37509461405) passed. CI (37509461382) remained in progress at readback.
+- Locked 12.39 before code. Separate unmounted issueBundle handler uses existing
+  exact-origin POST JSON / body / literal-true permit gates, then accepts only
+  handle/reference and internally assembles the 12.38 trusted snapshot bundle.
+  Provider/token/private authority injection is denied before RPC. Fresh no-store
+  headers apply to success/denial; recognition-only bundles remain valid 200,
+  errors/timeouts/aborts fail uniformly without Location or private error data.
+- Actual SDK fixtures exercise guarded HTTP → exact SSR confirmation/provider
+  forms → independent native redemption/replay, partial/all-unavailable bundles,
+  locator injection, wrong origin, nonliteral permit, abortion and timeout.
+  Existing single-provider and request/core semantics are unchanged.
+- 91 targeted tests, typecheck/lint, five tooling tests, 1,120 application tests,
+  three builds and final diff review/checks passed. Latest exact-push evidence
+  remains PENDING until observed; no database behavior change or migration.
+- No route/grant/credential/provider/production change. S5/S6 NOT CLOSED / VERIFIED.
+  Next safe task: inspect and lock a bounded private distributed action/work-budget
+  adapter under 12.4 (Upstash), with injected trusted client identity, fail-closed
+  denial and bundle work accounting. Do not configure a live provider or mount
+  routes before required privileged/identity/limiter/browser/cache/retention gates.
 
 ## Current local integration — 2026-10-04
 

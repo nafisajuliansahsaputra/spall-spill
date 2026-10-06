@@ -63,10 +63,18 @@ describe("private snapshot-bound Product confirmation bundle", () => {
     expect(f.calls.slice(0,3).map(c => c.name)).toEqual(["resolve_public_product", "resolve_published_product_click_context_server", "resolve_published_product_click_context_server"]);
   });
   it("hands actual calibrated SDK bundle through SSR forms to independent native redemption and replay denial", async () => {
-    const f = fixture(); const result = await createProductClickConfirmationBundle(f.client)(locator); expect(result?.intents).toHaveLength(2);
+    const f = fixture(); const http = createProductClickHttpBoundary({ client: f.client, origin: "https://app.example.test", permit: async () => true });
+    const response = await http.issueBundle(new Request("https://app.example.test/staged-bundle", { method: "POST",
+      headers: { origin: "https://app.example.test", "content-type": "application/json" }, body: JSON.stringify(locator) }));
+    expect(response.status).toBe(200); expect(response.headers.get("Location")).toBeNull();
+    expect(response.headers.get("Cache-Control")).toContain("no-store");
+    expect(response.headers.get("Referrer-Policy")).toBe("no-referrer");
+    expect(response.headers.get("X-Content-Type-Options")).toBe("nosniff");
+    expect(response.headers.get("Access-Control-Allow-Origin")).toBeNull();
+    const result = await response.json(); expect(result.intents).toHaveLength(2);
+    expect(JSON.stringify(result)).not.toContain("publication_token");
     const html = renderToStaticMarkup(createElement(PublishedProductConfirmationActions, { payload: result }));
     expect(html).toContain("Choose marketplace"); expect(html.indexOf("<h1")).toBeLessThan(html.indexOf("<form"));
-    const http = createProductClickHttpBoundary({ client: f.client, origin: "https://app.example.test", permit: async () => true });
     for (const [index, form] of html.matchAll(/<form\b[^>]*>([\s\S]*?)<\/form>/g).toArray().entries()) {
       const fields = [...form[1]!.matchAll(/name="([^"]+)" value="([^"]+)"/g)].map(m => [m[1]!,m[2]!] as [string,string]);
       const request = () => new Request("https://app.example.test/actions/product-click", { method: "POST", headers: {
@@ -158,5 +166,62 @@ describe("private snapshot-bound Product confirmation bundle", () => {
     expect(JSON.stringify(result)).not.toContain("private permission detail");
     expect(f.fetch.mock.calls.filter(([input,init])=>String(input).endsWith("resolve_published_product_click_context_server")
       && JSON.parse(String(init?.body)).input_provider_key==="shopee")).toHaveLength(1);
+  });
+});
+
+
+describe("unmounted guarded Product bundle HTTP", () => {
+  const origin = "https://app.example.test";
+  const request = (body: unknown, signal?: AbortSignal) => new Request(`${origin}/staged-bundle`, { method: "POST",
+    headers: { origin, "content-type": "application/json" }, body: JSON.stringify(body), ...(signal ? { signal } : {}) });
+  it.each([{ ...locator, provider_key: "shopee" }, { ...locator, token: "A".repeat(43) },
+    { ...locator, confirmation: product }, { ...locator, destination_url: product.destinations[0]!.destination_url },
+    { ...locator, binding: context("shopee").binding }, { ...locator, owner_id: "spoof" },
+    { ...locator, spill_reference: "27" }, { ...locator, spill_reference: Number.MAX_SAFE_INTEGER + 1 }])
+    ("rejects caller authority/invalid locator before RPC %j", async body => {
+      const f = fixture(); const permit = vi.fn(async (request: Request, action: string) => {
+        expect(request.method).toBe("POST"); expect(action).toBe("issue"); return true;
+      });
+      const http = createProductClickHttpBoundary({ client: f.client, origin, permit });
+      const response = await http.issueBundle(request(body)); expect(response.status).toBe(403);
+      expect(response.headers.get("Location")).toBeNull(); expect(response.headers.get("Cache-Control")).toContain("no-store");
+      expect(f.fetch).not.toHaveBeenCalled(); expect(permit).toHaveBeenCalledTimes(1);
+      expect(permit.mock.calls[0]?.[1]).toBe("issue");
+    });
+  it.each([false, null, "true"])("denies non-literal distributed permit %j", async value => {
+    const f = fixture(); const http = createProductClickHttpBoundary({ client: f.client, origin, permit: async () => value });
+    expect((await http.issueBundle(request(locator))).status).toBe(403); expect(f.fetch).not.toHaveBeenCalled();
+  });
+  it("denies mismatched origin before permit or RPC", async () => {
+    const f = fixture(); const permit = vi.fn(async () => true);
+    const http = createProductClickHttpBoundary({ client: f.client, origin, permit });
+    const req = request(locator); req.headers.set("origin", "https://attacker.example.test");
+    expect((await http.issueBundle(req)).status).toBe(403); expect(permit).not.toHaveBeenCalled(); expect(f.fetch).not.toHaveBeenCalled();
+  });
+  it("returns trusted all-unavailable recognition without creating intents", async () => {
+    const f = fixture(); f.projection({ ...product, destinations: product.destinations.map(d => ({ ...d, available: false, destination_url: null })) });
+    const http = createProductClickHttpBoundary({ client: f.client, origin, permit: async () => true });
+    const response = await http.issueBundle(request(locator)); expect(response.status).toBe(200);
+    expect((await response.json()).intents).toEqual([]); expect(f.calls).toHaveLength(1); expect(f.records.size).toBe(0);
+  });
+  it("returns only independent available provider intents", async () => {
+    const f = fixture(); f.denied.add("shopee");
+    const http = createProductClickHttpBoundary({ client: f.client, origin, permit: async () => true });
+    const response = await http.issueBundle(request(locator)); expect(response.status).toBe(200);
+    expect((await response.json()).intents.map((i: { provider_key: string }) => i.provider_key)).toEqual(["tokopedia"]);
+  });
+  it("denies aborted operation without leaking late-created authority", async () => {
+    const f = fixture(); const controller = new AbortController();
+    const http = createProductClickHttpBoundary({ client: f.client, origin, permit: async () => { controller.abort(); return true; } });
+    expect((await http.issueBundle(request(locator, controller.signal))).status).toBe(403); expect(f.fetch).not.toHaveBeenCalled();
+  });
+  it("bounds pending SDK work and returns uniform unavailable", async () => {
+    vi.useFakeTimers(); try {
+      const f = fixture(); f.fetch.mockImplementation(() => new Promise<Response>(() => {}));
+      const http = createProductClickHttpBoundary({ client: f.client, origin, permit: async () => true });
+      const pending = http.issueBundle(request(locator)); await vi.advanceTimersByTimeAsync(10000);
+      const response = await pending; expect(response.status).toBe(403); expect(response.headers.get("Location")).toBeNull();
+      expect(response.headers.get("Cache-Control")).toContain("no-store"); expect(await response.text()).not.toContain("binding");
+    } finally { vi.useRealTimers(); }
   });
 });

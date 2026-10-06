@@ -4,10 +4,12 @@ import { z } from "zod";
 import { publicHandleSchema } from "./locators";
 import { providerKeySchema } from "./product-contract";
 import { createPublishedProductClickIssuance } from "./product-click-issuance";
+import { createProductClickConfirmationBundle } from "./product-click-bundle";
 import { readProductClickRequest, readProductClickFormRequest, productClickNoStoreHeaders, unavailableProductClickResponse, type ProductClickAction } from "./product-click-request";
 
 const locator = z.object({ handle: publicHandleSchema,
   spill_reference: z.number().int().positive().max(Number.MAX_SAFE_INTEGER), provider_key: providerKeySchema }).strict();
+const bundleLocator = locator.omit({ provider_key: true });
 const redemption = locator.extend({ token: z.string().regex(/^[A-Za-z0-9_-]{43}$/)
   .refine(token => Buffer.from(token, "base64url").toString("base64url") === token) }).strict();
 async function resultWithinDeadline<T>(promise: Promise<T>): Promise<T> {
@@ -25,6 +27,7 @@ export function createProductClickHttpBoundary({ client, origin, permit }: {
   permit: (request: Request, action: ProductClickAction) => Promise<unknown>;
 }) {
   const issuance = createPublishedProductClickIssuance(client);
+  const bundle = createProductClickConfirmationBundle(client);
   async function redeem(request: Request, native: boolean): Promise<Response> {
     try {
       const permitAction = (action: ProductClickAction) => permit(request, action);
@@ -40,6 +43,16 @@ export function createProductClickHttpBoundary({ client, origin, permit }: {
     } catch { return unavailableProductClickResponse(); }
   }
   return {
+    async issueBundle(request: Request): Promise<Response> {
+      try {
+        const body = bundleLocator.safeParse(await readProductClickRequest(request, origin, "issue", action => permit(request, action)));
+        if (!body.success || request.signal.aborted) return unavailableProductClickResponse();
+        const result = await bundle(body.data);
+        if (result === null || request.signal.aborted) return unavailableProductClickResponse();
+        const headers = productClickNoStoreHeaders(); headers.set("Content-Type", "application/json; charset=utf-8");
+        return new Response(JSON.stringify(result), { status: 200, headers });
+      } catch { return unavailableProductClickResponse(); }
+    },
     async issue(request: Request): Promise<Response> {
       try {
         const body = locator.safeParse(await readProductClickRequest(request, origin, "issue", action => permit(request, action)));

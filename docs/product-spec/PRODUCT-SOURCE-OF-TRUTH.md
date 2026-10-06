@@ -594,6 +594,17 @@ typecheck/lint and three builds passed. Exact latest-push evidence remains PENDI
 until observed; guarded HTTP bundle integration and actual privileged transport /
 identity/distributed limiter/browser/cache/provider/publication gates remain open.
 
+Contract [12.39](./technical-architecture/12.39-private-product-bundle-http-contract.md)
+stages a separate unmounted locator-only HTTP bundle handler with the existing
+origin/POST JSON/permit/body limits and fresh no-store headers. The internally
+constructed 12.38 bundle is the only confirmation/intent source; caller provider,
+token, URL and private bindings are rejected before RPC. SDK fixtures exercise
+HTTP → SSR confirmation/forms → native redemption/replay without live/browser claims.
+91 targeted and 1,120 application tests, five tooling tests, typecheck/lint and
+three builds passed; exact latest-push CI/Security/Guard remains PENDING until
+observed. Actual trusted distributed action/work limits and client identity are
+next safe private foundations; routes/grants/provider/production remain withheld.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -631,7 +642,8 @@ foundation:
 - staged unmounted private HTTP/core assembly under 12.35;
 - staged unmounted native-form POST redemption under 12.36;
 - staged unmounted confirmation/provider form presentation under 12.37;
-- staged private multi-provider confirmation/intent bundle under 12.38.
+- staged private multi-provider confirmation/intent bundle under 12.38;
+- unmounted guarded private HTTP bundle responses under 12.39.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -686,7 +698,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.38 govern the staged work already present.
+public transport**. Contracts 12.12–12.39 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
