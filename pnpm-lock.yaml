@@ -3145,12 +3145,6 @@ snapshots:
     optional: true
   '@img/sharp-win32-x64@0.35.5':
     optional: true
-
-  '@ioredis/commands@2.0.0': {}
-
-  '@jridgewell/resolve-uri@3.1.2': {}
-
-  '@jridgewell/sourcemap-codec@1.5.5': {}
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
