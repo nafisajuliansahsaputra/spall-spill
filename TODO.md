@@ -741,13 +741,33 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   1,104 application tests, three builds and final diff review/checks passed.
   Actual SDK fixtures prove two-provider bundle → SSR forms → native redemption /
   replay denial and exact creator URLs. Fixtures are not live RPC/browser evidence.
-  No migration/database behavior changes. Latest exact-push CI/Security/Guard
-  evidence remains PENDING until observed; S5/S6 are NOT CLOSED / VERIFIED.
+  No migration/database behavior changes. Exact push-event Application/Database and Guard passed on
+  `e4c57b9730e61650636f796f2e7032ca526ae8d8`; Secret Scan and SAST passed.
+  Dependency Scan failed on newly reported High `GHSA-wq5f-xc86-pv6w`
+  (`sharp@0.35.4`, fixed in `0.35.5`). S5/S6 are NOT CLOSED / VERIFIED.
 - No route, grant, credential, provider activation, publication or scheduler change.
   Next safe task: guarded strict locator-only private HTTP bundle response assembly
   under a bounded contract, retaining origin/no-store and required distributed permit.
   Actual identity/limiter/privileged RPC, browser/CDN/cache, retention activation /
   capacity/monitoring and live provider/publication gates remain open.
+
+### Autonomous verification fix — patched image decoder — 2026-10-06
+
+- Exact bundle push evidence: [CI 37477549620](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37477549620)
+  passed Application and Database (1,616 pgTAP assertions / 30 files, nine existing
+  races, retention lock competition and real isolated cron runtime).
+  [Guard 37477549603](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37477549603)
+  passed. [Security 37477549598](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37477549598)
+  passed Secret Scan/SAST but failed Dependency Scan on High GHSA-wq5f-xc86-pv6w.
+- Patched the direct media-sanitizer decoder from sharp 0.35.4 to 0.35.5 and
+  regenerated the lockfile with its matching binaries/libvips 1.3.4. Existing
+  12.4 patch/security and 12.11 media-processing authority applies; no new product
+  semantics or JIT contract is needed for this dependency patch. No scan exemption,
+  route/grant, credential, production or provider configuration change.
+- Frozen install, 32 targeted sanitizer tests, typecheck/lint, five tooling tests,
+  1,104 application tests, three builds and final diff review/checks passed.
+  Exact latest-push CI/Security/Guard is PENDING until observed. S5/S6 remain
+  NOT CLOSED / VERIFIED; private HTTP bundle assembly is still the next safe task.
 
 ## Current local integration — 2026-10-04
 

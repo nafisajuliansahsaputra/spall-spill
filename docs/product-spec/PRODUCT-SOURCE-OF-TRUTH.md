@@ -584,7 +584,13 @@ precede writes; every issued intent hashes the same trusted anchor confirmation.
 Snapshot mismatch emits no mixed intents; individual unavailable/safety/store failures
 preserve independent alternatives. One operation-local calibration, ten-second
 deadline and final conservative expiry bound work without wall-clock fallback.
-No migration, grant, route or credential changes. Exact-push evidence is PENDING
+No migration, grant, route or credential changes. Bundle commit
+`e4c57b9730e61650636f796f2e7032ca526ae8d8` passed push-event CI (37477549620),
+Guard (37477549603), Secret Scan and SAST; Dependency Scan (37477549598) found
+High GHSA-wq5f-xc86-pv6w in sharp 0.35.4. The decoder is patched to sharp 0.35.5
+with matching binaries/libvips under existing 12.4/12.11 security/media authority.
+Frozen install, 32 sanitizer tests, all 1,104 application tests, five tooling tests,
+typecheck/lint and three builds passed. Exact latest-push evidence remains PENDING
 until observed; guarded HTTP bundle integration and actual privileged transport /
 identity/distributed limiter/browser/cache/provider/publication gates remain open.
 
