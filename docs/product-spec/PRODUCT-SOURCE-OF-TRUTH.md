@@ -415,6 +415,19 @@ isolated Database reset/lint/error-level advisors, 1,424 pgTAP assertions across
 `source-map-js` advisory GHSA-68fv-2mgg-jv7q; the patched dependency and exact final
 push still require all remote gates. This evidence does not enable public transport
 or close S5/S6.
+Patched final commit `7141fdce7af33c6aab26b685dd9bd4f6eadc882f` passed exact
+push-event Application/Database CI (37398772253), all three Security scans
+(37398772255) and Autopilot Guard (37398772256). Database again passed 1,424
+pgTAP assertions and seven concurrency tests; no High dependency finding remains.
+
+Contract [12.27](./technical-architecture/12.27-product-click-intent-core-contract.md)
+stages a server-only opaque one-use click-intent core with mandatory injectable
+atomic storage. It binds validated server confirmation/Published selection,
+selected provider and original URL hash, fixed expiry and current safety on
+redemption, without follower login or private context in the token. No concrete
+persistence, schema/grant, route, CTA, redirect or publication is enabled. Unit
+memory-store evidence does not prove durable database atomicity or browser
+confirmation provenance. Those adapter/transport gates and S5/S6 remain open.
 
 ### Current implementation checkpoint
 
@@ -441,7 +454,8 @@ foundation:
 - staged exact Published Product media transport under 12.23;
 - staged Product detail projection/per-destination availability under 12.24;
 - staged Product visual/context confirmation renderer under 12.25;
-- staged exact Published marketplace destination resolution under 12.26.
+- staged exact Published marketplace destination resolution under 12.26;
+- staged opaque one-use Product click-intent core under 12.27.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -496,7 +510,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.26 govern the staged work already present.
+public transport**. Contracts 12.12–12.27 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

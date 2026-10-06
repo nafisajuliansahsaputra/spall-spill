@@ -100,7 +100,8 @@ Already present and governed by locked contracts:
 - 12.23 staged exact Published Product image transport;
 - 12.24 staged Product detail projection with current per-destination availability;
 - 12.25 staged unmounted Product visual/context confirmation renderer;
-- 12.26 staged exact Published destination resolution with all execution withheld.
+- 12.26 staged exact Published destination resolution with all execution withheld;
+- 12.27 staged opaque one-use Product click-intent core with injectable storage.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -128,6 +129,8 @@ Current safe work must be selected from the remaining dependency frontier:
   without public route assembly, data fetching or marketplace actions.
 - [x] Stage exact Published provider/URL-hash destination resolution under 12.26;
   browser context-intent authority and outbound transport remain unfinished.
+- [x] Stage server-only opaque one-use intent core under 12.27; durable store,
+  exact Published issuance provenance and route/browser assembly remain unfinished.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -355,9 +358,41 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   typecheck/lint, all 758 application/tooling tests, three builds and diff checks
   passed again. Final-push evidence must be
   reverified; this is not a security-gate waiver or checkpoint closure.
+- Patched final commit `7141fdce7af33c6aab26b685dd9bd4f6eadc882f` passed
+  exact push-event [Application/Database CI 37398772253](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37398772253),
+  [Secret Scan/SAST/Dependency Scan 37398772255](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37398772255),
+  and [Autopilot Guard 37398772256](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37398772256).
+  Database again passed all 1,424 pgTAP assertions and seven concurrency tests.
 - Next dependency-safe task: lock server-authenticated rendered-context click intent
   transport with expiry/tamper/replay/cross-context denial, then stage P03 marketplace
   action assembly. Do not enable outbound routes/grants or first Publish prematurely.
+
+### Autonomous continuation — staged Product click-intent core — 2026-10-06
+
+- Clean `work` synchronized to `7141fdce7af33c6aab26b685dd9bd4f6eadc882f`.
+  Fresh canonical frontier, J2/J4/J6/J9, pinned P03 and 12.23–12.26/source/tests
+  readback identified intent core as the next bounded server dependency. Locked
+  12.27 before code; no follower login or journey topology change.
+- Core issues random 256-bit opaque capabilities for validated matching server
+  confirmation/binding after safety resolution. Storage receives only token hash,
+  purpose, private binding, confirmation digest and fixed 120-second lifetime.
+- Mandatory injectable store must create atomically without overwrite and consume
+  atomically once. Redemption validates strict public context/stored record/time,
+  consumes before resolving exact current Published safety, preserves original
+  attribution and rechecks time after asynchronous resolution. Failure is null;
+  no private reason, redirect, publication/lifecycle mutation or analytics.
+- Added no schema/migration, concrete store/RPC adapter, route/CTA, grant, credentials
+  or Publish integration. Test-only memory storage is not production persistence.
+  Durable database replay/concurrency/retention and exact snapshot issuance provenance
+  require the later adapter contract; browser/cache/abuse/provider gates remain open.
+- Targeted tests: 75 passed (54 new intent-core tests). Typecheck, lint, tooling,
+  full tests (790 Vitest + 17 auth navigation + 5 tooling = 812), three builds and
+  diff checks passed. Exact latest-push CI/Security/Guard remain PENDING until
+  observed. No new database behavior was introduced; committed Database regression
+  CI still runs. S5/S6 remain NOT CLOSED / VERIFIED.
+- Next dependency-safe task: lock and implement the withheld durable atomic intent
+  store and exact Published confirmation/binding issuance adapter, including database
+  replay/concurrency/retention evidence, before staged P03 action/HTTP assembly.
 
 ## Current local integration — 2026-10-04
 
