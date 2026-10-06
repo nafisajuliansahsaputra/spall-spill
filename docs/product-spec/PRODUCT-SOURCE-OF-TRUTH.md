@@ -440,6 +440,11 @@ boundary. Database/concurrency verification remains PENDING until observed; no
 raw token/URL storage or public action is enabled. Exact confirmation issuance,
 application RPC adapter, cleanup wiring/clock alignment and public transport
 remain unfinished; S5/S6 are not CLOSED / VERIFIED.
+Store implementation `ee8173dbd51cee6b6bba40454de7f90328d73e84` passed isolated
+reset/lint/error-level advisors, 1,503 pgTAP assertions and seven existing races.
+The new race fixture needed explicit pgTAP extension setup outside the CLI's
+transactional test runner; final durable concurrency/exact-push evidence is still
+required. No test assertion or private access boundary was weakened.
 
 ### Current implementation checkpoint
 

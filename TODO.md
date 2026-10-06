@@ -425,6 +425,14 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   check for the concurrency harness and diff checks passed. Unchanged application
   results used Turbo cache where appropriate. Exact latest-push remote evidence
   remains PENDING until observed; no CLOSED / VERIFIED or production claim.
+- First store push `ee8173dbd51cee6b6bba40454de7f90328d73e84` passed Application,
+  all Security scans and Guard. Database reset/lint/error-level advisors, 1,503
+  pgTAP assertions across 27 files (79 new) and seven existing races passed.
+  New race setup failed because pgTAP's transaction-installed `no_plan()` was
+  unavailable on separate Node connections. The isolated concurrency fixture
+  now explicitly installs the already available pgTAP extension; no assertions,
+  database permissions or production paths were relaxed. New exact-push evidence
+  remains required before the durable concurrency claim.
 - Next dependency-safe task: exact same-snapshot Published confirmation/binding
   issuance plus concrete server RPC store adapter, and evidence for bounded cleanup
   wiring/clock alignment, before staged public action/HTTP assembly. Browser/live

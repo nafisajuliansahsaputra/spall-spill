@@ -31,6 +31,8 @@ const record = async () => JSON.parse(await query(`select jsonb_build_object(
   from (select floor(extract(epoch from clock_timestamp())*1000)::bigint-10 as ms) t;`));
 let ownerIds = [];
 before(async () => {
+  // Supabase's pgTAP runner installs its extension transactionally; Node connections need it explicitly.
+  await query('create extension if not exists pgtap with schema extensions;');
   // Reuse only the privileged fixture prefix, never the rolled-back store assertions.
   const fixture = readFileSync(new URL('../supabase/tests/database/027_product_click_intent_store.test.sql', import.meta.url), 'utf8');
   const marker = '\n-- Intent store fixtures.\n'; assert.ok(fixture.includes(marker));
