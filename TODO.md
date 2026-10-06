@@ -115,7 +115,8 @@ Already present and governed by locked contracts:
 - 12.38 private snapshot-bound multi-provider confirmation/intent bundle;
 - 12.39 unmounted guarded locator-only private HTTP bundle handler;
 - 12.40 private atomic distributed action/work budget primitive;
-- 12.41 private confined bounded Upstash REST EVAL transport.
+- 12.41 private confined bounded Upstash REST EVAL transport;
+- 12.42 private handler-specific HTTP / distributed budget composition.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -173,6 +174,8 @@ Current safe work must be selected from the remaining dependency frontier:
   policy/subject injection and required isolated Redis runtime tests; live Upstash/identity integration open.
 - [x] Stage confined private Upstash REST EVAL transport under 12.41; protocol
   fixtures are not live provider compatibility or trusted deployment identity evidence.
+- [x] Compose private HTTP handlers with mandatory handler-selected budgets under
+  12.42; no permissive permit or caller-selected cost, no mounted public route.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -873,6 +876,37 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   native Windows pnpm test without requiring a Unix Redis binary; no silent skip.
   Actual provider EVAL/TIME/replication/TTL/cluster compatibility, approved capacity
   and trusted deployment identity/browser/cache/retention/publication gates remain open.
+
+### Autonomous continuation — private budgeted HTTP composition — 2026-10-06
+
+- Clean work synchronized to `345953dfb3bfdd040b37ba0abdfd0ff76d36d803`.
+  Exact push-event [CI 37512049348](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37512049348),
+  [Security 37512049379](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37512049379)
+  and [Guard 37512049256](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37512049256)
+  passed all six jobs, including the corrected SAST gate, six actual Redis tests
+  without skips, 1,616 pgTAP assertions, nine races and retention lock/cron runtime.
+  This supersedes pending 12.41 evidence, not live provider/identity/public enabling.
+- Locked 12.42 before code. Separate unmounted factory requires trusted policy,
+  subject resolver, Redis transport, server Supabase client and application origin.
+  Internally composes only the correctly budgeted issue/bundle/redeem handlers;
+  server-selected costs are 4/32/3, with no caller operation or permissive permit.
+  Native and JSON redemption share the redeem permit; all requests get fresh
+  decisions and share existing namespace/subject work state, without cached grants.
+- Actual SDK/REST fixtures exercise bundle → exact SSR forms → two independent
+  native provider redemption/replay and single issue → JSON redemption, preserving
+  exact original URLs. Failed budgets/origin/missing policy/subject/transport
+  prevent RPC. Caller cost injection cannot lower bundle cost; invalid DTO may
+  conservatively spend capacity but performs no RPC or refund.
+- 171 targeted tests, typecheck/lint, five tooling tests, 1,200 application tests,
+  six isolated Redis tests, three builds and final diff review/checks passed.
+  Latest exact-push CI/Security/Guard evidence remains PENDING until observed.
+- No migration, route/grant, credentials, provider or production changes. S5/S6
+  NOT CLOSED / VERIFIED. Next safe task: audit and lock bounded trusted-source
+  network identity canonicalization / opaque subject derivation under 12.4,
+  requiring injected trusted runtime metadata and server key, without reading
+  arbitrary forwarded headers or treating hashing as proof of trust. Actual
+  upstream identity provenance, live Upstash compatibility/capacity, browser/cache,
+  retention activation and provider/publication evidence remain open enabling gates.
 
 ## Current local integration — 2026-10-04
 

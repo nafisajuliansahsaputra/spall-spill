@@ -642,6 +642,22 @@ No live provider call, credentials, route/grant, publication or production chang
 Handler-specific private HTTP/permit composition is next; actual live Upstash /
 trusted identity/capacity/browser/cache/retention/publication evidence remains open.
 
+Final 12.41 commit `345953dfb3bfdd040b37ba0abdfd0ff76d36d803` passed all six
+push-event jobs: CI (37512049348), Security (37512049379), Guard (37512049256),
+including corrected SAST, six Redis tests without skips and the full database gates.
+This supersedes pending 12.41 automated evidence without closing live enabling gates.
+
+Contract [12.42](./technical-architecture/12.42-private-budgeted-product-http-contract.md)
+stages private handler-specific HTTP/permit composition with explicit trusted
+policy/identity/Redis dependencies and mandatory server-selected 4/32/3 costs.
+171 targeted tests, 1,200 application tests, six isolated Redis tests, five tooling
+tests, typecheck/lint and three builds passed. SDK/REST/SSR fixtures exercise complete
+bundle/form/native redemption/replay and single issue/JSON redemption, not real
+browser/privileged-provider evidence. Latest exact-push evidence remains PENDING
+until observed. No routes/grants, credentials, provider or production changes.
+Bounded trusted-source identity/opaque subject derivation is next; upstream metadata
+provenance/live Upstash/capacity/browser/cache/retention/publication gates remain open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -682,7 +698,8 @@ foundation:
 - staged private multi-provider confirmation/intent bundle under 12.38;
 - unmounted guarded private HTTP bundle responses under 12.39;
 - private atomic distributed action/work budgets under 12.40;
-- confined bounded private Upstash REST EVAL transport under 12.41.
+- confined bounded private Upstash REST EVAL transport under 12.41;
+- private handler-specific budgeted HTTP composition under 12.42.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -737,7 +754,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.41 govern the staged work already present.
+public transport**. Contracts 12.12–12.42 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
