@@ -7,8 +7,93 @@ import { createProductClickConfirmationBundle } from "./product-click-bundle";
 import { createProductClickHttpBoundary } from "./product-click-http";
 import { createBudgetedProductClickHttpBoundary } from "./product-click-budget-http";
 import { createProductClickUpstashBudgetTransport } from "./product-click-budget-upstash";
+import { createNetworkBudgetedProductClickHttpBoundary } from "./product-click-network-http";
 import { PublishedProductConfirmationActions } from "./product-confirmation-actions";
 import type { ProductClickIntentRecord } from "./product-click-intent";
+
+describe("private trusted-network subject / budgeted HTTP composition", () => {
+  const origin = "https://app.example.test";
+  const request = (body: unknown) => new Request(`${origin}/staged`, { method: "POST", headers: { origin,
+    "content-type": "application/json", "x-real-ip": "203.0.113.99", "x-forwarded-for": "203.0.113.99" }, body: JSON.stringify(body) });
+  function networked() {
+    const f = fixture(); const key = new Uint8Array(32).fill(11); // Test-only, not a deployment key.
+    const readTrustedMetadata = vi.fn(async () => ({ address: "192.0.2.1" }) as unknown);
+    const fetcher = vi.fn<typeof fetch>(async () => new Response('{"result":1}', { headers: { "content-type": "application/json" } }));
+    const policy = { namespace: "network-test", window_ms: 60000, issue_limit: 100, redeem_limit: 100, work_limit: 1000 };
+    const redis = createProductClickUpstashBudgetTransport({ origin: "https://budget-fixture.upstash.io", namespace: policy.namespace, token: "test-only-bearer-placeholder" }, fetcher);
+    const dependencies = { client: f.client, origin, policy, redis, key, readTrustedMetadata };
+    return { ...f, readTrustedMetadata, fetcher, dependencies, http: createNetworkBudgetedProductClickHttpBoundary(dependencies) };
+  }
+  it("binds one policy namespace and canonical subject through bundle, SSR forms, native redemption/replay", async () => {
+    const f = networked(); const response = await f.http.issueBundle(request(locator)); expect(response.status).toBe(200);
+    const payload = await response.json(); const html = renderToStaticMarkup(createElement(PublishedProductConfirmationActions, { payload }));
+    expect(html.indexOf("<h1")).toBeLessThan(html.indexOf("<form")); expect(payload.intents).toHaveLength(2);
+    f.readTrustedMetadata.mockResolvedValue({ address: "::ffff:192.0.2.1" });
+    for (const [index, form] of html.matchAll(/<form\b[^>]*>([\s\S]*?)<\/form>/g).toArray().entries()) {
+      const fields = [...form[1]!.matchAll(/name="([^"]+)" value="([^"]+)"/g)].map(m => [m[1]!, m[2]!] as [string, string]);
+      const req = () => new Request(`${origin}/staged`, { method: "POST", headers: { origin, "content-type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(fields) });
+      const redeemed = await f.http.redeemForm(req()); expect(redeemed.status).toBe(303);
+      expect(redeemed.headers.get("Location")).toBe(product.destinations[index]!.destination_url);
+      expect((await f.http.redeemForm(req())).status).toBe(403);
+    }
+    const commands = f.fetcher.mock.calls.map(([, init]) => JSON.parse(String(init?.body)) as string[]);
+    expect(commands.map(c => c.at(-1))).toEqual(["32", "3", "3", "3", "3"]);
+    expect(new Set(commands.map(c => c[4])).size).toBe(1);
+    expect(commands.every(c => c[4]!.startsWith("spall-click:network-test:"))).toBe(true);
+    expect(JSON.stringify(commands)).not.toContain("192.0.2.1"); expect(JSON.stringify(commands)).not.toContain("203.0.113.99");
+    expect(JSON.stringify(payload)).not.toContain("address"); expect(f.readTrustedMetadata).toHaveBeenCalledTimes(5); expect(f.records.size).toBe(0);
+  });
+  it("retains single issue and JSON redemption with 4/3 costs", async () => {
+    const f = networked(); const context = { ...locator, provider_key: "shopee" };
+    const issued = await f.http.issue(request(context)); expect(issued.status).toBe(200); const payload = await issued.json();
+    const redeemed = await f.http.redeem(request({ ...context, token: payload.token })); expect(redeemed.status).toBe(303);
+    expect(redeemed.headers.get("Location")).toBe(product.destinations[0]!.destination_url);
+    expect(f.fetcher.mock.calls.map(([, init]) => JSON.parse(String(init?.body)).at(-1))).toEqual(["4", "3"]);
+  });
+  it("ignores unchecked caller identity and independent namespace override", async () => {
+    const f = networked(); const override = vi.fn(async () => "attacker-selected-subject");
+    const http = createNetworkBudgetedProductClickHttpBoundary({ ...f.dependencies, ...{ identity: override, namespace: "attacker" } });
+    expect((await http.issueBundle(request(locator))).status).toBe(200); expect(override).not.toHaveBeenCalled();
+    expect(JSON.parse(String(f.fetcher.mock.calls[0]?.[1]?.body))[4]).toMatch(/^spall-click:network-test:/);
+    f.readTrustedMetadata.mockResolvedValue(null); expect((await http.issueBundle(request(locator))).status).toBe(403);
+    expect(override).not.toHaveBeenCalled(); expect(f.fetcher).toHaveBeenCalledTimes(1);
+  });
+  it("snapshots policy namespace and capacity together against external mutation", async () => {
+    const f = networked(); f.dependencies.policy.namespace = "changed"; f.dependencies.policy.work_limit = 0;
+    expect((await f.http.issueBundle(request(locator))).status).toBe(200);
+    const command = JSON.parse(String(f.fetcher.mock.calls[0]?.[1]?.body));
+    expect(command[4]).toMatch(/^spall-click:network-test:/); expect(command.at(-2)).toBe("1000");
+  });
+  it.each([null, { address: "short" }, { address: "192.0.2.1", extra: true }])("denies invalid metadata %j without header fallback or RPC", async metadata => {
+    const f = networked(); f.readTrustedMetadata.mockResolvedValue(metadata);
+    const response = await f.http.issueBundle(request(locator)); expect(response.status).toBe(403);
+    expect(response.headers.get("Cache-Control")).toContain("no-store"); expect(response.headers.get("Location")).toBeNull();
+    expect(f.fetcher).not.toHaveBeenCalled(); expect(f.fetch).not.toHaveBeenCalled();
+  });
+  it.each(["key", "readTrustedMetadata", "policy", "redis"])("denies missing dependency %s before SDK RPC", async missing => {
+    const f = networked(); Reflect.deleteProperty(f.dependencies, missing);
+    const http = createNetworkBudgetedProductClickHttpBoundary(f.dependencies);
+    expect((await http.issueBundle(request(locator))).status).toBe(403); expect(f.fetch).not.toHaveBeenCalled(); expect(f.fetcher).not.toHaveBeenCalled();
+  });
+  it("checks origin before metadata, Redis and RPC", async () => {
+    const f = networked(); const req = request(locator); req.headers.set("origin", "https://attacker.example.test");
+    expect((await f.http.issueBundle(req)).status).toBe(403); expect(f.readTrustedMetadata).not.toHaveBeenCalled();
+    expect(f.fetcher).not.toHaveBeenCalled(); expect(f.fetch).not.toHaveBeenCalled();
+  });
+  it("cannot start Redis or SDK after a late metadata reader", async () => {
+    vi.useFakeTimers(); try {
+      const f = networked(); let finish!: (metadata: unknown) => void;
+      f.readTrustedMetadata.mockImplementation(() => new Promise(resolve => { finish = resolve; }));
+      const pending = f.http.issueBundle(request(locator)); await vi.advanceTimersByTimeAsync(500);
+      expect((await pending).status).toBe(403); finish({ address: "192.0.2.1" }); await vi.advanceTimersByTimeAsync(0);
+      expect(f.fetcher).not.toHaveBeenCalled(); expect(f.fetch).not.toHaveBeenCalled();
+    } finally { vi.useRealTimers(); }
+  });
+  it("denies exhausted work budget after trusted metadata without RPC", async () => {
+    const f = networked(); f.fetcher.mockResolvedValue(new Response('{"result":0}', { headers: { "content-type": "application/json" } }));
+    expect((await f.http.issueBundle(request(locator))).status).toBe(403); expect(f.readTrustedMetadata).toHaveBeenCalledTimes(1); expect(f.fetch).not.toHaveBeenCalled();
+  });
+});
 
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
 const locator = { handle: "creator", spill_reference: 27 };

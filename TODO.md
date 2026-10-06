@@ -118,6 +118,7 @@ Already present and governed by locked contracts:
 - 12.41 private confined bounded Upstash REST EVAL transport;
 - 12.42 private handler-specific HTTP / distributed budget composition.
 - 12.43 private trusted-network canonicalization/keyed budget subjects.
+- 12.44 private same-policy network subject / budgeted HTTP composition.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -179,6 +180,8 @@ Current safe work must be selected from the remaining dependency frontier:
   12.42; no permissive permit or caller-selected cost, no mounted public route.
 - [x] Stage private trusted-runtime IP canonicalization/keyed subject derivation
   under 12.43; actual upstream attestation/provenance remains an enabling gate.
+- [x] Compose private network subjects and budgeted HTTP under 12.44, binding a
+  copied policy namespace and disallowing caller identity override/fallback.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -936,6 +939,34 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   supports it; never substitute arbitrary headers for source attestation.
   Actual runtime trust, live Upstash/capacity/browser/cache, retention activation
   and provider/publication evidence remain open enabling gates.
+
+### Autonomous continuation — private network-subject HTTP composition — 2026-10-06
+
+- Clean work synchronized to `7265f27991458d04d318fe52ca8995736670764f`.
+  Exact push-event CI 37545813408, Security 37545813258 and Guard 37545813134
+  passed all six jobs, six Redis tests without skips, 1,616 pgTAP assertions,
+  nine races and isolated retention lock/cron runtime; 12.43 automated evidence
+  superseded, without closing deployment provenance or other enabling gates.
+- Read back [Vercel SDK headers source at 2cace21](https://github.com/vercel/vercel/blob/2cace21c4b65057822dd2fbec39dc5fcc62e05d0/packages/functions/src/headers.ts):
+  ipAddress() reads x-real-ip; this getter is not deployment sanitization proof.
+  Header-source adapter path remains withheld. Continue independent private work.
+- Locked 12.44 before code. Separate unmounted factory composes 12.43 and 12.42
+  with required server key/runtime reader and copied budget policy. Subject and
+  Redis namespaces stay bound despite unchecked override or external mutation.
+  No caller identity, independent namespace, permissive fallback or account gate.
+- Actual SDK/REST/runtime/SSR fixtures verify fresh reads and shared work keys
+  through bundle/form/native independent provider redemption/replay and single
+  issue/JSON redemption. Origin-first, missing dependencies, invalid metadata,
+  exhausted budget and late reader all deny before RPC. Costs remain 4/32/3.
+- Latest exact-push CI/Security/Guard evidence remains PENDING until observed.
+  No dependency, migration, credential, route/grant, provider or production changes.
+  233 targeted tests, 1,262 application tests, six isolated Redis tests, five
+  tooling tests, typecheck/lint, three builds and final diff review/checks passed.
+  S5/S6 NOT CLOSED / VERIFIED. Next safe task: audit/lock bounded isolated browser
+  confirmation and native-form verification using owned fixtures, without live
+  credentials, public enabling or claiming deployed provider/cache evidence.
+  Upstream trusted metadata provenance, live Upstash/capacity/browser/cache,
+  retention activation and provider/publication gates remain open.
 
 ## Current local integration — 2026-10-04
 

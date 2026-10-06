@@ -674,6 +674,22 @@ six Redis tests, five tooling tests and typecheck/lint/three builds passed;
 latest exact-push evidence remains PENDING until observed. Actual source attestation, capacity,
 browser/cache/retention/publication gates remain open; S5/S6 NOT CLOSED / VERIFIED.
 
+Exact 12.43 push `7265f27991458d04d318fe52ca8995736670764f` passed all six
+jobs: CI 37545813408, Security 37545813258 and Guard 37545813134, including
+six Redis tests without skips and full database/retention runtime gates.
+
+Contract [12.44](./technical-architecture/12.44-private-network-budgeted-http-contract.md)
+composes the private network subject with budgeted HTTP handlers under one copied
+policy namespace. No caller identity override, separate namespace or fallback.
+Actual SDK/REST/runtime/SSR fixtures preserve bundle/form/native redemption/replay
+and single issue/JSON redemption with existing 4/32/3 costs. Upstream source trust
+remains open: pinned Vercel SDK readback only reads x-real-ip and does not itself
+attest deployment stripping/provenance. No public enabling/provider/production change.
+233 targeted tests, 1,262 application tests, six Redis tests, five tooling tests,
+typecheck/lint and three builds passed; latest exact-push evidence PENDING until observed.
+Isolated browser confirmation/native-form verification is next independent work;
+actual deployed provider/cache/browser/retention/publication evidence remains open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -717,6 +733,7 @@ foundation:
 - confined bounded private Upstash REST EVAL transport under 12.41;
 - private handler-specific budgeted HTTP composition under 12.42.
 - private trusted-network canonicalization/keyed budget subjects under 12.43.
+- private same-policy network subject / budgeted HTTP composition under 12.44.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -771,7 +788,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.43 govern the staged work already present.
+public transport**. Contracts 12.12–12.44 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
