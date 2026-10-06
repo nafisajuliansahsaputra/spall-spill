@@ -106,7 +106,8 @@ Already present and governed by locked contracts:
 - 12.29 staged private application RPC store/cleanup adapter;
 - 12.30 staged same-Published-snapshot confirmation/binding and private issuance;
 - 12.31 withheld database clock/deadline and bounded calibration primitives;
-- 12.32 operation-local calibrated private intent issuance/redemption wiring.
+- 12.32 operation-local calibrated private intent issuance/redemption wiring;
+- 12.33 inactive bounded database retention scheduler foundation.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -146,6 +147,8 @@ Current safe work must be selected from the remaining dependency frontier:
   under 12.31; exact `a029b71` passed all automated gates; private wiring follows below.
 - [x] Wire lower issuance/upper deadline bounds and committed-record database
   resolution under 12.32; actual authorized integration/public transport remain open.
+- [x] Register inactive bounded intent/history retention under 12.33; actual
+  scheduler CI evidence pending, controlled activation/capacity/monitoring open.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -561,6 +564,32 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Next safe work: bounded retention scheduling under its own JIT contract.
   Real authorized RPC integration, browser action, cache/abuse/origin/provider
   evidence and first-Publish wiring remain open. S5/S6 are NOT CLOSED / VERIFIED.
+
+### Autonomous continuation — inactive bounded retention scheduler — 2026-10-06
+
+- Clean `work` refreshed to exact `b7887ca866d200ebbf8371b2beefd648531731cb`.
+  All six exact push-event gates passed: CI 37435260252, Security 37435260217,
+  Guard 37435260204, with 1,595 pgTAP assertions and nine real races.
+  This supersedes the pending 12.32 evidence above, not S5/S6 journey closure.
+- Locked 12.33 before code, following the existing 12.4 Supabase Cron decision.
+  Migration registers one inactive minute-cadence postgres job and a withheld
+  tick: transaction try-lock, one 500-expired-intent cleanup, at most 500 own
+  terminal cron history records older than seven days. No application-role grants,
+  HTTP/provider/credentials, TTL extension or publication/private-state changes.
+- Rolled-back pgTAP covers bounded remainder cleanup, unexpired/recent/running/
+  null-end-time/unrelated preservation and inactive configuration. CI adds real
+  multi-connection lock competition and temporary isolated cron activation with
+  successful run/deletion observation, always restoring inactive minute cadence.
+  These database/runtime results are PENDING until observed; local Docker capacity
+  remains insufficient. Typecheck/lint, five tooling tests, 920 application tests,
+  three builds, Node syntax validation and final diff checks/review passed.
+  Unchanged application gates reused the verified Turbo cache where applicable.
+- This is an inactive scheduler foundation, not guaranteed production retention.
+  Controlled activation, minute-cadence observation, capacity versus abuse limits
+  and monitoring remain gates before public intent issuance. Next independent
+  safe task: bounded staged HTTP/action boundary with no-store/origin/abuse checks,
+  no public routes/grants until all transport/provider gates are met. Real authorized
+  integration, browser/provider/publication and S5/S6 closure remain open.
 
 ## Current local integration — 2026-10-04
 

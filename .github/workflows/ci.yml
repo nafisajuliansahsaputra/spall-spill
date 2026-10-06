@@ -129,3 +129,6 @@ jobs:
 
       - name: Verify concurrent Product click intent consumption
         run: node --test tests/product-click-intent-concurrency.test.mjs
+
+      - name: Verify isolated Product intent retention scheduler
+        run: node --test tests/product-click-retention.test.mjs
