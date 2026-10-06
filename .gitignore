@@ -35,3 +35,23 @@ pnpm-debug.log*
 # Operating system
 .DS_Store
 Thumbs.db
+
+# secrets / credentials
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+credentials.json
+secrets.json
+service-account*.json
+
+# local data exports / database artifacts
+*.sqlite
+*.sqlite3
+*.db
+*.dump
+*.bak
+*.sql.gz
+/backups/
