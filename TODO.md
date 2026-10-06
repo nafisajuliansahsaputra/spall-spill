@@ -117,6 +117,7 @@ Already present and governed by locked contracts:
 - 12.40 private atomic distributed action/work budget primitive;
 - 12.41 private confined bounded Upstash REST EVAL transport;
 - 12.42 private handler-specific HTTP / distributed budget composition.
+- 12.43 private trusted-network canonicalization/keyed budget subjects.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -176,6 +177,8 @@ Current safe work must be selected from the remaining dependency frontier:
   fixtures are not live provider compatibility or trusted deployment identity evidence.
 - [x] Compose private HTTP handlers with mandatory handler-selected budgets under
   12.42; no permissive permit or caller-selected cost, no mounted public route.
+- [x] Stage private trusted-runtime IP canonicalization/keyed subject derivation
+  under 12.43; actual upstream attestation/provenance remains an enabling gate.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -907,6 +910,32 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   arbitrary forwarded headers or treating hashing as proof of trust. Actual
   upstream identity provenance, live Upstash compatibility/capacity, browser/cache,
   retention activation and provider/publication evidence remain open enabling gates.
+
+### Autonomous continuation — private trusted-network budget subject — 2026-10-06
+
+- Clean work synchronized to `27c54db8ff8a45df9d7ea72aa81821a13231f15c`.
+  Exact push-event CI 37513153112, Security 37513153120 and Guard 37513152998
+  passed all six jobs, 1,616 pgTAP assertions, nine races and isolated retention
+  lock/cron runtime. This supersedes pending 12.42 automated evidence only.
+- Locked 12.43 before code. Unmounted server-only resolver takes an injected
+  trusted metadata reader, bounded namespace and copied 32–64 byte HMAC key.
+  Bare IPv4/IPv6 literals only; normalize IPv6 equivalence and collapse mapped
+  IPv6 to IPv4, preserving all other address bits. Return only domain-separated
+  base64url HMAC; never read forwarded headers or log/persist raw addresses.
+- Fresh reads, malformed/extra metadata, reader errors, abortion and 500 ms
+  monotonic timeout fail closed. No cached subject, retry or permissive fallback;
+  canonical subjects share existing distributed work keys, absent identity never
+  reaches Redis. No follower account required; hashing is not provenance proof.
+- Latest exact-push CI/Security/Guard evidence remains PENDING until observed.
+  No dependency/migration/route/grant/credential/provider/production changes.
+  75 targeted tests (48 new subject cases and 27 budget regressions), 1,248
+  application tests, six isolated Redis tests, five tooling tests, typecheck/lint,
+  three builds and final diff review/checks passed. Fixtures are not live evidence.
+  S5/S6 NOT CLOSED / VERIFIED. Next safe task: audit authoritative runtime client
+  metadata provenance and lock a bounded deployment-source adapter if evidence
+  supports it; never substitute arbitrary headers for source attestation.
+  Actual runtime trust, live Upstash/capacity/browser/cache, retention activation
+  and provider/publication evidence remain open enabling gates.
 
 ## Current local integration — 2026-10-04
 
