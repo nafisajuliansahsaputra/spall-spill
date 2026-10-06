@@ -108,7 +108,8 @@ Already present and governed by locked contracts:
 - 12.31 withheld database clock/deadline and bounded calibration primitives;
 - 12.32 operation-local calibrated private intent issuance/redemption wiring;
 - 12.33 inactive bounded database retention scheduler foundation;
-- 12.34 unmounted bounded request/permit/no-store primitives.
+- 12.34 unmounted bounded request/permit/no-store primitives;
+- 12.35 unmounted strict private HTTP/core response assembly.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -151,7 +152,9 @@ Current safe work must be selected from the remaining dependency frontier:
 - [x] Register inactive bounded intent/history retention under 12.33; actual
   isolated scheduler evidence passed on `19cce5e`; controlled activation/capacity/monitoring open.
 - [x] Stage strict request/permit/body limits and no-store denial under 12.34;
-  actual distributed limiter, strict HTTP/core assembly and mounted routes remain open.
+  actual distributed limiter and mounted routes remain open.
+- [x] Assemble strict locator/token HTTP responses with calibrated private core
+  under 12.35; concrete identity/limiter and confirmation-before-action browser integration remain open.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -617,6 +620,35 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   its own contract, retaining injected fail-closed distributed permit dependency.
   Actual trusted identity/Upstash integration, browser/cache/CDN, retention
   activation/capacity/monitoring/provider and S5/S6 closure remain open.
+
+### Autonomous continuation — private HTTP/core assembly — 2026-10-06
+
+- Clean `work` synchronized to `f240742c91ccc0a1d27167c7ffd6ed642575e74a`.
+  Exact push-event [CI 37462353637](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37462353637),
+  [Security 37462353655](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37462353655)
+  and [Guard 37462353664](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37462353664)
+  passed all six jobs. Database evidence includes 1,616 pgTAP assertions,
+  nine existing races, retention lock competition and actual isolated cron execution.
+  This supersedes 12.34 pending evidence without enabling public transport.
+- Locked 12.35 before code. Unmounted HTTP assembly uses strict locator-only
+  issuance and canonical token/context redemption, the 12.34 request guard and
+  internally constructed 12.32 calibrated private issuance. Exact Published
+  confirmation/token returns only after durable creation; exact original Location
+  returns only after committed consume and fresh deadline/safety resolution.
+- Uniform no-store/no-referrer unavailable truth covers malformed input, rejected
+  permits, SDK failures, aborted requests, core deadline stalls and unsupported
+  Location encoding. Consumed authority is never restored or retried.
+- 74 targeted tests, typecheck/lint, five tooling tests, 994 application tests,
+  three builds and final diff review/checks passed. Initial typecheck caught an
+  optional RequestInit signal in the test helper; corrected without weakening gates.
+  No migration/database behavior changes. Latest exact-push CI/Security/Guard
+  evidence remains PENDING until observed.
+- No route, credential, grant, distributed limiter, browser navigation, scheduler
+  activation or publication enabled. Next safe task: staged exact confirmation /
+  explicit selected-provider browser action assembly after refreshing its authority.
+  Actual privileged transport, trusted identity/Upstash, browser/cache/CDN,
+  retention activation/capacity/monitoring and live provider/publication evidence
+  remain open. S5/S6 are NOT CLOSED / VERIFIED.
 
 ## Current local integration — 2026-10-04
 

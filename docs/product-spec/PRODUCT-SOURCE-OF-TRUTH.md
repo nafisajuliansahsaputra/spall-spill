@@ -527,6 +527,21 @@ grant is enabled. Parsed unknown JSON is not trusted locator/capability authorit
 Latest exact-push evidence is PENDING until observed; strict private HTTP/core
 assembly and actual identity/limiter/browser/cache/provider integration remain open.
 
+Final 12.34 commit `f240742c91ccc0a1d27167c7ffd6ed642575e74a` passed push-event
+CI (37462353637), all Security scans (37462353655) and Guard (37462353664),
+including 1,616 pgTAP assertions, the nine existing races, retention lock competition
+and actual isolated cron execution. No public enablement or browser proof is implied.
+
+Contract [12.35](./technical-architecture/12.35-private-product-click-http-assembly-contract.md)
+stages unmounted strict locator/token HTTP assembly over the calibrated private core.
+Issue returns trusted confirmation/token after durable creation; redemption returns
+exact original Location only after committed consume and fresh deadline/safety
+resolution. Error/abort/timeout paths retain uniform no-store denial and never
+restore consumed authority. No route, credential, public grant or concrete limiter
+is enabled. Latest exact-push evidence is PENDING until observed; actual privileged
+identity/limiter, confirmation-before-action browser/cache/provider and publication
+integration remain open. Fixtures are not live RPC or browser evidence.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -560,7 +575,8 @@ foundation:
 - staged database clock/deadline calibration primitives under 12.31;
 - staged calibrated private intent assembly under 12.32;
 - staged inactive bounded retention scheduler under 12.33;
-- staged unmounted request/permit/no-store primitives under 12.34.
+- staged unmounted request/permit/no-store primitives under 12.34;
+- staged unmounted private HTTP/core assembly under 12.35.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -615,7 +631,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.34 govern the staged work already present.
+public transport**. Contracts 12.12–12.35 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
