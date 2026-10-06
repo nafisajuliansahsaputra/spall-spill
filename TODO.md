@@ -114,7 +114,8 @@ Already present and governed by locked contracts:
 - 12.37 unmounted confirmation-before-provider native form renderer;
 - 12.38 private snapshot-bound multi-provider confirmation/intent bundle;
 - 12.39 unmounted guarded locator-only private HTTP bundle handler;
-- 12.40 private atomic distributed action/work budget primitive.
+- 12.40 private atomic distributed action/work budget primitive;
+- 12.41 private confined bounded Upstash REST EVAL transport.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -170,6 +171,8 @@ Current safe work must be selected from the remaining dependency frontier:
   origin/permit/body/deadline/no-store gates; routes and actual distributed enforcement remain withheld.
 - [x] Stage private atomic action/work budgets under 12.40, with explicit trusted
   policy/subject injection and required isolated Redis runtime tests; live Upstash/identity integration open.
+- [x] Stage confined private Upstash REST EVAL transport under 12.41; protocol
+  fixtures are not live provider compatibility or trusted deployment identity evidence.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -834,6 +837,38 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   use fixtures without live credentials or provider activation. Actual Upstash
   EVAL/TIME/TTL/cluster compatibility, trusted deployment identity/approved capacity,
   browser/cache/provider/publication/retention gates still block public enabling.
+
+### Autonomous continuation — bounded private Upstash EVAL — 2026-10-06
+
+- Clean work synchronized to `f3e00e5616aad8511b4eb4e62b3ed31349e0e5ae`.
+  Exact push-event [CI 37511084740](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37511084740),
+  [Security 37511084695](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37511084695)
+  and [Guard 37511084767](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37511084767)
+  passed all six jobs. Application CI actually ran six isolated Redis tests;
+  Database CI passed existing migration/security/pgTAP/concurrency/cron gates.
+  This supersedes 12.40 pending evidence, not live Upstash/identity or public enabling.
+- Locked 12.41 before code after public @upstash/redis 1.39.0 source readback
+  confirmed POST JSON EVAL/Bearer/result protocol. No new SDK dependency.
+  Server-only adapter requires injected exact HTTPS Upstash service origin,
+  namespace and bounded Bearer token; no environment reads or actual provider call.
+- Confines invocation to the exact 12.40 script, same-slot namespace/digest
+  action/work keys and canonical bounded matching work arguments. No arbitrary
+  command, endpoint, redirects or retries. Token stays in Authorization only.
+  Whole response has 1.5-second abort/monotonic deadline, 4,096 decoded-byte /
+  4,097-read bounds, strict framing/UTF-8 and one literal numeric result key.
+  Error/status/duplicate/private/late responses deny without leaking or retrying;
+  abandoned bodies are cancelled without waiting for cancellation completion.
+- 67 targeted tests (40 REST / 27 permit), six isolated Redis tests, frozen install
+  from unchanged dependency baseline, typecheck/lint, five tooling tests, 1,193
+  application/runtime tests, three builds and final diff review/checks passed.
+  Fixtures integrate trusted subject → permit → exact REST EVAL → literal grant /
+  denial. Latest exact-push evidence remains PENDING until observed.
+- No route/grant/provider/credential configuration, migration or production change;
+  S5/S6 NOT CLOSED / VERIFIED. Next safe task: lock private handler-specific
+  HTTP/permit composition so bundle always budgets 32 and issue/redeem 4/3, with
+  injected trusted identity/policy/transport; verify full SDK/REST fixture flow.
+  Actual provider EVAL/TIME/replication/TTL/cluster compatibility, approved capacity
+  and trusted deployment identity/browser/cache/retention/publication gates remain open.
 
 ## Current local integration — 2026-10-04
 
