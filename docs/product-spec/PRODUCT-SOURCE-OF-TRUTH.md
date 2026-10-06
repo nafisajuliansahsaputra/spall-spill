@@ -490,6 +490,18 @@ are not end-to-end clock alignment or public enabling evidence. Latest Database/
 exact-push gates remain PENDING until observed. Future core wiring, committed
 consumption, bounded retention and browser/provider/transport gates remain open.
 
+Final 12.31 fixture commit `a029b7151d0f802119f1799d9c845e4d57a94691` passed
+push-event CI (37429773966), all Security scans (37429773975) and Guard
+(37429773959), including 1,595 pgTAP assertions and nine real concurrency tests.
+
+Contract [12.32](./technical-architecture/12.32-product-click-clock-wiring-contract.md)
+wires operation-local database calibration into private issuance/redemption,
+using lower issuance time and upper deadlines. Committed consumption precedes
+stored-record database expiry resolution; failures do not restore authority or
+fall back to application wall time/binding-only redemption. This is staged wiring,
+not live authorized RPC or public-enablement evidence. Exact-push gates remain
+PENDING until observed; bounded retention and browser/provider/transport remain open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -520,7 +532,8 @@ foundation:
 - withheld durable Product click-intent store under 12.28;
 - staged private Product click-intent RPC adapter under 12.29;
 - staged exact Published Product intent issuance under 12.30;
-- staged database clock/deadline calibration primitives under 12.31.
+- staged database clock/deadline calibration primitives under 12.31;
+- staged calibrated private intent assembly under 12.32.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -575,7 +588,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.31 govern the staged work already present.
+public transport**. Contracts 12.12–12.32 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

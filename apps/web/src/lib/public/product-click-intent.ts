@@ -30,10 +30,12 @@ export interface ProductClickIntentStore {
 }
 
 /** No concrete persistence, public endpoint, redirect or browser issuance authority. */
-export function createPublishedProductClickIntentCore({ store, resolve, now = Date.now }: {
+export function createPublishedProductClickIntentCore({ store, resolve, now = Date.now, issueNow = now, resolveConsumed }: {
   store: ProductClickIntentStore;
   resolve: (binding: Binding) => Promise<unknown>;
   now?: () => number;
+  issueNow?: () => number;
+  resolveConsumed?: (record: ProductClickIntentRecord) => Promise<unknown>;
 }) {
   return {
     async issue(confirmation: unknown, request: unknown): Promise<string | null> {
@@ -48,7 +50,7 @@ export function createPublishedProductClickIntentCore({ store, resolve, now = Da
           || hash(destination.destination_url) !== binding.data.destination_hash) return null;
         const result = await resolve({ ...binding.data });
         if (validatePublishedProductDestinationResult(binding.data, result) === null) return null;
-        const issuedAt = now();
+        const issuedAt = issueNow();
         const record = productClickIntentRecordSchema.safeParse({
           purpose: "published-product-click-v1", binding: binding.data,
           confirmation_hash: hash(JSON.stringify(product.data)),
@@ -78,7 +80,7 @@ export function createPublishedProductClickIntentCore({ store, resolve, now = Da
           || checkedAt >= record.data.expires_at
           || binding.handle !== context.data.handle || binding.spill_reference !== context.data.spill_reference
           || binding.provider_key !== context.data.provider_key) return null;
-        const result = await resolve({ ...binding });
+        const result = resolveConsumed ? await resolveConsumed(record.data) : await resolve({ ...binding });
         const decidedAt = now();
         if (!timeSchema.safeParse(decidedAt).success || decidedAt < checkedAt
           || decidedAt >= record.data.expires_at) return null;
