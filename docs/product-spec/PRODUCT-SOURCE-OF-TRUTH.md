@@ -605,6 +605,23 @@ three builds passed; exact latest-push CI/Security/Guard remains PENDING until
 observed. Actual trusted distributed action/work limits and client identity are
 next safe private foundations; routes/grants/provider/production remain withheld.
 
+Final 12.39 commit `5172aeab9dd29a2db262812744d3b245274e7ea6` passed all six
+push-event jobs: CI (37509798120), Security (37509798025), Guard (37509798067),
+including 1,616 pgTAP assertions, nine races, retention lock competition and real
+isolated cron runtime. This supersedes its pending automated evidence only.
+
+Contract [12.40](./technical-architecture/12.40-product-click-distributed-budget-contract.md)
+stages a private atomic Redis action/work permit, with explicit trusted operation,
+policy and client subject injection. Redis TIME, cluster-slot keys, bounded TTL,
+fixed-window state validation and a two-second fail-closed decision enforce the
+4/32/3 RPC work costs; no memory fallback, default capacity or forwarded-header trust.
+27 unit and six real isolated Redis tests, 1,153 application/runtime tests, five
+tooling tests, typecheck/lint and three builds passed. Application CI requires
+Redis runtime tests; latest exact-push evidence remains PENDING until observed.
+No mounted routes, grants, provider credentials or production changes. Bounded
+private Upstash REST transport is next; actual live Upstash/identity/capacity and
+browser/cache/provider/publication/retention evidence remains open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -643,7 +660,8 @@ foundation:
 - staged unmounted native-form POST redemption under 12.36;
 - staged unmounted confirmation/provider form presentation under 12.37;
 - staged private multi-provider confirmation/intent bundle under 12.38;
-- unmounted guarded private HTTP bundle responses under 12.39.
+- unmounted guarded private HTTP bundle responses under 12.39;
+- private atomic distributed action/work budgets under 12.40.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -698,7 +716,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.39 govern the staged work already present.
+public transport**. Contracts 12.12–12.40 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

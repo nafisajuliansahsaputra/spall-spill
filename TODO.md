@@ -113,7 +113,8 @@ Already present and governed by locked contracts:
 - 12.36 unmounted strict native-form POST redemption adapter;
 - 12.37 unmounted confirmation-before-provider native form renderer;
 - 12.38 private snapshot-bound multi-provider confirmation/intent bundle;
-- 12.39 unmounted guarded locator-only private HTTP bundle handler.
+- 12.39 unmounted guarded locator-only private HTTP bundle handler;
+- 12.40 private atomic distributed action/work budget primitive.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -167,6 +168,8 @@ Current safe work must be selected from the remaining dependency frontier:
   checking shared publication binding before writes; guarded HTTP bundle integration remains open.
 - [x] Stage guarded locator-only HTTP bundle responses under 12.39, preserving
   origin/permit/body/deadline/no-store gates; routes and actual distributed enforcement remain withheld.
+- [x] Stage private atomic action/work budgets under 12.40, with explicit trusted
+  policy/subject injection and required isolated Redis runtime tests; live Upstash/identity integration open.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -796,6 +799,41 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   adapter under 12.4 (Upstash), with injected trusted client identity, fail-closed
   denial and bundle work accounting. Do not configure a live provider or mount
   routes before required privileged/identity/limiter/browser/cache/retention gates.
+
+### Autonomous continuation — atomic distributed click budgets — 2026-10-06
+
+- Clean work synchronized to `5172aeab9dd29a2db262812744d3b245274e7ea6`.
+  Exact push-event [CI 37509798120](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37509798120),
+  [Security 37509798025](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37509798025)
+  and [Guard 37509798067](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37509798067)
+  passed all six jobs. Database logs proved 1,616 pgTAP assertions, nine existing
+  races, retention lock competition and actual isolated cron execution. This
+  supersedes pending 12.39 evidence, without closing S5/S6 or public enabling.
+- Locked 12.40 before code. Private permit requires explicit server-selected
+  operation, bounded deployment policy, trusted opaque client subject and injected
+  atomic Redis EVAL transport. No default capacity, memory fallback or header/IP trust.
+  Issue/bundle share an action counter; redeem has its own, all share work capacity.
+  Work upper bounds are 4/32/3 RPCs for issue/bundle/redeem. Two keys share a
+  cluster hash slot and use hashed partitioning without raw subject or intent data.
+- Redis TIME / atomic Lua checks both budgets before consuming either, bounds TTL,
+  resets fixed windows and denies malformed state/backward stored server time.
+  Fixed-window adjacent bursts are explicit; deployment capacity remains an open
+  gate. Two-second identity/EVAL and monotonic checks deny errors/abort/late grants
+  without retry/refund; no EVAL starts after a late identity resolution.
+- Added required isolated Redis runtime tests to web tests/Application CI.
+  27 targeted unit and six actual local Redis tests passed, including competing
+  grants, shared work, TTL/reset and corrupt/future-clock state denial. Redis is
+  private to a temporary Unix socket with persistence/TCP disabled; tests do not
+  use production services. CI provisions its isolated Redis test runtime.
+- Frozen install, typecheck/lint, five tooling tests, 1,153 application/runtime tests,
+  three builds and final diff review/checks passed. Latest exact-push evidence is
+  PENDING until observed. No database migration or provider credential change.
+- S5/S6 NOT CLOSED / VERIFIED. Next safe task: lock and stage a bounded private
+  Upstash REST EVAL transport with injected server credentials, exact configured
+  HTTPS service origin, no redirects/retries and strict bounded response parsing;
+  use fixtures without live credentials or provider activation. Actual Upstash
+  EVAL/TIME/TTL/cluster compatibility, trusted deployment identity/approved capacity,
+  browser/cache/provider/publication/retention gates still block public enabling.
 
 ## Current local integration — 2026-10-04
 

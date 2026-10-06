@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit",
-    "test": "pnpm run test:auth-navigation && pnpm run test:unit",
+    "test": "pnpm run test:auth-navigation && pnpm run test:click-budget-redis && pnpm run test:unit",
+    "test:click-budget-redis": "node --test tests/product-click-budget-redis.test.mjs",
     "test:auth-navigation": "node --test tests/intended-destination.test.mjs",
     "test:unit": "vitest run"
   },
