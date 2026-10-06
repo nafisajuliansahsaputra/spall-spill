@@ -401,6 +401,15 @@ safe Owner/Browse navigation retained. It fetches no data and emits no outbound
 URLs/actions. Public routing, marketplace action/click transport, provider/cache/
 browser evidence and first Publish remain unfinished; no grants are enabled.
 
+Contract [12.26](./technical-architecture/12.26-published-product-destination-resolution-contract.md)
+stages exact Published marketplace destination resolution with current safety,
+Identity/Product publication-token and provider/original-URL-hash binding. The
+read-only resolver preserves creator attribution and has no execution grants to
+public/anon/authenticated/service_role. A strict server-only validator adds no
+browser authority, redirect, intent or public action. Context-intent transport,
+P03 action assembly and publication integration remain unfinished; database and
+exact latest-push CI/Security/Guard evidence remain PENDING until observed.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -425,7 +434,8 @@ foundation:
 - private Product preparation preview/receipt binding under 12.22;
 - staged exact Published Product media transport under 12.23;
 - staged Product detail projection/per-destination availability under 12.24;
-- staged Product visual/context confirmation renderer under 12.25.
+- staged Product visual/context confirmation renderer under 12.25;
+- staged exact Published marketplace destination resolution under 12.26.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -480,7 +490,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.25 govern the staged work already present.
+public transport**. Contracts 12.12–12.26 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

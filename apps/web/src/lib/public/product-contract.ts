@@ -2,7 +2,7 @@ import { z } from "zod";
 import { marketplaceProvider, productDestinationSchema } from "@/lib/onboarding/product-preparation-contract";
 import { publicHandleSchema } from "./locators";
 
-const providerKeySchema = z.string().min(1).max(262).refine((key) =>
+export const providerKeySchema = z.string().min(1).max(262).refine((key) =>
   ["shopee", "tokopedia", "tiktok"].includes(key)
   || (key.startsWith("external:") && marketplaceProvider(`https://${key.slice(9)}/`) === key));
 const destinationSchema = z.object({

@@ -99,7 +99,8 @@ Already present and governed by locked contracts:
 - 12.22 private Product preparation/image/destination/safety preview and receipt binding;
 - 12.23 staged exact Published Product image transport;
 - 12.24 staged Product detail projection with current per-destination availability;
-- 12.25 staged unmounted Product visual/context confirmation renderer.
+- 12.25 staged unmounted Product visual/context confirmation renderer;
+- 12.26 staged exact Published destination resolution with all execution withheld.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -125,6 +126,8 @@ Current safe work must be selected from the remaining dependency frontier:
   context, ordered current destination availability and no private fields.
 - [x] Implement the staged Product visual/context confirmation region under 12.25
   without public route assembly, data fetching or marketplace actions.
+- [x] Stage exact Published provider/URL-hash destination resolution under 12.26;
+  browser context-intent authority and outbound transport remain unfinished.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -315,6 +318,35 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Next dependency-safe task: lock exact Published marketplace action/click-time
   safety binding and attribution-preserving transport, then complete staged P03
   action assembly without enabling withheld public readers or first Publish.
+
+
+### Autonomous continuation — staged Product destination resolution — 2026-10-06
+
+- Started from clean synchronized `5802935602a9034b63e62ea033d297d2a849747e`.
+  That exact push passed Application CI and Security Dependency Scan; Database,
+  Secret Scan, SAST and Guard were cancelled before steps ran. Those infrastructure
+  gates remain PENDING, not code failures or human-only blockers.
+- Locked 12.26 after current authority, J2/J4/J6/J9, pinned P03/FR-PRD and
+  existing media/projection/source/test readback. Staged a read-only server resolver
+  binding exact Published Identity/Product token, provider and original URL hash
+  to current fresh URL/hash-bound safety. It preserves creator attribution and
+  denies stale context, unsafe alternatives and private Working substitution.
+- All resolver execution remains withheld from public/anon/authenticated/service_role.
+  The strict server-only result validator checks provider URL policy and original
+  hash; it does not authorize browser input, fetch, redirect or mint an intent.
+  No public route/action, publication writer, lifecycle mutation or credential change.
+- Local targeted tests: 44 passed (21 new validator tests). Typecheck, lint,
+  test:tooling (5), test (736 Vitest + 17 auth navigation; 758 including tooling),
+  three builds and diff review/check passed. New privileged rolled-back pgTAP
+  fixtures cover selection/attribution, stale context/hash, safety degradation and
+  recovery, lifecycle/ownership/media denial, withheld grants and no writes.
+- Database reset/lint/error-level advisors/pgTAP/seven existing concurrency tests
+  require committed isolated Database CI; local Docker capacity prevents that
+  evidence here. Exact latest-push CI/Security/Guard remain PENDING until observed.
+  Browser/manual/live provider/cache/abuse evidence and S5/S6 closure remain open.
+- Next dependency-safe task: lock server-authenticated rendered-context click intent
+  transport with expiry/tamper/replay/cross-context denial, then stage P03 marketplace
+  action assembly. Do not enable outbound routes/grants or first Publish prematurely.
 
 ## Current local integration — 2026-10-04
 
