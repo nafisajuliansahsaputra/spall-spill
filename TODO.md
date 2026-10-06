@@ -103,7 +103,8 @@ Already present and governed by locked contracts:
 - 12.26 staged exact Published destination resolution with all execution withheld;
 - 12.27 staged opaque one-use Product click-intent core with injectable storage;
 - 12.28 withheld durable hashed intent persistence/consume/bounded cleanup;
-- 12.29 staged private application RPC store/cleanup adapter.
+- 12.29 staged private application RPC store/cleanup adapter;
+- 12.30 staged same-Published-snapshot confirmation/binding and private issuance.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -137,6 +138,8 @@ Current safe work must be selected from the remaining dependency frontier:
   Database CI passed 1,503 pgTAP assertions and nine real concurrency tests.
 - [x] Stage the private RPC store/one-call cleanup adapter under 12.29; no grants
   or schedule enabled. Exact latest-push evidence remains PENDING until observed.
+- [x] Stage same-snapshot Published context and locator-only private issuance
+  under 12.30; exact-push database/CI evidence remains PENDING until observed.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -463,6 +466,32 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   actual authorized RPC integration, clock alignment, scheduled bounded cleanup,
   public transport/cache/abuse/origin controls and browser/live-provider gates
   remain open. S5/S6 remain NOT CLOSED / VERIFIED.
+
+### Autonomous continuation — exact Published intent issuance — 2026-10-06
+
+- Refreshed clean `work` to `d029075136d1bd02bebc0134009cd4aa36517efe`.
+  All six exact push-event gates passed on that adapter baseline: CI 37423061706,
+  Security 37423061823, Guard 37423061697. Database passed 1,503 pgTAP assertions
+  and nine actual concurrency tests; this supersedes adapter evidence pending above.
+- Locked 12.30 before code. Added a withheld server context RPC selecting the
+  exact Published Identity/Product rows for both public confirmation and selected
+  provider binding, rechecking same-Owner finalized canonical media and current
+  safety. Protected aliases resolve canonical Handle. No private-state fallback.
+- Added locator-only private issuance assembly using 12.27 core and 12.29 store,
+  with standalone current resolver and durable acknowledgment before returning
+  public confirmation plus opaque token. Raw DTO/digest/URL/Owner input denied.
+  No grants, credentials, HTTP route/redirect, CTA, schedule, publication or
+  journey change. Returned context is not evidence a human viewed the page.
+- Targeted tests passed: 131 core/adapter/issuance cases (28 new issuance tests).
+  Full typecheck/lint, five tooling tests, 884 application tests
+  (867 Vitest plus 17 native auth-navigation) and three builds passed. Final diff
+  review and checks passed before commit. New rolled-back database context tests are committed-CI evidence
+  PENDING until observed; local Docker capacity remains insufficient. Exact latest
+  pushed CI/Security/Guard must pass before an automated verification claim.
+- Next safe dependency work: server/database clock alignment and bounded retention
+  scheduling under a new contract, then staged P03 provider-action/HTTP transport
+  with cache/abuse/origin controls. Real authorized RPC, browser/provider delivery,
+  first-Publish binding/UI, D01 handoff and S5/S6 closure remain open.
 
 ## Current local integration — 2026-10-04
 

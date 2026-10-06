@@ -461,6 +461,21 @@ no credentials, public route, issuance provenance or cleanup schedule is enabled
 Exact latest-push evidence remains PENDING until observed. Same-snapshot Published
 confirmation/binding issuance and real authorized transport integration remain open.
 
+Exact adapter commit `d029075136d1bd02bebc0134009cd4aa36517efe` passed all six
+push-event gates: Application/Database CI (37423061706), Security (37423061823)
+and Guard (37423061697). Database regression passed 1,503 assertions and nine
+real concurrency tests; actual SDK POST/schema/no-retry fixture checks passed.
+This does not establish live RPC/browser integration or public enablement.
+
+Contract [12.30](./technical-architecture/12.30-product-click-issuance-context-contract.md)
+stages a withheld same-Published-row confirmation/binding resolver and locator-only
+private intent issuance assembly. Exact finalized media and current safety are
+rechecked; private caller bindings and Working/Draft fallback are denied. Public
+confirmation plus opaque token is returned only after fresh resolution/durable
+create acknowledgment. No grants, credentials, routes, CTA, schedule or publication
+are enabled. Database and exact latest-push evidence remain PENDING until observed;
+clock alignment, scheduled retention, browser/cache/abuse/provider gates remain open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -489,7 +504,8 @@ foundation:
 - staged exact Published marketplace destination resolution under 12.26;
 - staged opaque one-use Product click-intent core under 12.27;
 - withheld durable Product click-intent store under 12.28;
-- staged private Product click-intent RPC adapter under 12.29.
+- staged private Product click-intent RPC adapter under 12.29;
+- staged exact Published Product intent issuance under 12.30.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -544,7 +560,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.29 govern the staged work already present.
+public transport**. Contracts 12.12–12.30 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
