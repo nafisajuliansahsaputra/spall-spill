@@ -409,6 +409,12 @@ public/anon/authenticated/service_role. A strict server-only validator adds no
 browser authority, redirect, intent or public action. Context-intent transport,
 P03 action assembly and publication integration remain unfinished; database and
 exact latest-push CI/Security/Guard evidence remain PENDING until observed.
+Exact resolver implementation `43363369ca86b3773e132449863e3a144f0c27f9` passed
+isolated Database reset/lint/error-level advisors, 1,424 pgTAP assertions across
+26 files and seven concurrency tests. Its Dependency Scan detected transitive
+`source-map-js` advisory GHSA-68fv-2mgg-jv7q; the patched dependency and exact final
+push still require all remote gates. This evidence does not enable public transport
+or close S5/S6.
 
 ### Current implementation checkpoint
 
