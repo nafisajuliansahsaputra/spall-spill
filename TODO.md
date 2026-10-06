@@ -525,6 +525,12 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   pgTAP includes malformed/future/expired/stale records and a controlled delayed
   resolver proving the final expiry check; actual Database/exact-push evidence
   remains PENDING until observed. Local Docker capacity remains insufficient.
+- Initial `7734867` passed Application, all Security scans and Guard. Database
+  reset/lint/advisors passed; pgTAP stopped after 35 new-file assertions because
+  the expired safety fixture had expiry before its checked-at timestamp. The
+  fixture now uses an earlier checked-at value and advances verdict revision on
+  expiry/recovery; table constraints and denial assertions remain unchanged.
+  Final exact-push Database/CI/Security/Guard evidence remains PENDING.
 - Calibration is not wired into existing issuance/core by this bounded slice:
   current clock alignment is still incomplete. Next safe task is a bounded core/
   issuance integration contract using lower time for issuance, upper time for

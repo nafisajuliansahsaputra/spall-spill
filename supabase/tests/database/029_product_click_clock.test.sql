@@ -84,9 +84,9 @@ select is(api.resolve_product_click_intent_destination_server(v),'{"status":"una
  (jsonb_set(pg_temp.intent_record(),'{binding,publication_token}',to_jsonb(repeat('a',64))))) records(v);
 create temporary table deadline_record as select pg_temp.intent_record() as value;
 create temporary table clock_publications as select item_id,snapshot,working_revision from core.spill_item_publications;
-update core.external_destination_safety set expires_at=now()-interval '1 second';
+update core.external_destination_safety set checked_at=now()-interval '1 hour',expires_at=now()-interval '1 second',revision=revision+1;
 select is(api.resolve_product_click_intent_destination_server((select value from deadline_record)),'{"status":"unavailable"}'::jsonb,'Expired destination safety denied even with valid intent lifetime');
-update core.external_destination_safety set expires_at=now()+interval '1 hour';
+update core.external_destination_safety set checked_at=now(),expires_at=now()+interval '1 hour',revision=revision+1;
 select is(api.resolve_product_click_intent_destination_server((select value from deadline_record))->>'status','success','Safety recovery permits current exact deadline-bound record');
 select ok(not exists(select 1 from core.spill_item_publications p join clock_publications b using(item_id) where p.snapshot<>b.snapshot or p.working_revision<>b.working_revision),'Clock and deadline reads mutate no publication');
 select is((select count(*) from core.product_click_intents),0::bigint,'Deadline resolver does not create or consume authority');
