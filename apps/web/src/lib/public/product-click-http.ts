@@ -4,7 +4,7 @@ import { z } from "zod";
 import { publicHandleSchema } from "./locators";
 import { providerKeySchema } from "./product-contract";
 import { createPublishedProductClickIssuance } from "./product-click-issuance";
-import { readProductClickRequest, productClickNoStoreHeaders, unavailableProductClickResponse, type ProductClickAction } from "./product-click-request";
+import { readProductClickRequest, readProductClickFormRequest, productClickNoStoreHeaders, unavailableProductClickResponse, type ProductClickAction } from "./product-click-request";
 
 const locator = z.object({ handle: publicHandleSchema,
   spill_reference: z.number().int().positive().max(Number.MAX_SAFE_INTEGER), provider_key: providerKeySchema }).strict();
@@ -25,6 +25,20 @@ export function createProductClickHttpBoundary({ client, origin, permit }: {
   permit: (request: Request, action: ProductClickAction) => Promise<unknown>;
 }) {
   const issuance = createPublishedProductClickIssuance(client);
+  async function redeem(request: Request, native: boolean): Promise<Response> {
+    try {
+      const permitAction = (action: ProductClickAction) => permit(request, action);
+      const input = native ? await readProductClickFormRequest(request, origin, permitAction)
+        : await readProductClickRequest(request, origin, "redeem", permitAction);
+      const body = redemption.safeParse(input);
+      if (!body.success || request.signal.aborted) return unavailableProductClickResponse();
+      const { token, ...context } = body.data;
+      const destination = await resultWithinDeadline(issuance.redeem(token, context));
+      if (destination === null || request.signal.aborted) return unavailableProductClickResponse();
+      const headers = productClickNoStoreHeaders(); headers.set("Location", destination);
+      return new Response(null, { status: 303, headers });
+    } catch { return unavailableProductClickResponse(); }
+  }
   return {
     async issue(request: Request): Promise<Response> {
       try {
@@ -36,16 +50,7 @@ export function createProductClickHttpBoundary({ client, origin, permit }: {
         return new Response(JSON.stringify(result), { status: 200, headers });
       } catch { return unavailableProductClickResponse(); }
     },
-    async redeem(request: Request): Promise<Response> {
-      try {
-        const body = redemption.safeParse(await readProductClickRequest(request, origin, "redeem", action => permit(request, action)));
-        if (!body.success || request.signal.aborted) return unavailableProductClickResponse();
-        const { token, ...context } = body.data;
-        const destination = await resultWithinDeadline(issuance.redeem(token, context));
-        if (destination === null || request.signal.aborted) return unavailableProductClickResponse();
-        const headers = productClickNoStoreHeaders(); headers.set("Location", destination);
-        return new Response(null, { status: 303, headers });
-      } catch { return unavailableProductClickResponse(); }
-    },
+    redeem: (request: Request) => redeem(request, false),
+    redeemForm: (request: Request) => redeem(request, true),
   };
 }

@@ -10,6 +10,11 @@ const hash = (s: string) => createHash("sha256").update(s).digest("hex");
 function request(body: unknown, signal?: AbortSignal) {
   return new Request(`${origin}/staged-action`, { method: "POST", headers: { origin, "content-type": "application/json" }, body: JSON.stringify(body), ...(signal ? { signal } : {}) });
 }
+function formRequest(body: Record<string, unknown>): Request {
+  return new Request(`${origin}/staged-action`, { method: "POST", headers: { origin,
+    "content-type": "application/x-www-form-urlencoded", "sec-fetch-mode": "navigate", "sec-fetch-dest": "document" },
+    body: new URLSearchParams(Object.entries(body).map(([key, value]) => [key, String(value)])) });
+}
 function fixture(url = originalUrl) {
   let stored: unknown = null; let safe = true; let clockOffset = 0;
   const calls: { name: string; body: Record<string, unknown> }[] = [];
@@ -46,6 +51,34 @@ async function denial(response: Response) {
   expect(await response.json()).toEqual({ status: "unavailable" });
 }
 describe("unmounted strict private Product HTTP assembly", () => {
+  it("supports native POST navigation only through committed redemption and exact Location", async () => {
+    const f = fixture(); const result = await (await f.http.issue(request(locator))).json();
+    const native = formRequest({ ...locator, token: result.token }); const response = await f.http.redeemForm(native);
+    expect(response.status).toBe(303); cacheTruth(response); expect(response.headers.get("Location")).toBe(originalUrl);
+    expect(await response.text()).toBe(""); expect(f.stored()).toBeNull(); expect(f.permit).toHaveBeenLastCalledWith(native, "redeem");
+    expect(f.calls.at(-1)!.name).toBe("resolve_product_click_intent_destination_server");
+    await denial(await f.http.redeemForm(formRequest({ ...locator, token: result.token })));
+  });
+  it.each([{ token: "bad" }, { token: "A".repeat(42)+"B" }, { handle: "../creator" }, { provider_key: "spoof" },
+    { spill_reference: "027" }, { destination_url: originalUrl }, { owner_id: "forged" }])
+    ("denies native invalid or raw authority before RPC %j", async other => {
+      const f = fixture(); await denial(await f.http.redeemForm(formRequest({ ...locator, token: "A".repeat(43), ...other })));
+      expect(f.fetch).not.toHaveBeenCalled();
+    });
+  it.each([{ handle: "another" }, { provider_key: "tokopedia" }, { spill_reference: 28 }])
+    ("burns native cross-context token %j without fallback", async other => {
+      const f = fixture(); const result = await (await f.http.issue(request(locator))).json();
+      await denial(await f.http.redeemForm(formRequest({ ...locator, ...other, token: result.token }))); expect(f.stored()).toBeNull();
+    });
+  it("denies native fresh safety revocation without restoring consumed authority", async () => {
+    const f = fixture(); const result = await (await f.http.issue(request(locator))).json(); f.unsafe();
+    await denial(await f.http.redeemForm(formRequest({ ...locator, token: result.token }))); expect(f.stored()).toBeNull();
+  });
+  it("retains separate media policies and rejects native form issuance", async () => {
+    const f = fixture(); await denial(await f.http.issue(formRequest(locator)));
+    await denial(await f.http.redeem(formRequest({ ...locator, token: "A".repeat(43) })));
+    await denial(await f.http.redeemForm(request({ ...locator, token: "A".repeat(43) }))); expect(f.fetch).not.toHaveBeenCalled();
+  });
   it("uses actual SDK context/calibration/create/committed consume/final resolver and exact Location", async () => {
     const f = fixture(); const first = request(locator); const response = await f.http.issue(first);
     expect(response.status).toBe(200); cacheTruth(response); expect(response.headers.has("Location")).toBe(false);

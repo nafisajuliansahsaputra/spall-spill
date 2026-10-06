@@ -542,6 +542,20 @@ is enabled. Latest exact-push evidence is PENDING until observed; actual privile
 identity/limiter, confirmation-before-action browser/cache/provider and publication
 integration remain open. Fixtures are not live RPC or browser evidence.
 
+Final 12.35 commit `50d6569c98bab9aed8701d1afe9662ac9032893d` passed push-event
+CI (37463408221), all Security scans (37463408298) and Guard (37463408277),
+including 1,616 pgTAP assertions, nine existing races, retention lock competition
+and actual isolated cron execution. No browser/provider/public activation is implied.
+
+Contract [12.36](./technical-architecture/12.36-product-click-native-post-contract.md)
+stages a separate strict native-form POST redemption adapter so a future browser
+form can receive top-level 303 navigation. It shares bounded origin/permit/body
+protections and calibrated one-use redemption, rejects ambiguous/duplicate/private
+fields and preserves the original JSON media policy. No route, form UI, grant or
+credential is enabled. Latest exact-push evidence is PENDING until observed;
+confirmation/provider action assembly and actual browser/privileged transport,
+identity/limiter/cache/provider/publication gates remain open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -576,7 +590,8 @@ foundation:
 - staged calibrated private intent assembly under 12.32;
 - staged inactive bounded retention scheduler under 12.33;
 - staged unmounted request/permit/no-store primitives under 12.34;
-- staged unmounted private HTTP/core assembly under 12.35.
+- staged unmounted private HTTP/core assembly under 12.35;
+- staged unmounted native-form POST redemption under 12.36.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -631,7 +646,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.35 govern the staged work already present.
+public transport**. Contracts 12.12–12.36 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

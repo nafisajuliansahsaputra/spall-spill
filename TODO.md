@@ -109,7 +109,8 @@ Already present and governed by locked contracts:
 - 12.32 operation-local calibrated private intent issuance/redemption wiring;
 - 12.33 inactive bounded database retention scheduler foundation;
 - 12.34 unmounted bounded request/permit/no-store primitives;
-- 12.35 unmounted strict private HTTP/core response assembly.
+- 12.35 unmounted strict private HTTP/core response assembly;
+- 12.36 unmounted strict native-form POST redemption adapter.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -155,6 +156,8 @@ Current safe work must be selected from the remaining dependency frontier:
   actual distributed limiter and mounted routes remain open.
 - [x] Assemble strict locator/token HTTP responses with calibrated private core
   under 12.35; concrete identity/limiter and confirmation-before-action browser integration remain open.
+- [x] Stage native-form POST redemption under 12.36 without relaxing JSON
+  interfaces; no mounted route or confirmation/provider action UI is enabled.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -649,6 +652,34 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   Actual privileged transport, trusted identity/Upstash, browser/cache/CDN,
   retention activation/capacity/monitoring and live provider/publication evidence
   remain open. S5/S6 are NOT CLOSED / VERIFIED.
+
+### Autonomous continuation — native POST redemption — 2026-10-06
+
+- Clean `work` synchronized to `50d6569c98bab9aed8701d1afe9662ac9032893d`.
+  Its exact push-event [CI 37463408221](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37463408221),
+  [Security 37463408298](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37463408298)
+  and [Guard 37463408277](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37463408277)
+  passed all six jobs, including 1,616 pgTAP assertions, nine existing races,
+  retention lock competition and actual isolated cron execution. This supersedes
+  12.35 pending evidence, not live/browser/public-enablement proof.
+- Locked 12.36 before code: native forms need a separate URL-encoded POST target
+  for top-level 303 navigation. Shared preflight/permit/byte/deadline protections
+  remain intact; JSON issue/redeem still reject form bodies.
+- Strict four-field decoding rejects decoded duplicate names, private/raw URL
+  authority, malformed percent UTF-8, ambiguous framing and noncanonical references.
+  Unmounted redeemForm uses the same calibrated consume/fresh resolution and exact
+  original Location/no-store/error truth, always selecting the redeem permit.
+- 131 targeted tests, frozen install, typecheck/lint, five tooling tests,
+  1,051 application tests, three builds and final diff review/checks passed.
+  No database behavior changes. Latest exact-push CI/Security/Guard evidence
+  remains PENDING until observed.
+- No route, form UI, automatic submission, credential, grant, distributed limiter,
+  publication or production scheduler change. Browser navigation/confirmation,
+  actual privileged RPC/identity/limiter, CDN/cache, retention capacity/monitoring
+  and live provider/publication evidence remain open; S5/S6 are NOT CLOSED / VERIFIED.
+  Next safe dependency: exact confirmation and provider-action form assembly under
+  its own contract, preserving one-provider CTA / multi-provider chooser and no
+  automatic outbound action.
 
 ## Current local integration — 2026-10-04
 
