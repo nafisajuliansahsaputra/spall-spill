@@ -514,6 +514,19 @@ isolated scheduler/exact-push evidence is PENDING until observed. This is not
 production activation or a retention guarantee; controlled activation, capacity,
 monitoring, browser/provider and transport prerequisites remain open.
 
+Final 12.33 commit `19cce5ef99ea919b1a7d121aaefb36108805092d` passed push-event
+CI (37436124962), all Security scans (37436124910) and Guard (37436124896),
+including 1,616 pgTAP assertions, the nine existing races, retention lock competition
+and actual isolated cron execution/deletion. Job configuration was restored inactive;
+this is not production activation or minute-cadence/capacity/monitoring evidence.
+
+Contract [12.34](./technical-architecture/12.34-product-click-request-boundary-contract.md)
+stages unmounted exact-origin POST/JSON/permit/body-bound primitives and no-store
+denial. No route, concrete distributed limiter, browser, core/store call or public
+grant is enabled. Parsed unknown JSON is not trusted locator/capability authority.
+Latest exact-push evidence is PENDING until observed; strict private HTTP/core
+assembly and actual identity/limiter/browser/cache/provider integration remain open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -546,7 +559,8 @@ foundation:
 - staged exact Published Product intent issuance under 12.30;
 - staged database clock/deadline calibration primitives under 12.31;
 - staged calibrated private intent assembly under 12.32;
-- staged inactive bounded retention scheduler under 12.33.
+- staged inactive bounded retention scheduler under 12.33;
+- staged unmounted request/permit/no-store primitives under 12.34.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -601,7 +615,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.33 govern the staged work already present.
+public transport**. Contracts 12.12–12.34 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

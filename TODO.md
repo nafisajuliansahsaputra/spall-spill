@@ -107,7 +107,8 @@ Already present and governed by locked contracts:
 - 12.30 staged same-Published-snapshot confirmation/binding and private issuance;
 - 12.31 withheld database clock/deadline and bounded calibration primitives;
 - 12.32 operation-local calibrated private intent issuance/redemption wiring;
-- 12.33 inactive bounded database retention scheduler foundation.
+- 12.33 inactive bounded database retention scheduler foundation;
+- 12.34 unmounted bounded request/permit/no-store primitives.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -148,7 +149,9 @@ Current safe work must be selected from the remaining dependency frontier:
 - [x] Wire lower issuance/upper deadline bounds and committed-record database
   resolution under 12.32; actual authorized integration/public transport remain open.
 - [x] Register inactive bounded intent/history retention under 12.33; actual
-  scheduler CI evidence pending, controlled activation/capacity/monitoring open.
+  isolated scheduler evidence passed on `19cce5e`; controlled activation/capacity/monitoring open.
+- [x] Stage strict request/permit/body limits and no-store denial under 12.34;
+  actual distributed limiter, strict HTTP/core assembly and mounted routes remain open.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -590,6 +593,30 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   safe task: bounded staged HTTP/action boundary with no-store/origin/abuse checks,
   no public routes/grants until all transport/provider gates are met. Real authorized
   integration, browser/provider/publication and S5/S6 closure remain open.
+
+### Autonomous continuation — unmounted request boundary — 2026-10-06
+
+- Clean `work` synchronized to exact `19cce5ef99ea919b1a7d121aaefb36108805092d`.
+  Exact push-event CI 37436124962, Security 37436124910 and Guard 37436124896
+  passed, including 1,616 pgTAP assertions, nine existing races, retention lock
+  competition and actual isolated cron execution/deletion with inactive restoration.
+  This supersedes 12.33 pending evidence, not production scheduler activation.
+- Locked 12.34 before code. Unmounted request helper requires configured exact
+  HTTPS origin, POST JSON, matching Origin/URL/optional Host, safe request metadata
+  and one literal-true action-specific permit acknowledgment with five-second limit.
+- Streamed JSON enforces 4,096 actual bytes, bounded framing/read duration,
+  declared length equality, strict UTF-8, cancellation and uniform null denial.
+  Returned unknown JSON is not validated context or authority. Fresh no-store
+  headers and generic unavailable response expose no redirect/CORS/private detail.
+- 45 targeted tests, typecheck/lint, five tooling tests, 965 application tests,
+  three builds and final diff review/checks passed. No database behavior changes.
+  Latest exact-push CI/Security/Guard evidence remains PENDING until observed.
+- No concrete limiter/provider/client-identity inference, credential, route,
+  core/store invocation, browser change, grant, scheduler activation or publication.
+  Next safe task: strict locator/token DTO and private HTTP/core assembly under
+  its own contract, retaining injected fail-closed distributed permit dependency.
+  Actual trusted identity/Upstash integration, browser/cache/CDN, retention
+  activation/capacity/monitoring/provider and S5/S6 closure remain open.
 
 ## Current local integration — 2026-10-04
 
