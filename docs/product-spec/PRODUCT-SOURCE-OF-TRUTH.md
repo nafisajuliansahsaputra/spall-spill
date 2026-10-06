@@ -556,6 +556,22 @@ credential is enabled. Latest exact-push evidence is PENDING until observed;
 confirmation/provider action assembly and actual browser/privileged transport,
 identity/limiter/cache/provider/publication gates remain open.
 
+Final 12.36 commit `4bd784c446999e9a8cd40f7452584a1891c43573` passed push-event
+CI (37464290466), all Security scans (37464290451) and Guard (37464290566),
+including 1,616 pgTAP assertions, nine existing races, retention lock competition
+and actual isolated cron execution. No browser/native navigation proof is implied.
+
+Contract [12.37](./technical-architecture/12.37-product-confirmation-action-renderer-contract.md)
+stages an unmounted server renderer with strict confirmation/opaque-intent inputs,
+recognition before native forms, deterministic provider-labelled choices and
+Published context retained during partial/all unavailable commerce. Forms contain
+only public locators/token, fixed same-origin POST action and explicit submit buttons;
+no original destination URLs, automatic outbound action or private binding. Future
+server assembly must prove exact trusted issuance/confirmation consistency; SSR
+validation is not authority. No route or grant is enabled. Latest exact-push
+evidence is PENDING until observed; actual multi-provider issuance/browser,
+privileged transport/limiter/cache/provider/publication integration remains open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -591,7 +607,8 @@ foundation:
 - staged inactive bounded retention scheduler under 12.33;
 - staged unmounted request/permit/no-store primitives under 12.34;
 - staged unmounted private HTTP/core assembly under 12.35;
-- staged unmounted native-form POST redemption under 12.36.
+- staged unmounted native-form POST redemption under 12.36;
+- staged unmounted confirmation/provider form presentation under 12.37.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -646,7 +663,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.36 govern the staged work already present.
+public transport**. Contracts 12.12–12.37 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

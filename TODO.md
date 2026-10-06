@@ -110,7 +110,8 @@ Already present and governed by locked contracts:
 - 12.33 inactive bounded database retention scheduler foundation;
 - 12.34 unmounted bounded request/permit/no-store primitives;
 - 12.35 unmounted strict private HTTP/core response assembly;
-- 12.36 unmounted strict native-form POST redemption adapter.
+- 12.36 unmounted strict native-form POST redemption adapter;
+- 12.37 unmounted confirmation-before-provider native form renderer.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -157,7 +158,9 @@ Current safe work must be selected from the remaining dependency frontier:
 - [x] Assemble strict locator/token HTTP responses with calibrated private core
   under 12.35; concrete identity/limiter and confirmation-before-action browser integration remain open.
 - [x] Stage native-form POST redemption under 12.36 without relaxing JSON
-  interfaces; no mounted route or confirmation/provider action UI is enabled.
+  interfaces; no mounted route is enabled.
+- [x] Stage confirmation-first provider forms under 12.37; exact trusted
+  multi-provider issuance/confirmation assembly and real browser transport remain open.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -680,6 +683,36 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   Next safe dependency: exact confirmation and provider-action form assembly under
   its own contract, preserving one-provider CTA / multi-provider chooser and no
   automatic outbound action.
+
+### Autonomous continuation — confirmation/provider form presentation — 2026-10-06
+
+- Clean `work` synchronized to `4bd784c446999e9a8cd40f7452584a1891c43573`.
+  Independent presentation continued while Database infrastructure prepared;
+  all six exact push-event gates subsequently passed:
+  [CI 37464290466](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37464290466),
+  [Security 37464290451](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37464290451),
+  [Guard 37464290566](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37464290566).
+  Database: 1,616 pgTAP assertions, nine existing races, retention lock competition
+  and actual isolated cron execution. This supersedes 12.36 pending evidence.
+- Reread pinned P03 and J2/J4/J6/J9; locked 12.37 before code. Separate unmounted
+  renderer validates strict confirmation/intents and preserves recognition first,
+  saved provider order, single direct CTA / direct multiple choices, structured
+  provider labels, partial/all unavailability and internal navigation.
+- Native forms post only canonical public locators and opaque tokens to fixed
+  same-origin /actions/product-click. No destination URL, private binding, GET
+  token query, script, automatic submission or provider-ranking claim is emitted.
+  Invalid/private bundles deny generically; valid alternatives remain actionable.
+- 77 targeted tests, typecheck/lint, five tooling tests, 1,072 application tests,
+  three builds and final diff review/checks passed. SDK-fixture issuance → SSR
+  hidden fields → private native redemption/replay passed; this is simulated
+  request/rendering evidence, not actual browser or live provider evidence.
+  No database behavior changes. Latest exact-push CI/Security/Guard is PENDING
+  until observed; S5/S6 remain NOT CLOSED / VERIFIED.
+- No route, grant, credential, publication or provider/scheduler activation.
+  Next safe dependency: bounded snapshot-consistent multi-provider issuance /
+  confirmation bundle assembly, before mounting any public renderer or action.
+  Actual privileged RPC/identity/distributed limiter, browser/CDN/cache,
+  retention activation/capacity/monitoring and provider/publication gates remain open.
 
 ## Current local integration — 2026-10-04
 

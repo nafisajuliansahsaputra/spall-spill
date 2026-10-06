@@ -1,7 +1,10 @@
 import { createHash } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { createProductClickHttpBoundary } from "./product-click-http";
+import { PublishedProductConfirmationActions } from "./product-confirmation-actions";
 
 const origin = "https://app.example.test";
 const locator = { handle: "creator", spill_reference: 27, provider_key: "shopee" };
@@ -51,6 +54,21 @@ async function denial(response: Response) {
   expect(await response.json()).toEqual({ status: "unavailable" });
 }
 describe("unmounted strict private Product HTTP assembly", () => {
+  it("hands exact issued confirmation and rendered native fields back to private redemption", async () => {
+    const f = fixture(); const issued = await (await f.http.issue(request(locator))).json();
+    const html = renderToStaticMarkup(createElement(PublishedProductConfirmationActions, { payload: {
+      confirmation: issued.confirmation, intents: [{ provider_key: locator.provider_key, token: issued.token }],
+    } }));
+    expect(html).toContain("Published Product"); expect(html.indexOf("<h1")).toBeLessThan(html.indexOf("<form"));
+    expect(html).not.toContain(originalUrl);
+    const fields = Object.fromEntries([...html.matchAll(/<input type="hidden" name="([^"]+)" value="([^"]+)"/g)]
+      .map(match => [match[1]!, match[2]!]));
+    expect(fields).toEqual({ handle: locator.handle, spill_reference: String(locator.spill_reference),
+      provider_key: locator.provider_key, token: issued.token });
+    const response = await f.http.redeemForm(formRequest(fields)); expect(response.status).toBe(303);
+    expect(response.headers.get("Location")).toBe(originalUrl); cacheTruth(response); expect(f.stored()).toBeNull();
+    await denial(await f.http.redeemForm(formRequest(fields)));
+  });
   it("supports native POST navigation only through committed redemption and exact Location", async () => {
     const f = fixture(); const result = await (await f.http.issue(request(locator))).json();
     const native = formRequest({ ...locator, token: result.token }); const response = await f.http.redeemForm(native);
