@@ -111,7 +111,8 @@ Already present and governed by locked contracts:
 - 12.34 unmounted bounded request/permit/no-store primitives;
 - 12.35 unmounted strict private HTTP/core response assembly;
 - 12.36 unmounted strict native-form POST redemption adapter;
-- 12.37 unmounted confirmation-before-provider native form renderer.
+- 12.37 unmounted confirmation-before-provider native form renderer;
+- 12.38 private snapshot-bound multi-provider confirmation/intent bundle.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -159,8 +160,10 @@ Current safe work must be selected from the remaining dependency frontier:
   under 12.35; concrete identity/limiter and confirmation-before-action browser integration remain open.
 - [x] Stage native-form POST redemption under 12.36 without relaxing JSON
   interfaces; no mounted route is enabled.
-- [x] Stage confirmation-first provider forms under 12.37; exact trusted
-  multi-provider issuance/confirmation assembly and real browser transport remain open.
+- [x] Stage confirmation-first provider forms under 12.37; real browser transport
+  remains open, with private bundle foundations below.
+- [x] Assemble private multi-provider confirmation/intent bundles under 12.38,
+  checking shared publication binding before writes; guarded HTTP bundle integration remains open.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -713,6 +716,38 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   confirmation bundle assembly, before mounting any public renderer or action.
   Actual privileged RPC/identity/distributed limiter, browser/CDN/cache,
   retention activation/capacity/monitoring and provider/publication gates remain open.
+
+### Autonomous continuation — snapshot-bound confirmation bundle — 2026-10-06
+
+- Clean `work` synchronized to `919efbe535b6e21224ec3b2833e80e11e3a2bc0c`.
+  Exact push-event [CI 37464919554](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37464919554),
+  [Security 37464919453](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37464919453)
+  and [Guard 37464919482](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/37464919482)
+  passed all six jobs, including 1,616 pgTAP assertions, nine existing races,
+  retention lock competition and actual isolated cron execution. This supersedes
+  12.37 pending evidence without claiming live/browser/public enablement.
+- Locked 12.38 before code. Locator-only bundle reads existing withheld projection
+  and private provider contexts, chooses trusted anchor confirmation and checks
+  identical publication token, recognition and provider order before any create.
+  Changed snapshot returns recognition without mixed intents; per-provider
+  unavailable/error/fresh-safety/create failure preserves independent alternatives.
+- All issued records hash the same exact anchor confirmation. A shared calibrated
+  core constructor preserves existing single-provider issue/redeem behavior;
+  bundle calibrates once per operation and rechecks final conservative expiry.
+  Ten-second deadline stops later work/creates; already in-flight writes may commit
+  without returning a token and remain subject to existing expiry/retention.
+  Maximum work is 32 RPCs; future distributed transport must budget bundle work.
+- Frozen install, 115 targeted tests, typecheck/lint, five tooling tests,
+  1,104 application tests, three builds and final diff review/checks passed.
+  Actual SDK fixtures prove two-provider bundle → SSR forms → native redemption /
+  replay denial and exact creator URLs. Fixtures are not live RPC/browser evidence.
+  No migration/database behavior changes. Latest exact-push CI/Security/Guard
+  evidence remains PENDING until observed; S5/S6 are NOT CLOSED / VERIFIED.
+- No route, grant, credential, provider activation, publication or scheduler change.
+  Next safe task: guarded strict locator-only private HTTP bundle response assembly
+  under a bounded contract, retaining origin/no-store and required distributed permit.
+  Actual identity/limiter/privileged RPC, browser/CDN/cache, retention activation /
+  capacity/monitoring and live provider/publication gates remain open.
 
 ## Current local integration — 2026-10-04
 
