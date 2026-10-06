@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import type { SupabaseClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { describe, expect, it, vi } from "vitest";
 import { createPublishedProductClickIntentCore, type ProductClickIntentRecord } from "./product-click-intent";
 import { createProductClickIntentRpcAdapter } from "./product-click-intent-store";
@@ -83,6 +83,35 @@ describe("staged private Product intent RPC adapter", () => {
   });
   it("distinguishes successful zero cleanup from RPC failure", async () => {
     expect(await fixture({ data: 0, error: null }).cleanup(10)).toBe(0);
+  });
+  it("uses actual SDK POST/schema transport without retrying failed mutations", async () => {
+    const calls: Array<{ url: string; options: RequestInit }> = [];
+    let response: unknown = true;
+    let fail = false;
+    const fetch = vi.fn(async (url: RequestInfo | URL, options?: RequestInit): Promise<Response> => {
+      calls.push({ url: String(url), options: options ?? {} });
+      if (fail) throw new Error("transient network");
+      return new Response(JSON.stringify(response), { status: 200, headers: { "content-type": "application/json" } });
+    });
+    const client = createClient("https://adapter.example.test", "test-only-publishable-placeholder", {
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }, global: { fetch },
+    });
+    const f = createProductClickIntentRpcAdapter(client);
+    expect(await f.store.create(key, record)).toBe(true);
+    response = record; expect(await f.store.consume(key)).toEqual(record);
+    response = 0; expect(await f.cleanup(10)).toBe(0);
+    const names = ["create_product_click_intent_server", "consume_product_click_intent_server", "cleanup_product_click_intents_server"];
+    const bodies = [{ input_token_hash: key, input_record: record }, { input_token_hash: key }, { input_limit: 10 }];
+    for (const [index, call] of calls.entries()) {
+      expect(call.url).toBe(`https://adapter.example.test/rest/v1/rpc/${names[index]}`);
+      expect(call.options.method).toBe("POST");
+      expect(new Headers(call.options.headers).get("content-profile")).toBe("api");
+      expect(JSON.parse(call.options.body as string)).toEqual(bodies[index]);
+    }
+    expect(fetch).toHaveBeenCalledTimes(3); fail = true;
+    expect(await f.store.create(key, record)).toBe(false); expect(fetch).toHaveBeenCalledTimes(4);
+    expect(await f.store.consume(key)).toBeNull(); expect(fetch).toHaveBeenCalledTimes(5);
+    expect(await f.cleanup(10)).toBeNull(); expect(fetch).toHaveBeenCalledTimes(6);
   });
   it("waits for consumption before resolution and never restores on fresh safety denial", async () => {
     const f = fixture(); const events: string[] = [];

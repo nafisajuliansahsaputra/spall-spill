@@ -452,11 +452,12 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   call. Shared the existing record schema; canonical records, malformed data,
   errors and exceptions fail closed. No mutation retries, fallback persistence,
   credentials, grants, route/CTA, schedule, publication or journey change.
-- Targeted adapter/core tests passed: 102 tests (48 new adapter cases). Full
-  typecheck, lint, five tooling tests and 855 application tests passed (838 Vitest
+- Targeted adapter/core tests passed: 103 tests (49 new adapter cases). Full
+  typecheck, lint, five tooling tests and 856 application tests passed (839 Vitest
   plus 17 native auth-navigation tests). Three production builds and final diff
   checks passed. Exact latest-push gates remain PENDING until
-  observed. Adapter mocks are not live RPC/browser evidence.
+  observed. The actual Supabase SDK also passed POST/schema/parameter and no-retry checks
+  with a test fetch; this is not live RPC/browser evidence.
 - Existing Database CI supplies unchanged-schema regression. Same-snapshot
   Published confirmation/binding issuance is the next dependency-safe slice;
   actual authorized RPC integration, clock alignment, scheduled bounded cleanup,
