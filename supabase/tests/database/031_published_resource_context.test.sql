@@ -80,10 +80,11 @@ insert into core.external_destination_safety(normalized_url,url_hash,safety_stat
 select is(api.resolve_public_resource_context('resource-context-one',1)->>'available','true','Fresh exact safe verdict enables only availability');
 select is(api.resolve_public_resource_context('resource-context-one',1)->>'source_url',(select snapshot->>'source_url' from resource_context_baseline),'Exact attribution preserved without URL rewriting');
 select is(api.resolve_public_resource('resource-context-one',1)->>'status','success','Existing reader still requires safe source');
-update core.external_destination_safety set safety_status='pending',revision=revision+1;
+update core.external_destination_safety set safety_status='pending',checked_at=null,expires_at=null,scanner_version=null,revision=revision+1;
 select is(api.resolve_public_resource_context('resource-context-one',1)->>'status','success','Pending retains Published recognition');
 select is(api.resolve_public_resource_context('resource-context-one',1)->'source_url','null'::jsonb,'Pending masks exact URL');
-update core.external_destination_safety set safety_status='review',reason_codes=array['malware'],revision=revision+1;
+update core.external_destination_safety set safety_status='review',reason_codes=array['malware'],
+ checked_at=now(),expires_at=now()+interval '1 hour',scanner_version='resource-context-fixture',revision=revision+1;
 select is(api.resolve_public_resource_context('resource-context-one',1)->>'available','false','Review source unavailable');
 select is(api.resolve_public_resource_context('resource-context-one',1)->>'title','Published Portfolio','Review preserves title');
 update core.external_destination_safety set safety_status='blocked',revision=revision+1;

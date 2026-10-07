@@ -787,6 +787,10 @@ typecheck/lint/three builds and diff checks passed locally. 65 new pgTAP asserti
 and migration/reset/lint/advisors/concurrency/retention evidence remain PENDING
 until observed in exact latest-push CI. No reader/table grant, public route,
 Resource Open, type dispatch, provider, firstPublish or production enabling.
+The initial 12.49 push `3fa3595` passed Application/Security/Guard and database
+reset/lint/advisors, but its new pending-transition fixture violated the existing
+safety-row metadata constraint. The corrected fixture preserves that constraint;
+all latest-push evidence requires reverification on the corrected exact SHA.
 Next bounded slice: exact Published Item type/visibility resolver and private SDK
 dispatch after required evidence; all live public transport gates remain separate.
 S5/S6 NOT CLOSED / VERIFIED.

@@ -1122,6 +1122,12 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   47 targeted DTO tests and full 1,372 application tests, eight Chromium fixtures,
   six actual Redis tests, five tooling tests, typecheck/lint/three builds and diff
   checks passed locally. Initial test-only union typing error was corrected.
+- First push `3fa35956b9dec0c61905e4068b792cf019b13fc7` passed Application,
+  all three Security jobs and Guard. Database reset/lint/advisors passed, but the
+  new pgTAP fixture violated `external_destination_pending_shape` by retaining
+  verdict metadata during a pending transition. The fixture now clears metadata
+  for pending and restores it for review; no production constraint/gate changed.
+  Reverification targets the exact corrected push, not this failed predecessor.
 - Added 65 pgTAP assertions for grants, role/alias equality, ownership/type/range,
   lifecycle/minimum fields, degradation/recovery, private isolation and no writes.
   Migration reset/lint/security advisors/pgTAP/concurrency/retention are delegated
