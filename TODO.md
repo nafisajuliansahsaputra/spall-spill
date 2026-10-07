@@ -124,6 +124,7 @@ Already present and governed by locked contracts:
 - 12.47 isolated single/degraded provider native-browser evidence.
 - 12.48 unmounted strict exact-reference locator normalization.
 - 12.49 withheld Published Resource context / current source availability projection.
+- 12.50 withheld exact Published Item type resolution / private SDK dispatch.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -1138,6 +1139,36 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Next safe slice after required evidence: audit/lock a private exact Published
   Item type resolver and SDK dispatch using 12.48/12.49/12.24, with no fuzzy,
   neighboring reference, cross-Owner or newer private fallback; do not mount routes.
+
+## Exact Published Item resolution prerequisite — 2026-10-07
+
+- Refreshed the clean Cloud lane to `1aa03fa897313a9e653384a28407756f14d6cc60`.
+  All six exact push-event gates passed: CI 37575974247, Security 37575974249,
+  Guard 37575974321. Database passed 1,681 pgTAP assertions across 31 files,
+  nine real concurrency cases and two isolated retention checks. This supersedes
+  pending 12.49 evidence and its failed predecessor fixture.
+- Locked 12.50 before coding after refreshing J6/J8, pinned P02/P03/P04 and
+  12.13/12.24/12.48/12.49. The withheld resolver selects immutable same-Owner
+  reference/type binding and dispatches only the matching Published reader.
+  Missing/private/hidden/invalid context returns uniform unavailable without
+  cross-type, neighboring reference, newer Working or cross-Owner fallback.
+- Strict tagged DTO and unmounted server-only SDK accept only the exact locator,
+  call one RPC, retain authoritative alias context and exact reference, and keep
+  operational null separate from unavailable. Fixed five-second client deadline,
+  strict parsing and AbortSignal ignore late responses without retry or logging.
+- All 41 new SDK/schema tests passed using the pinned client with mocked fetch;
+  no live/provider credential claim. Full 1,413 application tests (1,132 web),
+  five tooling tests, six actual Redis tests, eight Chromium fixtures, typecheck,
+  lint, three production builds and diff checks passed locally.
+- Added 32 pgTAP assertions across the existing Product/Resource suites. Isolated
+  committed CI must verify migration reset/lint/security advisors/pgTAP, nine
+  concurrency cases and retention. Exact latest-push CI/Security/Guard evidence
+  remains PENDING until observed; no CLOSED / VERIFIED claim is made here.
+- No public/RPC grant, route, renderer, outbound, publication, provider, credential,
+  dependency or production enabling. S5/S6 NOT CLOSED / VERIFIED.
+- Next safe slice after required evidence: audit pinned P04 and lock a bounded
+  unmounted Resource recognition renderer, preserving Published degradation and
+  semantic context while keeping Resource Open/public-route assembly withheld.
 
 ## Current local integration — 2026-10-04
 
