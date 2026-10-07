@@ -701,6 +701,8 @@ saved-order provider choice, native browser POST through the staged private hand
 one-use consume, exact affiliate URL 303 and no-store replay denial. Actual SSR and
 production CSS preserve recognition when no commerce intent exists. Every page
 request is intercepted before network; image/provider/favicon responses are stubs.
+POSIX fixture cleanup owns a separate process group and bounded profile-removal
+retries, addressing observed Chrome CI child-process cleanup races.
 Two browser tests, 1,262 application tests, six actual Redis tests, five tooling
 tests, typecheck/lint and three builds passed locally. Separate mandatory browser
 Application CI gate requires built CSS/browser with no skips. Latest exact-push

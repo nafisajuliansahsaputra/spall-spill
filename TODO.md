@@ -997,6 +997,12 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   skips, five tooling tests, typecheck/lint and three builds passed. Final diff
   review/checks passed. Latest exact-push CI/Security/Guard remains PENDING until
   observed. No route/grant, migration, credential, provider or production change.
+- First 12.45 push `15220e17f139672b225b9cae93abb72ae7d7e654` passed Security
+  and Guard but Application CI 37551279923 exposed ENOTEMPTY during profile
+  cleanup with Chrome 154. Isolated fixture now launches its own POSIX process
+  group, terminates its renderer/utility children and uses bounded filesystem
+  retries only for its own temporary profile. No assertion or gate is relaxed.
+  Replacement exact-push evidence remains PENDING until observed.
 - S5/S6 NOT CLOSED / VERIFIED. Chromium interception is not live TLS/CDN/cache,
   provider reachability, production browser hardening or trusted metadata provenance
   evidence. Next safe task: audit remaining bounded browser denial/journey cases

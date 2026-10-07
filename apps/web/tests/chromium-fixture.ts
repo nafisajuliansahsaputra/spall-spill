@@ -12,20 +12,28 @@ export async function until(predicate: () => boolean | Promise<boolean>, millise
 }
 export async function chromiumFixture() {
   const directory = await mkdtemp(join(tmpdir(), "spall-click-browser-"));
+  const processGroup = process.platform !== "win32";
   const child = spawn(process.env.SPALL_TEST_BROWSER ?? "chromium", ["--headless=new", "--disable-gpu",
     "--disable-background-networking", "--disable-component-update", "--disable-default-apps", "--disable-sync",
     "--no-first-run", "--no-default-browser-check", "--disable-dev-shm-usage", "--remote-debugging-port=0",
-    `--user-data-dir=${directory}`, ...(process.getuid?.() === 0 ? ["--no-sandbox"] : []), "about:blank"], { stdio: "ignore" });
+    `--user-data-dir=${directory}`, ...(process.getuid?.() === 0 ? ["--no-sandbox"] : []), "about:blank"], { stdio: "ignore", detached: processGroup });
   let failure: Error | undefined; child.once("error", error => { failure = error; });
   const closed = new Promise<void>(resolve => child.once("close", () => resolve()));
   let socket: WebSocket | undefined; let nextId = 0;
   const pending = new Map<number, { resolve: (value: unknown) => void; reject: (error: Error) => void; timer: ReturnType<typeof setTimeout> }>();
   const events = new Map<string, ((params: unknown) => void)[]>();
+  const terminate = (signal: NodeJS.Signals) => {
+    try {
+      if (processGroup && child.pid) process.kill(-child.pid, signal);
+      else child.kill(signal);
+    } catch (error) { if ((error as NodeJS.ErrnoException).code !== "ESRCH") throw error; }
+  };
   const close = async () => {
     socket?.close(); for (const p of pending.values()) { clearTimeout(p.timer); p.reject(new Error("Browser closed")); } pending.clear();
-    child.kill("SIGTERM"); await Promise.race([closed, new Promise(resolve => setTimeout(resolve, 1000))]);
-    if (child.exitCode === null && child.signalCode === null) { child.kill("SIGKILL"); await closed; }
-    await rm(directory, { recursive: true, force: true });
+    terminate("SIGTERM"); await Promise.race([closed, new Promise(resolve => setTimeout(resolve, 1000))]);
+    // The parent can exit before profile-writing renderer/utility children do.
+    terminate("SIGKILL"); await closed;
+    await rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
   };
   try {
     let port = "";
