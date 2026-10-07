@@ -126,6 +126,7 @@ Already present and governed by locked contracts:
 - 12.49 withheld Published Resource context / current source availability projection.
 - 12.50 withheld exact Published Item type resolution / private SDK dispatch.
 - 12.51 unmounted Published Resource recognition renderer.
+- 12.52 withheld exact Published Resource source resolution / strict server validator.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -1197,6 +1198,36 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   source resolution/transport prerequisites under J8 and safety authority before
   source-action or public-route assembly. Preserve one semantic source action,
   creator attribution and current Published visibility with no private fallback.
+
+## Published Resource source-resolution prerequisite — 2026-10-07
+
+- Clean Cloud baseline `d71ac3029a05ee13f3457040f5af44775e84f54f` passed all
+  six exact push-event gates: CI 37601075570, Security 37601075575, Guard
+  37601075581. Database passed 1,713 assertions across 31 files, nine real
+  concurrency cases and both retention checks. Pending 12.51 evidence is superseded.
+- Refreshed J6/J8, 12.49–12.51/12.26, pinned P04 and source/migration/test
+  authority. Locked 12.52 before source; CLI-created the additive migration.
+- Withheld exact Resource source resolver requires both Published Identity/Resource
+  row digest and exact original source hash. Final SELECT independently rechecks
+  eligible same-Owner/type/reference/context and wall-clock exact fresh safety.
+  Changed publication or attribution cannot inherit old binding, even if safe.
+  Public recognition degradation stays unchanged; no fallback or lifecycle writes.
+- Pure server validator rejects malformed/private fields, unsafe/noncanonical URL
+  and mismatched original bytes without rewriting attribution or doing I/O.
+  It neither derives server context nor authorizes browser-supplied raw bindings.
+- All 33 new validator tests and full application/tooling/typecheck/lint/build/diff
+  gates passed locally, including six actual Redis and eight existing Product
+  Chromium regression fixtures. No Resource browser/live-provider evidence claimed.
+- Added 45 pgTAP assertions for grants, roles/aliases, exact private/Owner/type/ref
+  denial, stale Identity/Resource/source bindings, safety degradation/recovery,
+  malformed context and no writes. Required migration reset/lint/advisors/pgTAP/
+  concurrency/retention and six exact latest-push gates remain PENDING until
+  observed in committed isolated CI. No local Docker or production DB claim.
+- No public/RPC grant, browser intent, source CTA, route, publication, provider,
+  credential, dependency or production enabling. S5/S6 remain NOT CLOSED / VERIFIED.
+- Next safe slice after required evidence: audit/lock same-Published-snapshot
+  Resource recognition plus private server binding derivation and SDK validation;
+  never derive outbound authority from browser tokens or public DTOs.
 
 ## Current local integration — 2026-10-04
 
