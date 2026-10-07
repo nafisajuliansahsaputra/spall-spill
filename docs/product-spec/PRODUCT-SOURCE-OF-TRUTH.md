@@ -690,6 +690,26 @@ typecheck/lint and three builds passed; latest exact-push evidence PENDING until
 Isolated browser confirmation/native-form verification is next independent work;
 actual deployed provider/cache/browser/retention/publication evidence remains open.
 
+
+Exact 12.44 push `61cccf6f30f908a193c57290c6677f70b2810825` passed all six
+jobs: CI 37546489491, Security 37546489008 and Guard 37546489004, including
+1,616 pgTAP assertions, nine races and isolated retention lock/cron runtime.
+
+Contract [12.45](./technical-architecture/12.45-isolated-product-browser-contract.md)
+adds actual isolated Chromium fixture evidence for confirmation before explicit
+saved-order provider choice, native browser POST through the staged private handler,
+one-use consume, exact affiliate URL 303 and no-store replay denial. Actual SSR and
+production CSS preserve recognition when no commerce intent exists. Every page
+request is intercepted before network; image/provider/favicon responses are stubs.
+Two browser tests, 1,262 application tests, six actual Redis tests, five tooling
+tests, typecheck/lint and three builds passed locally. Separate mandatory browser
+Application CI gate requires built CSS/browser with no skips. Latest exact-push
+CI/Security/Guard remains PENDING until observed. No route/grant/provider enabling.
+This is not actual deployment TLS/CDN/cache, provider reachability, production
+browser hardening or upstream metadata provenance evidence. Remaining bounded
+browser denial/journey coverage may continue independently after authority audit;
+actual public enabling/firstPublish gates remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -734,6 +754,7 @@ foundation:
 - private handler-specific budgeted HTTP composition under 12.42.
 - private trusted-network canonicalization/keyed budget subjects under 12.43.
 - private same-policy network subject / budgeted HTTP composition under 12.44.
+- isolated actual Chromium confirmation/native-form fixture evidence under 12.45.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -788,7 +809,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.44 govern the staged work already present.
+public transport**. Contracts 12.12–12.45 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

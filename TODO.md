@@ -119,6 +119,7 @@ Already present and governed by locked contracts:
 - 12.42 private handler-specific HTTP / distributed budget composition.
 - 12.43 private trusted-network canonicalization/keyed budget subjects.
 - 12.44 private same-policy network subject / budgeted HTTP composition.
+- 12.45 isolated Chromium confirmation/native-form fixture evidence.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -182,6 +183,8 @@ Current safe work must be selected from the remaining dependency frontier:
   under 12.43; actual upstream attestation/provenance remains an enabling gate.
 - [x] Compose private network subjects and budgeted HTTP under 12.44, binding a
   copied policy namespace and disallowing caller identity override/fallback.
+- [x] Verify staged Product confirmation/native form/replay and recognition-only
+  behavior in actual isolated Chromium under 12.45; deployed browser/TLS/CDN gates stay open.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -967,6 +970,38 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   credentials, public enabling or claiming deployed provider/cache evidence.
   Upstream trusted metadata provenance, live Upstash/capacity/browser/cache,
   retention activation and provider/publication gates remain open.
+
+
+## Isolated Product browser fixture evidence — 2026-10-07
+
+- Continued clean baseline `61cccf6f30f908a193c57290c6677f70b2810825`.
+  Exact push CI 37546489491, Security 37546489008 and Guard 37546489004
+  passed all six jobs, including 1,616 pgTAP assertions, nine races and isolated
+  retention lock/cron runtime. This supersedes 12.44 pending automated evidence.
+- Locked 12.45 before test implementation. Real headless Chromium 151.0.7922.173
+  uses actual SSR components and production-build CSS, actual Supabase SDK with
+  injected RPC/metadata/Redis fixtures, ephemeral profile and bounded loopback CDP.
+  Page requests are intercepted before network; provider navigation/favicon and
+  image responses are owned stubs. No marketplace/provider/database contacted.
+- Two browser tests observed confirmation before saved-order provider choices,
+  zero initial POST/outbound navigation, browser-generated same-origin native POST
+  with four exact fields, one-use consume, exact attribution-preserving 303 and
+  no-store 403 replay denial; recognition-only state has no marketplace forms.
+  Native mouse input scrolls the actual styled button into view. Tests initially
+  exposed absent production CSS in the fixture; loading built CSS fixes the
+  fixture rather than changing product behavior or weakening the assertion.
+- Separate browser command is mandatory after production build in Application CI;
+  missing browser/build CSS fails, no skips or new dependencies. Default unit
+  command remains unchanged, including Windows compatibility.
+- Local 1,262 application tests, two Chromium tests, six actual Redis tests without
+  skips, five tooling tests, typecheck/lint and three builds passed. Final diff
+  review/checks passed. Latest exact-push CI/Security/Guard remains PENDING until
+  observed. No route/grant, migration, credential, provider or production change.
+- S5/S6 NOT CLOSED / VERIFIED. Chromium interception is not live TLS/CDN/cache,
+  provider reachability, production browser hardening or trusted metadata provenance
+  evidence. Next safe task: audit remaining bounded browser denial/journey cases
+  against J6 and pinned P03 before locking another fixture-only contract; public
+  enabling still requires actual provider/provenance/capacity/retention gates.
 
 ## Current local integration — 2026-10-04
 
