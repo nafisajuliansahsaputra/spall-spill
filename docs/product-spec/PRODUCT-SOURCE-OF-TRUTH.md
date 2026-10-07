@@ -769,6 +769,28 @@ Next bounded audit concerns Published exact-match type/visibility under J6/pinne
 P02/P04/12.19/12.24 before SDK dispatch, retaining separate live enabling gates.
 S5/S6 NOT CLOSED / VERIFIED; parser availability is not integrated public routing.
 
+Exact 12.48 push `3454591fa3578a73b6a3de8e6a790eef068387d0` passed all six
+jobs: CI 37571553523, Security 37571553544, Guard 37571553530. Application passed
+1,325 tests/eight Chromium cases; Database passed 1,616 pgTAP assertions, nine
+concurrency cases and isolated retention lock/cron. Pending 12.48 evidence is superseded.
+
+Contract [12.49](./technical-architecture/12.49-published-resource-context-contract.md)
+adds a separate withheld exact Published Resource context projection under J6/J8
+and pinned P04 decision 18. The 12.19 safe-source reader stays unchanged. Current
+unsafe/missing/expired/hash-mismatched source verdicts retain Published recognition
+with available=false/null source URL; exact fresh-safe recovery preserves creator
+attribution, semantic type, reference and snapshot without lifecycle mutation.
+Private Working repair cannot supply public fields. Strict DTO uses the shared
+external destination policy without rewriting URLs. 47 targeted tests, 1,372
+application tests, eight Chromium fixtures, six actual Redis/five tooling tests,
+typecheck/lint/three builds and diff checks passed locally. 65 new pgTAP assertions
+and migration/reset/lint/advisors/concurrency/retention evidence remain PENDING
+until observed in exact latest-push CI. No reader/table grant, public route,
+Resource Open, type dispatch, provider, firstPublish or production enabling.
+Next bounded slice: exact Published Item type/visibility resolver and private SDK
+dispatch after required evidence; all live public transport gates remain separate.
+S5/S6 NOT CLOSED / VERIFIED.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -817,6 +839,7 @@ foundation:
 - isolated native-browser context/expiry/budget denial evidence under 12.46.
 - isolated single/degraded provider native-browser evidence under 12.47.
 - unmounted strict exact-reference locator normalization under 12.48.
+- withheld Published Resource context / source availability projection under 12.49.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -871,7 +894,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.48 govern the staged work already present.
+public transport**. Contracts 12.12–12.49 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

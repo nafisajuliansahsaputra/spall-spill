@@ -123,6 +123,7 @@ Already present and governed by locked contracts:
 - 12.46 isolated native-browser context/expiry/budget denial evidence.
 - 12.47 isolated single/degraded provider native-browser evidence.
 - 12.48 unmounted strict exact-reference locator normalization.
+- 12.49 withheld Published Resource context / current source availability projection.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -194,6 +195,8 @@ Current safe work must be selected from the remaining dependency frontier:
   no-referrer behavior under 12.47 owned fixtures; deployed evidence remains open.
 - [x] Stage strict server-only exact-reference locator normalization under 12.48;
   actual Published lookup/type dispatch and public routing remain withheld.
+- [x] Stage additive Published Resource context projection under 12.49; source
+  degradation retains recognition with no URL, existing 12.19 reader unchanged.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -1100,6 +1103,35 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   SDK dispatch; do not guess Resource degradation semantics or mount routes.
   Provider/provenance/capacity/TLS/CDN/cache/retention activation and firstPublish
   enabling still require their separate committed evidence gates.
+
+## Published Resource context prerequisite — 2026-10-07
+
+- Refreshed clean Cloud `work` to `3454591fa3578a73b6a3de8e6a790eef068387d0`.
+  All six exact push-event gates passed: CI 37571553523, Security 37571553544,
+  Guard 37571553530. Database passed 1,616 pgTAP assertions, nine concurrency
+  cases and isolated retention lock/cron; this supersedes pending 12.48 evidence.
+- Audited J6/J8/J9, pinned P02/P04 decision 18, 12.14/12.18/12.19/12.24 and
+  source/migrations/tests. Locked 12.49 before source: add a separate withheld
+  `resolve_public_resource_context` reader; preserve the 12.19 safe-source reader.
+- Exact same-Owner Published Identity/Resource recognition survives missing,
+  pending/review/blocked/expired/hash-mismatched source verdicts. URLs are masked
+  unless exact fresh-safe; recovery preserves original attribution and reference.
+  Private Working source/type/title repairs never become public or fallback.
+- Strict public DTO accepts only explicit Resource semantics and bounded context;
+  shared destination policy rejects unsafe/noncanonical URLs without rewriting.
+  47 targeted DTO tests and full 1,372 application tests, eight Chromium fixtures,
+  six actual Redis tests, five tooling tests, typecheck/lint/three builds and diff
+  checks passed locally. Initial test-only union typing error was corrected.
+- Added 65 pgTAP assertions for grants, role/alias equality, ownership/type/range,
+  lifecycle/minimum fields, degradation/recovery, private isolation and no writes.
+  Migration reset/lint/security advisors/pgTAP/concurrency/retention are delegated
+  to committed isolated CI; latest exact-push gates remain PENDING until observed.
+- No public/private table grant, firstPublish, renderer, Resource Open, dispatch,
+  route, provider/credential/dependency/production change. S5/S6 NOT CLOSED /
+  VERIFIED; deployed browser/provider/provenance/cache/capacity gates remain open.
+- Next safe slice after required evidence: audit/lock a private exact Published
+  Item type resolver and SDK dispatch using 12.48/12.49/12.24, with no fuzzy,
+  neighboring reference, cross-Owner or newer private fallback; do not mount routes.
 
 ## Current local integration — 2026-10-04
 
