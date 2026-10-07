@@ -122,6 +122,7 @@ Already present and governed by locked contracts:
 - 12.45 isolated Chromium confirmation/native-form fixture evidence.
 - 12.46 isolated native-browser context/expiry/budget denial evidence.
 - 12.47 isolated single/degraded provider native-browser evidence.
+- 12.48 unmounted strict exact-reference locator normalization.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -191,6 +192,8 @@ Current safe work must be selected from the remaining dependency frontier:
   sibling-intent isolation under 12.46; live database/provider gates remain open.
 - [x] Verify single/degraded provider CTA, original native redirect and browser
   no-referrer behavior under 12.47 owned fixtures; deployed evidence remains open.
+- [x] Stage strict server-only exact-reference locator normalization under 12.48;
+  actual Published lookup/type dispatch and public routing remain withheld.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -1071,6 +1074,32 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   canonical authority supports it, preserving exactness and no public grants.
   Live provider/provenance/capacity/TLS/CDN/cache/retention activation and
   firstPublish/public enabling gates remain open; fixtures are not deployed proof.
+
+
+## Private exact-reference locator prerequisite — 2026-10-07
+
+- Refreshed clean workspace to `b82b741e0d17b9e3502189446cc0e478618a9a17`.
+  All six exact push-event jobs passed: CI 37571125173, Security 37571125186,
+  Guard 37571125185. Chrome 154.0.8037.97 passed eight browser cases; Database
+  passed 1,616 pgTAP assertions, nine races and isolated retention lock/cron.
+  This supersedes pending 12.47 automated evidence.
+- Audited J6, pinned P02/P03, 12.19 and current locator/projection/transport code.
+  Locked 12.48 before source. Separate unmounted server-only parser accepts only
+  string handle/reference, normalizes 27 and #27 identically and reuses existing
+  requested-Handle/canonical safe-integer reference schemas. It does not classify
+  arbitrary keyword input, resolve current Owner/alias/type, fetch data or navigate.
+- Strict fields/types, canonical numeric framing/range, no coercion/trim/URL decode,
+  hostile getter/proxy denial and caller immutability passed 63 targeted tests.
+  No neighbor/fuzzy/provider fallback, private/raw-URL authority or public enabling.
+- Local 1,325 application tests, eight Chromium cases, six actual Redis tests,
+  five tooling tests, typecheck/lint and three builds passed; final diff review /
+  checks passed. Exact latest-push CI/Security/Guard remains PENDING until observed.
+  No SQL/migration/grant/credential/provider/dependency/publication change.
+- S5/S6 NOT CLOSED / VERIFIED. Next safe task: audit/lock Published exact-match
+  type/visibility resolution using J6, pinned P02/P04 and 12.19/12.24 before private
+  SDK dispatch; do not guess Resource degradation semantics or mount routes.
+  Provider/provenance/capacity/TLS/CDN/cache/retention activation and firstPublish
+  enabling still require their separate committed evidence gates.
 
 ## Current local integration — 2026-10-04
 

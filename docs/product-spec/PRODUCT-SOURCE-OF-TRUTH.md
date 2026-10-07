@@ -751,6 +751,24 @@ TLS/CDN/cache/deployed-provenance evidence. Next safe audit: J6/12.19 public-rou
 ingress dependencies and bounded unmounted exact-reference normalization/dispatch.
 S5/S6 NOT CLOSED / VERIFIED; public transport and firstPublish enabling remain open.
 
+
+Exact 12.47 push `b82b741e0d17b9e3502189446cc0e478618a9a17` passed all six
+jobs: CI 37571125173, Security 37571125186, Guard 37571125185. Chrome 154.0.8037.97
+passed eight browser cases; Database passed 1,616 pgTAP assertions, nine races and
+isolated retention lock/cron. This supersedes pending 12.47 automated evidence.
+
+Contract [12.48](./technical-architecture/12.48-private-exact-reference-locator-contract.md)
+stages one pure server-only strict exact-locator parser. String 27/#27 normalize to
+the same canonical positive safe integer and existing requested-Handle casing
+normalizes without resolving Owner/alias/type. No coercion, keyword classification,
+trim/URL decode, partial return, neighbor/fuzzy fallback, lookup/navigation or route.
+63 targeted tests and 1,325 application tests, eight browser fixtures, six actual
+Redis tests, five tooling tests and typecheck/lint/three builds passed locally;
+exact latest-push evidence remains PENDING until observed. No grant or publication.
+Next bounded audit concerns Published exact-match type/visibility under J6/pinned
+P02/P04/12.19/12.24 before SDK dispatch, retaining separate live enabling gates.
+S5/S6 NOT CLOSED / VERIFIED; parser availability is not integrated public routing.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -798,6 +816,7 @@ foundation:
 - isolated actual Chromium confirmation/native-form fixture evidence under 12.45.
 - isolated native-browser context/expiry/budget denial evidence under 12.46.
 - isolated single/degraded provider native-browser evidence under 12.47.
+- unmounted strict exact-reference locator normalization under 12.48.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -852,7 +871,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.47 govern the staged work already present.
+public transport**. Contracts 12.12–12.48 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
