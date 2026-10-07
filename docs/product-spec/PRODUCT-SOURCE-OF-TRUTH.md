@@ -847,6 +847,24 @@ browser/cache/abuse/context-intent evidence stays open. Next bounded prerequisit
 same-snapshot Resource recognition and private server binding derivation/validation.
 S5/S6 remain NOT CLOSED / VERIFIED.
 
+Exact 12.52 push `7e699c5c20bda7c8bd7708fc9470cac31c90eb9c` passed
+all six gates: CI 37606769599, Security 37606769584, Guard 37606769580.
+Database passed 1,758 assertions, nine real races and both retention checks.
+Pending 12.52 evidence is superseded.
+
+Contract [12.53](./technical-architecture/12.53-resource-server-context-binding-contract.md)
+stages a single materialized Published Resource selection for exact recognition
+and private server binding, with same-statement Identity eligibility and one source
+safety evaluation. Source degradation retains recognition with null binding.
+Strict pure server parsing checks locator/reference/canonical context/hash agreement
+without deriving tokens from public DTOs or exposing browser authority. All 27 new
+parser tests and full application/tooling/typecheck/lint/build/diff checks, six
+Redis/eight existing Product Chromium fixtures passed locally. 43 new pgTAP
+assertions and required isolated DB/exact latest-push jobs remain PENDING until
+observed. No public grant/CTA/route/intent/publication or production enabling.
+Next bounded task: private injected-client context/source RPC adapter under its
+own deadline/strict validation contract. S5/S6 remain NOT CLOSED / VERIFIED.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -899,6 +917,7 @@ foundation:
 - withheld exact Published Item resolution / private SDK dispatch under 12.50.
 - unmounted Published Resource recognition renderer under 12.51.
 - withheld exact Published Resource source resolution / server validation under 12.52.
+- withheld same-snapshot Resource recognition / private server binding under 12.53.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -953,7 +972,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.52 govern the staged work already present.
+public transport**. Contracts 12.12–12.53 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

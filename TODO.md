@@ -127,6 +127,7 @@ Already present and governed by locked contracts:
 - 12.50 withheld exact Published Item type resolution / private SDK dispatch.
 - 12.51 unmounted Published Resource recognition renderer.
 - 12.52 withheld exact Published Resource source resolution / strict server validator.
+- 12.53 withheld same-snapshot Resource recognition / private server binding.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -1228,6 +1229,36 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Next safe slice after required evidence: audit/lock same-Published-snapshot
   Resource recognition plus private server binding derivation and SDK validation;
   never derive outbound authority from browser tokens or public DTOs.
+
+## Same-snapshot Resource server-context prerequisite — 2026-10-07
+
+- Clean Cloud baseline `7e699c5c20bda7c8bd7708fc9470cac31c90eb9c` passed all
+  six exact push-event gates: CI 37606769599, Security 37606769584, Guard
+  37606769580. Database passed 1,758 assertions across 31 files, nine real
+  concurrency cases and both retention checks. Pending 12.52 evidence is superseded.
+- Refreshed J6/J8, 12.49–12.52/12.30, pinned P04 and current source/tests.
+  Locked 12.53 before source and CLI-created the additive migration.
+- One materialized context selection applies the stable Identity eligibility gate
+  and exact Published Owner/type/ref/structural checks in the same SQL statement.
+  Recognition and server binding derive from those same publication rows; current
+  safety is evaluated once at one wall-clock time. Unsafe sources retain Published
+  recognition with binding=null and disclose no masked source hash/token.
+- Pure server-only parser validates strict outer/recognition/binding fields, exact
+  reference, authoritative canonical Handle agreement, availability/binding shape
+  and original source hash. Invalid/private/cross-context/hostile input is null.
+  Tokens are not derived from public DTOs or treated as browser authorization.
+- All 27 new parser tests and full application/tooling/typecheck/lint/build/diff
+  checks passed locally, including six actual Redis and eight existing Product
+  Chromium fixtures. No Resource browser or live provider proof is claimed.
+- Added 43 pgTAP assertions for same-row digest/source/context, alias/role equality,
+  degradation/recovery, changed rows/source, private/Owner/type/ref/lifecycle denial
+  and no writes. Migration reset/lint/advisors/pgTAP/concurrency/retention and six
+  exact latest-push jobs remain PENDING until observed in isolated committed CI.
+- No grants, browser intent, source CTA, route, publication, credential/provider,
+  dependency or production enabling. S5/S6 remain NOT CLOSED / VERIFIED.
+- Next bounded slice after required evidence: private injected-client Resource
+  context/source RPC adapter with strict locator-only ingress, deadline, no retry,
+  no binding exposure and current fresh source validation before intent assembly.
 
 ## Current local integration — 2026-10-04
 
