@@ -125,6 +125,7 @@ Already present and governed by locked contracts:
 - 12.48 unmounted strict exact-reference locator normalization.
 - 12.49 withheld Published Resource context / current source availability projection.
 - 12.50 withheld exact Published Item type resolution / private SDK dispatch.
+- 12.51 unmounted Published Resource recognition renderer.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -1169,6 +1170,33 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Next safe slice after required evidence: audit pinned P04 and lock a bounded
   unmounted Resource recognition renderer, preserving Published degradation and
   semantic context while keeping Resource Open/public-route assembly withheld.
+
+## Published Resource recognition prerequisite — 2026-10-07
+
+- Clean Cloud baseline `9e5e6bffa265f1c9a6c2a0615ac09290fdcc35be` passed all
+  six exact push-event gates: CI 37600188252, Security 37600188096, Guard
+  37600188162. Database passed 1,713 assertions across 31 files, nine real
+  concurrency cases and two retention checks. Pending 12.50 evidence is superseded.
+- Refreshed J6/J8, 12.49/12.50/12.25, canonical Resource labels, existing renderer
+  tests and pinned P04 regions A–D/decision 18. Locked 12.51 before source.
+- Unmounted strict Published Resource renderer preserves Owner/current Handle,
+  reference, semantic type, title and intentional decorative type fallback.
+  Source degradation retains recognition/internal navigation with textual status;
+  read-time safe sources still emit no outbound URL or fake active/disabled CTA.
+  Private/malformed/unavailable input gives identical generic denial. No fabricated
+  optional fields, source-host inference, iframe, download, fetch or mutation.
+- All 27 new SSR tests passed. Full 1,440 application tests (1,159 web), five
+  tooling/six actual Redis/eight existing Product Chromium fixtures, typecheck,
+  lint, three builds and diff checks passed locally. Product fixture results are
+  regression evidence, not Resource browser/responsive or live-source evidence.
+- No database/migration/grant/dependency change; all exact latest-push automated
+  gates, including existing Database CI, remain PENDING until observed. No public
+  route, Resource Open, publication, provider or production enabling. S5/S6 and
+  full P04 NOT CLOSED / VERIFIED.
+- Next safe slice: audit and lock bounded exact Published Resource click-time
+  source resolution/transport prerequisites under J8 and safety authority before
+  source-action or public-route assembly. Preserve one semantic source action,
+  creator attribution and current Published visibility with no private fallback.
 
 ## Current local integration — 2026-10-04
 

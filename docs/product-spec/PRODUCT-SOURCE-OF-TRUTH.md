@@ -812,6 +812,23 @@ and exact latest-push gates remain PENDING until observed. No public grant, rout
 outbound, publication or production enabling. Next bounded dependency: unmounted
 P04 Resource recognition renderer under a new contract. S5/S6 remain open.
 
+Exact 12.50 push `9e5e6bffa265f1c9a6c2a0615ac09290fdcc35be` passed
+all six gates: CI 37600188252, Security 37600188096, Guard 37600188162.
+Database passed 1,713 pgTAP assertions, nine real concurrency cases and two
+retention checks. Pending 12.50 evidence is superseded.
+
+Contract [12.51](./technical-architecture/12.51-published-resource-recognition-renderer-contract.md)
+stages an unmounted strict Published Resource recognition region with canonical
+semantic labels, Owner/reference/title/navigation and intentional type fallback.
+Source degradation keeps context and textual status without fake CTA or private
+repair. No source URLs/actions, fabricated optional metadata, route or grant.
+27 new SSR tests and all 1,440 application tests, five tooling/six Redis/eight
+existing Product Chromium fixtures, typecheck/lint/three builds and diff checks
+passed locally. This changes no database behavior. All exact latest-push gates
+remain PENDING until observed; Resource browser/responsive/live-source evidence
+is not claimed. Next bounded task: audit/lock exact Resource click-time source
+resolution/transport prerequisites. S5/S6 and full P04 remain open.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -862,6 +879,7 @@ foundation:
 - unmounted strict exact-reference locator normalization under 12.48.
 - withheld Published Resource context / source availability projection under 12.49.
 - withheld exact Published Item resolution / private SDK dispatch under 12.50.
+- unmounted Published Resource recognition renderer under 12.51.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -916,7 +934,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.50 govern the staged work already present.
+public transport**. Contracts 12.12–12.51 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
