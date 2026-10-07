@@ -1254,6 +1254,11 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   degradation/recovery, changed rows/source, private/Owner/type/ref/lifecycle denial
   and no writes. Migration reset/lint/advisors/pgTAP/concurrency/retention and six
   exact latest-push jobs remain PENDING until observed in isolated committed CI.
+- Initial push `d37b08d90e026b2cf87c5f873a83d30523285f84` passed Application,
+  all three Security jobs and Guard. Database reset/lint/advisors passed, but a
+  missing quote in the new binding-to-source pgTAP assertion stopped that suite
+  after 78 successful assertions. The fixture quote is corrected; no production
+  function/gate changed. All latest-push evidence requires exact-SHA reverification.
 - No grants, browser intent, source CTA, route, publication, credential/provider,
   dependency or production enabling. S5/S6 remain NOT CLOSED / VERIFIED.
 - Next bounded slice after required evidence: private injected-client Resource

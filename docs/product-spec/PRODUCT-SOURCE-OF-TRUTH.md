@@ -862,6 +862,10 @@ parser tests and full application/tooling/typecheck/lint/build/diff checks, six
 Redis/eight existing Product Chromium fixtures passed locally. 43 new pgTAP
 assertions and required isolated DB/exact latest-push jobs remain PENDING until
 observed. No public grant/CTA/route/intent/publication or production enabling.
+The initial `d37b08d` push passed Application/Security/Guard and database reset/
+lint/advisors, but the new binding-to-source test had a missing quote. Its fixture
+is corrected without production changes; all exact latest-push gates must be
+reverified. No success is claimed from the failed predecessor.
 Next bounded task: private injected-client context/source RPC adapter under its
 own deadline/strict validation contract. S5/S6 remain NOT CLOSED / VERIFIED.
 
