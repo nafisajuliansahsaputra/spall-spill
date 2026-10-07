@@ -120,6 +120,7 @@ Already present and governed by locked contracts:
 - 12.43 private trusted-network canonicalization/keyed budget subjects.
 - 12.44 private same-policy network subject / budgeted HTTP composition.
 - 12.45 isolated Chromium confirmation/native-form fixture evidence.
+- 12.46 isolated native-browser context/expiry/budget denial evidence.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -185,6 +186,8 @@ Current safe work must be selected from the remaining dependency frontier:
   copied policy namespace and disallowing caller identity override/fallback.
 - [x] Verify staged Product confirmation/native form/replay and recognition-only
   behavior in actual isolated Chromium under 12.45; deployed browser/TLS/CDN gates stay open.
+- [x] Verify actual isolated native-browser context/expiry/budget denial and
+  sibling-intent isolation under 12.46; live database/provider gates remain open.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -1008,6 +1011,34 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   evidence. Next safe task: audit remaining bounded browser denial/journey cases
   against J6 and pinned P03 before locking another fixture-only contract; public
   enabling still requires actual provider/provenance/capacity/retention gates.
+
+
+## Isolated native-browser denial evidence — 2026-10-07
+
+- Refreshed clean workspace to `7b3ac7a5e039f86327357a4d64a9200cbb0ffd04`.
+  All six exact push-event jobs passed: CI 37551550595, Security 37551550597,
+  Guard 37551550705. Application observed both browser scenarios in Google Chrome
+  154.0.8037.97; Database observed 1,616 pgTAP assertions, nine races and isolated
+  retention lock/cron. This supersedes 12.45 pending automated evidence.
+- Locked 12.46 before extending owned fixtures. Three actual Chromium native POST
+  scenarios deny browser-edited provider context, server-fixture expiry beyond
+  120,000 ms, and denied redemption budget. Every denial has no-store/no-referrer
+  403, no Location and zero marketplace requests; another explicit click still
+  cannot replay consumed fixture authority or fall back to a sibling provider.
+- RPC traces distinguish clock/consume before context/expiry denial from budget
+  denial before all SDK calls. Context/expiry consume only the selected record;
+  sibling record is untouched. Budget denial retains both unconsumed records.
+  Costs remain 32/3/3. No production validator, clock, consume, permit or renderer
+  behavior changes; fixture clock/Redis/records are not live-provider/database proof.
+- Five Chromium cases, 1,262 application tests, six actual Redis tests, five tooling
+  tests, typecheck/lint and three builds passed locally; final diff checks/review
+  passed. Exact latest-push CI/Application/Database/Security/Guard remains PENDING
+  until observed. No dependency, migration, route/grant, credential or deployment.
+- S5/S6 NOT CLOSED / VERIFIED. Next safe task: lock bounded Chromium single-provider
+  and partially degraded provider-choice evidence from J6/P03; retain recognition,
+  exact attribution and absence of a redundant one-choice chooser. Live provider,
+  trusted metadata provenance/capacity, TLS/CDN/cache, retention activation and
+  firstPublish/public enabling remain separate open gates.
 
 ## Current local integration — 2026-10-04
 

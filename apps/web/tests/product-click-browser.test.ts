@@ -19,11 +19,12 @@ const product = { status: "success", current_handle: "creator", display_name: "P
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
 function fixture() {
   const records = new Map<string, ProductClickIntentRecord>(); const costs: string[] = [];
+  const calls: string[] = []; const state = { clockOffset: 0, denyRedeem: false };
   const client = createClient("https://browser-sdk-fixture.example.test", "test-only-publishable-placeholder", {
     auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }, global: { fetch: async (input, init) => {
-      const name = String(input).split("/").at(-1)!; const body = JSON.parse(String(init?.body ?? "{}")); let result: unknown = null;
+      const name = String(input).split("/").at(-1)!; calls.push(name); const body = JSON.parse(String(init?.body ?? "{}")); let result: unknown = null;
       if (name === "resolve_public_product") result = product;
-      if (name === "read_product_click_clock_server") result = 100000 + Math.floor(performance.now());
+      if (name === "read_product_click_clock_server") result = 100000 + Math.floor(performance.now()) + state.clockOffset;
       if (name === "resolve_published_product_click_context_server") {
         const destination = product.destinations.find(d => d.provider_key === body.input_provider_key)!;
         result = { status: "success", confirmation: product, binding: { ...locator, provider_key: destination.provider_key,
@@ -41,8 +42,8 @@ function fixture() {
   const http = createNetworkBudgetedProductClickHttpBoundary({ client, origin, key: new Uint8Array(32).fill(13),
     readTrustedMetadata: async () => ({ address: "192.0.2.1" }),
     policy: { namespace: "browser-test", window_ms: 60000, issue_limit: 100, redeem_limit: 100, work_limit: 1000 },
-    redis: { eval: async (_script, _keys, args) => { costs.push(args[3]!); return 1; } } });
-  return { http, records, costs };
+    redis: { eval: async (_script, _keys, args) => { costs.push(args[3]!); return state.denyRedeem && args[3] === "3" ? 0 : 1; } } });
+  return { http, records, costs, calls, state };
 }
 type Paused = { requestId: string; request: { url: string; method: string; headers: Record<string, string>; postData?: string } };
 async function documentHtml(payload: unknown) {
@@ -156,5 +157,67 @@ it("real Chromium retains recognition without any marketplace form when intents 
     expect(recognition.forms).toBe(0); expect(recognition.buttons).toBe(0);
     expect(recognition.links).toEqual([`${origin}/creator`, `${origin}/creator/spill`]);
     expect(unexpected).toEqual([]);
+  } finally { await browser.close(); }
+});
+
+
+it.each(["provider context", "expired intent", "denied budget"] as const)("real Chromium denies %s without fallback", async scenario => {
+  const f = fixture(); const issued = await f.http.issueBundle(new Request(`${origin}/staged`, { method: "POST",
+    headers: { origin, "content-type": "application/json" }, body: JSON.stringify(locator) }));
+  expect(issued.status).toBe(200); const payload = await issued.json(); const html = await documentHtml(payload);
+  expect(f.records.size).toBe(2); f.calls.length = 0;
+  if (scenario === "expired intent") f.state.clockOffset = 120001;
+  if (scenario === "denied budget") f.state.denyRedeem = true;
+  const browser = await chromiumFixture(); const unexpected: string[] = []; const posts: Response[] = [];
+  try {
+    browser.on("Fetch.requestPaused", value => {
+      const paused = value as Paused;
+      void (async () => {
+        let response: Response;
+        if (paused.request.method === "GET" && paused.request.url === `${origin}/creator/spill/27`) {
+          response = new Response(html, { headers: { "content-type": "text/html" } });
+        } else if (paused.request.method === "POST" && paused.request.url === `${origin}/actions/product-click`) {
+          response = await f.http.redeemForm(new Request(paused.request.url, { method: "POST", headers: paused.request.headers,
+            body: paused.request.postData ?? "" })); posts.push(response);
+        } else if (paused.request.method === "GET" && [ `${origin}${product.primary_image_path}`, `${origin}/favicon.ico` ].includes(paused.request.url)) {
+          response = new Response(null, { status: 204 });
+        } else { unexpected.push(`${paused.request.method} ${paused.request.url}`);
+          await browser.command("Fetch.failRequest", { requestId: paused.requestId, errorReason: "BlockedByClient" }); return; }
+        await browser.command("Fetch.fulfillRequest", { requestId: paused.requestId, responseCode: response.status,
+          responseHeaders: [...response.headers].map(([name, value]) => ({ name, value })),
+          body: Buffer.from(await response.clone().arrayBuffer()).toString("base64") });
+      })().catch(error => unexpected.push(String(error)));
+    });
+    await browser.command("Runtime.enable"); await browser.command("Page.enable");
+    await browser.command("Fetch.enable", { patterns: [{ urlPattern: "*" }] });
+    const navigate = async () => {
+      await browser.command("Page.navigate", { url: `${origin}/creator/spill/27` });
+      await until(() => browser.evaluate<boolean>("document.readyState === 'complete' && document.forms.length === 2"));
+      expect(await browser.evaluate<string>("document.querySelector('h1').textContent")).toBe(product.title);
+    };
+    await navigate(); expect(posts).toHaveLength(0); expect(f.calls).toEqual([]);
+    if (scenario === "provider context") await browser.evaluate("document.forms[0].elements.namedItem('provider_key').value = 'tokopedia'");
+    const click = async () => {
+      const point = await browser.evaluate<{ x: number; y: number }>(`(() => { const b = document.querySelector('button'); b.scrollIntoView({ block: 'center' }); const r = b.getBoundingClientRect(); return { x: r.x+r.width/2, y: r.y+r.height/2 }; })()`);
+      await browser.command("Input.dispatchMouseEvent", { type: "mousePressed", ...point, button: "left", clickCount: 1 });
+      await browser.command("Input.dispatchMouseEvent", { type: "mouseReleased", ...point, button: "left", clickCount: 1 });
+      await until(() => browser.evaluate<boolean>("document.readyState === 'complete' && location.pathname === '/actions/product-click' && document.forms.length === 0"));
+    };
+    await click(); expect(posts).toHaveLength(1);
+    const selectedHash = hash(payload.intents[0].token); const siblingHash = hash(payload.intents[1].token);
+    expect(f.records.has(siblingHash)).toBe(true);
+    expect(f.records.has(selectedHash)).toBe(scenario === "denied budget");
+    expect(f.records.size).toBe(scenario === "denied budget" ? 2 : 1);
+    expect(f.calls).toEqual(scenario === "denied budget" ? [] : ["read_product_click_clock_server", "consume_product_click_intent_server"]);
+    // The original SSR form restores the original provider, never creates new authority.
+    await navigate(); await click(); expect(posts).toHaveLength(2);
+    expect(f.calls).toEqual(scenario === "denied budget" ? [] : ["read_product_click_clock_server", "consume_product_click_intent_server",
+      "read_product_click_clock_server", "consume_product_click_intent_server"]);
+    for (const post of posts) {
+      expect(post.status).toBe(403); expect(post.headers.get("Location")).toBeNull();
+      expect(post.headers.get("Cache-Control")).toContain("no-store"); expect(post.headers.get("Referrer-Policy")).toBe("no-referrer");
+    }
+    expect(f.records.has(siblingHash)).toBe(true); expect(f.records.size).toBe(scenario === "denied budget" ? 2 : 1);
+    expect(f.costs).toEqual(["32", "3", "3"]); expect(unexpected).toEqual([]);
   } finally { await browser.close(); }
 });
