@@ -6,6 +6,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { expect, it } from "vitest";
 import { createNetworkBudgetedProductClickHttpBoundary } from "../src/lib/public/product-click-network-http";
 import { PublishedProductConfirmationActions } from "../src/lib/public/product-confirmation-actions";
+import type { PublicProduct } from "../src/lib/public/product-contract";
 import type { ProductClickIntentRecord } from "../src/lib/public/product-click-intent";
 import { chromiumFixture, until } from "./chromium-fixture";
 
@@ -17,24 +18,28 @@ const product = { status: "success", current_handle: "creator", display_name: "P
     { provider_key: "tokopedia", available: true, destination_url: "https://tokopedia.com/item?affiliate=creator" },
   ] };
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
-function fixture() {
+function fixture(destinations: PublicProduct["destinations"] = product.destinations) {
+  const published = { ...product, destinations };
   const records = new Map<string, ProductClickIntentRecord>(); const costs: string[] = [];
-  const calls: string[] = []; const state = { clockOffset: 0, denyRedeem: false };
+  const calls: string[] = []; const state = { clockOffset: 0, denyRedeem: false, failedProvider: null as string | null };
   const client = createClient("https://browser-sdk-fixture.example.test", "test-only-publishable-placeholder", {
     auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }, global: { fetch: async (input, init) => {
       const name = String(input).split("/").at(-1)!; calls.push(name); const body = JSON.parse(String(init?.body ?? "{}")); let result: unknown = null;
-      if (name === "resolve_public_product") result = product;
+      if (name === "resolve_public_product") result = published;
       if (name === "read_product_click_clock_server") result = 100000 + Math.floor(performance.now()) + state.clockOffset;
       if (name === "resolve_published_product_click_context_server") {
-        const destination = product.destinations.find(d => d.provider_key === body.input_provider_key)!;
-        result = { status: "success", confirmation: product, binding: { ...locator, provider_key: destination.provider_key,
-          publication_token: "a".repeat(64), destination_hash: hash(destination.destination_url) } };
+        const destination = published.destinations.find(d => d.provider_key === body.input_provider_key)!;
+        result = { status: "success", confirmation: published, binding: { ...locator, provider_key: destination.provider_key,
+          publication_token: "a".repeat(64), destination_hash: hash(destination.destination_url!) } };
       }
-      if (name === "create_product_click_intent_server") { records.set(body.input_token_hash, body.input_record); result = true; }
+      if (name === "create_product_click_intent_server") {
+        result = body.input_record.binding.provider_key !== state.failedProvider;
+        if (result) records.set(body.input_token_hash, body.input_record);
+      }
       if (name === "consume_product_click_intent_server") { result = records.get(body.input_token_hash) ?? null; records.delete(body.input_token_hash); }
       if (name === "resolve_published_product_destination_server" || name === "resolve_product_click_intent_destination_server") {
         const provider = name === "resolve_product_click_intent_destination_server" ? body.input_record.binding.provider_key : body.input_provider_key;
-        result = { status: "success", destination_url: product.destinations.find(d => d.provider_key === provider)!.destination_url };
+        result = { status: "success", destination_url: published.destinations.find(d => d.provider_key === provider)!.destination_url };
       }
       return new Response(JSON.stringify(result), { headers: { "content-type": "application/json" } });
     } },
@@ -219,5 +224,66 @@ it.each(["provider context", "expired intent", "denied budget"] as const)("real 
     }
     expect(f.records.has(siblingHash)).toBe(true); expect(f.records.size).toBe(scenario === "denied budget" ? 2 : 1);
     expect(f.costs).toEqual(["32", "3", "3"]); expect(unexpected).toEqual([]);
+  } finally { await browser.close(); }
+});
+
+
+it.each(["single saved", "unavailable first", "create denied first"] as const)("real Chromium offers one direct provider for %s", async scenario => {
+  const destinations: PublicProduct["destinations"] = scenario === "single saved" ? [product.destinations[0]!] :
+    scenario === "unavailable first" ? [{ ...product.destinations[0]!, available: false, destination_url: null }, product.destinations[1]!] : product.destinations;
+  const f = fixture(destinations); if (scenario === "create denied first") f.state.failedProvider = "shopee";
+  const issued = await f.http.issueBundle(new Request(`${origin}/staged`, { method: "POST",
+    headers: { origin, "content-type": "application/json" }, body: JSON.stringify(locator) }));
+  expect(issued.status).toBe(200); const payload = await issued.json();
+  const selected = product.destinations[scenario === "single saved" ? 0 : 1]!;
+  expect(payload.intents).toHaveLength(1); expect(payload.intents[0].provider_key).toBe(selected.provider_key);
+  expect(f.records.size).toBe(1); const html = await documentHtml(payload);
+  const browser = await chromiumFixture(); const unexpected: string[] = []; const posts: { request: Request; response: Response }[] = [];
+  const outbound: Paused["request"][] = [];
+  try {
+    browser.on("Fetch.requestPaused", value => {
+      const paused = value as Paused;
+      void (async () => {
+        let response: Response;
+        if (paused.request.method === "GET" && paused.request.url === `${origin}/creator/spill/27`) {
+          response = new Response(html, { headers: { "content-type": "text/html", "cache-control": "no-store" } });
+        } else if (paused.request.method === "POST" && paused.request.url === `${origin}/actions/product-click`) {
+          const request = new Request(paused.request.url, { method: "POST", headers: paused.request.headers, body: paused.request.postData ?? "" });
+          response = await f.http.redeemForm(request.clone()); posts.push({ request, response });
+        } else if (paused.request.method === "GET" && paused.request.url === selected.destination_url) {
+          outbound.push(paused.request); response = new Response("Expected provider navigation stub", { headers: { "content-type": "text/plain" } });
+        } else if (paused.request.method === "GET" && [`${origin}${product.primary_image_path}`, `${origin}/favicon.ico`,
+          `${new URL(selected.destination_url).origin}/favicon.ico`].includes(paused.request.url)) {
+          response = new Response(null, { status: 204 });
+        } else { unexpected.push(`${paused.request.method} ${paused.request.url}`);
+          await browser.command("Fetch.failRequest", { requestId: paused.requestId, errorReason: "BlockedByClient" }); return; }
+        await browser.command("Fetch.fulfillRequest", { requestId: paused.requestId, responseCode: response.status,
+          responseHeaders: [...response.headers].map(([name, value]) => ({ name, value })),
+          body: Buffer.from(await response.clone().arrayBuffer()).toString("base64") });
+      })().catch(error => unexpected.push(String(error)));
+    });
+    await browser.command("Runtime.enable"); await browser.command("Page.enable");
+    await browser.command("Fetch.enable", { patterns: [{ urlPattern: "*" }] });
+    await browser.command("Page.navigate", { url: `${origin}/creator/spill/27` });
+    await until(() => browser.evaluate<boolean>("document.readyState === 'complete' && document.forms.length === 1"));
+    const presentation = await browser.evaluate<{ title: string; button: string; chooser: number; status: string | null; titleFirst: boolean }>(`({
+      title: document.querySelector('h1').textContent, button: document.querySelector('button').textContent.trim(),
+      chooser: document.querySelectorAll('h2').length, status: document.querySelector('[role=status]')?.textContent ?? null,
+      titleFirst: Boolean(document.querySelector('h1').compareDocumentPosition(document.querySelector('form')) & Node.DOCUMENT_POSITION_FOLLOWING) })`);
+    expect(presentation.title).toBe(product.title); expect(presentation.titleFirst).toBe(true); expect(presentation.chooser).toBe(0);
+    expect(presentation.button).toBe(scenario === "single saved" ? "Open in Shopee" : "Open in Tokopedia");
+    expect(presentation.status).toBe(scenario === "single saved" ? null : "Some marketplace destinations are temporarily unavailable.");
+    expect(posts).toHaveLength(0); expect(outbound).toHaveLength(0);
+    const point = await browser.evaluate<{ x: number; y: number }>(`(() => { const b = document.querySelector('button'); b.scrollIntoView({ block: 'center' }); const r = b.getBoundingClientRect(); return { x: r.x+r.width/2, y: r.y+r.height/2 }; })()`);
+    await browser.command("Input.dispatchMouseEvent", { type: "mousePressed", ...point, button: "left", clickCount: 1 });
+    await browser.command("Input.dispatchMouseEvent", { type: "mouseReleased", ...point, button: "left", clickCount: 1 });
+    await until(() => browser.evaluate<boolean>("document.readyState === 'complete' && document.body.innerText.includes('Expected provider navigation stub')"));
+    expect(posts).toHaveLength(1); expect(outbound).toHaveLength(1);
+    const post = posts[0]!; expect(post.response.status).toBe(303); expect(post.response.headers.get("Location")).toBe(selected.destination_url);
+    expect(post.response.headers.get("Cache-Control")).toContain("no-store"); expect(post.response.headers.get("Referrer-Policy")).toBe("no-referrer");
+    const fields = new URLSearchParams(await post.request.text()); expect([...fields.keys()]).toEqual(["handle", "spill_reference", "provider_key", "token"]);
+    expect(fields.get("provider_key")).toBe(selected.provider_key); expect(fields.get("token")).toBe(payload.intents[0].token);
+    expect(outbound[0]!.url).toBe(selected.destination_url); expect(new Headers(outbound[0]!.headers).has("Referer")).toBe(false);
+    expect(f.records.size).toBe(0); expect(f.costs).toEqual(["32", "3"]); expect(unexpected).toEqual([]);
   } finally { await browser.close(); }
 });

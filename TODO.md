@@ -121,6 +121,7 @@ Already present and governed by locked contracts:
 - 12.44 private same-policy network subject / budgeted HTTP composition.
 - 12.45 isolated Chromium confirmation/native-form fixture evidence.
 - 12.46 isolated native-browser context/expiry/budget denial evidence.
+- 12.47 isolated single/degraded provider native-browser evidence.
 
 Do **not** rebuild the scaffold, S5 foundation, Resource Draft, private Preview,
 preview receipt, first-publication transaction foundation, or published-reader
@@ -188,6 +189,8 @@ Current safe work must be selected from the remaining dependency frontier:
   behavior in actual isolated Chromium under 12.45; deployed browser/TLS/CDN gates stay open.
 - [x] Verify actual isolated native-browser context/expiry/budget denial and
   sibling-intent isolation under 12.46; live database/provider gates remain open.
+- [x] Verify single/degraded provider CTA, original native redirect and browser
+  no-referrer behavior under 12.47 owned fixtures; deployed evidence remains open.
 - [ ] Verify live R2 delivery/revocation and production cache/abuse gates before
   enabling media publication/public readers.
 - [ ] Explicit first-Publish UI/bundle wiring after required safety/transport gates.
@@ -1039,6 +1042,35 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   exact attribution and absence of a redundant one-choice chooser. Live provider,
   trusted metadata provenance/capacity, TLS/CDN/cache, retention activation and
   firstPublish/public enabling remain separate open gates.
+
+
+## Isolated single/degraded provider browser evidence — 2026-10-07
+
+- Clean workspace synchronized to `cfec3f4d4cc3df733648c5991ca23dd1f36aa5a0`.
+  All six exact push-event jobs passed: CI 37570605365, Security 37570605502,
+  Guard 37570605477. Chrome 154.0.8037.57 passed all five browser scenarios;
+  Database passed 1,616 pgTAP assertions, nine races and retention lock/cron.
+  This supersedes 12.46 pending automated evidence.
+- Locked 12.47 before fixture code. Actual private SDK/bundle output feeds real
+  SSR/production CSS/Chromium for one saved provider, unavailable first provider,
+  and denied first-provider durable create. Each shows Product recognition and
+  exactly one direct provider CTA with no redundant chooser; partial failures
+  retain the existing unavailable message and only the usable provider's intent.
+- Native mouse input is required before the sole form POST. Actual handler
+  consumes that selected fixture record, returns exact original affiliate URL
+  303/no-store/no-referrer, and only that provider's intercepted navigation occurs.
+  Browser outbound request omits Referer. Costs remain 32/3; no implicit fallback,
+  initial POST/navigation, invented authority or contact with real providers.
+- Eight browser cases, 1,262 application tests, six actual Redis tests, five tooling
+  tests, typecheck/lint and three builds passed locally; final diff review/checks
+  passed. Latest exact-push CI/Security/Guard remains PENDING until observed.
+  No production renderer, validator, route/grant, migration, dependency, credential,
+  publication or provider configuration changed. S5/S6 NOT CLOSED / VERIFIED.
+- Next safe task: audit J6/12.19 public-route ingress dependencies and lock an
+  unmounted exact-reference normalization / Product-or-Resource dispatch slice if
+  canonical authority supports it, preserving exactness and no public grants.
+  Live provider/provenance/capacity/TLS/CDN/cache/retention activation and
+  firstPublish/public enabling gates remain open; fixtures are not deployed proof.
 
 ## Current local integration — 2026-10-04
 
