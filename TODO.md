@@ -1295,6 +1295,37 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   bounded opaque one-use Resource Open intent core binding recognition to its
   exact server-selected publication/source, without browser raw-binding authority.
 
+## Resource Open intent core prerequisite — 2026-10-07
+
+- Clean Cloud baseline `acee5b8c60d453010bbc20b94fc5740dedd21a27` passed all
+  six exact push-event gates: CI 37638435524, Security 37638435405, Guard
+  37638435557. Database passed 1,801 assertions across 31 files, nine real
+  concurrency cases and both retention checks. Pending 12.54 evidence is superseded.
+- Refreshed J6/J8, pinned P04, 12.27/12.28/12.31 and 12.52–12.54 source/tests.
+  Locked 12.55 before source. No user-journey, provider chooser or publication change.
+- Server-only injectable Resource Open core issues from strict locator/private
+  same-snapshot context, rechecks exact source before storage and returns only an
+  opaque random 256-bit capability. Records contain token hash, purpose, exact
+  binding, recognition hash and fixed 120-second lifetime; no raw token/source URL.
+- Redemption accepts only canonical opaque token/public Handle/ref, atomically
+  consumes first, validates record/context/time, freshly re-resolves source and
+  rechecks expiry/progression after async resolution. Denial never restores authority.
+  Schemas do not prove server selection provenance or that a visitor viewed P04.
+- All 76 new unit tests passed, including strict/private/degraded/hostile ingress,
+  collision/error acknowledgement, canonical encoding, clock/overflow/expiry,
+  replay/competing consume, cross-context burns, exact attribution and independent
+  capabilities. Memory persistence is explicitly test-only, not durable DB evidence.
+- Full local typecheck/lint, five tooling tests, 1,612 application tests, six actual
+  Redis tests, three builds, eight existing Product Chromium fixtures and diff checks
+  passed. No Resource browser/live-provider or database capability proof is claimed.
+- No migration/grants/concrete store/client/credential/HTTP/CTA/publication or
+  production enabling. Required exact latest-push jobs, including unchanged database
+  regression, remain PENDING until observed. S5/S6 remain NOT CLOSED / VERIFIED.
+- Next bounded prerequisite after required evidence: audit/lock durable private
+  hashed Resource intent persistence with strict records, atomic create/consume,
+  fresh exact binding checks, database time, bounded cleanup and real concurrency
+  evidence, retaining withheld execution grants and no public transport.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

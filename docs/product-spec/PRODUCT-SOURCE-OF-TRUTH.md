@@ -887,6 +887,26 @@ Next bounded prerequisite: audit/lock an opaque one-use Resource Open intent cor
 under 12.27/12.28/12.31 patterns with exact selected context/source binding.
 Resource browser/live/cache/abuse/HTTP gates and S5/S6 closure remain open.
 
+Exact 12.54 push `acee5b8c60d453010bbc20b94fc5740dedd21a27` passed all
+six gates: CI 37638435524, Security 37638435405, Guard 37638435557.
+Database passed 1,801 assertions, nine real races and both retention checks.
+Pending 12.54 evidence is superseded.
+
+Contract [12.55](./technical-architecture/12.55-resource-open-intent-core-contract.md)
+stages a server-only injectable one-use Resource Open capability core. Issuance
+validates exact selected recognition/binding and fresh source; only token hash and
+strict fixed-lifetime record are stored. Redemption consumes first, checks public
+Handle/ref and time, revalidates exact original source and expiry without fallback
+or restoration. Browser raw bindings are not authority; server provenance remains
+mandatory. All 76 new unit tests and full local quality gates passed, including
+six Redis/eight existing Product Chromium fixtures. Memory store is test-only;
+durable database/browser/live/calibrated assembly/HTTP/cache/abuse gates stay open.
+Exact latest-push CI/Security/Guard, including unchanged DB regression, remain
+PENDING until observed. Next prerequisite: bounded durable private hashed intent
+store with database clock, fresh binding, atomic create/consume, cleanup and real
+concurrency evidence. No grants/public transport/CTA/publication/production enabling.
+S5/S6 remain NOT CLOSED / VERIFIED.
+
 ### Current implementation checkpoint
 
 #### Integrated implementation frontier — 2026-10-06
@@ -941,6 +961,7 @@ foundation:
 - withheld exact Published Resource source resolution / server validation under 12.52.
 - withheld same-snapshot Resource recognition / private server binding under 12.53.
 - unmounted private injected-client Resource context/source RPC adapter under 12.54.
+- unmounted opaque one-use Resource Open intent core under 12.55.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -995,7 +1016,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.54 govern the staged work already present.
+public transport**. Contracts 12.12–12.55 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
