@@ -1265,6 +1265,36 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   context/source RPC adapter with strict locator-only ingress, deadline, no retry,
   no binding exposure and current fresh source validation before intent assembly.
 
+## Private Resource RPC adapter prerequisite — 2026-10-07
+
+- Clean Cloud baseline `b7ea84eb51b64009d3020a0c63a11fad3dc6d51c` passed all
+  six exact push-event gates: CI 37607906948, Security 37607906801, Guard
+  37607906887. Database passed 1,801 assertions across 31 files, nine real
+  concurrency cases and both retention checks. Pending 12.53 evidence and its
+  failed predecessor are superseded by this exact final commit's passing evidence.
+- Refreshed J6/J8, pinned P04, 12.52/12.53 and actual pinned SDK source/tests.
+  Locked 12.54 before source. Current Supabase AbortSignal documentation was read;
+  changelog access returned proxy 403, with no bypass or dependency change.
+- Unmounted server-only injected-client adapter reads private context once from
+  strict normalized locator ingress and validates it through 12.53. Uniform
+  authoritative unavailable remains distinct from operational null. Source reads
+  validate only trusted server bindings and exact original canonical URL/hash.
+- Both calls have independent five-second deadlines/AbortSignals, ignore late
+  success and perform no retry/fallback/cache/log/client or credential creation.
+  Future assembly must select bindings through the trusted server boundary;
+  browser raw tokens/public DTOs are never action authority.
+- All 36 new actual pinned-SDK mocked-fetch tests passed; full local typecheck,
+  lint, five tooling tests, 1,536 application tests, six actual Redis tests, three
+  production builds, eight existing Product Chromium fixtures and diff checks
+  passed. No Resource browser/live-provider proof is claimed.
+- No database/grant/publication/route/intent/CTA/provider/credential/dependency or
+  production change. Required exact latest-push CI/Security/Guard, including the
+  unchanged database regression, remain PENDING until observed. S5/S6 NOT CLOSED /
+  VERIFIED.
+- Next safe slice after required evidence: audit 12.27/12.28/12.31 and lock a
+  bounded opaque one-use Resource Open intent core binding recognition to its
+  exact server-selected publication/source, without browser raw-binding authority.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
