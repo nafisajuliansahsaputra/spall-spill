@@ -1419,6 +1419,36 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   Resource issuance/redemption assembly, then inactive retention wiring.
   Resource browser/live-provider/public transport evidence and S5/S6 remain open.
 
+### Staged Resource database clock/deadline primitives — 2026-10-10
+
+- Exact adapter push `e34f7756e10418d51ae2fe1c43336c77c6e1dcfc` passed all six
+  gates: CI 38078890673, Security 38078890655, Guard 38078890669; this supersedes
+  adapter pending evidence above.
+- Clean explicit fetched lane at `e34f7756e10418d51ae2fe1c43336c77c6e1dcfc`;
+  refreshed changed authority and the existing 12.31–12.33 patterns. This bounded
+  prerequisite uses verified 12.52/12.55/12.56 independently of 12.57 adapter gates.
+  Locked 12.58 before implementation; J6/J8 and pinned P04 semantics unchanged.
+- Added withheld database wall-clock sample and strict record-aware exact Resource
+  source resolver checking database time before and after resolution. No capability
+  authentication is inferred from a supplied record; future assembly must commit
+  one-use consumption first. No grants, state writes, credentials or public enabling.
+- Added operation-local monotonic calibration with lower issuance/upper deadline
+  bounds, permanent invalidation on counter failure/rollback/overflow and a finite
+  five-second AbortSignal deadline even if transport ignores abort. No retries,
+  wall-clock fallback, TTL extension or shared calibration.
+- Twenty-six targeted tests and full typecheck/lint, five tooling tests, 1,693
+  application tests, six Redis tests, eight existing Product Chromium fixtures,
+  three builds and diff review passed. PostgreSQL parser accepted six migration
+  and 71 pgTAP statements. Database reset/lint/error advisors/pgTAP/races/retention
+  evidence must come from committed isolated CI, not this parser or mocked fetch.
+- Added rolled-back pgTAP clock-range/grant/strict/time/safety/stale/attribution/
+  state-isolation fixtures, including expiry during a controlled delayed resolver.
+  Latest exact push-event six gates remain PENDING until observed.
+- Next: bounded trusted per-operation calibrated Resource issuance/redemption
+  assembly, then inactive bounded retention wiring before public transport.
+  Actual authorized calibration/RPC, Resource browser/manual/provider, cache/
+  origin/abuse and publication gates remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

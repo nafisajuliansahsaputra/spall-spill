@@ -951,6 +951,24 @@ observed. Next: bounded database clock/deadline calibration, followed by inactiv
 retention wiring and trusted assembly before transport. Mocked transport is not
 Resource browser/live-provider proof; S5/S6 remain NOT CLOSED / VERIFIED.
 
+Exact adapter commit `e34f7756e10418d51ae2fe1c43336c77c6e1dcfc` passed all six
+push-event gates: [CI 38078890673](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38078890673),
+[Security 38078890655](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38078890655)
+and [Guard 38078890669](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38078890669).
+This supersedes adapter pending evidence; no S5/S6 closure.
+
+Contract [12.58](./technical-architecture/12.58-resource-open-intent-database-clock-contract.md)
+stages withheld database wall-clock sampling and strict record-aware exact source
+resolution with database deadline checks before/after fresh resolution. Injected
+monotonic calibration supplies conservative lower/upper bounds, finite five-second
+abort-ignoring deadlines and permanent invalidation on counter faults. Twenty-six
+new unit cases and full local quality gates passed; new rolled-back clock/grant/
+strict/time/safety/stale/attribution/state-isolation pgTAP awaits exact isolated CI.
+No grants, credentials, scheduler, public action or publication enabling. Next:
+trusted operation-local calibrated Resource issuance/redemption assembly, followed
+by inactive retention. Actual privileged transport/calibration, browser/provider and
+public safety gates remain open; S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
@@ -1005,7 +1023,8 @@ foundation:
 - unmounted private injected-client Resource context/source RPC adapter under 12.54.
 - unmounted opaque one-use Resource Open intent core under 12.55.
 - withheld durable Resource Open intent persistence under 12.56;
-- unmounted private Resource intent RPC adapter under 12.57.
+- unmounted private Resource intent RPC adapter under 12.57;
+- withheld Resource database clock/deadline primitives under 12.58.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -1060,7 +1079,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.57 govern the staged work already present.
+public transport**. Contracts 12.12–12.58 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
