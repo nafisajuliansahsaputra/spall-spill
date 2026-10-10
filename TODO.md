@@ -1449,6 +1449,13 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   Actual authorized calibration/RPC, Resource browser/manual/provider, cache/
   origin/abuse and publication gates remain open. S5/S6 NOT CLOSED / VERIFIED.
 
+- Initial clock push `863e057` passed Application, all three Security scans and
+  Guard. Database reset/lint/error advisors passed; pgTAP stopped after 47 new
+  assertions because the blocked-safety fixture omitted mandatory reason_codes.
+  Corrected the fixture with malware reason and restored empty reasons on safe
+  recovery; runtime SQL and security constraints are unchanged. Corrected exact
+  push evidence remains PENDING until observed.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

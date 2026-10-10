@@ -93,9 +93,9 @@ update core.external_destination_safety set checked_at=now()-interval '1 hour',e
 select is(api.resolve_resource_open_intent_source_server((select value from deadline_record)),'{"status":"unavailable"}'::jsonb,'Expired destination safety denied even with valid intent lifetime');
 update core.external_destination_safety set checked_at=now(),expires_at=now()+interval '1 hour',revision=revision+1;
 select is(api.resolve_resource_open_intent_source_server((select value from deadline_record))->>'status','success','Safety recovery permits current exact deadline-bound record');
-update core.external_destination_safety set safety_status='blocked',revision=revision+1;
+update core.external_destination_safety set safety_status='blocked',reason_codes=array['malware'],revision=revision+1;
 select is(api.resolve_resource_open_intent_source_server((select value from deadline_record)),'{"status":"unavailable"}'::jsonb,'Known unsafe source denied');
-update core.external_destination_safety set safety_status='safe',revision=revision+1;
+update core.external_destination_safety set safety_status='safe',reason_codes=array[]::text[],revision=revision+1;
 select ok(not exists(select 1 from core.spill_item_publications p join clock_publications b using(item_id) where p.snapshot<>b.snapshot or p.working_revision<>b.working_revision),'Clock and deadline reads mutate no publication');
 select is((select count(*) from core.resource_open_intents),0::bigint,'Deadline resolver does not create or consume authority');
 update core.spill_item_publications set snapshot=jsonb_set(snapshot,'{title}','"Changed Published title"') where item_type='resource';
