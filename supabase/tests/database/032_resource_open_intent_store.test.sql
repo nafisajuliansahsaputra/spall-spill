@@ -118,7 +118,7 @@ select is(core.resource_open_intent_record_valid(r),false,'Strict record rejects
  (jsonb_set((select record from intent_expected),'{binding,spill_reference}', '1.5')),
  (jsonb_set((select record from intent_expected),'{binding,spill_reference}', '"1"')),
  (jsonb_set((select record from intent_expected),'{binding,handle}', '" creator"')),
- (jsonb_set((select record from intent_expected),'{expires_at}', to_jsonb((select (record->>'issued_at')::bigint+120001 from intent_expected)))) t(r);
+ (jsonb_set((select record from intent_expected),'{expires_at}', to_jsonb((select (record->>'issued_at')::bigint+120001 from intent_expected))))) t(r);
 select is((select count(*) from pg_policy where polrelid='core.resource_open_intents'::regclass),0::bigint,'No intent access policy');
 select is(api.create_resource_open_intent_server(repeat('b',64),pg_temp.intent_record(-130000)),false,'Expired record cannot issue');
 select is(api.create_resource_open_intent_server(repeat('b',64),pg_temp.intent_record(3600000)),false,'Future-issued record denied');

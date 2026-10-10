@@ -1383,6 +1383,13 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   injected Resource intent RPC adapter with strict create/consume acknowledgements,
   committed consumption and finite deadlines; database clock calibration and
   inactive retention wiring remain later prerequisites before public transport.
+- Initial push `cc8274d` passed Application, Secret/SAST/Dependency and Guard.
+  Database reset/lint/error advisors passed; pgTAP then stopped at a missing closing
+  parenthesis in the new malformed-record VALUES fixture after 71 passing assertions.
+  Corrected fixture syntax without changing runtime SQL or weakening coverage.
+  PostgreSQL parser validation passed for all 16 migration and 83 fixture statements;
+  full local quality gates, Redis and existing Product Chromium checks passed again.
+  Exact corrected-push database/all-six evidence remains PENDING until observed.
 
 ## Current local integration — 2026-10-04
 
