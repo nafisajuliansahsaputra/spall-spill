@@ -969,6 +969,22 @@ trusted operation-local calibrated Resource issuance/redemption assembly, follow
 by inactive retention. Actual privileged transport/calibration, browser/provider and
 public safety gates remain open; S5/S6 NOT CLOSED / VERIFIED.
 
+Exact clock correction `e9ae09efceee2d54cc9dfbcb24fc7aaace27a65e` passed all six
+push-event gates: CI 38079349366, Security 38079349395 and Guard 38079349383.
+Database passed 1,964 assertions, twelve races and two retention tests. This
+supersedes pending clock evidence without closing S5/S6.
+
+Contract [12.59](./technical-architecture/12.59-resource-open-calibrated-assembly-contract.md)
+stages private injected Resource issuance/redemption assembly: trusted same-Published
+context, calibration per operation, lower issuance/upper expiry bounds, consume
+before stored-record-only database deadline resolution, final upper-bound check
+and five-second abort-ignoring deadline. No retries/fallback/restoration or grants,
+credentials, scheduler, public route/CTA/analytics/publication mutation. Twenty
+assembly tests cover mocked SDK provenance/order/time/failure truth, not live RPC
+or Resource browser/provider evidence. Latest exact push gates require observation.
+Next: inactive bounded Resource retention wiring, then transport/safety evidence.
+S5/S6 remain NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
@@ -1024,7 +1040,8 @@ foundation:
 - unmounted opaque one-use Resource Open intent core under 12.55.
 - withheld durable Resource Open intent persistence under 12.56;
 - unmounted private Resource intent RPC adapter under 12.57;
-- withheld Resource database clock/deadline primitives under 12.58.
+- withheld Resource database clock/deadline primitives under 12.58;
+- unmounted calibrated Resource Open assembly under 12.59.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -1079,7 +1096,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.58 govern the staged work already present.
+public transport**. Contracts 12.12–12.59 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.

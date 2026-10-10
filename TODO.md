@@ -1456,6 +1456,34 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   recovery; runtime SQL and security constraints are unchanged. Corrected exact
   push evidence remains PENDING until observed.
 
+### Staged calibrated Resource Open assembly — 2026-10-10
+
+- Clean fetched Cloud lane at `e9ae09efceee2d54cc9dfbcb24fc7aaace27a65e`;
+  all six exact push-event gates rechecked successful: CI 38079349366, Security
+  38079349395, Guard 38079349383. Database passed 1,964 assertions / 33 files,
+  twelve concurrency cases and two retention tests, superseding clock pending
+  evidence above. Prior transient runner port conflict was resolved by retry.
+- Refreshed current authority, locked J6/J8, pinned P04 and 12.54–12.58/source.
+  Locked 12.59 before implementing injected private issuance/redemption assembly.
+  Issue reads same-Published RPC recognition/binding and calibrates separately;
+  uses lower bound for issuance and upper for expiry. Redemption commits one-use
+  consumption before strict returned-record database deadline resolution, then
+  checks the upper bound again. Five-second abort-ignoring deadline, no retries,
+  wall-clock fallback, shared calibration, restoration or TTL grace.
+- No credentials, migration/grants, scheduler, route/CTA, analytics or publication
+  writes. Return only recognition and opaque token; private binding stays server-side.
+- Twenty assembly tests cover actual pinned SDK mocked-fetch provenance/parameters,
+  distinct/per-operation bounds, calibration failure, context mismatch, replay,
+  expiry, rejected exact source, late timeout and cleanup without calibration.
+  Full typecheck/lint, five tooling tests, 1,713 application tests, six Redis,
+  eight existing Product Chromium fixtures, three builds and final diff review
+  passed. Exact latest-push six gates remain PENDING until observed; unchanged
+  Database CI remains required regression evidence.
+- Next safe slice: lock inactive bounded Resource intent retention wiring under
+  the existing pg_cron policy, including actual isolated cadence/lock/cleanup tests.
+  Trusted live RPC/calibration, Resource browser/provider, HTTP/cache/origin/abuse
+  and public publication gates remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
