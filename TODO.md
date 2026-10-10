@@ -1391,6 +1391,34 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   full local quality gates, Redis and existing Product Chromium checks passed again.
   Exact corrected-push database/all-six evidence remains PENDING until observed.
 
+### Staged private Resource intent RPC adapter — 2026-10-10
+
+- Preserved the current-thread 12.57 contract prepared before the pause; no unrelated
+  workspace edits or unpushed commits. HEAD equals explicit fetched autopilot ref
+  `b1dfa1e2669ef987ee981c2f16902c737e0cdf5e` before implementation.
+- Rechecked all six exact baseline push-event jobs: CI 38056051562, Security
+  38056051554 and Guard 38056051559 passed. Observed Database evidence: 1,910
+  assertions / 32 files, twelve concurrency cases and two retention tests. This
+  supersedes the pending corrected-store evidence above.
+- Refreshed J6/J8, pinned P04 and 12.29/12.55/12.56; implemented under locked 12.57.
+  Injected api-schema create/consume/cleanup only, strict canonical record/hash/
+  acknowledgements and bounded counts, five-second independent AbortSignal deadlines,
+  fail-closed late responses and no retries/fallback/restoration. Standalone consume
+  completes before core source resolution. No new client credentials/table access,
+  migration/grants/scheduler/route/CTA/publication mutation.
+- Fifty-five targeted tests passed including malformed/private/noncanonical input,
+  permission/transport errors, exact pinned SDK POST/schema/parameters, no retries,
+  cleanup bounds, independent deadlines, abort-ignoring late completion and denied
+  core resolution after uncertain consume. SDK mocked-fetch is not live RPC proof.
+- Full typecheck/lint, five tooling tests, 1,667 application tests, six actual
+  Redis tests, eight existing Product Chromium fixtures, three builds and final
+  diff review passed. No Resource browser/manual/provider evidence is claimed.
+- Latest push-event CI/Security/Guard remains PENDING until observed. Database
+  behavior is unchanged and isolated Database CI remains required regression.
+  Next safe dependency: lock database-clock/deadline calibration before trusted
+  Resource issuance/redemption assembly, then inactive retention wiring.
+  Resource browser/live-provider/public transport evidence and S5/S6 remain open.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

@@ -930,18 +930,26 @@ Database passed 1,801 assertions, nine concurrency cases and two retention tests
 Dependency Scan found no issues in 535 packages. Earlier pending evidence above
 is superseded by these exact results, without claiming S5/S6 closure.
 
+Exact durable-store correction `b1dfa1e2669ef987ee981c2f16902c737e0cdf5e`
+passed all six push-event gates: [CI 38056051562](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38056051562),
+[Security 38056051554](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38056051554)
+and [Guard 38056051559](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38056051559).
+Database passed 1,910 assertions across 32 files, twelve concurrency cases and two
+retention tests. This supersedes 12.56 pending evidence without closing S5/S6.
+
 Contract [12.56](./technical-architecture/12.56-resource-open-intent-store-contract.md)
-stages withheld durable private hashed Resource Open intent persistence: strict
-120-second record, fresh exact source at create, database-time bounds, atomic
-insert-if-absent/consume-delete and indexed bounded SKIP LOCKED cleanup. RLS has
-no policies and all table/helper/RPC execution remains revoked from public/anon/
-authenticated/service_role. New rolled-back schema/security fixtures and three
-isolated multi-connection tests are committed into Database CI. Local full quality
-gates passed; database reset/lint/advisors/pgTAP/races and all six exact latest-push
-gates remain PENDING until observed. No scheduler/adapter/grants/HTTP/CTA/publication
-enabling. Next: bounded private injected Resource intent RPC adapter, followed by
-database clock/deadline calibration and inactive retention wiring before transport.
-No Resource browser/live-provider proof; S5/S6 remain NOT CLOSED / VERIFIED.
+stages withheld durable private hashed Resource Open intent persistence. Contract
+[12.57](./technical-architecture/12.57-resource-open-intent-rpc-adapter-contract.md)
+adds the unmounted injected private create/consume/cleanup RPC adapter: strict
+canonical records/acknowledgements, five-second AbortSignal deadlines, standalone
+consume before source resolution and no retries/fallback/restoration. Late results
+are denied even if transport ignores abort; timeout is not proof of transaction
+cancellation. Fifty-five targeted adapter tests include pinned SDK mocked-fetch
+transport and core ordering. All grants remain withheld; no credentials, scheduler,
+route/CTA or publication enabling. Exact latest-push gates remain PENDING until
+observed. Next: bounded database clock/deadline calibration, followed by inactive
+retention wiring and trusted assembly before transport. Mocked transport is not
+Resource browser/live-provider proof; S5/S6 remain NOT CLOSED / VERIFIED.
 
 #### Integrated implementation frontier — 2026-10-06
 
@@ -996,7 +1004,8 @@ foundation:
 - withheld same-snapshot Resource recognition / private server binding under 12.53.
 - unmounted private injected-client Resource context/source RPC adapter under 12.54.
 - unmounted opaque one-use Resource Open intent core under 12.55.
-- withheld durable Resource Open intent persistence under 12.56.
+- withheld durable Resource Open intent persistence under 12.56;
+- unmounted private Resource intent RPC adapter under 12.57.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -1051,7 +1060,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.56 govern the staged work already present.
+public transport**. Contracts 12.12–12.57 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
