@@ -148,3 +148,6 @@ jobs:
 
       - name: Verify concurrent private Resource Open intent persistence
         run: node --test tests/resource-open-intent-concurrency.test.mjs
+
+      - name: Verify isolated Resource Open intent retention scheduler
+        run: node --test tests/resource-open-retention.test.mjs

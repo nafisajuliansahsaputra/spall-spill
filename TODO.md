@@ -1484,6 +1484,36 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   Trusted live RPC/calibration, Resource browser/provider, HTTP/cache/origin/abuse
   and public publication gates remain open. S5/S6 NOT CLOSED / VERIFIED.
 
+### Staged inactive Resource Open retention — 2026-10-10
+
+- Clean fetched Cloud lane at `6d4766ad5e369b61d63c6bf95fbe39dbbde18ebe`;
+  all six exact push-event gates rechecked successful: CI 38082775815, Security
+  38082775732, Guard 38082775789. Database passed 1,964 assertions / 33 files,
+  twelve concurrency cases and two Product retention tests. This supersedes
+  assembly pending evidence without closing S5/S6.
+- Refreshed current authority, locked J6/J8, pinned P04, 12.33/12.56–12.59 and
+  existing SQL/tests/CI. Locked 12.60 before implementing inactive Resource cron.
+  Reuses pg_cron; separate transaction try-lock, one indexed 500-intent cleanup
+  and own terminal history older than seven days bounded to 500. Fixed five-second
+  statement/one-second lock limits; registration and deactivation in one transaction.
+  No grants, credentials, HTTP/provider, publication/Working/Draft/safety/analytics
+  changes, TTL extension or restoration. Product intents/job remain unchanged.
+- Added rolled-back pgTAP for inactive cadence/ownership/fixed command/withheld
+  grants, 500 plus remainder cleanup and protected-state preservation. Added two
+  isolated actual multi-connection/cadence tests, restoring inactive minute job,
+  as an additive Database CI step. Node syntax and SQL statement parsing passed;
+  those are not database runtime evidence. Local Docker capacity remains insufficient.
+- Full typecheck/lint, five tooling tests, 1,713 application tests, six actual Redis,
+  eight existing Product Chromium fixtures, three builds and final diff review
+  passed (unchanged application gates used local Turbo cache where applicable).
+  New migration reset/lint/error advisors/pgTAP/races/actual Resource retention and
+  all six exact latest-push gates remain PENDING until observed in isolated CI.
+- Next safe slice: bounded private Resource action-specific abuse budget/transport
+  contract using existing Product safety patterns, without enabling public routes
+  or grants. Controlled minute-cadence/monitoring/capacity, trusted live integration,
+  Resource browser/manual/provider and publication gates remain open.
+  S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

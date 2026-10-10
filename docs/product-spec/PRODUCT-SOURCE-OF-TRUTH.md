@@ -985,6 +985,25 @@ or Resource browser/provider evidence. Latest exact push gates require observati
 Next: inactive bounded Resource retention wiring, then transport/safety evidence.
 S5/S6 remain NOT CLOSED / VERIFIED.
 
+Exact assembly commit `6d4766ad5e369b61d63c6bf95fbe39dbbde18ebe` passed all six
+push-event gates: [CI 38082775815](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38082775815),
+[Security 38082775732](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38082775732)
+and [Guard 38082775789](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38082775789).
+This supersedes assembly pending evidence; S5/S6 remain open.
+
+Contract [12.60](./technical-architecture/12.60-resource-open-retention-scheduler-contract.md)
+stages one inactive postgres-owned Resource retention job: separate try-lock,
+existing indexed cleanup once with 500 and own seven-day terminal history pruning
+bounded to 500, fixed SQL timeouts and no public/grant/credential/production changes.
+Rolled-back pgTAP covers inactive registration, grants, bounds and protected-state
+preservation; additive isolated CI tests require actual busy lock/cadence and restore
+inactive minute configuration. Local application/tooling/Redis/existing Product
+Chromium/build/diff gates passed; new Database and exact latest-push six gates
+remain PENDING until observed. Next: bounded private Resource abuse budget/transport
+contract without public enabling. Controlled minute-cadence/monitoring/capacity,
+trusted live integration, Resource browser/provider and publication gates remain
+open; S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
