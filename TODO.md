@@ -1326,6 +1326,32 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   fresh exact binding checks, database time, bounded cleanup and real concurrency
   evidence, retaining withheld execution grants and no public transport.
 
+### Resource intent recovery and framework security patch — 2026-10-10
+
+- Owner authorized recovery of preserved local commit `11cb08c`; it was pushed
+  without rewriting history from `acee5b8` to `codex/autopilot`. Clean local and
+  remote HEAD equality was verified before the security remediation below.
+- Exact recovered push: CI 38055016564 Application/Database, Security
+  38055016709 Secret Scan/SAST and Guard 38055016575 passed. Dependency Scan
+  failed with six Next.js 16.3.6 advisories (one High, five Medium), all reporting
+  16.3.8 as the fixed version. This is a real security failure, not pending infra.
+- Under the existing patched Active LTS requirement in 12.4, all three apps now
+  pin Next.js/eslint-config-next 16.3.8 and matching Next internals. The existing
+  plugin patch is byte-identical and remains version-scoped; its unused fast-glob
+  tree stays removed. Release-age/trust/build policies and scanner gates are intact.
+  Lockfile review found only intended Next versions, integrity and patch paths.
+- Frozen install, typecheck, lint, five tooling tests, 1,612 application tests,
+  six actual Redis tests, three builds, eight existing Product Chromium fixtures
+  and diff checks passed on the patched tree. The final captured verification
+  reused matching Turbo caches; Redis/tooling/browser checks ran directly.
+- No product source behavior, migration, grants, credentials or publication change.
+  All six exact security-patch push-event gates remain PENDING until observed;
+  neither recovery nor this dependency update closes S5/S6 or proves Resource
+  browser/provider/durable capability behavior.
+- Next safe task after required evidence: the bounded durable private hashed
+  Resource intent store already identified under 12.55, with a new locked contract,
+  database clock/atomic operations/cleanup/concurrency and withheld execution grants.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

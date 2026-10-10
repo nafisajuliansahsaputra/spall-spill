@@ -12,7 +12,7 @@
     "dependencies": {
         "@spall-spill/external-destination-policy": "workspace:*",
         "@spall-spill/profile-media-policy": "workspace:*",
-        "next": "16.3.6",
+        "next": "16.3.8",
         "parse5": "^8.0.1",
         "react": "19.2.8",
         "react-dom": "19.2.8"
@@ -22,7 +22,7 @@
         "@types/react": "19.2.18",
         "@types/react-dom": "19.2.5",
         "eslint": "^9",
-        "eslint-config-next": "16.3.6",
+        "eslint-config-next": "16.3.8",
         "typescript": "^5",
         "vitest": "4.1.11"
     }
