@@ -145,3 +145,6 @@ jobs:
 
       - name: Verify isolated Product intent retention scheduler
         run: node --test tests/product-click-retention.test.mjs
+
+      - name: Verify concurrent private Resource Open intent persistence
+        run: node --test tests/resource-open-intent-concurrency.test.mjs

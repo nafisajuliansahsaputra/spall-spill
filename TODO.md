@@ -1352,6 +1352,38 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   Resource intent store already identified under 12.55, with a new locked contract,
   database clock/atomic operations/cleanup/concurrency and withheld execution grants.
 
+### Withheld durable Resource Open intent persistence — 2026-10-10
+
+- Fresh clean Cloud baseline `9122f8166dcda49f70eb131b0925df8d2f51351c` passed all
+  six exact push-event gates: CI 38055281125, Security 38055281147, Guard
+  38055281143. Database passed 1,801 assertions, nine races and both retention
+  tests. OSV found no issues in 535 packages; earlier pending evidence superseded.
+- Refreshed J6/J8, 12.28/12.52–12.55 and source/migration/tests; read pinned P04
+  from bb79dce4e5ee384d3e9932504386602f60d074ce. Locked 12.56 before coding.
+  Supabase RLS documentation was read through its documentation connector after
+  direct HTTP docs/changelog access returned 403; no CLI/API upgrade was made.
+- Added private hashed Resource intent table with strict fixed-lifetime records,
+  fresh exact source resolution and database-clock bounds on create, atomic
+  create-if-absent without expired collision overwrite, consume/delete before
+  returning one still-current record, expired/future burns and bounded indexed
+  SKIP LOCKED cleanup. RLS has no policies; all public/browser/service execution
+  stays withheld. No raw token/source URL or Owner/Item UUID is persisted.
+- Added rolled-back pgTAP schema/security/strict-ingress/freshness/collision/time/
+  cleanup/state-isolation tests plus isolated duplicate-create, committed consume/
+  replay and actually-locked cleanup races, wired additively into Database CI.
+- Typecheck/lint, five tooling tests, 1,612 application tests, six actual Redis
+  tests, three builds and eight existing Product Chromium fixtures passed locally;
+  unchanged application Turbo results were reused. Node syntax and diff review
+  passed. Database behavior is not claimed locally: committed isolated CI supplies
+  required reset/lint/error advisors/pgTAP/concurrency/retention evidence.
+- Latest push-event Application/Database/Secret/SAST/Dependency/Guard evidence
+  remains PENDING until observed. No adapter, credentials, retention scheduler,
+  public grants, route/CTA or publication enabling; S5/S6 remain NOT CLOSED / VERIFIED.
+- Next bounded dependency after required evidence: lock/implement the private
+  injected Resource intent RPC adapter with strict create/consume acknowledgements,
+  committed consumption and finite deadlines; database clock calibration and
+  inactive retention wiring remain later prerequisites before public transport.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

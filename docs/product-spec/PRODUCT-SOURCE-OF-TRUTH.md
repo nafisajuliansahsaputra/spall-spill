@@ -924,6 +924,25 @@ Resource intent store above. S5/S6 closure and Goal completion remain unproven.
 
 ### Current implementation checkpoint
 
+Exact security/recovery push `9122f8166dcda49f70eb131b0925df8d2f51351c`
+passed all six gates: CI 38055281125, Security 38055281147 and Guard 38055281143.
+Database passed 1,801 assertions, nine concurrency cases and two retention tests;
+Dependency Scan found no issues in 535 packages. Earlier pending evidence above
+is superseded by these exact results, without claiming S5/S6 closure.
+
+Contract [12.56](./technical-architecture/12.56-resource-open-intent-store-contract.md)
+stages withheld durable private hashed Resource Open intent persistence: strict
+120-second record, fresh exact source at create, database-time bounds, atomic
+insert-if-absent/consume-delete and indexed bounded SKIP LOCKED cleanup. RLS has
+no policies and all table/helper/RPC execution remains revoked from public/anon/
+authenticated/service_role. New rolled-back schema/security fixtures and three
+isolated multi-connection tests are committed into Database CI. Local full quality
+gates passed; database reset/lint/advisors/pgTAP/races and all six exact latest-push
+gates remain PENDING until observed. No scheduler/adapter/grants/HTTP/CTA/publication
+enabling. Next: bounded private injected Resource intent RPC adapter, followed by
+database clock/deadline calibration and inactive retention wiring before transport.
+No Resource browser/live-provider proof; S5/S6 remain NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
@@ -977,6 +996,7 @@ foundation:
 - withheld same-snapshot Resource recognition / private server binding under 12.53.
 - unmounted private injected-client Resource context/source RPC adapter under 12.54.
 - unmounted opaque one-use Resource Open intent core under 12.55.
+- withheld durable Resource Open intent persistence under 12.56.
 
 This implementation frontier does **not** mean S5 or S6 is CLOSED / VERIFIED.
 The last fully closed checkpoint remains S4 because later journey-level,
@@ -1031,7 +1051,7 @@ No J1–J9 User Flow topology change is required.
 
 The last fully CLOSED / VERIFIED checkpoint remains **S4**, while the active
 implementation frontier is **O01-S6 — Preview & Publish / first-publication and
-public transport**. Contracts 12.12–12.55 govern the staged work already present.
+public transport**. Contracts 12.12–12.56 govern the staged work already present.
 S5/S6 remain **NOT CLOSED / VERIFIED** until their remaining journey, public
 transport/publication, provider, runtime/manual, and remote evidence gates are
 actually satisfied.
