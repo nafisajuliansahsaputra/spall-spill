@@ -1724,6 +1724,38 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   cache/provider, retention monitoring/capacity, publication and full journey gates
   remain open. This is a bounded evidence checkpoint, not Goal completion.
 
+### Private handler-specific Resource HTTP budgets — 2026-10-11
+
+- Continued independent unmounted security composition from clean pushed
+  `8a619fd0f44b41dc1b594c1b1f540c23f7cb0d20` while CI evidence was pending.
+  Before this commit all six exact push-event gates passed:
+  [CI 38176004666](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176004666),
+  [Security 38176004673](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176004673),
+  [Guard 38176004667](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176004667).
+  Application includes eight Resource Chromium cases; Database passed 2,019
+  assertions / 34 files and all committed concurrency/retention checks.
+  Supersedes 12.67 pending evidence. No public enablement or S5/S6 closure.
+- Refreshed 12.61/12.62/12.64/12.65, existing Product budget/HTTP composition and
+  actual Resource SDK/REST source/tests. Locked 12.68 before production code.
+  Added unmounted server-only HTTP factory requiring private client, canonical
+  origin, explicit policy, Redis transport and trusted opaque identity resolver.
+  Internally selected issue cost four and JSON/native redemption cost three;
+  replay gets a fresh permit. No bundle/default/permissive permit/identity inference.
+- 21 actual SDK-fetch/REST fixture cases passed: native/JSON issuance-redemption-
+  replay, exact attribution, Resource-only request keys/shared work slot, per-request
+  identity/token confinement, failed/noncanonical budget, missing dependencies,
+  invalid identity, origin-before-permit, caller cost injection and insufficient
+  capacity. Rejected redemption budget preserves intent without starting RPC.
+- Full typecheck/lint, five tooling tests, 2,024 application tests, nine actual Redis
+  cases, eight Product and eight Resource Chromium cases, three builds and final
+  diff review passed. Exact latest-push six gates remain PENDING until observed.
+  No database change. Mocked SDK/REST/store is not live integration/concurrency proof.
+- No public route/grant, credentials/provider config, analytics, publication or
+  Working/Draft change. Next safe task: separately contract Resource network subject
+  derivation and trusted metadata HTTP composition. Live deployed identity/Redis/
+  cache/provider, capacity/retention monitoring, publication and full journey gates
+  remain open. S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

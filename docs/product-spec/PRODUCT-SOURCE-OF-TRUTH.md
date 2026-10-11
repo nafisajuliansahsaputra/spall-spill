@@ -1143,6 +1143,27 @@ retention monitoring/capacity and publication/full journey gates remain open.
 Next: separately contract trusted Resource network identity/distributed-permit HTTP
 composition before mounting. S5/S6 NOT CLOSED / VERIFIED; Goal remains unfinished.
 
+Exact browser commit `8a619fd0f44b41dc1b594c1b1f540c23f7cb0d20` passed six
+push-event gates: [CI 38176004666](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176004666),
+[Security 38176004673](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176004673)
+and [Guard 38176004667](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176004667).
+Application includes eight Resource Chromium cases; Database passed 2,019 assertions /
+34 files and all committed concurrency/retention checks. Supersedes 12.67 pending
+evidence; S5/S6 remain open.
+
+Contract [12.68](./technical-architecture/12.68-resource-budgeted-http-contract.md)
+stages private handler-selected Resource HTTP/distributed-budget composition with
+mandatory explicit policy/Redis/trusted opaque identity. Issue costs four, JSON/native
+redemption costs three and replay requires fresh admission. 21 actual SDK-fetch/REST
+fixture cases and all local quality/Redis/Product+Resource browser gates passed;
+exact latest-push six gates remain PENDING until observed. This independent slice
+began while 12.67 CI evidence was pending and its six gates passed before this commit;
+no dependent public path or closure advanced. No route/grant, credentials/provider, analytics, publication
+or Working/Draft change. Fixtures do not prove deployed identity/Redis/provider/RPC.
+Next: contract Resource network subject derivation/trusted metadata HTTP composition
+before mounting. Live transport/cache/provider, capacity/retention monitoring,
+publication and full journey gates remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
