@@ -1756,6 +1756,25 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   cache/provider, capacity/retention monitoring, publication and full journey gates
   remain open. S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
 
+### Resource budget HTTP fixture cleanup / exact-push evidence — 2026-10-11
+
+- Commit `0d0fc007195ab46995619b39f1f7490f588c2ba1` passed all six exact
+  push-event gates: [CI 38176259824](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176259824),
+  [Security 38176259809](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176259809),
+  [Guard 38176259785](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176259785).
+  Database passed 2,019 assertions / 34 files, twelve concurrency and four retention
+  cases. Supersedes 12.68 pending evidence for that exact commit.
+- Remote lint passed with one new unused fixture-parameter warning. Use an explicit
+  mock function type instead of an unused implementation parameter, preserving
+  typed per-request assertions and identical fixture behavior. Production source
+  and 12.68 contract are unchanged. Re-run complete local gates and verify the exact
+  cleanup push independently; latest-push evidence remains PENDING until observed.
+- Cleanup full typecheck/lint (new warning absent), five tooling, 2,024 application,
+  nine actual Redis, eight Product/eight Resource Chromium, three builds and diff
+  review passed. Unchanged package checks may reuse verified Turbo cache.
+- Next safe task and all live/publication/full-journey gates remain unchanged.
+  This cleanup/evidence checkpoint does not close S5/S6 or complete the Goal.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

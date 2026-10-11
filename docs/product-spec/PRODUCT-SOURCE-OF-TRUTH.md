@@ -1164,6 +1164,16 @@ Next: contract Resource network subject derivation/trusted metadata HTTP composi
 before mounting. Live transport/cache/provider, capacity/retention monitoring,
 publication and full journey gates remain open. S5/S6 NOT CLOSED / VERIFIED.
 
+Exact budget HTTP commit `0d0fc007195ab46995619b39f1f7490f588c2ba1` passed six
+push-event gates: [CI 38176259824](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176259824),
+[Security 38176259809](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176259809)
+and [Guard 38176259785](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176259785).
+Database passed 2,019 assertions / 34 files, twelve concurrency and four retention
+cases. Supersedes 12.68 pending evidence for that exact commit. An unused fixture
+parameter warning is removed by typing the mock signature explicitly, with no
+production/contract behavior change. Cleanup push requires its own six gates;
+latest evidence remains PENDING until observed. Next safe task and S5/S6 gates stay open.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

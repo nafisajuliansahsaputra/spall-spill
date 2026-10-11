@@ -27,7 +27,7 @@ function fixture() {
   const client = createClient("https://sdk-fixture.example.test", "test-only-publishable-placeholder", {
     auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }, global: { fetch: sdkFetch } });
   const rest = vi.fn<typeof fetch>(async () => new Response('{"result":1}', { headers: { "content-type": "application/json" } }));
-  const identity = vi.fn(async (_request: Request): Promise<unknown> => "trusted-resource-subject");
+  const identity = vi.fn<(request: Request) => Promise<unknown>>(async () => "trusted-resource-subject");
   const policy = { namespace: "resource-test", window_ms: 60000, issue_limit: 100, redeem_limit: 100, work_limit: 1000 };
   const redis = createResourceOpenUpstashBudgetTransport({ origin: "https://fixture.upstash.io", namespace: policy.namespace,
     token: "test-only-bearer-placeholder" }, rest);
