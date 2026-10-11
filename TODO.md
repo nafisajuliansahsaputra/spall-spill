@@ -1689,6 +1689,41 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   identity/Redis/cache/provider, retention monitoring/capacity and publication gates
   remain open. S5/S6 NOT CLOSED / VERIFIED.
 
+### Isolated Resource native browser navigation — 2026-10-11
+
+- Clean fetched lane at `aae78ce3ff041aec9696f13500cd70ce40750785`; all six exact
+  push-event gates passed: [CI 38171785178](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38171785178),
+  [Security 38171785152](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38171785152),
+  [Guard 38171785139](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38171785139).
+  Supersedes 12.66 pending evidence. S5/S6 remain open.
+- Refreshed AGENTS/bootstrap, canonical checkpoint/protocol/runbook, J6/J8, pinned
+  P04 and 12.59/12.65/12.66 source/tests. Locked 12.67 before implementation.
+  Added isolated actual Chromium fixtures using production CSS, exact issued
+  recognition/token, existing renderer and private native HTTP redemption.
+- Eight Resource Chromium cases passed: recognition before one explicit semantic
+  action, 44px touch height, exact native fields and attribution-preserving 303,
+  no external Referer, replay/context/expiry/fresh-safety/permit denial, and
+  missing-token/degraded contextual recovery without forms. Consumed tokens are
+  never restored; denied permit preserves token and performs no RPC.
+- Initial fixture no-referrer context made Chromium send Origin null, correctly
+  denied before permit/RPC. Corrected context fixture to same-origin and added
+  explicit null-Origin negative browser proof. Future context transport must retain
+  same-origin native Origin; strict validation is not relaxed. Outbound responses
+  retain no-referrer. Every page request is intercepted; external response is a stub.
+- Added separate required Resource browser config/command and CI Application step
+  after build, preserving Product browser gate. Full typecheck/lint, five tooling
+  tests, 2,003 application tests, nine actual Redis cases, eight Product Chromium
+  cases, eight Resource Chromium cases, three builds and diff review passed.
+  Exact latest-push six gates remain PENDING until observed. No database change.
+- No public route/grant, credentials/provider configuration, production source,
+  analytics, publication or Working/Draft change. SDK-fetch/storage/permit fixtures
+  are not deployed privileged RPC, database concurrency, trusted network metadata,
+  distributed Redis or live provider/cache evidence. S5/S6 NOT CLOSED / VERIFIED.
+- Next safe task: separately contract trusted Resource network identity and
+  distributed-permit HTTP composition before any public mount. Live transport/
+  cache/provider, retention monitoring/capacity, publication and full journey gates
+  remain open. This is a bounded evidence checkpoint, not Goal completion.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

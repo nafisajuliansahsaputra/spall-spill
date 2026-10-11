@@ -79,6 +79,13 @@ jobs:
           "$SPALL_TEST_BROWSER" --version
           pnpm --filter @spall-spill/web test:click-browser
 
+      - name: Isolated Resource browser tests
+        run: |
+          export SPALL_TEST_BROWSER="$(command -v google-chrome || command -v chromium)"
+          test -n "$SPALL_TEST_BROWSER"
+          "$SPALL_TEST_BROWSER" --version
+          pnpm --filter @spall-spill/web test:resource-browser
+
   database:
     name: Database
     if: github.event_name != 'pull_request' || github.head_ref != 'codex/autopilot'

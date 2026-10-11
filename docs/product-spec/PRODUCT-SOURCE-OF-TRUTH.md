@@ -1121,6 +1121,28 @@ context-before-Open, attribution and replay/context/safety/expiry/permit denial.
 Live transport/identity/Redis/cache/provider, retention monitoring/capacity and
 publication evidence remain open. S5/S6 NOT CLOSED / VERIFIED.
 
+Exact renderer commit `aae78ce3ff041aec9696f13500cd70ce40750785` passed six
+push-event gates: [CI 38171785178](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38171785178),
+[Security 38171785152](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38171785152)
+and [Guard 38171785139](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38171785139).
+This supersedes 12.66 pending evidence; S5/S6 remain open.
+
+Contract [12.67](./technical-architecture/12.67-resource-native-browser-fixture-contract.md)
+adds eight isolated actual Resource Chromium cases through exact issued recognition/
+token, existing renderer/native HTTP and production CSS. Context precedes explicit
+semantic action; exact URL attribution, no external Referer and replay/context/
+expiry/safety/permit denial are observed. Null-token/degraded recovery has no action.
+A separate negative fixture confirms no-referrer context yields Origin null, denied
+before permit/RPC; main context uses same-origin policy without relaxing validation.
+Separate mandatory Resource browser CI step preserves Product gate. Full local
+quality/Redis/Product browser gates passed; exact latest-push six gates remain PENDING
+until observed. No production source, route/grant, credentials/provider, analytics,
+publication or Working/Draft change. All page requests are intercepted; provider is
+stubbed, not contacted. Live privileged transport/network identity/Redis/cache/provider,
+retention monitoring/capacity and publication/full journey gates remain open.
+Next: separately contract trusted Resource network identity/distributed-permit HTTP
+composition before mounting. S5/S6 NOT CLOSED / VERIFIED; Goal remains unfinished.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
