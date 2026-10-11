@@ -1546,6 +1546,37 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   retention monitoring/capacity and publication gates remain open.
   S5/S6 NOT CLOSED / VERIFIED.
 
+### Staged private Resource Upstash budget transport — 2026-10-11
+
+- Clean fetched lane at `dc61d7e5a9003c4ac87494ef38b54af716f9405f`;
+  rechecked all six exact push-event gates successful: CI 38097950363,
+  Security 38097950318, Guard 38097950371. Database passed 2,019 assertions / 34
+  files, twelve races and four actual retention cases. Supersedes prior budget
+  pending evidence without closing S5/S6 or claiming live provider evidence.
+- Refreshed canonical checkpoint/protocol/Cloud runbook, J6/J8, pinned P04,
+  12.41/12.61 and affected source/tests. Locked 12.62 before private transport.
+  Accepts only exact Lua, same-slot Resource namespace/digest action/work keys
+  and issue four/redeem three costs. Product keys and bundle cost deny locally.
+  Injected canonical HTTPS Upstash origin/token; no environment/credential reads,
+  dependency/provider config or live call. Bearer stays only in request headers.
+- No-store POST EVAL, redirects/retries denied; whole fetch/read/decision has
+  1.5-second abort/monotonic ceiling under existing two-second permit. Strict
+  4,096-byte/4,097-read framing and declared/actual length equality, UTF-8 and
+  sole literal result 0/1. Late/invalid/error responses deny and abandoned reads
+  cancel without waiting. No grants, routes/CTA, publication or Working/Draft change.
+- Fifty-five targeted cases cover exact protocol, costs/key isolation, framing,
+  denial/error/abort/monotonic/timeout/late body cancellation and both permit
+  operations. Full typecheck/lint, five tooling tests, 1,800 application tests,
+  nine actual Redis tests, eight existing Product Chromium fixtures, three builds
+  and final diff review passed. Exact latest-push six gates remain PENDING until
+  observed; unchanged isolated Database regression still required.
+- Next safe slice: bounded private Resource request/origin/body/no-store contract
+  and strict issuance/redemption HTTP assembly, preserving lightweight J6/J8 context
+  before Open without Product chooser fields. Public mounting/grants, trusted live
+  identity/RPC/Redis, Resource browser/provider, controlled minute retention
+  monitoring/capacity and first publication gates remain open.
+  S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

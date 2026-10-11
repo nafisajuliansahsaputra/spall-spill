@@ -1024,6 +1024,24 @@ Resource-key-confined Upstash transport, then request/origin/body/cache/native-a
 assembly. Actual trusted/live integration, Resource browser/provider and controlled
 minute retention monitoring/capacity/publication gates remain open. S5/S6 NOT CLOSED.
 
+Exact budget commit `dc61d7e5a9003c4ac87494ef38b54af716f9405f` passed all six
+push-event gates: [CI 38097950363](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38097950363),
+[Security 38097950318](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38097950318)
+and [Guard 38097950371](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38097950371).
+This supersedes budget pending evidence; S5/S6 remain open.
+
+Contract [12.62](./technical-architecture/12.62-resource-open-upstash-budget-transport-contract.md)
+stages private Resource-key-confined Upstash EVAL transport: exact Lua/namespace/
+digest and 4/3 cost agreement, canonical HTTPS/Bearer configuration, no-store POST
+without redirects/retries, 1.5-second bounded response and strict byte/read/length/
+UTF-8/literal-result framing. Fifty-five fixtures cover protocol/confinement/failure/
+late truth and both Resource permits; full local gates passed. No live credentials,
+provider configuration, routes/grants/CTA or publication/Working/Draft changes.
+Exact latest-push CI/Database/Security/Guard remains PENDING until observed. Next:
+bounded private Resource request/origin/body/no-store and strict HTTP assembly.
+Live runtime/provider, Resource browser/cache, retention monitoring/capacity and
+publication gates remain open; S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
