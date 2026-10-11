@@ -172,3 +172,47 @@ describe("unmounted strict private Resource HTTP assembly", () => {
     expect((await pending).status).toBe(403); expect((await pending).headers.has("Location")).toBe(false);
   });
 });
+
+function formRequest(fields: Record<string, unknown>, signal?: AbortSignal) {
+  return new Request(`${origin}/staged-action`, { method: "POST", headers: { origin,
+    "content-type": "application/x-www-form-urlencoded", "sec-fetch-mode": "navigate", "sec-fetch-dest": "document" },
+    body: new URLSearchParams(Object.entries(fields).map(([key, value]) => [key, String(value)])), ...(signal ? { signal } : {}) });
+}
+describe("unmounted native Resource redemption assembly", () => {
+  it("redeems through actual SDK committed record with exact Location and replay denial", async () => {
+    const f = fixture(); const issued = await (await f.http.issue(request(locator))).json(); const stored = [...f.records.values()][0];
+    const native = formRequest({ ...context, token: issued.token }); const response = await f.http.redeemForm(native);
+    expect(response.status).toBe(303); cacheTruth(response); expect(response.headers.get("Location")).toBe(originalUrl);
+    expect(await response.text()).toBe(""); expect(f.records.size).toBe(0); expect(f.permit).toHaveBeenLastCalledWith(native, "redeem");
+    expect(f.calls.at(-1)).toEqual({ name: "resolve_resource_open_intent_source_server", args: { input_record: stored } });
+    await denial(await f.http.redeemForm(formRequest({ ...context, token: issued.token })));
+  });
+  it.each([{ token: "bad" }, { token: "A".repeat(42) + "B" }, { handle: "../creator" }, { spill_reference: "027" },
+    { provider_key: "shopee" }, { source_url: originalUrl }, { input_record: {} }])("rejects invalid/private native authority before RPC %j", async other => {
+    const f = fixture(); await denial(await f.http.redeemForm(formRequest({ ...context, token: "A".repeat(43), ...other })));
+    expect(f.fetcher).not.toHaveBeenCalled();
+  });
+  it.each([{ handle: "another" }, { spill_reference: 28 }])("burns native cross-context token %j", async other => {
+    const f = fixture(); const issued = await (await f.http.issue(request(locator))).json();
+    await denial(await f.http.redeemForm(formRequest({ ...context, token: issued.token, ...other }))); expect(f.records.size).toBe(0);
+    expect(f.calls.at(-1)!.name).toBe("consume_resource_open_intent_server");
+  });
+  it.each(["unsafe", "expired", "abort", "provider-error"])("denies native fresh %s without restoration", async state => {
+    const f = fixture(); const issued = await (await f.http.issue(request(locator))).json(); const controller = new AbortController();
+    if (state === "unsafe") f.unsafe(); else if (state === "expired") f.expire();
+    const normal = f.fetcher.getMockImplementation()!;
+    f.fetcher.mockImplementation(async (input, options) => {
+      const response = await normal(input, options);
+      if (state === "abort" && String(input).endsWith("consume_resource_open_intent_server")) controller.abort();
+      if (state === "provider-error" && String(input).endsWith("resolve_resource_open_intent_source_server"))
+        return new Response(JSON.stringify({ message: "private" }), { status: 403 });
+      return response;
+    });
+    await denial(await f.http.redeemForm(formRequest({ ...context, token: issued.token }, controller.signal))); expect(f.records.size).toBe(0);
+  });
+  it("preserves separate JSON/form media policies and no native issuance", async () => {
+    const f = fixture(); await denial(await f.http.issue(formRequest(locator)));
+    await denial(await f.http.redeem(formRequest({ ...context, token: "A".repeat(43) })));
+    await denial(await f.http.redeemForm(request({ ...context, token: "A".repeat(43) }))); expect(f.fetcher).not.toHaveBeenCalled();
+  });
+});

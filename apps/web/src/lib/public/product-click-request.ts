@@ -13,7 +13,8 @@ async function bounded<T>(promise: Promise<T>): Promise<T> {
 
 /** Unmounted primitive. Permit must use a trusted distributed adapter before enabling. */
 async function readEncodedRequest(request: Request, trustedOrigin: string, action: ProductClickAction,
-  permit: (action: ProductClickAction) => Promise<unknown>, native: boolean): Promise<unknown | null> {
+  permit: (action: ProductClickAction) => Promise<unknown>, decodeNative?: (text: string) => unknown): Promise<unknown | null> {
+  const native = decodeNative !== undefined;
   let reader: ReadableStreamDefaultReader<Uint8Array> | undefined;
   let completed = false;
   try {
@@ -52,7 +53,7 @@ async function readEncodedRequest(request: Request, trustedOrigin: string, actio
       const bytes = new Uint8Array(size); let offset = 0;
       for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
       const text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
-      return native ? decodeNativeRedemption(text) : JSON.parse(text) as unknown;
+      return decodeNative ? decodeNative(text) : JSON.parse(text) as unknown;
     })());
     completed = true;
     reader.releaseLock();
@@ -65,13 +66,19 @@ async function readEncodedRequest(request: Request, trustedOrigin: string, actio
 
 export function readProductClickRequest(request: Request, trustedOrigin: string, action: ProductClickAction,
   permit: (action: ProductClickAction) => Promise<unknown>): Promise<unknown | null> {
-  return readEncodedRequest(request, trustedOrigin, action, permit, false);
+  return readEncodedRequest(request, trustedOrigin, action, permit);
 }
 
 /** Separate native redemption only; JSON interfaces keep their original media policy. */
 export function readProductClickFormRequest(request: Request, trustedOrigin: string,
   permit: (action: ProductClickAction) => Promise<unknown>): Promise<unknown | null> {
-  return readEncodedRequest(request, trustedOrigin, "redeem", permit, true);
+  return readNativeRedemptionRequest(request, trustedOrigin, permit, decodeNativeRedemption);
+}
+
+/** Shared bounded native transport; only an injected server decoder chooses fields. */
+export function readNativeRedemptionRequest(request: Request, trustedOrigin: string,
+  permit: (action: ProductClickAction) => Promise<unknown>, decode: (text: string) => unknown): Promise<unknown | null> {
+  return readEncodedRequest(request, trustedOrigin, "redeem", permit, decode);
 }
 
 function decodeNativeRedemption(text: string): unknown {

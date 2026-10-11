@@ -2,7 +2,7 @@ import "server-only";
 import { z } from "zod";
 import { publicHandleSchema } from "./locators";
 import { parseExactSpillReferenceLocator } from "./exact-reference-locator";
-import { readProductClickRequest } from "./product-click-request";
+import { readProductClickRequest, readNativeRedemptionRequest } from "./product-click-request";
 import type { ResourceOpenAction } from "./resource-open-budget";
 
 const redemption = z.object({ handle: publicHandleSchema,
@@ -21,6 +21,30 @@ export async function readResourceOpenRequest(request: Request, origin: string, 
     const locator = parseExactSpillReferenceLocator(input);
     return locator === null ? null : { handle: locator.handle, reference: String(locator.spill_reference) };
   }
+  const parsed = redemption.safeParse(input);
+  return parsed.success ? parsed.data : null;
+}
+
+/** Separate form redemption; JSON media and DTO policies remain unchanged. */
+export async function readResourceOpenFormRequest(request: Request, origin: string,
+  permit: (request: Request, action: ResourceOpenAction) => Promise<unknown>): Promise<z.infer<typeof redemption> | null> {
+  const input = await readNativeRedemptionRequest(request, origin, action => permit(request, action), text => {
+    const pairs = text.split("&");
+    if (pairs.length !== 3) throw new Error("unavailable");
+    const values = new Map<string, string>();
+    const decode = (value: string) => decodeURIComponent(value.replace(/\+/g, " "));
+    for (const pair of pairs) {
+      const parts = pair.split("=");
+      if (parts.length !== 2) throw new Error("unavailable");
+      const key = decode(parts[0]!); const value = decode(parts[1]!);
+      if (!["handle", "spill_reference", "token"].includes(key) || values.has(key) || !value) throw new Error("unavailable");
+      values.set(key, value);
+    }
+    const reference = values.get("spill_reference")!;
+    if (!/^[1-9][0-9]{0,15}$/.test(reference) || !Number.isSafeInteger(Number(reference))) throw new Error("unavailable");
+    return { handle: values.get("handle"), spill_reference: Number(reference), token: values.get("token") };
+  });
+  if (input === null || request.signal.aborted) return null;
   const parsed = redemption.safeParse(input);
   return parsed.success ? parsed.data : null;
 }

@@ -2,7 +2,7 @@ import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { ResourceOpenAction } from "./resource-open-budget";
 import { createPublishedResourceOpenIssuance } from "./resource-open-issuance";
-import { readResourceOpenRequest, resourceOpenNoStoreHeaders, unavailableResourceOpenResponse } from "./resource-open-request";
+import { readResourceOpenRequest, readResourceOpenFormRequest, resourceOpenNoStoreHeaders, unavailableResourceOpenResponse } from "./resource-open-request";
 
 async function resultWithinDeadline<T>(promise: Promise<T>): Promise<T> {
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -13,12 +13,24 @@ async function resultWithinDeadline<T>(promise: Promise<T>): Promise<T> {
   } finally { clearTimeout(timer); }
 }
 
-/** Unmounted JSON handlers. No credentials, public routes or permissive limiter. */
+/** Unmounted JSON/native handlers. No credentials, public routes or permissive limiter. */
 export function createResourceOpenHttpBoundary({ client, origin, permit }: {
   client: Pick<SupabaseClient, "schema">; origin: string;
   permit: (request: Request, action: ResourceOpenAction) => Promise<unknown>;
 }) {
   const issuance = createPublishedResourceOpenIssuance(client);
+  async function redeem(request: Request, native: boolean): Promise<Response> {
+    try {
+      const input = native ? await readResourceOpenFormRequest(request, origin, permit)
+        : await readResourceOpenRequest(request, origin, "redeem", permit);
+      if (input === null || !("token" in input) || request.signal.aborted) return unavailableResourceOpenResponse();
+      const { token, ...context } = input;
+      const source = await resultWithinDeadline(issuance.redeem(token, context));
+      if (source === null || request.signal.aborted) return unavailableResourceOpenResponse();
+      const headers = resourceOpenNoStoreHeaders(); headers.set("Location", source);
+      return new Response(null, { status: 303, headers });
+    } catch { return unavailableResourceOpenResponse(); }
+  }
   return {
     async issue(request: Request): Promise<Response> {
       try {
@@ -30,16 +42,7 @@ export function createResourceOpenHttpBoundary({ client, origin, permit }: {
         return new Response(JSON.stringify(result), { status: 200, headers });
       } catch { return unavailableResourceOpenResponse(); }
     },
-    async redeem(request: Request): Promise<Response> {
-      try {
-        const input = await readResourceOpenRequest(request, origin, "redeem", permit);
-        if (input === null || !("token" in input) || request.signal.aborted) return unavailableResourceOpenResponse();
-        const { token, ...context } = input;
-        const source = await resultWithinDeadline(issuance.redeem(token, context));
-        if (source === null || request.signal.aborted) return unavailableResourceOpenResponse();
-        const headers = resourceOpenNoStoreHeaders(); headers.set("Location", source);
-        return new Response(null, { status: 303, headers });
-      } catch { return unavailableResourceOpenResponse(); }
-    },
+    redeem: (request: Request) => redeem(request, false),
+    redeemForm: (request: Request) => redeem(request, true),
   };
 }

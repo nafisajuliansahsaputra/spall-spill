@@ -1635,6 +1635,34 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   Resource browser/cache/provider, retention monitoring/capacity and publication
   gates remain open. S5/S6 NOT CLOSED / VERIFIED.
 
+### Staged private Resource native POST redemption — 2026-10-11
+
+- Refetched clean lane at `5cdbd076d9e87e5ca92f7b61dc0688da0b8b956f` after all
+  six exact push-event gates passed: CI 38146699695 (Application/Database),
+  Security 38146699406 (Secret/SAST/Dependency), Guard 38146699412. Database
+  passed 2,019 assertions / 34 files, twelve races and four retention cases.
+  Supersedes 12.64 pending evidence; no S5/S6 closure or live claim.
+- Refreshed changed authority/checkpoint, J6/J8/pinned P04, 12.34/12.36/12.63/
+  12.64 and affected Product/Resource source/tests. Locked 12.65 before coding.
+  Shared bounded native transport now accepts a server-injected decoder; Product
+  retains its unchanged four-field decoder. Resource requires exactly three fields,
+  strict framing/UTF-8/percent decoding, canonical numeric reference/token and Handle
+  normalization. Reject Product/private fields and duplicate decoded names.
+- Added unmounted redeemForm sharing existing calibrated consume-first redemption,
+  exact empty 303 and generic no-store/no-referrer denial. JSON methods retain their
+  media policy; no native issuance, public route, grants, credential/provider config,
+  UI or Working/Draft/publication change. No consumed-token restore/retry.
+- 67 new native request cases and 15 actual-SDK fetch HTTP cases passed; 313 targeted
+  Resource/Product transport regression tests passed. Full typecheck/lint, five
+  tooling tests, 1,981 application tests, nine actual Redis cases, eight existing
+  Product Chromium fixtures, three builds and final diff review passed. Exact latest
+  six push-event gates remain PENDING until observed. No database change.
+- Next safe task: lock exact trusted recognition/token native Resource action
+  composition and prove recognition-before-explicit-Open through actual isolated
+  Resource Chromium navigation fixtures. This requires no public mounting. Live
+  privileged transport/identity/Redis, Resource cache/provider, retention monitoring/
+  capacity and publication evidence remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

@@ -1082,6 +1082,25 @@ recognition-before-action browser wiring. Live privileged transport/identity/Red
 Resource browser/cache/provider, retention monitoring/capacity and publication
 evidence remain open. S5/S6 NOT CLOSED / VERIFIED.
 
+Exact HTTP assembly commit `5cdbd076d9e87e5ca92f7b61dc0688da0b8b956f` passed all
+six push-event gates: [CI 38146699695](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38146699695),
+[Security 38146699406](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38146699406)
+and [Guard 38146699412](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38146699412).
+Database passed 2,019 assertions / 34 files, twelve races and four retention cases.
+This supersedes 12.64 pending evidence; S5/S6 remain open.
+
+Contract [12.65](./technical-architecture/12.65-resource-open-native-post-contract.md)
+stages strict three-field native Resource redemption using a shared bounded native
+transport with server-selected decoder and unchanged Product four-field policy.
+Unmounted redeemForm shares 12.64 calibrated redemption/exact 303 and generic
+no-store denial; JSON media stays separate. 82 new cases/313 targeted transport
+regressions and full local gates passed. No route/grant, credential/provider config,
+UI, publication or Working/Draft changes. Latest exact-push six gates remain PENDING
+until observed. Next: separately contract trusted recognition/token native Resource
+action composition and actual isolated Chromium recognition-before-explicit-Open
+navigation. Live transport/identity/Redis, Resource cache/provider, retention
+monitoring/capacity and publication remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
