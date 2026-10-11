@@ -40,7 +40,8 @@ describe("bounded private Resource Upstash budget transport", () => {
       } });
     expect(await permit(new Request("https://app.example.test/staged"), operation)).toBe(true);
     const command = JSON.parse(String(f.fetcher.mock.calls[0]![1]?.body)) as string[];
-    expect(command[3]).toMatch(new RegExp(`^spall-resource-open:test:\\{[a-f0-9]{64}\\}:${operation}$`));
+    expect(command[3]).toMatch(/^spall-resource-open:test:\{[a-f0-9]{64}\}:(issue|redeem)$/);
+    expect(command[3]!.endsWith(`:${operation}`)).toBe(true);
     expect(command.slice(5)).toEqual(["60000", operation === "issue" ? "10" : "20", "100", operation === "issue" ? "4" : "3"]);
   });
   it("denies a nonfinite initial clock before network", async () => {

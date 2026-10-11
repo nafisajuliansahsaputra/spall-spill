@@ -1570,6 +1570,10 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   nine actual Redis tests, eight existing Product Chromium fixtures, three builds
   and final diff review passed. Exact latest-push six gates remain PENDING until
   observed; unchanged isolated Database regression still required.
+- Initial transport push `1f6b8b9` failed SAST on a dynamic RegExp in the test
+  fixture. Replaced it with a literal key-shape pattern and exact operation suffix
+  assertion; no scan suppression or runtime change. Repeated full local gates
+  passed with the same counts; corrected exact-push evidence remains pending.
 - Next safe slice: bounded private Resource request/origin/body/no-store contract
   and strict issuance/redemption HTTP assembly, preserving lightweight J6/J8 context
   before Open without Product chooser fields. Public mounting/grants, trusted live
