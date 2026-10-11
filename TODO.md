@@ -1607,6 +1607,34 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   minute retention monitoring/capacity and publication gates remain open.
   S5/S6 NOT CLOSED / VERIFIED.
 
+### Staged private Resource HTTP response assembly — 2026-10-11
+
+- Clean verified lane at `ac7be2228c199d2f9b9676ab8ba9f9bc4c1c4812`.
+  All six exact push-event gates passed: CI 38143301651 (Application/Database),
+  Security 38143301638 (Secret/SAST/Dependency), Guard 38143301656. Database
+  passed 2,019 assertions / 34 files, twelve races and four actual retention
+  cases. Supersedes 12.63 pending evidence; no S5/S6 closure or live claim.
+- Refreshed current authority, protocol/runbook, J6/J8, pinned P04, 12.35/12.59/
+  12.63 and affected source/tests. Locked bounded 12.64 before implementation.
+  Private JSON issue/redeem handlers assemble existing calibrated Resource
+  issuance internally. Public-only 200 recognition/token; empty 303 exact source
+  only after committed consumption and final stored-record safety/deadline check.
+  Fresh no-store/no-referrer headers, generic 403, ten-second result deadline,
+  abort/late denial, no retry/restoration. No native form or public mounting.
+- 39 new actual-SDK fetch fixtures and 119 targeted tests passed. Location
+  construction failure is injected; unnormalized Unicode source already denies
+  before creation. Aggregate RPC delay exercises late committed creation without
+  returning authority. Fixtures are not live RPC/provider or Resource browser proof.
+- Typecheck/lint, five tooling tests, 1,899 application tests, nine actual Redis
+  cases, eight existing Product Chromium fixtures, three builds and final diff
+  review passed. Exact latest-push six gates remain PENDING until observed.
+- No migrations/grants, credentials/provider configuration, publication or
+  Working/Draft changes. Next safe task: separately lock strict bounded native
+  Resource redemption request decoding and private HTTP integration, then exact
+  recognition-before-action browser wiring. Live identity/privileged RPC/Redis,
+  Resource browser/cache/provider, retention monitoring/capacity and publication
+  gates remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

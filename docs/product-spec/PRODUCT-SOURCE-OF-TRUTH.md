@@ -1061,6 +1061,27 @@ and injected Resource permits, then separately contracted native/browser actions
 Live identity/privileged RPC/Redis, Resource browser/cache/provider and retention
 monitoring/capacity/publication evidence remain open. S5/S6 NOT CLOSED / VERIFIED.
 
+Exact request-boundary commit `ac7be2228c199d2f9b9676ab8ba9f9bc4c1c4812` passed
+all six push-event gates: [CI 38143301651](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38143301651),
+[Security 38143301638](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38143301638)
+and [Guard 38143301656](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38143301656).
+Database passed 2,019 assertions / 34 files, twelve races and four retention cases.
+This supersedes 12.63 pending evidence; S5/S6 remain open.
+
+Contract [12.64](./technical-architecture/12.64-private-resource-open-http-assembly-contract.md)
+stages unmounted strict Resource JSON HTTP issuance/redemption assembly using
+12.63 and internally constructed 12.59. Public recognition/token 200 and exact
+empty-body 303 after committed consumption/fresh stored-record resolution;
+no-store/no-referrer, generic denial, bounded result and abort/late handling.
+39 actual-SDK fetch fixtures/full local gates passed. Header-construction failure
+is injected; Unicode source denial occurs upstream. No native form, route/grant,
+credentials/provider configuration, publication or Working/Draft changes. Exact
+latest-push six gates remain PENDING until observed. Next: separately contracted
+strict bounded native Resource redemption reader/private HTTP integration, then
+recognition-before-action browser wiring. Live privileged transport/identity/Redis,
+Resource browser/cache/provider, retention monitoring/capacity and publication
+evidence remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
