@@ -1663,6 +1663,32 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   privileged transport/identity/Redis, Resource cache/provider, retention monitoring/
   capacity and publication evidence remain open. S5/S6 NOT CLOSED / VERIFIED.
 
+### Staged Resource recognition/action renderer — 2026-10-11
+
+- Clean fetched lane at `9bcadf02e993a85b647d85b1675dea2f337bdc1c`; all six
+  exact push-event gates passed: CI 38167019422, Security 38167019442,
+  Guard 38167019433. Database passed 2,019 assertions / 34 files, twelve races
+  and four retention cases. Supersedes 12.65 pending evidence; S5/S6 stay open.
+- Refreshed authority/checkpoint, protocol/runbook, J6/J8, pinned P04, 12.37/
+  12.53/12.65 and renderer/source/tests. Locked 12.66 before source changes.
+  Added unmounted server-only strict recognition/token renderer. Existing Published
+  context precedes one semantic native form with only canonical Handle/reference/
+  opaque token. Null token or degraded source preserves recognition without action;
+  malformed/private bundle denies. No direct source link, arbitrary labels/targets,
+  chooser, automatic submission or source authority derived from browser fields.
+- 22 new static cases / 49 targeted renderer tests passed. Initial fixture assertion
+  was corrected to inspect exact React-serialized attributes independently of order.
+  Full typecheck/lint, five tooling tests, 2,003 application tests, nine actual Redis
+  cases, eight existing Product Chromium fixtures, three builds and diff review
+  passed. Exact latest-push six gates remain PENDING until observed.
+- No route/grants, issuance/RPC, credentials/provider config, analytics, publication
+  or Working/Draft change. Static rendering is not Resource browser/provider proof.
+  Next safe task: contract and run isolated Resource Chromium native navigation
+  through 12.65 using exact issued recognition/token; prove explicit action order,
+  exact attribution, replay/context/safety/expiry/permit denial. Live transport/
+  identity/Redis/cache/provider, retention monitoring/capacity and publication gates
+  remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

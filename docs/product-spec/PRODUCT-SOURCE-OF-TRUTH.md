@@ -1101,6 +1101,26 @@ action composition and actual isolated Chromium recognition-before-explicit-Open
 navigation. Live transport/identity/Redis, Resource cache/provider, retention
 monitoring/capacity and publication remain open. S5/S6 NOT CLOSED / VERIFIED.
 
+Exact native POST commit `9bcadf02e993a85b647d85b1675dea2f337bdc1c` passed all six
+push-event gates: [CI 38167019422](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38167019422),
+[Security 38167019442](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38167019442)
+and [Guard 38167019433](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38167019433).
+Database passed 2,019 assertions / 34 files, twelve races and four retention cases.
+This supersedes 12.65 pending evidence; S5/S6 remain open.
+
+Contract [12.66](./technical-architecture/12.66-resource-recognition-action-renderer-contract.md)
+stages server-only trusted recognition/token composition: existing Published context
+before one semantic native Resource POST action, strict payload/canonical token,
+no action for degraded source/missing token and generic malformed/private denial.
+22 static cases and full local gates passed; exact latest-push six gates remain
+PENDING until observed. No public route/grant, RPC/issuance, credentials/provider
+config, analytics, publication or Working/Draft change. Static rendering is not
+Resource browser proof. Next: separately contract actual isolated Chromium native
+navigation through 12.65 using exact issued recognition/token, including explicit
+context-before-Open, attribution and replay/context/safety/expiry/permit denial.
+Live transport/identity/Redis/cache/provider, retention monitoring/capacity and
+publication evidence remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
