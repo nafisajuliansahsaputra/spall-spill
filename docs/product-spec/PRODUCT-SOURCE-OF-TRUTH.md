@@ -1042,6 +1042,25 @@ bounded private Resource request/origin/body/no-store and strict HTTP assembly.
 Live runtime/provider, Resource browser/cache, retention monitoring/capacity and
 publication gates remain open; S5/S6 NOT CLOSED / VERIFIED.
 
+Exact transport correction `03958520020773625043334f4f051da3a965bd11` passed all six
+push-event gates: [CI 38142778244](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38142778244),
+[Security 38142778314](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38142778314)
+and [Guard 38142778331](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38142778331).
+Database passed 2,019 assertions / 34 files, twelve races and four actual retention
+cases. This supersedes 12.62 pending evidence; S5/S6 remain open.
+
+Contract [12.63](./technical-architecture/12.63-resource-open-request-boundary-contract.md)
+stages private JSON-only Resource request/strict DTO boundaries using existing
+12.34 origin/permit/bounded byte/read/length/UTF-8/deadline protocol. Issue normalizes
+the existing exact locator; redeem requires canonical token and numeric context.
+Browser-supplied Product/private/raw-URL authority denies. Sixty new fixtures and
+full local gates passed. No core/RPC/route/grants, native action, provider/credential,
+publication or Working/Draft changes. Exact latest-push six gates remain PENDING
+until observed. Next: strict private 12.59 HTTP response assembly with these DTOs
+and injected Resource permits, then separately contracted native/browser actions.
+Live identity/privileged RPC/Redis, Resource browser/cache/provider and retention
+monitoring/capacity/publication evidence remain open. S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

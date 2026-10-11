@@ -1581,6 +1581,32 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   monitoring/capacity and first publication gates remain open.
   S5/S6 NOT CLOSED / VERIFIED.
 
+### Staged private Resource JSON request boundary — 2026-10-11
+
+- Clean fetched lane at `03958520020773625043334f4f051da3a965bd11`;
+  all six exact push-event gates rechecked successful: CI 38142778244,
+  Security 38142778314, Guard 38142778331. Database passed 2,019 assertions /
+  34 files, twelve races and four actual retention cases. Supersedes 12.62
+  pending/corrected-fixture evidence; no S5/S6 closure or live-provider claim.
+- Refreshed checkpoint, protocol/runbook, J6/J8, pinned P04, 12.34/12.35/12.59,
+  parser/issuance/budget/source/tests. Locked bounded 12.63 before source changes.
+  Resource JSON reader reuses exact 12.34 origin/preflight/permit and bounded
+  stream protocol, then validates action-specific strict DTOs. Issue uses existing
+  exact locator, normalizing #reference and Handle; redeem requires positive safe
+  numeric reference and canonical opaque token. Reject Product fields, supplied
+  URLs/records/bindings/private authority. No core/RPC/route/redirect or grants.
+- Sixty new Resource cases passed; 105 targeted Resource/Product request tests
+  passed. Full typecheck/lint, five tooling tests, 1,860 application tests, nine
+  actual Redis tests, eight existing Product Chromium fixtures, three builds and
+  diff review passed. Exact latest-push six gates remain PENDING until observed.
+- No database migration, credential/provider configuration, publication or
+  Working/Draft changes. Next safe slice: strict private 12.59 HTTP issuance/
+  redemption response assembly using 12.63 and injected distributed Resource
+  permits. Native action/browser wiring needs its own bounded contract. Live
+  privileged transport/identity/Redis, Resource browser/cache/provider, controlled
+  minute retention monitoring/capacity and publication gates remain open.
+  S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
