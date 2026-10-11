@@ -1004,6 +1004,26 @@ contract without public enabling. Controlled minute-cadence/monitoring/capacity,
 trusted live integration, Resource browser/provider and publication gates remain
 open; S5/S6 NOT CLOSED / VERIFIED.
 
+Exact retention commit `afcc2119a7a83cfefb419f69c21e2b9867963210` passed all six
+push-event gates: [CI 38086746559](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38086746559),
+[Security 38086746503](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38086746503)
+and [Guard 38086746505](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38086746505).
+Database passed 2,019 assertions / 34 files, twelve races and four actual retention
+cases, including Resource busy lock/cron cleanup/preservation and inactive restore.
+This supersedes retention pending evidence; production activation remains withheld.
+
+Contract [12.61](./technical-architecture/12.61-resource-open-distributed-budget-contract.md)
+stages private Resource issue/redeem budgets with four/three work costs, distinct
+Resource Redis keys, separate request/shared work capacity, existing atomic Redis
+TIME/Lua/TTL policy and two-second fail-closed decision. Thirty-two unit and three
+new actual Redis cases passed, plus full local application/tooling/typecheck/lint/
+existing Redis/Product Chromium/build/diff gates. New runtime checks are additive
+and required in CI. No routes/grants/credentials/providers/publication/Working/Draft
+changes. Exact latest-push six gates remain PENDING until observed. Next: bounded
+Resource-key-confined Upstash transport, then request/origin/body/cache/native-action
+assembly. Actual trusted/live integration, Resource browser/provider and controlled
+minute retention monitoring/capacity/publication gates remain open. S5/S6 NOT CLOSED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

@@ -1514,6 +1514,38 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   Resource browser/manual/provider and publication gates remain open.
   S5/S6 NOT CLOSED / VERIFIED.
 
+### Staged private Resource Open action/work budgets — 2026-10-11
+
+- Refreshed clean Cloud lane at `afcc2119a7a83cfefb419f69c21e2b9867963210`;
+  all six exact push-event gates successful: CI 38086746559, Security 38086746503,
+  Guard 38086746505. Database reset/lint/error advisors and 2,019 assertions / 34
+  files passed, with twelve existing races and four actual Product/Resource
+  retention cases. Resource busy lock and real cron expired cleanup/current
+  preservation passed; test restored inactive minute job. Supersedes retention
+  pending evidence; not production minute-cadence/monitoring/capacity proof.
+- Fresh authority/J6/J8/P04/source audit; locked 12.61 before coding private budget.
+  Reuses exact 12.40 atomic Lua with distinct Resource key domain. Server-selected
+  issue/redeem costs four/three RPC units, separate request/shared Resource work
+  counters; no bundle, Product counter mutation, default policy, header trust,
+  follower account requirement, retry, refund or fallback. Two-second monotonic
+  decision denies invalid/aborted/late identity or EVAL; literal numeric grant only.
+- Thirty-two unit cases cover strict policy/action/operation/identity/result,
+  key isolation, error/abort/clock/timeout/late truth. Three actual isolated Redis
+  cases prove four/three shared work, Product isolation, atomic competing grants
+  and denial without partial charge. Required existing six Lua window/TTL/state
+  tests remain unchanged. New Resource runtime command is required in Application CI.
+- Full typecheck/lint, five tooling tests, 1,745 application tests, nine actual
+  Redis tests, eight existing Product Chromium fixtures, three builds and final
+  diff review passed. No database/dependency/provider config, credential, route,
+  grant/CTA, publication or Working/Draft change. Exact latest-push six gates
+  remain PENDING until observed; unchanged Database regression remains required.
+- Next safe task: lock a Resource-key-confined private Upstash EVAL transport,
+  following the bounded 12.41 protocol with issue cost four only and redeem three.
+  Then Resource request/origin/body/cache/native-action assembly. Actual trusted
+  deployment identity/live Redis/RPC/Resource browser/provider, controlled minute
+  retention monitoring/capacity and publication gates remain open.
+  S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
