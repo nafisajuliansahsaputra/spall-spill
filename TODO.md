@@ -1775,6 +1775,33 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
 - Next safe task and all live/publication/full-journey gates remain unchanged.
   This cleanup/evidence checkpoint does not close S5/S6 or complete the Goal.
 
+### Private Resource trusted-network subjects — 2026-10-12
+
+- Clean fetched lane at `e13b2f96358996576a7b32fdef543aa6206bd4b3` passed
+  all six exact push-event gates: [CI 38176587620](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176587620),
+  [Security 38176587605](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176587605),
+  [Guard 38176587580](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176587580).
+  Supersedes cleanup pending evidence; S5/S6 remain open.
+- Refreshed AGENTS/bootstrap, checkpoint/protocol/runbook, J6/J8/pinned P04 and
+  12.43/12.44/12.61/12.68 source/tests. Locked 12.69 before code. Extracted shared
+  strict bare-IP HMAC subject primitive with closed server domain; Product wrapper
+  preserves exact existing domain/algorithm. Resource fixes its separate domain.
+  No public/header/runtime deployment reader or HTTP composition is mounted.
+- 51 new Resource cases and all 48 unchanged Product subject cases passed. Verify
+  full IPv6/mapped equivalence, distinct domains/namespace/key, copied key bytes,
+  invalid metadata/dependencies/domain, spoofed headers, abort/error/500ms timeout/
+  monotonic/late denial and Resource budget-key equivalence before Redis EVAL.
+- Full typecheck/lint, five tooling tests, 2,075 application tests, nine actual Redis
+  cases, eight Product/eight Resource Chromium cases, three builds and final diff
+  review passed. Latest exact-push six gates remain PENDING until observed.
+  No database/dependency, credential/provider, route/grant, publication or
+  Working/Draft change. Fixture metadata is not trusted deployed proxy evidence.
+- Next safe bounded task: Resource network-subject / 12.68 HTTP composition using
+  one snapshotted explicit policy namespace, mandatory trusted reader/key and no
+  caller identity override. Real proxy provenance/stripping, Redis/cache/provider,
+  capacity/retention monitoring, publication and full journey gates remain open.
+  S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

@@ -1174,6 +1174,26 @@ parameter warning is removed by typing the mock signature explicitly, with no
 production/contract behavior change. Cleanup push requires its own six gates;
 latest evidence remains PENDING until observed. Next safe task and S5/S6 gates stay open.
 
+Exact cleanup commit `e13b2f96358996576a7b32fdef543aa6206bd4b3` passed six
+push-event gates: [CI 38176587620](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176587620),
+[Security 38176587605](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176587605)
+and [Guard 38176587580](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38176587580).
+Supersedes cleanup pending evidence; S5/S6 remain open.
+
+Contract [12.69](./technical-architecture/12.69-resource-network-budget-subject-contract.md)
+stages Resource trusted-network keyed subjects through a shared strict bare-IP
+primitive and closed server domain. Existing Product domain/digest behavior stays
+exact; Resource uses a distinct domain, copied key and fresh mandatory injected
+metadata under the same 500ms fail-closed deadline. 51 Resource and 48 Product
+subject cases plus full local quality/Redis/both browser gates passed; latest exact
+push-event six gates remain PENDING until observed. No HTTP/public mounting, header
+reader, credential/provider/grant, publication or Working/Draft change. Fixture
+metadata is not deployed proxy provenance or live identity evidence. Next: bounded
+Resource network-subject/12.68 HTTP composition with one snapshotted policy namespace
+and mandatory trusted reader/key, before any mounting. Live provenance/Redis/cache/
+provider, capacity/retention monitoring/publication/full journey gates stay open.
+S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
