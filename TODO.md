@@ -2093,6 +2093,46 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   separate scoped activation and real runtime gates; do not fabricate attention/
   health/analytics or link unsupported editors. D01/S5/S6 NOT CLOSED / VERIFIED.
 
+### Private guarded D01 Home assembly — 2026-10-12
+
+- Starting lane `5ff0e602b8be25313605ca0b41c3caa53d1b5f39` passed all six exact
+  push-event gates, freshly observed:
+  [CI 38276304925](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38276304925),
+  [Security 38276305183](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38276305183),
+  [Guard 38276304948](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38276304948).
+  Supersedes 12.77 pending evidence: Database reset/lint/advisors, 2,107 pgTAP
+  assertions in 37 files and all existing concurrency/retention passed.
+- Refreshed J5/J9/pinned D01, 12.7/12.75–12.77, auth/routing and actual routes.
+  Main Home and returning-Owner Identity/Spill editors are absent; unsupported
+  navigation and public readiness remain excluded. Locked/read back 12.78 before
+  code; stage server-only read assembly on one injected current-session client.
+- Claims subject and strict zero-target Owner-state proof precede Home reads.
+  Ineligible actors return only denial status without Home. Existing three strict
+  readers must all succeed with matching Handle/personalization. Reverify subject,
+  stable Owner binding and eligible state after reads; fresh matching context
+  required. Subject/Owner/context drift, malformed/partial/failed data cannot retain
+  any Home field. Success contains only context, Draft counts and Identity work.
+  This is guarded consistency, not an atomic cross-RPC snapshot or mutation right.
+- Aggregate five-second ceiling, state RPC abort and phase cancellation checks
+  reject ignored late claims/fetches and stop subsequent phases. No retries/cache,
+  caller Owner selector, metadata authority, credentials/service-role loading,
+  publication, route, database or execution-grant changes.
+- 36 actual pinned-SDK RPC-fetch tests plus controlled getClaims fixtures passed:
+  zero arguments/API profile, initial/mid-read account states, forged/malformed
+  state, subject/Owner/context drift, session loss, partial failure and aggregate
+  late denial. Initial undefined-subject test fixture default was corrected so the
+  missing-claims case is genuinely tested. No live JWT/provider/browser auth claim.
+- Frozen install, typecheck/lint, five tooling, 2,259 application tests (1,978 web
+  plus 281 other), three builds, nine actual Redis and 37 Chromium cases passed.
+  Final diff review/check passed. Changelog proxy request failed; no bypass/upgrade,
+  pinned SDK transport verified. No new migration; existing DB gates remain in CI.
+- Latest exact-push Application/Database, Secret Scan/SAST/Dependency Scan and
+  Autopilot Guard PENDING until observed. Scoped execution activation and actual
+  current-session runtime remain open. Next: supported D01 action/navigation and
+  failure presentation contract after historical editor/manager audit, retaining
+  intended-deep-link precedence and no unsupported/onboarding fallback editors.
+  D01/S5/S6 NOT CLOSED / VERIFIED; no Goal completion.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

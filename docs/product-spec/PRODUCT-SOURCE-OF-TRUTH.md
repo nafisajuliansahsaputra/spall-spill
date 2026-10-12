@@ -1396,6 +1396,33 @@ bounded transport/rendering contract; do not fabricate attention/health/analytic
 route unsupported editors. Future verified claims/state, post-read recheck, scoped
 activation and real runtime evidence remain required. D01/S5/S6 NOT CLOSED / VERIFIED.
 
+#### Private guarded D01 Home assembly — 2026-10-12
+
+Starting lane `5ff0e602b8be25313605ca0b41c3caa53d1b5f39` passed all six exact
+push-event gates: [CI 38276304925](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38276304925),
+[Security 38276305183](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38276305183),
+[Guard 38276304948](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38276304948).
+Supersedes 12.77 pending evidence, including Database reset/lint/advisors, 2,107
+pgTAP assertions/37 files and existing concurrency/retention. S5/S6 remain open.
+
+Locked [12.78](./technical-architecture/12.78-private-owner-home-assembly-contract.md)
+before code. Unmounted server-only assembly verifies current claims subject and
+strict zero-argument 12.7 Owner state before existing 12.75/12.76/12.77 Home reads,
+requires all readers and matching context, then rechecks subject/Owner/state and
+fresh current context. Any denial discards Home; no partial/fabricated values or
+public readiness. Aggregate five-second abort/phase checks deny late results and
+stop further phases, without retry/cache/metadata authority/credentials. Guarded
+consistency is not an atomic cross-RPC snapshot or mutation authorization.
+
+36 pinned-SDK RPC-fetch tests with controlled claims fixtures passed; not live JWT/
+provider evidence. Full local gates, 2,259 application, nine Redis and 37 Chromium
+cases passed. Latest exact-push six remote gates PENDING until observed. No route,
+DB/migration/grant/Working/publication/provider/configuration change. Scoped execution
+activation/current-session runtime still require separate evidence. Next: supported
+D01 action/navigation and failure presentation contract after historical editor/
+manager audit, preserving intended deep links. No unsupported or onboarding editor
+fallback for completed Owners. D01/S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
