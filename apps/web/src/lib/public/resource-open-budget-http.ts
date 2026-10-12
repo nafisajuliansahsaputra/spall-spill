@@ -10,5 +10,5 @@ export function createBudgetedResourceOpenHttpBoundary({ client, origin, ...budg
   const compose = (operation: "issue" | "redeem") => createResourceOpenHttpBoundary({ client, origin,
     permit: createResourceOpenDistributedPermit({ ...budget, operation }) });
   const issuance = compose("issue"); const redemption = compose("redeem");
-  return { issue: issuance.issue, redeem: redemption.redeem, redeemForm: redemption.redeemForm };
+  return { recognize: issuance.recognize, issue: issuance.issue, redeem: redemption.redeem, redeemForm: redemption.redeemForm };
 }

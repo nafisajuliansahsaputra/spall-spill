@@ -1905,6 +1905,42 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   public enablement/publication and complete journey gates remain open.
   Working/Draft/Published boundaries unchanged; S5/S6 NOT CLOSED / VERIFIED.
 
+### Private budgeted Resource recognition HTTP — 2026-10-12
+
+- Clean refreshed lane `b8b39124afbf8d2b7c5f462211816ce1771b4f77` passed all
+  six exact push-event gates, freshly observed:
+  [CI 38212342081](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212342081),
+  [Security 38212342080](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212342080),
+  [Guard 38212342084](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212342084).
+  Database reset/lint/security suite passed 2,019 assertions in 34 files, all twelve
+  concurrency and four retention cases. Supersedes 12.72 pending evidence.
+- Reread changed checkpoint/source, J6/J8 and 12.64/12.65/12.68/12.70/12.72;
+  locked and read back 12.73 before code. Added separate private JSON recognize
+  handler and exposed it through internally selected issue permit; network factory
+  inherits that same handler with unchanged trusted metadata/policy/key snapshots.
+  Recognition uses strict locator/preflight and original Request identity, cost four
+  even for degraded context, aggregate ten-second SDK-result deadline and fresh
+  no-store/no-referrer/no-CORS headers. Valid bounded recognition returns 200 with
+  nullable token; invalid/timeout/abort returns existing uniform 403. No Location
+  or private detail. Strict issue and JSON/native redemption remain unchanged.
+- Added 29 actual pinned SDK/REST HTTP cases: exact recognition/native redemption/
+  replay, degraded and failed clock/source/create recovery, private/context/DTO/
+  Origin/media/GET/permit/abort denial, original trusted request metadata, Resource
+  4/3 costs/shared work and failed metadata/Redis/private dependencies. Aggregate
+  timeout denies late result after captured context, even if late creation commits;
+  unreturned record retains existing TTL/retention, no retry/refund/restoration.
+  All 122 targeted existing/new HTTP/budget/network tests passed.
+- Full typecheck/lint, five tooling, 2,147 application tests (1,866 web + 281 other),
+  nine actual Redis, eight Product and nineteen Resource-config Chromium tests,
+  three builds and final diff review passed. Latest exact pushed commit's six
+  remote gates remain PENDING until observed. No DB/dependency/public route/grant/
+  credentials/provider/config/analytics/publication/Working change or live proof.
+- Next safe task: lock isolated Chromium recognition HTTP evidence, including
+  degraded/null-token recovery, explicit native action, no-store and denied trusted
+  metadata/budget/late transport. All requests/provider remain fixtures; do not mount
+  publicly before real proxy provenance/stripping, privileged RPC/Redis/cache/provider,
+  capacity/retention and publication/journey gates. S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

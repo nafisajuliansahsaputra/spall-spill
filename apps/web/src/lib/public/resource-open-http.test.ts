@@ -216,3 +216,80 @@ describe("unmounted native Resource redemption assembly", () => {
     await denial(await f.http.redeemForm(request({ ...context, token: "A".repeat(43) }))); expect(f.fetcher).not.toHaveBeenCalled();
   });
 });
+
+
+describe("private recognition HTTP transport", () => {
+  it("returns trusted recognition then redeems via native POST with exact attribution and replay denial", async () => {
+    const f = fixture(); const req = request(locator); const response = await f.http.recognize(req);
+    expect(response.status).toBe(200); cacheTruth(response); expect(response.headers.get("Location")).toBeNull();
+    const payload = await response.json(); expect(payload).toEqual({ recognition: f.recognition, token: expect.any(String) });
+    expect(JSON.stringify(payload)).not.toMatch(/publication_token|source_hash|binding|recognition_hash|owner_id/);
+    expect(f.permit).toHaveBeenCalledWith(req, "issue"); expect(f.calls).toHaveLength(4);
+    const outbound = await f.http.redeemForm(formRequest({ ...context, token: payload.token }));
+    expect(outbound.status).toBe(303); cacheTruth(outbound); expect(outbound.headers.get("Location")).toBe(originalUrl);
+    await denial(await f.http.redeemForm(formRequest({ ...context, token: payload.token }))); expect(f.records.size).toBe(0);
+  });
+  it("returns valid degraded recognition with null token before any clock/source/store", async () => {
+    const f = fixture(); const degraded = { ...f.recognition, available: false, source_url: null };
+    f.fetcher.mockResolvedValueOnce(new Response(JSON.stringify({ status: "success", recognition: degraded, binding: null })));
+    const response = await f.http.recognize(request(locator)); expect(response.status).toBe(200); cacheTruth(response);
+    expect(await response.json()).toEqual({ recognition: degraded, token: null }); expect(f.fetcher).toHaveBeenCalledTimes(1);
+    expect(f.records.size).toBe(0);
+  });
+  it.each(["read_resource_open_clock_server", "resolve_published_resource_source_server", "create_resource_open_intent_server"])(
+    "returns captured recognition without token after failed %s", async name => {
+      const f = fixture(); const normal = f.fetcher.getMockImplementation()!;
+      f.fetcher.mockImplementation((input, options) => String(input).endsWith(name)
+        ? Promise.resolve(new Response(JSON.stringify({ message: "private failure" }), { status: 403 })) : normal(input, options));
+      const response = await f.http.recognize(request(locator)); expect(response.status).toBe(200); cacheTruth(response);
+      expect(await response.json()).toEqual({ recognition: f.recognition, token: null }); expect(f.records.size).toBe(0);
+    });
+  it.each([null, { status: "unavailable" }, { status: "success", recognition: {}, binding: null },
+    { status: "success", recognition: {}, binding: null, owner_id: "private" }])("denies invalid/private context uniformly", async data => {
+    const f = fixture(); f.fetcher.mockResolvedValueOnce(new Response(JSON.stringify(data)));
+    await denial(await f.http.recognize(request(locator))); expect(f.fetcher).toHaveBeenCalledTimes(1); expect(f.records.size).toBe(0);
+  });
+  it.each([null, {}, { ...locator, reference: 27 }, { ...locator, source_url: originalUrl }, { ...locator, operation: "redeem" }])(
+    "rejects malformed or injected recognition DTO before RPC", async input => {
+      const f = fixture(); await denial(await f.http.recognize(request(input))); expect(f.fetcher).not.toHaveBeenCalled();
+    });
+  it.each(["origin", "media", "GET", "abort", "permit"])("denies %s before SDK work", async failure => {
+    const f = fixture(); const controller = new AbortController(); let req = request(locator, controller.signal);
+    if (failure === "origin") req.headers.set("Origin", "https://attacker.example.test");
+    if (failure === "media") req = formRequest(locator);
+    if (failure === "GET") req = new Request(`${origin}/staged-action`, { headers: { origin } });
+    if (failure === "abort") controller.abort();
+    if (failure === "permit") f.permit.mockResolvedValueOnce(false);
+    await denial(await f.http.recognize(req)); expect(f.fetcher).not.toHaveBeenCalled();
+    if (failure !== "permit") expect(f.permit).not.toHaveBeenCalled();
+  });
+  it("denies abort after committed creation without returning or restoring authority", async () => {
+    const f = fixture(); const controller = new AbortController(); const normal = f.fetcher.getMockImplementation()!;
+    f.fetcher.mockImplementation(async (input, options) => {
+      const result = await normal(input, options);
+      if (String(input).endsWith("create_resource_open_intent_server")) controller.abort();
+      return result;
+    });
+    await denial(await f.http.recognize(request(locator, controller.signal))); expect(f.records.size).toBe(1);
+  });
+  it("aggregate deadline denies a late result even after trusted context was captured", async () => {
+    vi.useFakeTimers(); const f = fixture(); const normal = f.fetcher.getMockImplementation()!;
+    const finishes: Array<() => void> = [];
+    f.fetcher.mockImplementation(async (input, options) => {
+      const response = await normal(input, options);
+      if (["resolve_published_resource_context_server", "read_resource_open_clock_server", "resolve_published_resource_source_server"].some(n => String(input).endsWith(n))) {
+        await new Promise<void>(resolve => { finishes.push(resolve); });
+      }
+      return response;
+    });
+    const pending = f.http.recognize(request(locator));
+    await vi.advanceTimersByTimeAsync(0); await vi.advanceTimersByTimeAsync(4000); finishes[0]!();
+    await vi.advanceTimersByTimeAsync(0); await vi.advanceTimersByTimeAsync(4000); finishes[1]!();
+    await vi.advanceTimersByTimeAsync(0); await vi.advanceTimersByTimeAsync(2000);
+    const response = await pending; await denial(response); expect(f.records.size).toBe(0);
+    finishes[2]!(); await vi.advanceTimersByTimeAsync(0);
+    expect(await pending).toBe(response); expect(response.headers.get("Location")).toBeNull();
+    expect(f.records.size).toBe(1); expect([...f.records.values()][0]).toHaveProperty("expires_at");
+    expect(f.fetcher).toHaveBeenCalledTimes(4);
+  });
+});

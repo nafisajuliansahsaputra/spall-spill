@@ -97,3 +97,35 @@ it("late trusted reader cannot start REST or SDK after HTTP denial", async () =>
     expect(f.rest).not.toHaveBeenCalled(); expect(f.sdkFetch).not.toHaveBeenCalled();
   } finally { vi.useRealTimers(); }
 });
+
+
+it("recognition uses original trusted requests and conservative 4/3 Resource budgets", async () => {
+  const f = fixture(); const first = request(locator); const response = await f.http.recognize(first);
+  expect(response.status).toBe(200); const payload = await response.json(); expect(payload.recognition).toEqual(f.recognition);
+  expect(response.headers.get("Location")).toBeNull(); expect(response.headers.get("Cache-Control")).toBe("private, no-store, max-age=0");
+  const second = new Request(`${origin}/staged`, { method: "POST", headers: { origin, "content-type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({ handle: "creator", spill_reference: "27", token: payload.token }) });
+  const outbound = await f.http.redeemForm(second); expect(outbound.status).toBe(303); expect(outbound.headers.get("Location")).toBe(source);
+  expect(f.readTrustedMetadata.mock.calls.map(([req]) => req)).toEqual([first, second]);
+  const commands = f.rest.mock.calls.map(([, init]) => JSON.parse(String(init?.body)) as string[]);
+  expect(commands.map(c => c.at(-1))).toEqual(["4", "3"]); expect(commands[0]![3]).toMatch(/^spall-resource-open:resource-test:.*:issue$/);
+  expect(commands[0]![4]).toBe(commands[1]![4]); expect(f.sdkFetch).toHaveBeenCalledTimes(7);
+});
+it("degraded recognition still spends four and never reads a clock or creates intent", async () => {
+  const f = fixture(); const degraded = { ...f.recognition, available: false, source_url: null };
+  f.sdkFetch.mockResolvedValueOnce(new Response(JSON.stringify({ status: "success", recognition: degraded, binding: null })));
+  const req = request(locator); const response = await f.http.recognize(req); expect(response.status).toBe(200);
+  expect(await response.json()).toEqual({ recognition: degraded, token: null }); expect(f.sdkFetch).toHaveBeenCalledTimes(1);
+  expect(f.readTrustedMetadata).toHaveBeenCalledWith(req); expect(JSON.parse(String(f.rest.mock.calls[0]![1]?.body)).at(-1)).toBe("4");
+  expect(f.records.size).toBe(0);
+});
+it.each(["metadata", "redis", "origin", "key", "readTrustedMetadata", "policy"])("recognition denies failed %s before SDK work", async failed => {
+  const f = fixture(); let http = f.http; const req = request(locator);
+  if (failed === "metadata") f.readTrustedMetadata.mockResolvedValueOnce(null);
+  else if (failed === "redis") f.rest.mockResolvedValueOnce(new Response('{"result":0}'));
+  else if (failed === "origin") req.headers.set("Origin", "https://attacker.example.test");
+  else { Reflect.deleteProperty(f.dependencies, failed); http = createNetworkBudgetedResourceOpenHttpBoundary(f.dependencies); }
+  await denial(await http.recognize(req)); expect(f.sdkFetch).not.toHaveBeenCalled();
+  if (failed !== "redis") expect(f.rest).not.toHaveBeenCalled();
+  if (failed === "origin") expect(f.readTrustedMetadata).not.toHaveBeenCalled();
+});

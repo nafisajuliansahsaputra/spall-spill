@@ -1261,6 +1261,31 @@ original trusted-request identity/budget, aggregate deadline, no-store response 
 preserved same-origin native redemption policy before mounting. All enabling/live/
 publication/full journey evidence remains open. S5/S6 NOT CLOSED / VERIFIED.
 
+#### Private budgeted Resource recognition HTTP — 2026-10-12
+
+Starting lane `b8b39124afbf8d2b7c5f462211816ce1771b4f77` passed all six exact
+push-event gates: [CI 38212342081](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212342081),
+[Security 38212342080](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212342080),
+[Guard 38212342084](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212342084).
+Database 2,019 assertions/34 files, twelve concurrency and four retention cases
+passed. Supersedes 12.72 pending evidence; S5/S6 remain open.
+
+Locked [12.73](./technical-architecture/12.73-resource-recognition-http-contract.md)
+adds separate private recognition JSON handler through existing strict issue
+preflight, original trusted Request identity, conservative cost four and ten-second
+aggregate SDK-result deadline. Valid bounded recognition returns 200 with nullable
+token and no Location/private detail; failed context/preflight/timeout/abort returns
+uniform no-store 403. Strict issue and JSON/native redemption remain unchanged.
+Late committed work is not cancelled or restored; unreturned records keep existing
+TTL/retention. 29 additional SDK/REST tests passed alongside original tests; full
+local gates, 2,147 application, nine Redis and 27 Chromium cases passed. Latest
+exact-push six remote gates PENDING until observed. No DB/dependency/public route/
+grant/config/provider/publication/Working change or live proof. Next: isolated
+Chromium recognition HTTP evidence with null-token/degraded recovery and denied
+metadata/budget/late response before public mounting. All real provenance/stripping,
+privileged RPC/Redis/cache/provider/capacity/retention/publication/journey gates remain
+open. S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

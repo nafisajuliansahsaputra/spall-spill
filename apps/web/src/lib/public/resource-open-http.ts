@@ -32,6 +32,16 @@ export function createResourceOpenHttpBoundary({ client, origin, permit }: {
     } catch { return unavailableResourceOpenResponse(); }
   }
   return {
+    async recognize(request: Request): Promise<Response> {
+      try {
+        const input = await readResourceOpenRequest(request, origin, "issue", permit);
+        if (input === null || !("reference" in input) || request.signal.aborted) return unavailableResourceOpenResponse();
+        const result = await resultWithinDeadline(issuance.recognize(input));
+        if (result === null || request.signal.aborted) return unavailableResourceOpenResponse();
+        const headers = resourceOpenNoStoreHeaders(); headers.set("Content-Type", "application/json; charset=utf-8");
+        return new Response(JSON.stringify(result), { status: 200, headers });
+      } catch { return unavailableResourceOpenResponse(); }
+    },
     async issue(request: Request): Promise<Response> {
       try {
         const input = await readResourceOpenRequest(request, origin, "issue", permit);
