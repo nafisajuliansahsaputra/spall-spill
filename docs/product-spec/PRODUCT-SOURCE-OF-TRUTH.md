@@ -1215,6 +1215,29 @@ REST fixtures with canonical identity and denied/late metadata. Live provenance/
 stripping, Redis/cache/provider, capacity/retention monitoring, public transport/
 publication and full journey gates stay open. S5/S6 NOT CLOSED / VERIFIED.
 
+Exact network HTTP commit `518883aa533599c66a6980e58a521e54ffe1f97e` passed six
+push-event gates: [CI 38187875959](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187875959),
+[Security 38187875987](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187875987)
+and [Guard 38187875922](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187875922).
+Supersedes 12.70 pending evidence; S5/S6 remain open.
+
+Contract [12.71](./technical-architecture/12.71-resource-network-browser-fixture-contract.md)
+adds ten actual isolated Resource Chromium cases through network HTTP/REST fixtures,
+retaining original eight Resource/eight Product cases. Observe canonical identity,
+4/3 budgets, native context/action/attribution, replay/safety/context/expiry/budget
+and absent/late metadata denial without fallback or token restoration. All page
+requests intercepted, provider stubbed, no live identity/Redis/provider claim.
+Repeated Product CDP cancellation prompted a controlled failing-then-passing
+navigation regression; shared helper drains unfinished intercepts before controlled
+navigation/mouse events under bounded deadlines, with errors/assertions preserved.
+Full local gates plus nine Redis and 27 browser cases passed; latest exact-push six
+gates remain PENDING until observed. No DB/production source/route/grant, credentials/
+provider, analytics, publication or Working/Draft change. Next: audit and separately
+contract bounded Resource context/issuance transport with original trusted-request
+metadata/same-origin native policy before mounting. Live provenance/stripping/Redis/
+cache/provider, capacity/retention monitoring/publication/full journey gates stay open.
+S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

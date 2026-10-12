@@ -1833,6 +1833,44 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   provenance, live Redis/cache/provider, capacity/retention monitoring, public
   transport/publication and full journey gates remain open. S5/S6 NOT CLOSED.
 
+### Isolated Resource network-budgeted Chromium evidence — 2026-10-12
+
+- Clean fetched lane at `518883aa533599c66a6980e58a521e54ffe1f97e` passed all
+  six exact push-event gates: [CI 38187875959](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187875959),
+  [Security 38187875987](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187875987),
+  [Guard 38187875922](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187875922).
+  Supersedes 12.70 pending evidence; S5/S6 remain open.
+- Refreshed checkpoint/protocol/runbook, J6/J8/pinned P04, 12.67/12.70 and
+  actual source/browser/config before code. Locked 12.71. Added separate ten-case
+  actual Chromium suite through exact issued recognition/token, existing renderer,
+  12.70 network HTTP and bounded Resource REST adapter fixtures. Original eight
+  Resource and eight Product cases remain intact; existing mandatory CI command
+  now includes the additional suite.
+- Observed explicit native action/context/44px touch, exact attribution/no external
+  Referer, replay/context/expiry/safety/REST budget denial, missing-token/degraded
+  recovery, null-Origin denial, fresh metadata reads and canonical IPv4/mapped
+  Resource action/shared-work keys with costs 4/3. Absent/late metadata denies before
+  REST/RPC, retains token; late completion cannot revive authority. All page requests
+  intercepted, provider stubbed; fixture metadata/REST/store are not deployment proof.
+- Repeated pre-existing Product Invalid InterceptionId triggered bounded fixture
+  diagnosis under amended 12.71. Product diagnostics now retain paused request URL.
+  Controlled actual Chromium test failed before the helper change: second navigation
+  started while a request remained paused. Shared helper now drains paused IDs until
+  fulfill/fail acknowledgment and 25ms quiet before navigation/mouse dispatch, bounded
+  by existing five-second deadline. Errors still reject; no ignored cancellation,
+  request release, navigation retry, assertion removal or broader URL allowance.
+  Reproduction then passed, as did all existing browser cases.
+- Full typecheck/lint, five tooling, 2,093 application, nine actual Redis, eight
+  Product Chromium and nineteen Resource-config Chromium cases (8 old + 10 network
+  + 1 controlled navigation), three builds and final diff review passed. Latest exact
+  push-event six gates remain PENDING until observed. No DB/dependency/production
+  source/route/grant/credentials/provider config/analytics/publication/Working change.
+- Next safe task: audit remaining Resource context/issuance transport and lock its
+  bounded server composition before mounting, retaining original trusted-request
+  metadata and same-origin native form policy. Real proxy provenance/stripping,
+  live Redis/cache/provider, capacity/retention monitoring, public transport/
+  publication and full journey gates stay open. S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

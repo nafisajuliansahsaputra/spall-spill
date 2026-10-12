@@ -22,6 +22,7 @@ export async function chromiumFixture() {
   let socket: WebSocket | undefined; let nextId = 0;
   const pending = new Map<number, { resolve: (value: unknown) => void; reject: (error: Error) => void; timer: ReturnType<typeof setTimeout> }>();
   const events = new Map<string, ((params: unknown) => void)[]>();
+  const interceptions = new Set<string>(); let interceptionActivity = performance.now();
   const terminate = (signal: NodeJS.Signals) => {
     try {
       if (processGroup && child.pid) process.kill(-child.pid, signal);
@@ -48,12 +49,27 @@ export async function chromiumFixture() {
       const message = JSON.parse(String(event.data)) as { id?: number; result?: unknown; error?: { message: string }; method?: string; params?: unknown };
       if (message.id) { const p = pending.get(message.id); if (!p) return; pending.delete(message.id); clearTimeout(p.timer);
         if (message.error) p.reject(new Error(message.error.message)); else p.resolve(message.result);
-      } else if (message.method) for (const handler of events.get(message.method) ?? []) handler(message.params);
+      } else if (message.method) {
+        if (message.method === "Fetch.requestPaused") {
+          const id = (message.params as { requestId?: unknown }).requestId;
+          if (typeof id === "string") { interceptions.add(id); interceptionActivity = performance.now(); }
+        }
+        for (const handler of events.get(message.method) ?? []) handler(message.params);
+      }
     });
-    const command = <T = unknown>(method: string, params: Record<string, unknown> = {}): Promise<T> => new Promise((resolve, reject) => {
-      const id = ++nextId; const timer = setTimeout(() => { pending.delete(id); reject(new Error(`CDP deadline: ${method}`)); }, 5000);
-      pending.set(id, { resolve: value => resolve(value as T), reject, timer }); socket!.send(JSON.stringify({ id, method, params }));
-    });
+    const command = async <T = unknown>(method: string, params: Record<string, unknown> = {}): Promise<T> => {
+      // Controlled navigation must not cancel an unfinished fixture interception.
+      if (method === "Page.navigate" || method === "Input.dispatchMouseEvent")
+        await until(() => interceptions.size === 0 && performance.now() - interceptionActivity >= 25);
+      return await new Promise<T>((resolve, reject) => {
+        const id = ++nextId; const timer = setTimeout(() => { pending.delete(id); reject(new Error(`CDP deadline: ${method}`)); }, 5000);
+        pending.set(id, { resolve: value => resolve(value as T), reject, timer }); socket!.send(JSON.stringify({ id, method, params }));
+      }).finally(() => {
+        if (method === "Fetch.fulfillRequest" || method === "Fetch.failRequest") {
+          interceptions.delete(String(params.requestId)); interceptionActivity = performance.now();
+        }
+      });
+    };
     const evaluate = async <T>(expression: string) => {
       const r = await command<{ result: { value: T }; exceptionDetails?: unknown }>("Runtime.evaluate", { expression, returnByValue: true });
       if (r.exceptionDetails) throw new Error("Browser evaluation failed"); return r.result.value;

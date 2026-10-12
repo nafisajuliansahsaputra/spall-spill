@@ -147,7 +147,7 @@ it("real Chromium retains recognition without any marketplace form when intents 
         await browser.command("Fetch.fulfillRequest", { requestId: paused.requestId, responseCode: response.status,
           responseHeaders: [...response.headers].map(([name, value]) => ({ name, value })),
           body: Buffer.from(await response.arrayBuffer()).toString("base64") });
-      })().catch(error => unexpected.push(String(error)));
+      })().catch(error => unexpected.push(`${paused.request.method} ${paused.request.url}: ${String(error)}`));
     });
     await browser.command("Runtime.enable"); await browser.command("Page.enable");
     await browser.command("Fetch.enable", { patterns: [{ urlPattern: "*" }] });
@@ -191,7 +191,7 @@ it.each(["provider context", "expired intent", "denied budget"] as const)("real 
         await browser.command("Fetch.fulfillRequest", { requestId: paused.requestId, responseCode: response.status,
           responseHeaders: [...response.headers].map(([name, value]) => ({ name, value })),
           body: Buffer.from(await response.clone().arrayBuffer()).toString("base64") });
-      })().catch(error => unexpected.push(String(error)));
+      })().catch(error => unexpected.push(`${paused.request.method} ${paused.request.url}: ${String(error)}`));
     });
     await browser.command("Runtime.enable"); await browser.command("Page.enable");
     await browser.command("Fetch.enable", { patterns: [{ urlPattern: "*" }] });
@@ -260,7 +260,7 @@ it.each(["single saved", "unavailable first", "create denied first"] as const)("
         await browser.command("Fetch.fulfillRequest", { requestId: paused.requestId, responseCode: response.status,
           responseHeaders: [...response.headers].map(([name, value]) => ({ name, value })),
           body: Buffer.from(await response.clone().arrayBuffer()).toString("base64") });
-      })().catch(error => unexpected.push(String(error)));
+      })().catch(error => unexpected.push(`${paused.request.method} ${paused.request.url}: ${String(error)}`));
     });
     await browser.command("Runtime.enable"); await browser.command("Page.enable");
     await browser.command("Fetch.enable", { patterns: [{ urlPattern: "*" }] });
