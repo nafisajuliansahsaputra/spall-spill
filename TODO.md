@@ -1802,6 +1802,37 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   capacity/retention monitoring, publication and full journey gates remain open.
   S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
 
+### Private Resource network-subject / HTTP composition — 2026-10-12
+
+- Clean fetched lane at `003eb00746901de60054a6082d1b03ffc88cb838` passed all
+  six exact push-event gates: [CI 38187458490](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187458490),
+  [Security 38187458296](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187458296),
+  [Guard 38187458273](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187458273).
+  Database passed 2,019 assertions / 34 files, twelve races and four retention cases.
+  Supersedes 12.69 pending evidence; no S5/S6 closure.
+- Refreshed changed checkpoint/12.69, 12.44/12.68 and affected Resource/Product
+  composition/SDK/REST fixtures. Locked 12.70 before source. Added unmounted private
+  network HTTP factory: one snapshotted policy namespace, copied subject key and
+  fresh trusted metadata reader; internal identity wins over unchecked overrides.
+  Preserves issue/redeem/native handlers, costs 4/3, existing preflight/deadlines/
+  one-use consumption/fresh source/no-store/attribution and no fallback or retry.
+- 18 actual SDK-fetch/Resource REST fixture cases passed: native/JSON/replay,
+  equivalent mapped identity/exact shared work keys/costs, fresh reader, policy/key
+  snapshots, missing/invalid dependencies/metadata, spoofed headers, origin-first,
+  unchecked identity/domain/namespace override and late reader/no RPC.
+- Full typecheck/lint, five tooling, 2,093 application, nine actual Redis, eight
+  Product/eight Resource Chromium, three builds and final diff review passed.
+  Latest exact-push six gates remain PENDING until observed. No DB/dependency change.
+  Initial Product Chromium run had one Invalid InterceptionId on navigation; unchanged
+  Product and Resource suites both passed on recheck. No assertion/gate was weakened.
+- No route/grant, runtime header reader, credential/provider configuration,
+  analytics, publication or Working/Draft change. Fixtures are not live privileged
+  RPC/Redis/cache/provider or deployed trusted identity proof. Next bounded slice:
+  isolated Resource Chromium through this composed boundary with distributed REST
+  fixtures, canonical identity and denied/late metadata. Actual proxy stripping/
+  provenance, live Redis/cache/provider, capacity/retention monitoring, public
+  transport/publication and full journey gates remain open. S5/S6 NOT CLOSED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

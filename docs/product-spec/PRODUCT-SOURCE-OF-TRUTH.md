@@ -1194,6 +1194,27 @@ and mandatory trusted reader/key, before any mounting. Live provenance/Redis/cac
 provider, capacity/retention monitoring/publication/full journey gates stay open.
 S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
 
+Exact subject commit `003eb00746901de60054a6082d1b03ffc88cb838` passed six
+push-event gates: [CI 38187458490](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187458490),
+[Security 38187458296](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187458296)
+and [Guard 38187458273](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38187458273).
+Database passed 2,019 assertions / 34 files, twelve races and four retention cases.
+Supersedes 12.69 pending evidence; S5/S6 remain open.
+
+Contract [12.70](./technical-architecture/12.70-resource-network-budgeted-http-contract.md)
+stages unmounted private Resource network-subject/HTTP composition using exactly one
+snapshotted explicit policy namespace and mandatory server key/trusted fresh reader.
+Internal identity wins over unchecked caller overrides; preflight and existing 4/3
+cost/deadline/consume/attribution rules stay exact. 18 actual SDK-fetch/REST fixture
+cases and full local quality/Redis/both browser gates passed. Latest exact-push six
+gates remain PENDING until observed. No public route/grant/header reader, provider/
+credentials, analytics, publication or Working/Draft change. Fixtures do not prove
+trusted deployed proxy identity/live privileged RPC/Redis/cache/provider. Next:
+separately contract isolated Resource Chromium through composed network boundary/
+REST fixtures with canonical identity and denied/late metadata. Live provenance/
+stripping, Redis/cache/provider, capacity/retention monitoring, public transport/
+publication and full journey gates stay open. S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
