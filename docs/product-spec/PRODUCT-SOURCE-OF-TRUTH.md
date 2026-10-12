@@ -1451,6 +1451,37 @@ Owner D02 private Working read bootstrap from full pinned 9.6/actual schema befo
 Home offers Continue Work. Scoped activation/current-session runtime and all public
 safety/provider gates remain separate. D01/S5/S6 NOT CLOSED / VERIFIED.
 
+#### Returning-Owner D02 Core Profile Working read — 2026-10-12
+
+Starting lane `0fffa0b1c2cb71d8e9b00182ddd4de3047bc1a36` passed all six exact
+push-event gates: [CI 38303863223](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38303863223),
+[Security 38303863068](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38303863068),
+[Guard 38303863288](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38303863288).
+Supersedes 12.79 pending evidence: Database reset/lint/advisors, 2,107 pgTAP
+assertions/37 files and existing concurrency/retention. Browser cancellation risk
+remains open despite green CI; diagnostic retention is not a repair claim.
+
+Full pinned 9.6/J5/J9 and actual schema refreshed. Locked
+[12.80](./technical-architecture/12.80-returning-owner-profile-working-read-contract.md)
+before code. Separate zero-target stable read-only returning-Owner Core Profile
+Working reader uses 12.7 active/completed Owner and strict 12.75 context. Only own
+persisted profile; unavailable for missing/unsafe state, no default creation.
+Success adds exact private display_name, optional Bio/photo key and safe revision;
+key is opaque reference, not a media URL/public-ready claim. No other Identity
+parts, IDs, metadata ownership, timestamps or Published fields. Existing onboarding
+read/save exclusion remains; no writes/grants/account/layout/connection/publication
+change. This is not a full D02/Identity Revision or fabricated block state.
+
+Strict bounded injected-client SDK reader preserves explicit nulls and PostgreSQL
+code-point lengths, no trimming/Unicode rewrite/asset URL/retry/cache/credentials.
+38 SDK tests passed; 32 pgTAP assertions committed, exact-push Database evidence
+PENDING until observed. Full local gates, 2,331 application, nine Redis and 37
+Chromium cases passed. Latest exact-push six remote gates PENDING until observed.
+Next: remaining persisted layout/connection/Working-versus-Published composition
+inputs and failure truth before guarded editor assembly/scoped route activation;
+no missing-block fabrication. Claims/state/post-read recheck/media/current-session/
+provider evidence remain separate. D01/D02/S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

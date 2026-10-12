@@ -2171,6 +2171,48 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   diagnose observed request identity under 12.71 before a bounded correction; never
   swallow CDP errors or weaken gates. D01/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
 
+### Returning-Owner D02 Core Profile Working read — 2026-10-12
+
+- Starting lane `0fffa0b1c2cb71d8e9b00182ddd4de3047bc1a36` passed all six exact
+  push-event gates, freshly observed:
+  [CI 38303863223](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38303863223),
+  [Security 38303863068](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38303863068),
+  [Guard 38303863288](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38303863288).
+  Supersedes 12.79 pending evidence: Database reset/lint/advisors, 2,107 pgTAP
+  assertions/37 files and all existing concurrency/retention passed. Prior browser
+  cancellation risk remains open despite green CI; diagnostics retained, not repaired.
+- Read full pinned 9.6 D02 and refreshed J5/J9, current schema/12.10/12.75/12.79.
+  Onboarding Basic Identity deliberately excludes completed Owners. Locked/read
+  back 12.80 before code: separate private Core Profile Working bootstrap only,
+  not whole D02/Identity Revision or a fabricated block canvas.
+- Added zero-argument stable read-only current-Owner RPC with 12.7 active/completed
+  eligibility and strict 12.75 context. Reads only that Owner's persisted profile;
+  missing state/unsafe revision fails unavailable without default creation. Success
+  adds exact display_name, nullable bio/profile_asset_key and safe revision. Asset
+  reference stays private/opaque, not a media URL or readiness claim. No Owner/Auth
+  IDs, timestamps, metadata ownership, other Identity parts or Published fields.
+  No writes/grants/onboarding/account/Handle/layout/connection/publication change;
+  all four execution grants withheld. Persona never filters Core Profile access.
+- Separate unmounted strict nested SDK reader, positive safe revision, PostgreSQL
+  code-point length limits, explicit optional nulls, no trimming/Unicode rewriting,
+  asset URL construction, retry/cache/credentials. Five-second abort/late null.
+  38 SDK-fetch cases passed. 32 pgTAP assertions committed for actor/metadata,
+  account/context/missing Working denial, nulls/Unicode/unsafe revisions, Working vs
+  publication, purity/hardening/withheld privileges and unchanged onboarding exclusion.
+  Database reset/lint/advisors/pgTAP/concurrency/retention PENDING committed CI;
+  no local DB/live auth/media/provider claim. Changelog request failed through proxy,
+  no bypass/upgrade; pinned CLI migration/API and SDK transport verified.
+- Frozen install, typecheck/lint, five tooling, 2,331 application tests (2,050 web
+  Vitest plus 281 other), three builds, nine actual Redis and 37 Chromium cases
+  passed on first full run. Final diff review/check passed. Latest exact-push
+  Application/Database, Secret Scan/SAST/Dependency Scan and Autopilot Guard PENDING
+  until observed; no route/scoped activation, Save/Preview/Publish or public change.
+- Next: contract remaining D02 persisted layout/connection/Working-versus-Published
+  composition inputs and failure truth without fabricating missing modular block
+  state, before guarded editor assembly or scoped route activation. Keep future
+  claims/state/post-read recheck/media/runtime gates. D01/D02/S5/S6 NOT CLOSED /
+  VERIFIED; Goal unfinished.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
