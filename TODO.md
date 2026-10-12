@@ -2015,6 +2015,45 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   activation and real evidence. Do not route to unsupported editors or infer public
   availability from private publication records. D01/S5/S6 NOT CLOSED / VERIFIED.
 
+### Private D01 never-published Draft counts — 2026-10-12
+
+- Starting lane `356b4e27967b64053a4491474554e28fbdf563be` passed all six exact
+  push-event gates, freshly observed:
+  [CI 38263299220](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38263299220),
+  [Security 38263299226](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38263299226),
+  [Guard 38263299213](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38263299213).
+  Supersedes 12.75 pending evidence; its Database reset/lint/advisors and 2,041
+  pgTAP assertions in 35 files plus existing concurrency/retention passed.
+- Refreshed current schema and locked/read back 12.76 before coding. Persisted
+  onboarding Draft rows survive publication: true never-published counts must
+  exclude matching publication records in published, hidden and archived states.
+  Existing one-Draft-per-kind-per-Owner constraint is unchanged.
+- Added zero-argument stable read-only current-Owner Draft summary through strict
+  12.75 context and auth.uid-derived 12.7 eligibility. Same-Owner immutable
+  registry bindings required; broken binding returns unavailable, not partial zero.
+  DTO adds only safe nonnegative Product/Resource counts. Personalization never
+  filters capabilities. No IDs/content/URLs/revisions, public readiness or inferred
+  Item Working changes. All four execution grants remain withheld; no writes.
+- Separate unmounted SDK reader enforces strict DTO, fixed zero-argument RPC,
+  five-second abort/late denial, no retry/cache/credentials. 27 new SDK tests
+  and 21 retained context tests passed. 27 pgTAP assertions committed for actor
+  isolation/metadata, account gates, all publication lifecycles, personalization,
+  purity/hardening/withheld execution. Database evidence PENDING exact-push CI;
+  fixtures do not prove live auth/provider or public readiness.
+- Frozen install, typecheck/lint, five tooling, 2,195 application tests (1,914 web
+  plus 281 other), three builds and nine actual Redis tests passed. First Product
+  Chromium run had an intermittent favicon Invalid InterceptionId fixture failure;
+  inspection and unchanged-code recheck passed all 37 Chromium cases (8 Product,
+  29 Resource). No assertion bypass or claim that intermittent fixture behavior
+  has been fixed. Final diff review/check passed.
+- Latest exact-push Application/Database, Secret Scan/SAST/Dependency Scan and
+  Autopilot Guard remain PENDING until observed. No route, transport activation,
+  grant, provider/configuration or publication change. Next: contract precise
+  Identity Working-versus-private-publication summary using all revision bindings
+  and failure truth before Home rendering. Retain future verified claims/state,
+  post-read identity/state recheck and separate access/runtime evidence gates.
+  D01/S5/S6 NOT CLOSED / VERIFIED; no Goal completion.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

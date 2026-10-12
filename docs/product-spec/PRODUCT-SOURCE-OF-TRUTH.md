@@ -1336,6 +1336,36 @@ and failure truth before Home rendering, with future verified claims/state and
 post-read recheck, separate access activation and evidence. Public availability
 must not be inferred from private records. D01/S5/S6 NOT CLOSED / VERIFIED.
 
+#### Private D01 never-published Draft counts — 2026-10-12
+
+Starting lane `356b4e27967b64053a4491474554e28fbdf563be` passed all six exact
+push-event gates: [CI 38263299220](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38263299220),
+[Security 38263299226](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38263299226),
+[Guard 38263299213](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38263299213).
+Supersedes 12.75 pending evidence, including Database reset/lint/advisors, 2,041
+pgTAP assertions/35 files and existing concurrency/retention. S5/S6 remain open.
+
+Locked [12.76](./technical-architecture/12.76-private-owner-home-draft-counts-contract.md)
+before code. Private zero-target stable read-only RPC requires 12.75 current
+context and 12.7 active/completed Owner, immutable same-Owner Draft identity/reference
+bindings and same-snapshot counts. Persisted Draft rows with any matching publication
+record (published/hidden/archived) are excluded, never relabeled as Draft. Broken
+bindings fail unavailable. DTO contains only context plus safe nonnegative counts;
+personalization does not filter kinds. Current one onboarding Draft per kind/Owner
+constraint remains; no returning-owner persistence, inferred Item Working changes,
+public availability, content/IDs/revisions, writes or execution grants.
+
+Separate strict bounded unmounted current-session SDK reader; 27 new SDK tests
+passed. 27 pgTAP assertions committed; exact-push Database/runtime evidence PENDING
+until observed. Full local gates, 2,195 application, nine Redis and 37 Chromium
+cases passed; initial Product favicon interception failure and unchanged-code passing
+recheck recorded in TODO, no fixture-fix claim. Latest exact-push six remote gates
+PENDING until observed. No route/provider/configuration/publication/transport activation.
+Next: precise Identity Working-versus-private-publication summary from all stored
+revision bindings before Home rendering. Future claims/state proof, post-read recheck,
+scoped activation and real runtime evidence remain required. D01/S5/S6 NOT CLOSED /
+VERIFIED; public availability cannot be inferred from private publication records.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
