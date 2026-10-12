@@ -1941,6 +1941,43 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   publicly before real proxy provenance/stripping, privileged RPC/Redis/cache/provider,
   capacity/retention and publication/journey gates. S5/S6 NOT CLOSED / VERIFIED.
 
+### Isolated recognition HTTP-issued Resource Chromium evidence — 2026-10-12
+
+- Clean fetched starting lane `976598625f855290942ca766e2e801d27cff0581`
+  passed all six exact push-event gates, freshly observed:
+  [CI 38212964084](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212964084),
+  [Security 38212964090](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212964090),
+  [Guard 38212964097](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212964097).
+  Database 2,019 assertions/34 files passed. Supersedes 12.73 pending evidence.
+- Refreshed canonical checkpoint/protocol/runbook, J6/J8/pinned P04 and
+  12.71/12.72/12.73 source before coding; locked and read back 12.74 first.
+  Added separate mandatory ten-case actual Chromium suite using JSON actually
+  returned by network-budgeted recognize, pinned SDK-fetch/REST fixtures, existing
+  renderer and production CSS. Existing Product/Resource suites remain intact.
+- Observed recognition before explicit native semantic action/44px touch, canonical
+  context, exact attribution/no outbound Referer, committed consume/replay denial,
+  fresh metadata/canonical IPv4-mapped keys/shared work and Resource costs 4/3.
+  Actual degraded context and failed clock/source/create preserve exact recognition
+  with null token, one unavailable status/recovery links and no action. Absent/late
+  metadata, Redis denial and denied private context RPC return uniform unavailable
+  without fabricated recognition. Late source ignoring abort completes after HTTP
+  recovery without creating an intent or reviving a browser action.
+- Recognition POST runs in isolated server fixture before SSR; browser navigation
+  uses its actual payload. This is not a mounted browser-fetch implementation or
+  deployment/proxy attestation. All page requests intercepted; provider only stubbed.
+  SDK/store/metadata/REST are fixtures, not live privileged integration evidence.
+- Full typecheck/lint, five tooling, 2,147 application tests, nine actual Redis,
+  eight Product and twenty-nine Resource-config Chromium tests (19 retained + 10 new),
+  three builds and final diff review passed. Latest exact pushed commit's six remote
+  gates remain PENDING until observed. No production source/DB/dependency/route/grant/
+  credentials/provider/config/analytics/publication/Working change.
+- Next safe task: audit remaining public transport enabling prerequisites against
+  actual runtime configuration/provenance and canonical safety gates before mounting.
+  Preserve blockers on proxy stripping/attestation, privileged RPC/Redis/cache/provider,
+  capacity/retention monitoring, publication and full journey evidence; continue any
+  independent safe implementation permitted by dependency order. S5/S6 NOT CLOSED /
+  VERIFIED; Goal unfinished.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

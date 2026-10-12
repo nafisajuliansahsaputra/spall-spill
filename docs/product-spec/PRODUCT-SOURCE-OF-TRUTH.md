@@ -1286,6 +1286,30 @@ metadata/budget/late response before public mounting. All real provenance/stripp
 privileged RPC/Redis/cache/provider/capacity/retention/publication/journey gates remain
 open. S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
 
+#### Isolated recognition HTTP-issued Resource browser evidence — 2026-10-12
+
+Starting lane `976598625f855290942ca766e2e801d27cff0581` passed all six exact
+push-event gates: [CI 38212964084](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212964084),
+[Security 38212964090](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212964090),
+[Guard 38212964097](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38212964097).
+Database 2,019 assertions/34 files passed. Supersedes 12.73 pending evidence.
+
+Locked [12.74](./technical-architecture/12.74-resource-recognition-browser-contract.md)
+adds ten mandatory actual Chromium cases from actual network-budgeted recognition
+HTTP results through existing renderer/production CSS. Observe native action/context/
+attribution/replay and exact Resource costs/keys, degraded/clock/source/create recovery
+with null token/no action, metadata/Redis/private-RPC denial and late source completion
+without authority revival. Recognition POST occurs in isolated server fixture before
+SSR; browser navigation uses its result, not a mounted browser-fetch implementation.
+All page requests intercepted, provider stubbed; no live attestation/integration claim.
+Full local gates, 2,147 application, nine Redis and 37 Chromium cases passed. Latest
+exact-push six remote gates PENDING until observed. No production source/DB/dependency/
+route/grant/credentials/config/provider/publication/Working change. Next: audit remaining
+public enabling prerequisites against actual runtime configuration/provenance and
+canonical safety gates, then continue independent dependency-safe work. Real proxy
+stripping/attestation, privileged RPC/Redis/cache/provider, capacity/retention,
+publication/full journey evidence stays open. S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
