@@ -1238,6 +1238,29 @@ metadata/same-origin native policy before mounting. Live provenance/stripping/Re
 cache/provider, capacity/retention monitoring/publication/full journey gates stay open.
 S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
 
+#### Private Resource recognition with optional intent — 2026-10-12
+
+Starting lane `c910a8608e5eb996b0c1272bb72a5a1d4c0d4798` passed all six
+exact push-event gates: [CI 38191758560](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38191758560),
+[Security 38191758557](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38191758557),
+[Guard 38191758548](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38191758548).
+Supersedes 12.71 pending evidence; S5/S6 remain open.
+
+Locked [12.72](./technical-architecture/12.72-resource-recognition-optional-intent-contract.md)
+adds private recognition with optional intent to the existing calibrated assembly.
+One strict same-Published snapshot survives failed intent as recognition plus null
+token, without changing captured availability/lifecycle. Valid degraded context
+requires no clock/source/store. Invalid/private/unavailable context fails uniformly.
+Existing strict issue, one-use redemption, cleanup and all deadlines remain intact.
+25 additional SDK-fetch/renderer cases verify recognition recovery/no form and late
+transport denial. Full local gates, 2,118 application tests, nine Redis and 27
+Chromium cases passed; latest exact-push six remote gates PENDING until observed.
+No DB/dependency/route/grant/provider/config/publication/Working change or live
+privileged/provider claim. Next: separately contract bounded recognition HTTP with
+original trusted-request identity/budget, aggregate deadline, no-store response and
+preserved same-origin native redemption policy before mounting. All enabling/live/
+publication/full journey evidence remains open. S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

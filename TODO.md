@@ -1871,6 +1871,40 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   live Redis/cache/provider, capacity/retention monitoring, public transport/
   publication and full journey gates stay open. S5/S6 NOT CLOSED / VERIFIED.
 
+### Private Resource recognition with optional intent — 2026-10-12
+
+- Clean fetched starting lane `c910a8608e5eb996b0c1272bb72a5a1d4c0d4798`
+  passed all six exact push-event gates, freshly observed:
+  [CI 38191758560](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38191758560),
+  [Security 38191758557](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38191758557),
+  [Guard 38191758548](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38191758548).
+  Supersedes 12.71 pending remote evidence; S5/S6 remain open.
+- Refreshed canonical checkpoint/protocol/runbook, J6/J8/pinned P04 and
+  12.53/12.59/12.66 source before coding; locked and read back 12.72 first.
+  Added private `recognize(locator)` to existing calibrated issuance assembly.
+  Valid Published context survives unavailable source or failed intent with nullable
+  token. Exact captured recognition is retained; no fabricated availability/lifecycle.
+  Degraded context avoids calibration/source/store. Malformed/private/unavailable/
+  wrong-reference context still returns null before those operations. Existing strict
+  `issue` shares the path and retains its token-or-null contract; redemption/cleanup
+  remain unchanged. No public route/HTTP mount/RPC grant/DB/dependency/config change.
+- Added 25 pinned SDK-fetch cases plus actual renderer readback: successful one-use
+  action, degraded recovery without form, failed/invalid clock, source mismatch,
+  literal create acknowledgment, expired durable record, invalid locators/private
+  context and five-second late source/create/context responses without revival.
+  Retained all original issuance/HTTP cases; 99 targeted tests passed.
+- Full typecheck/lint, five tooling, 2,118 application tests (1,837 web + 281 other),
+  nine actual Redis, eight Product and nineteen Resource-config Chromium tests,
+  all three builds and final diff review passed. Latest exact pushed commit's six
+  remote gates remain PENDING until observed; no CLOSED / VERIFIED claim.
+  SDK/metadata/store/provider fixtures are not live privileged/provider proof.
+- Next: lock a bounded private recognition HTTP composition, with original trusted
+  request identity, conservative issuance budget, aggregate deadline, no-store
+  response and preserved same-origin native redemption policy before mounting.
+  Proxy provenance/stripping, live Redis/cache/provider, capacity/retention,
+  public enablement/publication and complete journey gates remain open.
+  Working/Draft/Published boundaries unchanged; S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

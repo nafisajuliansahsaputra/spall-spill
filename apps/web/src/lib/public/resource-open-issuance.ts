@@ -34,16 +34,25 @@ export function createPublishedResourceOpenIssuance(client: Pick<SupabaseClient,
       },
     });
   }
+  async function recognize(locator: unknown) {
+    try {
+      const context = await resources.readContext(locator);
+      if (context === null || context.status !== "success") return null;
+      let token: string | null = null;
+      if (context.recognition.available && context.binding !== null) {
+        try {
+          const clock = await readClock();
+          if (clock !== null) token = await core(clock).issue(locator, context);
+        } catch { /* Recognition remains valid; failed issuance provides no action. */ }
+      }
+      return { recognition: context.recognition, token };
+    } catch { return null; }
+  }
   return {
+    recognize,
     async issue(locator: unknown) {
-      try {
-        const context = await resources.readContext(locator);
-        if (context === null || context.status !== "success" || !context.recognition.available || context.binding === null) return null;
-        const clock = await readClock();
-        if (clock === null) return null;
-        const token = await core(clock).issue(locator, context);
-        return token === null ? null : { recognition: context.recognition, token };
-      } catch { return null; }
+      const result = await recognize(locator);
+      return result === null || result.token === null ? null : { recognition: result.recognition, token: result.token };
     },
     async redeem(token: unknown, expectedContext: unknown) {
       try {

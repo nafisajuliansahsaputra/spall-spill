@@ -1,3 +1,6 @@
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { PublishedResourceRecognitionActions } from "./resource-recognition-actions";
 import { createHash } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -106,4 +109,117 @@ it("never consumes malformed capability or browser-supplied private record", asy
   const f = fixture(); expect(await f.assembly.redeem("invalid", context)).toBeNull();
   expect(await f.assembly.redeem("a".repeat(43), { ...context, binding })).toBeNull();
   expect(f.fetcher).not.toHaveBeenCalled();
+});
+
+
+describe("Published recognition with optional Open intent", () => {
+  function recovery(payload: unknown) {
+    const html = renderToStaticMarkup(createElement(PublishedResourceRecognitionActions, { payload }));
+    expect(html).toContain("Published Portfolio");
+    expect(html).toContain('href="/creator/spill"');
+    expect(html).toContain("Resource source is temporarily unavailable.");
+    expect(html).not.toContain("<form"); expect(html).not.toContain(url);
+    expect(html).not.toContain(binding.publication_token);
+    return html;
+  }
+  it("captures one canonical Published snapshot, issues an action and redeems only once", async () => {
+    const f = fixture(); const result = await f.assembly.recognize(locator);
+    expect(result).toEqual({ recognition, token: expect.stringMatching(/^[A-Za-z0-9_-]{43}$/) });
+    expect(f.calls[0]).toEqual({ name: "resolve_published_resource_context_server",
+      args: { input_handle: "previous", input_spill_reference: 27 } });
+    expect(Object.keys(result!)).toEqual(["recognition", "token"]);
+    const html = renderToStaticMarkup(createElement(PublishedResourceRecognitionActions, { payload: result }));
+    expect(html).toContain("View Portfolio"); expect(html).toContain("<form"); expect(html).toContain('action="/actions/resource-open"');
+    expect(html).not.toContain(url); expect(html).not.toContain(binding.publication_token);
+    expect(await f.assembly.redeem(result!.token, context)).toBe(url);
+    expect(await f.assembly.redeem(result!.token, context)).toBeNull();
+    expect(f.calls.filter(c => c.name === "resolve_published_resource_context_server")).toHaveLength(1);
+  });
+  it("retains valid degraded recognition without clock, source or store and keeps issue strict", async () => {
+    const f = fixture(); const degraded = { ...recognition, available: false, source_url: null };
+    f.fetcher.mockResolvedValue(new Response(JSON.stringify({ status: "success", recognition: degraded, binding: null })));
+    const result = await f.assembly.recognize(locator);
+    expect(result).toEqual({ recognition: degraded, token: null });
+    expect(recovery(result).match(/role="status"/g)).toHaveLength(1);
+    expect(f.fetcher).toHaveBeenCalledTimes(1); expect(f.readClock).not.toHaveBeenCalled();
+    expect(f.records.size).toBe(0);
+    f.fetcher.mockResolvedValue(new Response(JSON.stringify({ status: "success", recognition: degraded, binding: null })));
+    expect(await f.assembly.issue(locator)).toBeNull(); expect(f.readClock).not.toHaveBeenCalled();
+  });
+  it.each(["null", "throw", "invalid"])("retains recognition after %s calibration without creating authority", async failure => {
+    const f = fixture();
+    if (failure === "null") f.readClock.mockResolvedValue(null as never);
+    if (failure === "throw") f.readClock.mockRejectedValue(new Error("fixture clock unavailable"));
+    if (failure === "invalid") f.setTime(Number.NaN, 100_001);
+    const result = await f.assembly.recognize(locator);
+    expect(result).toEqual({ recognition, token: null }); recovery(result);
+    expect(f.records.size).toBe(0);
+    expect(f.calls.map(c => c.name)).toEqual(failure === "invalid"
+      ? ["resolve_published_resource_context_server", "resolve_published_resource_source_server"]
+      : ["resolve_published_resource_context_server"]);
+  });
+  it.each([null, { status: "unavailable" }, { status: "success", source_url: "https://foreign.example.test/" }])(
+    "retains the captured snapshot when fresh source validation fails", async data => {
+      const f = fixture(); const normal = f.fetcher.getMockImplementation()!;
+      f.fetcher.mockImplementation((input, options) => String(input).endsWith("resolve_published_resource_source_server")
+        ? Promise.resolve(new Response(JSON.stringify(data))) : normal(input, options));
+      const result = await f.assembly.recognize(locator);
+      expect(result).toEqual({ recognition, token: null }); recovery(result);
+      expect(f.calls.map(c => c.name)).toEqual(["resolve_published_resource_context_server"]);
+      expect(f.fetcher).toHaveBeenCalledTimes(2); expect(f.records.size).toBe(0);
+    });
+  it.each([false, 1, { success: true }])("requires literal durable-create acknowledgment without losing recognition", async data => {
+    const f = fixture(); const normal = f.fetcher.getMockImplementation()!;
+    f.fetcher.mockImplementation((input, options) => String(input).endsWith("create_resource_open_intent_server")
+      ? Promise.resolve(new Response(JSON.stringify(data))) : normal(input, options));
+    const result = await f.assembly.recognize(locator);
+    expect(result).toEqual({ recognition, token: null }); recovery(result);
+    expect(f.fetcher).toHaveBeenCalledTimes(3); expect(f.records.size).toBe(0);
+  });
+  it("retains recognition on upper-bound expiry without restoring or deleting the durable record", async () => {
+    const f = fixture(); f.setTime(100_000, 220_000);
+    const result = await f.assembly.recognize(locator);
+    expect(result).toEqual({ recognition, token: null }); recovery(result);
+    expect([...f.records.values()]).toHaveLength(1);
+    expect([...f.records.values()][0]).toMatchObject({ issued_at: 100_000, expires_at: 220_000 });
+    expect(f.fetcher).toHaveBeenCalledTimes(3);
+  });
+  it.each([null, {}, { ...locator, reference: 27 }, { ...locator, source_url: url }])(
+    "rejects invalid locator before recognition reads", async input => {
+      const f = fixture(); expect(await f.assembly.recognize(input)).toBeNull();
+      expect(f.fetcher).not.toHaveBeenCalled(); expect(f.readClock).not.toHaveBeenCalled();
+    });
+  it.each([null, { status: "unavailable" }, { status: "success", recognition, binding: null },
+    { status: "success", recognition, binding, owner_id: "private" },
+    { status: "success", recognition: { ...recognition, spill_reference: 28 }, binding },
+    { status: "success", recognition, binding: { ...binding, handle: "other" } }])(
+    "never retains malformed, private or unrelated context", async data => {
+      const f = fixture(); f.fetcher.mockResolvedValueOnce(new Response(JSON.stringify(data)));
+      expect(await f.assembly.recognize(locator)).toBeNull(); expect(f.fetcher).toHaveBeenCalledTimes(1);
+      expect(f.readClock).not.toHaveBeenCalled(); expect(f.records.size).toBe(0);
+    });
+  it.each(["resolve_published_resource_source_server", "create_resource_open_intent_server"])(
+    "bounds late %s transport and never revives an action", async name => {
+      vi.useFakeTimers(); const f = fixture(); const normal = f.fetcher.getMockImplementation()!;
+      let finish!: (response: Response) => void;
+      f.fetcher.mockImplementation((input, options) => String(input).endsWith(name)
+        ? new Promise(resolve => { finish = resolve; }) : normal(input, options));
+      const pending = f.assembly.recognize(locator);
+      await vi.advanceTimersByTimeAsync(5000);
+      const result = await pending; expect(result).toEqual({ recognition, token: null }); recovery(result);
+      const count = f.fetcher.mock.calls.length;
+      finish(new Response(JSON.stringify(name === "create_resource_open_intent_server" ? true : { status: "success", source_url: url })));
+      await vi.advanceTimersByTimeAsync(0);
+      expect(await pending).toEqual(result); expect(f.fetcher).toHaveBeenCalledTimes(count);
+      expect(f.records.size).toBe(0);
+    });
+  it("never fabricates recognition after a late context transport", async () => {
+    vi.useFakeTimers(); const f = fixture(); let finish!: (response: Response) => void;
+    f.fetcher.mockImplementation(() => new Promise(resolve => { finish = resolve; }));
+    const pending = f.assembly.recognize(locator); await vi.advanceTimersByTimeAsync(5000);
+    expect(await pending).toBeNull(); expect(f.readClock).not.toHaveBeenCalled();
+    finish(new Response(JSON.stringify({ status: "success", recognition, binding })));
+    await vi.advanceTimersByTimeAsync(0); expect(await pending).toBeNull();
+    expect(f.fetcher).toHaveBeenCalledTimes(1); expect(f.records.size).toBe(0);
+  });
 });
