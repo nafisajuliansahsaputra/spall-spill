@@ -1423,6 +1423,34 @@ D01 action/navigation and failure presentation contract after historical editor/
 manager audit, preserving intended deep links. No unsupported or onboarding editor
 fallback for completed Owners. D01/S5/S6 NOT CLOSED / VERIFIED.
 
+#### Private D01 disposition and supported navigation — 2026-10-12
+
+Starting lane `ca7330554e54251d3b73008e697ac776f55bfbd3` passed all six exact
+push-event gates: [CI 38296701037](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38296701037),
+[Security 38296701019](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38296701019),
+[Guard 38296701047](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38296701047).
+Supersedes 12.78 pending evidence, including Database reset/lint/advisors, 2,107
+pgTAP assertions/37 files and existing concurrency/retention. S5/S6 remain open.
+
+Locked [12.79](./technical-architecture/12.79-private-owner-home-disposition-contract.md)
+before code. Server-only pure adapter consumes trusted 12.78 results, not caller
+JSON authorization. Strict valid denial maps only to existing login/O01/D10 routes;
+missing Owner/unavailable/malformed/private/partial data never becomes empty Home.
+Success retains private work with an empty supported-action list: D02/D03 are not
+implemented, and completed Owners cannot reuse onboarding editors. No public links,
+attention/health/analytics or persona permissions inferred. No route/cookie/intended-
+destination/auth/DB/grant/Working/publication change; not complete D01.
+
+34 targeted cases, full local gates, 2,293 application, nine Redis and 37 Chromium
+cases observed passing. Initial Resource denied-permit Invalid InterceptionId and
+passing recheck remain recorded in TODO. Companion diagnostic under 12.71 retains
+paused method/URL/requestId without suppressing errors or weakening assertions/
+allowlists/gestures/timeouts; cancellation risk remains open, not claimed repaired.
+Latest exact-push six remote gates PENDING until observed. Next: bounded returning-
+Owner D02 private Working read bootstrap from full pinned 9.6/actual schema before
+Home offers Continue Work. Scoped activation/current-session runtime and all public
+safety/provider gates remain separate. D01/S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

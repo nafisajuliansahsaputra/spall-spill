@@ -88,7 +88,7 @@ async function navigationFixture(f: ReturnType<typeof fixture>, payload: unknown
         await browser.command("Fetch.failRequest", { requestId: paused.requestId, errorReason: "BlockedByClient" }); return; }
       await browser.command("Fetch.fulfillRequest", { requestId: paused.requestId, responseCode: response.status,
         responseHeaders: [...response.headers].map(([name, value]) => ({ name, value })), body: Buffer.from(await response.arrayBuffer()).toString("base64") });
-    })().catch(error => { failures.push(error); void browser.command("Fetch.failRequest", { requestId: paused.requestId, errorReason: "BlockedByClient" }).catch(() => {}); });
+    })().catch(error => { failures.push(`${paused.request.method} ${paused.request.url} [${paused.requestId}]: ${String(error)}`); void browser.command("Fetch.failRequest", { requestId: paused.requestId, errorReason: "BlockedByClient" }).catch(() => {}); });
   });
   browser.on("Runtime.exceptionThrown", value => failures.push(value));
   try {

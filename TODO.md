@@ -2133,6 +2133,44 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   intended-deep-link precedence and no unsupported/onboarding fallback editors.
   D01/S5/S6 NOT CLOSED / VERIFIED; no Goal completion.
 
+### Private D01 disposition and supported navigation — 2026-10-12
+
+- Starting lane `ca7330554e54251d3b73008e697ac776f55bfbd3` passed all six exact
+  push-event gates, freshly observed:
+  [CI 38296701037](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38296701037),
+  [Security 38296701019](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38296701019),
+  [Guard 38296701047](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38296701047).
+  Supersedes 12.78 pending evidence: Database reset/lint/advisors, 2,107 pgTAP
+  assertions/37 files and all existing concurrency/retention passed.
+- Refreshed J5/J9, pinned D01/D02/D03, 12.78 and actual routing/source. Main Home,
+  returning Identity/Spill editors remain absent; onboarding Basic Identity read/
+  save rejects completed Owners. Locked/read back 12.79 before code.
+- Added pure server-only adapter for trusted guarded assembly output, not auth or
+  a caller-JSON endpoint. Strict success/denial validation rejects stale Home on
+  denial, malformed/private/action fields and partial/unsafe counts. Valid account
+  denials map only to existing login/O01/D10 destinations. Missing Owner/unavailable
+  never becomes fabricated empty Home or redirect. Success retains private work
+  with no supported actions yet; no public links/health/analytics/persona permissions.
+  No route mount, cookies/intended-destination consumption, auth/service calls,
+  DB/grant/Working/publication change. Empty actions do not complete D01.
+- 34 targeted cases passed. Frozen install, typecheck/lint, five tooling, 2,293
+  application tests (2,012 web plus 281 other), three builds and nine actual Redis
+  passed. Product Chromium 8 passed; initial Resource Chromium had one intermittent
+  Invalid InterceptionId in denied-permit fixture (28/29 passed). Read back 12.71;
+  error lacked paused identity. Locked bounded diagnostic companion before adding
+  method/URL/requestId to Resource network-fixture captured errors. No assertion,
+  allowlist, native gesture, timeout or error suppression change. Typecheck/lint
+  and full Resource 29-case recheck passed; all 37 browser cases observed passing.
+  Cancellation risk remains open; passing recheck is not a root-cause repair claim.
+- Final diff review/check passed. Latest exact-push Application/Database, Secret
+  Scan/SAST/Dependency Scan and Autopilot Guard PENDING until observed. No live auth/
+  provider/public state claim; scoped activation/current-session runtime remain open.
+- Next: bounded returning-Owner D02 private Working read bootstrap contract from
+  full pinned 9.6 and actual schema before offering Continue Work; preserve onboarding
+  eligibility and explicit Publish separation. If fixture cancellation recurs,
+  diagnose observed request identity under 12.71 before a bounded correction; never
+  swallow CDP errors or weaken gates. D01/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
