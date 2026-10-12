@@ -1310,6 +1310,32 @@ canonical safety gates, then continue independent dependency-safe work. Real pro
 stripping/attestation, privileged RPC/Redis/cache/provider, capacity/retention,
 publication/full journey evidence stays open. S5/S6 NOT CLOSED / VERIFIED.
 
+#### Private D01 current-Owner context foundation — 2026-10-12
+
+Starting lane `c0d6368b048d130af39b194e02480e2dc8a6846a` passed all six exact
+push-event gates: [CI 38213728087](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38213728087),
+[Security 38213728090](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38213728090),
+[Guard 38213728095](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38213728095).
+Supersedes 12.74 pending evidence; S5/S6 remain open.
+
+Public enabling prerequisites remain unmet; independent audit found /dashboard
+main page absent despite normal active routing fallback. Locked
+[12.75](./technical-architecture/12.75-private-owner-home-context-contract.md)
+stages only private current-Owner context, not a placeholder Home. Zero-argument
+stable read-only RPC derives auth.uid through 12.7, requires active/completed Owner
+and that Owner's current Handle/stored personalization. Uniform unavailable on
+ineligible/missing context; success contains no IDs, private records or inferred
+publication/Working/capability state. All execution grants remain withheld. Bounded
+strict current-session SDK reader has no caller target, retry/cache or credential
+loading. 21 SDK-fetch tests passed; 22 pgTAP assertions committed, database reset/
+lint/advisors/pgTAP/concurrency/retention evidence PENDING CI, no local/live claim.
+Full local gates, 2,168 application, nine Redis and 37 Chromium cases passed. Latest
+exact-push six remote gates PENDING until observed. No route/grant/provider/config/
+publication/Working change. Next: Owner-scoped read-only work/publication summaries
+and failure truth before Home rendering, with future verified claims/state and
+post-read recheck, separate access activation and evidence. Public availability
+must not be inferred from private records. D01/S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

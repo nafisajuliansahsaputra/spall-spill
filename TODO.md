@@ -1978,6 +1978,43 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   independent safe implementation permitted by dependency order. S5/S6 NOT CLOSED /
   VERIFIED; Goal unfinished.
 
+### Private D01 current-Owner context foundation — 2026-10-12
+
+- Clean fetched starting lane `c0d6368b048d130af39b194e02480e2dc8a6846a`
+  passed all six exact push-event gates, freshly observed:
+  [CI 38213728087](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38213728087),
+  [Security 38213728090](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38213728090),
+  [Guard 38213728095](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38213728095).
+  Supersedes 12.74 pending evidence; S5/S6 remain open.
+- Current public transport still requires real provenance/provider/enabling gates.
+  Independent audit found normal active fallback /dashboard lacks a main page.
+  Refreshed J5/pinned D01, 12.7 and actual Owner/progress/Handle schema; locked
+  and read back 12.75 before code. Stage context only, not a placeholder dashboard.
+- Added zero-argument stable read-only private Home context RPC using existing
+  auth.uid-derived Owner-state resolver. Requires active/completed Owner and exact
+  same-Owner current Handle/stored Primary Use Case; no alias/metadata/target fallback.
+  Returns only status/current_handle/primary_use_case. Ineligible/missing context
+  returns generic unavailable. No Owner/Auth ID, publication/Working/capability claims,
+  lifecycle mutation, new table privilege or execution grant. PUBLIC/anon/
+  authenticated/service_role execution remains withheld.
+- Added bounded current-session SDK reader with strict canonical DTO, zero arguments,
+  five-second abort/late denial and no credential loading/retry/cache. Twenty-one
+  SDK-fetch tests passed; migration and twenty-two pgTAP assertions cover actor
+  isolation/forged metadata, all account gates, missing/alias context, no writes,
+  function hardening and retained withheld/existing privileges. Database reset/lint/
+  advisors/pgTAP and existing concurrency/retention evidence PENDING committed CI;
+  no local database or live auth/provider claim. Changelog host request was denied
+  by managed proxy; no bypass/upgrade, existing pinned CLI/SDK APIs verified locally.
+- Full typecheck/lint, five tooling, 2,168 application tests (1,887 web + 281 other),
+  nine actual Redis, 37 Chromium cases, three builds and final diff review passed.
+  Latest exact push-event CI Application/Database/Security/Guard remain PENDING until
+  observed. No route/public transport/grant/provider/config/publication/Working change.
+- Next: audit and contract read-only Owner-scoped work/publication summaries and
+  failure truth before Home rendering. Future workspace assembly requires current
+  claims/state proof plus post-read state/identity recheck, separately scoped access
+  activation and real evidence. Do not route to unsupported editors or infer public
+  availability from private publication records. D01/S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
