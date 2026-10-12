@@ -1366,6 +1366,36 @@ revision bindings before Home rendering. Future claims/state proof, post-read re
 scoped activation and real runtime evidence remain required. D01/S5/S6 NOT CLOSED /
 VERIFIED; public availability cannot be inferred from private publication records.
 
+#### Private D01 Identity work revision summary — 2026-10-12
+
+Starting lane `8d4ae7218406bd08874d23d52159033fb8229880` passed all six exact
+push-event gates: [CI 38269874374](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38269874374),
+[Security 38269874400](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38269874400),
+[Guard 38269874458](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38269874458).
+Supersedes 12.76 pending evidence: Database reset/lint/advisors, 2,068 pgTAP
+assertions/36 files and existing concurrency/retention. S5/S6 remain open.
+
+Locked [12.77](./technical-architecture/12.77-private-owner-home-identity-work-contract.md)
+before code. Private stable zero-target current-Owner reader requires 12.7/12.75
+active/completed context and compares content, layout and optional connection saved
+revisions against same-Owner private publication bindings in one statement snapshot.
+Returns only context plus identity_work enum never_published/unchanged/
+unpublished_changes. All publication lifecycles preserve history, not public
+availability. Missing required Working, unsafe or ahead-of-Working revisions and
+missing connection with a publication binding fail unavailable; no invented removal
+semantics. No content/IDs/revisions/URLs/assets/lifecycle fields, writes, publication
+or execution grants. Primary Use Case remains personalization only.
+
+Strict bounded unmounted current-session SDK reader has no caller target/retry/cache/
+credential loading. 28 new SDK tests passed; 39 pgTAP assertions committed, exact-push
+Database evidence PENDING until observed. Full local gates, 2,223 application, nine
+Redis and 37 Chromium cases passed. Latest exact-push six remote gates PENDING until
+observed. No route/public transport/provider/configuration/publication activation.
+Next: audit remaining truthful Home assembly inputs and supported actions before its
+bounded transport/rendering contract; do not fabricate attention/health/analytics or
+route unsupported editors. Future verified claims/state, post-read recheck, scoped
+activation and real runtime evidence remain required. D01/S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

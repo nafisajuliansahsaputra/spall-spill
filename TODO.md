@@ -2054,6 +2054,45 @@ item after fresh-reading the relevant O01/J1–J4 authority and affected code.
   post-read identity/state recheck and separate access/runtime evidence gates.
   D01/S5/S6 NOT CLOSED / VERIFIED; no Goal completion.
 
+### Private D01 Identity work revision summary — 2026-10-12
+
+- Starting lane `8d4ae7218406bd08874d23d52159033fb8229880` passed all six exact
+  push-event gates, freshly observed:
+  [CI 38269874374](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38269874374),
+  [Security 38269874400](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38269874400),
+  [Guard 38269874458](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38269874458).
+  Supersedes 12.76 pending evidence: Database reset/lint/advisors, 2,068 pgTAP
+  assertions in 36 files and all existing concurrency/retention passed.
+- Refreshed J5/J9/pinned D01 and actual content/layout/connection/publication
+  schema. Locked and read back 12.77 before code. Private stable zero-argument
+  current-Owner RPC compares all three saved revision bindings in one statement
+  snapshot, with active/completed eligibility and strict 12.75 context.
+- Success adds only identity_work: never_published, unchanged or unpublished_changes.
+  Publication records in all lifecycles retain history; no public availability
+  claim. Required Working missing, unsafe/ahead-of-Working revisions and missing
+  connection with published binding return unavailable. Current connection has no
+  removal/tombstone contract; do not infer intentional deletion from a missing row.
+  No private content/ID/revision/URL/asset/lifecycle data, write/publication/grant or
+  persona permission change. All four execution grants remain withheld.
+- Separate bounded unmounted current-session SDK reader with strict DTO/enum,
+  fixed zero-argument RPC, five-second abort/late null, no retry/cache/credential
+  loading. 28 new SDK tests plus 48 retained Home reader tests passed. 39 pgTAP
+  assertions committed for isolated actors/metadata/account/context, independent
+  revision comparisons, null/new connection, all publication lifecycles, missing/
+  unsafe/inconsistent state, read purity/hardening/withheld execution. Exact-push
+  Database evidence PENDING CI; no local database or live/provider claim.
+- Frozen install, typecheck/lint, five tooling, 2,223 application tests (1,942 web
+  plus 281 other), three builds, nine actual Redis and 37 Chromium cases passed
+  in the first full run. Final diff review/check passed. Changelog request failed
+  through managed proxy; no bypass/upgrade. Existing pinned CLI/SDK APIs verified.
+- Latest exact-push Application/Database, Secret Scan/SAST/Dependency Scan and
+  Autopilot Guard remain PENDING until observed. No Home route, access activation,
+  provider/configuration or publication change. Next: audit remaining truthful
+  Home assembly inputs and supported actions before locking its bounded transport/
+  rendering contract. Retain verified claims/state, post-read identity/state recheck,
+  separate scoped activation and real runtime gates; do not fabricate attention/
+  health/analytics or link unsupported editors. D01/S5/S6 NOT CLOSED / VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
