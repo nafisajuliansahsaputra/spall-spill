@@ -2850,6 +2850,47 @@ other typed payloads, complete Identity publication acknowledgment/snapshots,
 provider/safety/renderer activation remain separate withheld gates. Never use old
 profile/first-slot comparison as whole Identity truth or blindly retry unknown saves.
 
+### Private Owner block Working visibility CAS — 2026-10-13
+
+Fresh clean lane `9c84fdf88bf2c1e568a2e9e8011db054bbd92e89` verified all six
+exact push-event jobs: [CI 38440065878](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38440065878),
+[Security 38440065928](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38440065928),
+[Guard 38440066039](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38440066039).
+Supersedes 12.92 pending gates; 44 files/2,428 pgTAP and 24 concurrency/retention
+cases passed. Goal unfinished; D01/D02/S5/S6 NOT CLOSED / VERIFIED.
+
+Refreshed current authority/J5/J9/pinned 7.3/9.6/11.23/12.83/12.91 and actual
+schema/source/tests/workflow. Bounded visibility slice selected before reorder;
+locked/read back 12.93 before production code. Staged hardened private API mutation:
+strict exact block UUID/base safe revision/explicit boolean; derives current Owner,
+locks Owner then binding/rechecks, active/completed plus canonical context, locks
+own collection/member, denies foreign/missing identically. All six membership
+kinds supported independently of payload availability/Primary Use Case. Matching
+base writes only target visibility/update timestamp plus aggregate N→N+1 once,
+including identical explicit saves. Minimal exact block/boolean/next-revision ack.
+Stale/max/invalid/unauthorized requests cannot mutate or fabricate state.
+
+Stable IDs/Owner/kind/order/creation, other memberships, typed payloads, source,
+provenance, profile/layout/preview receipts/Published preserved. Hiding is private
+Working save, never immediate public Hide or public validity/publish permission.
+Execution PUBLIC/anon/authenticated/service_role remains withheld. No route/SDK/
+provider/credential/grant/policy/onboarding change; no live/manual evidence claim.
+
+72 pgTAP cases and five isolated Node races committed for CI: same/different block
+base, visibility versus payload aggregate CAS, collection advance while waiting,
+restriction during Owner wait. Database reset/lint/security advisors/pgTAP/all29
+concurrency-retention evidence and exact-push six gates PENDING until observed.
+Frozen install/typecheck/lint/five tooling/2,907 application tests/three builds
+passed (unchanged application Turbo cache reused); nine actual Redis and 37 actual
+Chromium cases passed. Final diff/check reviewed. Browser cancellation risk remains
+open; green regression is not proof of root-cause repair.
+
+Next: strict guarded current-session visibility SDK with exact block/boolean/base+1
+acknowledgment and 12.92 outcome_unknown proof/deadline rules. Then bounded
+keyboard-compatible reorder CAS. Add/remove, save/initialization reconciliation,
+complete Identity publication acknowledgment/snapshots, other typed payloads and
+provider/safety/media/renderer/runtime activation remain separate withheld gates.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

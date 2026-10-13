@@ -142,6 +142,9 @@ jobs:
       - name: Verify isolated Identity link Working CAS races
         run: node --test tests/identity-link-working-cas-concurrency.test.mjs
 
+      - name: Verify isolated Identity block Working visibility CAS races
+        run: node --test tests/identity-block-visibility-cas-concurrency.test.mjs
+
       - name: Verify concurrent Spill identity allocation
         run: node --test tests/spill-reference-concurrency.test.mjs
 
