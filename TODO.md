@@ -2462,6 +2462,61 @@ collection revision and typed content before activation; never publish membershi
 only, invalid visible payloads or silently omit blocks. Other block types/media/
 rendering/runtime/live-provider gates remain open.
 
+### Private current-Owner block/link Working read — 2026-10-13
+
+Starting lane `cc6c0e25ace3e2eae962c67336f129a181b2082e` passed all six exact
+push-event gates, freshly observed: [CI 38375343438](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38375343438),
+[Security 38375343464](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38375343464),
+[Guard 38375343446](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38375343446).
+Supersedes 12.85 pending evidence: DB reset/lint/security advisors, 2,273 pgTAP
+assertions/41 files and all 16 concurrency/retention cases passed. Browser
+cancellation risk remains open; green CI is not root-cause repair.
+
+Refreshed J5/J9, pinned 7.3/9.6, 12.75/12.83–12.85 and actual schema/SDK/source.
+Locked/read back 12.86 before code. Added staged zero-target stable read-only
+current-Owner block/link RPC: active/completed Owner through 12.7/12.75, own
+collection/ordered membership with tuple-matched own link payload. Null collection
+is distinct from initialized empty; link missing/present/all-null payload explicit,
+other kinds not_implemented/null without invented content or permission denial.
+Hidden rows remain in Working order. Only internal block UUID/kind/visibility/order/
+payload state/raw fields and collection revision/context, no Owner/Auth IDs,
+timestamps, Published/safety/public fields or whole Identity comparison claim.
+
+Complete-response engineering bound 500, ordered LIMIT 501; excess/duplicate order/
+unsafe revision fails unavailable without truncation/deletion. Not an MVP creation
+limit; later pagination required before extending transport. Same-statement snapshot,
+not post-return freshness/CAS authority. No mutation/default creation/initialization,
+onboarding conversion/backfill/schema/table grant/route/render/provider change;
+all four RPC execution grants withheld. Existing 12.75–12.85 unchanged.
+
+Strict unmounted SDK reader: exact context/collection/row shape, canonical UUID,
+int32 positions/positive safe revision, unique IDs/strictly ascending order/bound,
+kind/payload-state/null consistency and 12.84 recoverable field envelopes. Derives
+fixed local issues only for present link payloads, retains raw invalid values,
+no invented issues on missing/nonimplemented payloads. No fetch/open/normalization
+or spoofed issue/public authority. Five-second abort/late-null, zero args, no
+retry/cache/credentials. Claims/state/binding/post-read proof remains assembly gate;
+empty issues is not public-ready/Saved/Live or supported-provider verification.
+
+57 targeted pinned SDK cases passed; 36 pgTAP assertions committed for actors/
+metadata/context/account/Owner isolation, null/empty/all-kind/order/hidden/raw/
+payload-state truth, 500/501/duplicate-order denial, read purity/hardening/withheld
+execution. DB reset/lint/advisors/pgTAP/concurrency-retention PENDING exact-push
+committed CI, no local DB/live JWT/provider/manual claim. Pinned CLI generated
+migration; managed changelog request 403, no bypass/upgrade.
+
+Frozen install/typecheck/lint/five tooling/2,559 application tests (2,278 web Vitest
+plus 281 other), three builds, nine actual Redis and all 37 Chromium cases passed
+on first full run. Final diff review/check passed. Six latest exact-push
+Application/Database/Security/Guard gates PENDING until observed. D01/D02/S5/S6
+NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: guarded known-persisted block/link assembly with claims/state/subject/Owner/
+context rechecks and collection-revision consistency. Full Identity publication
+comparison, other typed payloads, provenance/CAS/race proof, renderer/scoped
+activation/current-session runtime/live-provider gates remain separate. Never
+publish membership-only/invalid visible payloads or silently omit blocks.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
