@@ -2940,6 +2940,50 @@ publication snapshot/revision, provider/safety/media/renderer activation remain
 separate withheld gates. Browser cancellation risk remains open, green regression
 not root-cause repair. Old profile/first-slot comparison is not whole Identity truth.
 
+### Private adjacent block Working reorder CAS — 2026-10-13
+
+Fresh clean lane `f60b9e0b532ef136a8ce91c0a6c9d3a54bc019a7` passed all six
+exact push-event jobs: [CI 38477424883](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38477424883),
+[Security 38477424910](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38477424910),
+[Guard 38477424901](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38477424901).
+Supersedes 12.94 pending evidence: DB reset/lint/security advisors, 45 files/2,500
+pgTAP and all 29 concurrency/retention cases passed. No Goal/D01/D02/S5/S6 closure.
+
+Refreshed canonical authority/J5/J9/pinned 7.3/9.6/11.23/12.83/12.93/12.94 and
+actual schema/tests/workflow. Locked/read back 12.95 before code. Staged private
+current-Owner adjacent move API: strict UUID/base/direction up/down, Owner then
+binding recheck/active/completed/context, own collection/member/neighbor locks,
+aggregate CAS. Server selects nearest smaller/larger own position, including hidden
+and all six kinds without payload/PUC gating. First/up, last/down, singleton boundary
+move_not_available has no writes/revision/timestamps; missing/foreign block identical
+denial. No caller neighbor/position array/Owner authority or implicit creation.
+
+One UPDATE swaps existing two positive positions with existing deferrable immediate
+unique constraint; no SET CONSTRAINTS/temp sentinel/renumber/coordinate/overflow.
+Real swap updates two member timestamps plus collection N→N+1 exactly once.
+Minimal block/direction/next revision acknowledgment. Stable ID/Owner/kind/visibility/
+creation, position set/gaps/int32 maximum, all other members/payload/source/provenance/
+profile/layout/receipts/Published unchanged. Stale/invalid/max/unauthorized deny;
+errors roll back both positions and aggregate. All-role execution remains withheld;
+no SDK/route/UI/grant/policy/provider/credentials/publication activation.
+
+88 pgTAP cases and six isolated Node races committed for actual PostgreSQL CI:
+reverse moves, different targets, move versus visibility/payload aggregate CAS,
+collection advance and restriction during waits. Tests assert exact winner order,
+content/visibility truth, position set, no stale writes, boundary/rollback purity
+and immediate uniqueness. DB reset/lint/security advisors/pgTAP/all35 concurrency-
+retention and exact latest-push Application/Database/Security/Guard PENDING until
+observed. Frozen install/typecheck/lint/five tooling/3,013 application tests/three
+builds passed (unchanged application Turbo cache reused); nine actual Redis and
+37 actual Chromium cases passed. Final diff/check reviewed. No live/manual proof.
+
+Next: guarded current-session move SDK, strict target/direction/base+1 acknowledgment,
+known boundary no-write and outcome_unknown after attempted mutation/lost response,
+no blind retry/repeated move. Add/remove, reconciliation/runtime, other typed payloads,
+complete Identity publication snapshots/revision, safety/provider/media/renderer
+activation remain withheld. Browser cancellation risk open; green is not root-cause
+repair. Old profile/first-slot comparison is never whole Identity publication truth.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
