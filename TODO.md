@@ -2984,6 +2984,58 @@ complete Identity publication snapshots/revision, safety/provider/media/renderer
 activation remain withheld. Browser cancellation risk open; green is not root-cause
 repair. Old profile/first-slot comparison is never whole Identity publication truth.
 
+### Guarded adjacent block move SDK and Chromium page readiness — 2026-10-13
+
+Freshly observed all six exact push-event jobs on
+`1677c1a616ad8351749154d68706eeb5c150076e`:
+[CI 38483799228](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38483799228),
+[Security 38483799290](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38483799290),
+[Guard 38483799230](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38483799230).
+Supersedes 12.95 pending evidence: reset/lint/security advisors, 46 files/2,588
+pgTAP and all 35 concurrency/retention cases passed. Six new reorder races observed,
+including actual one-statement swap, position-set preservation and move versus
+visibility/payload aggregate one-winner truth. Clean workspace fetched/synchronized
+at exact remote; refreshed changed authority/12.94/12.95 and actual source/tests.
+
+Locked/read back 12.96 before code after DB proof. Separate unmounted server-only
+current-session move SDK: strict UUID/base/direction, no caller Owner/neighbor/
+positions/visibility/payload/source/public authority. Verified claims/strict Owner
+state active/completed before one fixed API POST/input_working. Success matches
+exact block/direction/base+1 safe revision and final same subject/Owner proof.
+Minimal ack never fabricates resulting order or whole Identity publication truth.
+Known strict move_not_available is no-write boundary, not successful movement or
+new revision. Other known negatives status-only. Invalid/unknown/private/extra ack,
+changed proof, transport/error/timeout after attempt => outcome_unknown, possibly
+committed despite abort/lost response. Before attempt unavailable. Five-second
+aggregate deadline/late checks; no automatic retry/reverse/repeat/cache/merge/refresh/
+offline queue. Preserve intent and reconcile authoritative order before new base.
+117 controlled-claims/actual pinned SDK tests passed; no live JWT/route/manual proof.
+
+Required local Resource regression exposed a new startup race: page target absent
+from /json/list after DevToolsActivePort, causing undefined webSocketDebuggerUrl.
+Distinct from existing Invalid InterceptionId cancellation risk. Locked/read back
+companion 12.97 before fixture code. Retain 10s port readiness, then one aggregate
+5s abort/deadline for page allocation; 25ms enumeration only while valid list lacks
+page. Same loopback ws/exact-port validation, fail malformed/read/HTTP/child failure,
+abort/late checks and existing cleanup. No whole-test/navigation/CDP retry, widened
+URL, changed native gesture/security assertion, ignored CDP error or longer deadline.
+19 deterministic fixture cases passed (136 targeted including SDK); post-fix actual
+Product8/Resource29 Chromium passed. Cancellation risk remains open;
+this startup repair/green regression does not prove its root cause repaired.
+
+Frozen install/typecheck/lint/five tooling/3,149 application tests (2,868 web plus
+281 other)/three builds, nine actual Redis and 37 actual Chromium passed. Final
+staged diff/check reviewed. No DB/grants/policy/route/provider/credential/Working/
+Published behavior changes in SDK/fixture slice. Exact latest-push Application/
+Database/Security/Guard PENDING until observed; DB reset/lint/advisors/pgTAP/35
+concurrency-retention remain mandatory. D01/D02/S5/S6 NOT CLOSED / VERIFIED.
+
+Next: audit/lock bounded explicit membership add/remove contracts, stable IDs,
+typed payload intent, aggregate CAS/provenance preservation. Reconciliation and
+current-session runtime, other typed payloads, complete Identity publication
+acknowledgment/snapshots/revisions, provider/safety/media/renderer activation remain
+separate withheld gates. Goal unfinished; public enablement not authorized by saves.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

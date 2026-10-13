@@ -10,6 +10,33 @@ export async function until(predicate: () => boolean | Promise<boolean>, millise
     await new Promise(resolve => setTimeout(resolve, 25));
   }
 }
+/** Port-file readiness precedes page-target allocation; never open a debugger from an absent page. */
+export async function pageDebuggerUrl(port: string, readTargets: (signal: AbortSignal) => Promise<unknown>, checkBrowser: () => void) {
+  if (!/^[1-9]\d{0,4}$/.test(port) || Number(port) > 65535) throw new Error("Invalid debugger port");
+  const controller = new AbortController(); let timer: ReturnType<typeof setTimeout> | undefined;
+  let selected: URL | undefined;
+  const deadline = () => new Error("Browser page readiness deadline exceeded");
+  try {
+    return await Promise.race([
+      (async () => {
+        await until(async () => {
+          if (controller.signal.aborted) throw deadline(); checkBrowser();
+          const targets = await readTargets(controller.signal);
+          if (controller.signal.aborted) throw deadline(); checkBrowser();
+          if (!Array.isArray(targets)) throw new Error("Invalid debugger targets");
+          const page = targets.find(target => target && typeof target === "object" && target.type === "page") as { webSocketDebuggerUrl?: unknown } | undefined;
+          if (!page) return false;
+          if (typeof page.webSocketDebuggerUrl !== "string") throw new Error("Invalid page debugger");
+          const url = new URL(page.webSocketDebuggerUrl);
+          if (url.hostname !== "127.0.0.1" || url.protocol !== "ws:" || url.port !== port) throw new Error("Invalid loopback debugger");
+          selected = url; return true;
+        });
+        return selected!;
+      })(),
+      new Promise<URL>((_, reject) => { timer = setTimeout(() => { controller.abort(); reject(deadline()); }, 5000); }),
+    ]);
+  } finally { clearTimeout(timer); }
+}
 export async function chromiumFixture() {
   const directory = await mkdtemp(join(tmpdir(), "spall-click-browser-"));
   const processGroup = process.platform !== "win32";
@@ -41,9 +68,14 @@ export async function chromiumFixture() {
     await until(async () => { if (failure) throw failure;
       try { port = (await readFile(join(directory, "DevToolsActivePort"), "utf8")).split("\n")[0]!; return /^\d+$/.test(port); } catch { return false; }
     }, 10000);
-    const pages = await fetch(`http://127.0.0.1:${port}/json/list`, { signal: AbortSignal.timeout(5000) }).then(r => r.json()) as { type: string; webSocketDebuggerUrl: string }[];
-    const url = new URL(pages.find(p => p.type === "page")!.webSocketDebuggerUrl);
-    if (url.hostname !== "127.0.0.1" || url.protocol !== "ws:" || url.port !== port) throw new Error("Invalid loopback debugger");
+    const url = await pageDebuggerUrl(port, async signal => {
+      const reply = await fetch(`http://127.0.0.1:${port}/json/list`, { signal });
+      if (!reply.ok) throw new Error("Debugger enumeration failed");
+      return reply.json() as Promise<unknown>;
+    }, () => {
+      if (failure) throw failure;
+      if (child.exitCode !== null || child.signalCode !== null) throw new Error("Browser exited before page readiness");
+    });
     socket = new WebSocket(url); await until(() => socket!.readyState === WebSocket.OPEN);
     socket.addEventListener("message", event => {
       const message = JSON.parse(String(event.data)) as { id?: number; result?: unknown; error?: { message: string }; method?: string; params?: unknown };
