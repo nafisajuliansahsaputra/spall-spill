@@ -1836,6 +1836,61 @@ create defaults, omit existing content or claim whole Identity publication truth
 Other typed payloads, full publication revision/snapshot, current-session runtime,
 provider/safety and renderer/scoped activation remain open separate gates.
 
+#### Explicit first-connection block import preparation — 2026-10-13
+
+Starting lane `623ee13b31fec998f929ede7e2303ab9368bdd9c` freshly passed all six
+exact push-event jobs: [CI 38396560849](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38396560849),
+[Security 38396560846](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38396560846),
+[Guard 38396561028](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38396561028).
+Supersedes 12.87 pending evidence: DB reset/lint/security advisors, 2,309 pgTAP
+assertions/42 files and all 16 concurrency/retention cases passed. Browser
+cancellation risk remains open; green evidence is not root-cause repair.
+
+Refreshed mandatory Cloud authority/checkpoint, J5/J9, pinned 7.3/9.6/11.22/11.23,
+12.81/12.83/12.84/12.87 and actual SDK/source/tests. Locked/read back 12.88 before
+code. First bounded initialization/provenance preparation: pure unmounted server-
+only source/intent boundary. Explicit import action, acknowledged positive safe
+source revision and owner-supplied nullable title required; intent cannot select
+Owner/block/kind/platform/URL/membership/public fields. Reuses exported actual 12.81
+strict connection schema, unchanged validation/reader behavior. No guessed labels,
+modular IDs or automatic import on editor-open/read.
+
+Invalid intent/source, absent source and stale acknowledgment return only fixed
+status, no partial candidate/private data. Matching source revision yields only
+import_candidate with exact source kind/platform/URL, exact requested title,
+source_connection_revision and fixed 12.84 local issues. Generic title null/blank
+or controls remains recoverable; source-accepted URLs failing newer local policy
+remain private raw content with issues. No Social/Generic conversion, trim/rewrite,
+fetch/open/provider proof, revision bump or source mutation.
+
+Candidate is not authentication/authorization, trusted provenance, durable record,
+Saved/Live/public-ready or whole Identity comparison. Later initializer must load
+source server-side for the current active/completed Owner, lock/recheck source/
+Owner/collection, expected absence and acknowledgment, retain source provenance
+and allocate one stable block atomically without duplicate import/overwrite/loss.
+Never trust caller source merely because shape/revision parses. Existing collections
+need separate CAS authority. Renderer must deliberately avoid duplicate old-slot/
+imported-block display or silent omission. Transaction/SDK/runtime gates remain open.
+
+69 new cases plus all 63 existing composition cases passed in targeted verification:
+explicit/forged/private/malformed intent/source, safe/stale revisions/null source,
+source kind and exact raw fields, local issue recovery, Unicode/NUL/title budgets,
+immutability/no fetch and minimal output. No DB/schema/grant/route/persistence/
+onboarding/Working/Published/provider/credential change; withheld execution unchanged.
+
+Frozen install/typecheck/lint/five tooling/2,712 application tests (2,431 web Vitest
+plus 281 other), three builds, nine actual Redis and all 37 Chromium cases passed.
+Final diff review/check passed. Latest exact-push Application/Database/Security/
+Guard PENDING until observed. No local DB/live JWT/provider/manual evidence claim.
+D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: lock and implement explicit collection initialization transaction/provenance
+with expected absence, Owner/source locking, acknowledged source revision, atomic
+stable membership/payload creation and duplicate/stale/race denial tests. Keep grants
+withheld until transport/current-session runtime gates; do not auto-convert the
+onboarding slot. Full Identity publication snapshot/revision, other typed payloads,
+provider/safety and renderer/scoped activation remain separate gates.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

@@ -8,7 +8,7 @@ const destination = z.string().refine(value => {
   return length >= 8 && length <= 2048 && !/[\x00-\x20\x7f\\]/.test(value)
     && /^https?:\/\/[^/?#]+([/?#].*)?$/i.test(value);
 });
-const connection = z.discriminatedUnion("connection_kind", [
+export const ownerConnectionWorkingSchema = z.discriminatedUnion("connection_kind", [
   z.object({ connection_kind: z.literal("generic_link"), social_platform: z.null(),
     destination_url: destination, revision }).strict(),
   z.object({ connection_kind: z.literal("social"),
@@ -20,7 +20,7 @@ const context = z.object({ status: z.literal("success"),
   primary_use_case: z.enum(["creator", "affiliate", "business", "personal", "other"]),
   profile_revision: revision,
   layout_working: z.object({ starter_key: z.enum(["clean", "social_focus", "featured", "business"]), revision }).strict(),
-  connection_working: connection.nullable(),
+  connection_working: ownerConnectionWorkingSchema.nullable(),
   identity_work: z.enum(["never_published", "unchanged", "unpublished_changes"]),
 }).strict();
 export type OwnerCompositionWorking = z.infer<typeof context>;
