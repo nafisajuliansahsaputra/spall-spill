@@ -2891,6 +2891,55 @@ keyboard-compatible reorder CAS. Add/remove, save/initialization reconciliation,
 complete Identity publication acknowledgment/snapshots, other typed payloads and
 provider/safety/media/renderer/runtime activation remain separate withheld gates.
 
+### Guarded private block Working visibility SDK — 2026-10-13
+
+Freshly observed all six exact push-event jobs on
+`2e0d2734703b65c53beebd66de598321ee2b6842`:
+[CI 38476738747](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38476738747),
+[Security 38476738668](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38476738668),
+[Guard 38476738670](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38476738670).
+Supersedes 12.93 pending evidence: DB reset/lint/security advisors, 45 files/2,500
+pgTAP and all 29 concurrency/retention cases passed. All five visibility races
+observed, including visibility versus payload sharing one aggregate CAS winner.
+Clean workspace fetched/synchronized at exact remote before continuing.
+
+Refreshed changed authority/12.93/12.92 and actual SDK/tests; locked/read back 12.94
+before code after 12.93 proof. Separate unmounted server-only current-session
+visibility-save SDK: strict canonical block UUID/safe base/explicit boolean,
+no caller Owner/kind/order/payload/source/public authority. Invalid shape denied
+before claims/RPC, false preserved. Claims/strict zero-argument Owner-state proof
+before dispatch, active/completed only. One fixed api visibility POST/input_working;
+strict success matches exact block, boolean and base+1 safe revision, then final
+same subject/Owner active/completed proof before minimal acknowledgment.
+
+Known no-write DB negatives remain status-only; unknown/extra/private/forged/missing/
+coerced boolean/target/revision or failed final proof cannot acknowledge persistence.
+Five-second aggregate deadline: before attempt unavailable; after mutation attempt
+transport/HTTP/malformed/error/timeout/failed proof outcome_unknown. May have
+committed despite abort/lost response. No rollback/not Saved inference, implicit
+toggle, blind retry/cache/merge/refresh/offline queue. Late results cannot revive
+acknowledgment/start later phases. Preserve intent and reconcile authoritative
+collection/member before any new acknowledged-base write.
+
+106 actual pinned SDK/controlled claims tests passed, including explicit true/false,
+shape/UUID/revision bounds, max exhaustion/unsafe ack, all initial/post-proof states/
+claims/subject/Owner/error/timeout/ignored late responses, exact minimal ack, known
+negatives and no retries/cache/private leaks. No DB/schema/grants/policies/route/
+source/provenance/onboarding/Published changes. No live JWT/provider/manual proof.
+Frozen install/typecheck/lint/five tooling/3,013 application tests (2,732 web plus
+281 other)/three builds, nine actual Redis and all 37 actual Chromium cases passed.
+Final diff/check reviewed. Exact latest-push Application/Database/Security/Guard
+PENDING until observed; committed DB reset/lint/advisors/pgTAP/29 races-retention
+remain required. D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: bounded keyboard-compatible membership reorder CAS contract and transaction,
+server-derived adjacent movement, stable IDs/positions/aggregate revision and
+stale/foreign/Owner/race proof. Add/remove, initialization/save reconciliation and
+current-session runtime, other typed payloads, complete Identity acknowledged
+publication snapshot/revision, provider/safety/media/renderer activation remain
+separate withheld gates. Browser cancellation risk remains open, green regression
+not root-cause repair. Old profile/first-slot comparison is not whole Identity truth.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
