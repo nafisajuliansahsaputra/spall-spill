@@ -1627,6 +1627,58 @@ and whole Identity publication acknowledgment/snapshot binding gates must preced
 activation; never publish membership-only skeletons or silently omit blocks.
 Other typed blocks/media/rendering/runtime/live-provider gates remain open.
 
+#### Recoverable Identity link Working input boundary — 2026-10-13
+
+Starting lane `d580f0a4f22fa3837b144d80d6c19f617191b90e` passed all six exact
+push-event gates, freshly observed: [CI 38361885541](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38361885541),
+[Security 38361885667](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38361885667),
+[Guard 38361885532](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38361885532).
+Supersedes 12.83 pending evidence: Database reset/lint/security advisors, 2,228
+pgTAP assertions/40 files and all 16 concurrency/retention cases passed. Existing
+browser cancellation risk remains open; no root-cause repair claim from green CI.
+
+Refreshed J5/J9, pinned 7.3 FR-IDN-017–020/050/9.6 invalid-Working semantics,
+12.83 and actual shared destination policy/source. Locked/read back 12.84 before
+code. Stage pure unmounted server-only typed Social/Generic Link Working input
+and local field diagnostics before typed persistence/mutation. Strict explicit
+nullable title/platform/destination, kind only social/generic_link; no selectors,
+revision, metadata or caller-supplied safety/provider/public authority fields.
+Bounded transport envelopes use Unicode code points (512/40/2048); reject NUL,
+not a new historical UX/public length policy. Malformed shape returns only
+invalid_working_shape; pure function never erases/mutates caller input.
+
+Well-shaped incomplete/invalid values remain exact recoverable Working with fixed
+field/code issues. Generic label required/nonblank, Social title optional, title
+controls localized. Social retains structured platform syntax; Generic inappropriate
+platform is retained with an issue, never silently cleared/converted. Nullable/
+blank/partial/hostile destinations preserved; reuse existing external policy only
+for local checking and discard normalized output/raw exceptions. No new parser,
+policy weakening, fetch/open/DNS/provider ownership or supported-provider claim.
+Empty issues is not publish/safety verdict, Saved, Live, auth or public readiness.
+Raw markup stays literal private text; no renderer in this slice, future escaping
+required. Existing Onboarding slot is not imported or given a fabricated label.
+
+60 targeted tests passed for recovery/multiple localized issues, strict/private
+shape, exact values/no mutation/no fetch/normalization/conversion, hostile/private/
+credential/fragment destinations, platform and Unicode/NUL boundaries. No DB/schema/
+API/route/grant/persistence/initialization/backfill/Published/Working mutation,
+credential or provider change; 12.75–12.83 and all existing eligibility unchanged.
+No whole D02, publication acknowledgment, safety or runtime readiness claim.
+
+Frozen install/typecheck/lint/five tooling/2,502 application tests (2,221 web Vitest
+plus 281 other), three builds, nine actual Redis and all 37 Chromium cases
+(eight Product, 29 Resource) passed on first full run. Final diff review/check passed.
+Existing DB reset/lint/advisors/pgTAP/concurrency-retention
+and six latest exact-push CI/Security/Guard gates PENDING until observed.
+D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: bounded typed private link payload persistence with actual block kind/Owner
+bindings and recoverable field envelopes before mutation/provenance initialization.
+Future mutators derive active authorized Owner, lock collection/CAS revision and
+preserve IDs under 11.23 with race proof. Whole Identity publication snapshot/
+acknowledgment, other block types/media/rendering/runtime/live-provider gates remain
+separate; no membership-only publishing or silently omitted blocks.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
