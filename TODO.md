@@ -2738,6 +2738,60 @@ provider/safety and renderer activation remain open separate gates. Never blindl
 retry unknown initialization or use prior profile/first-slot comparison as whole
 Identity publication truth.
 
+### Private Owner link Working payload CAS — 2026-10-13
+
+Starting lane `208c4e4bf010e5ea754e1bbf6c80e5703c5c057d` freshly passed all six
+exact push-event jobs: [CI 38430153255](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38430153255),
+[Security 38430153591](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38430153591),
+[Guard 38430153384](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38430153384).
+Supersedes 12.90 pending evidence: reset/lint/security advisors, 2,373 pgTAP/43
+files and all 20 concurrency/retention cases passed. Browser cancellation risk
+remains open; green evidence is not root-cause repair.
+
+Refreshed canonical Cloud authority/checkpoint, J5/J9, pinned 7.3/9.6/11.21/11.23,
+12.83–12.90 and actual schema/lock order/SDK/pgTAP/CI. Locked/read back 12.91 before
+SQL. Added staged volatile hardened current-Owner link payload save: active/completed
+Auth.uid-derived Owner, Owner-first and same binding locks/recheck/context proof,
+strict block/base/nested recoverable input. No caller Owner/provider/public/issues
+fields; same actual Social/Generic membership kind required, no silent conversion.
+Own existing collection lock/CAS; missing/unsafe/stale/exhausted/foreign/unsupported
+or malformed state returns fixed no-write status. Foreign and nonexistent block
+UUIDs share block_not_found; own unsupported kind is technical scope, not PUC denial.
+
+Explicitly insert missing own typed payload or update existing tuple-bound payload,
+retaining exact raw/null/control/markup/partial/hostile fields within 12.84 Unicode
+budgets. No trim/normalization/fetch/public-validity gate or guessed label. Every
+successful save, including identical fields, bumps aggregate N→N+1 once atomically
+with payload timestamp; no automatic dedup/idempotency/merge/retry. Minimal success
+status/block_id/new collection revision. Preserve payload created_at, Owner/kind,
+membership IDs/order/visibility/timestamps, other blocks/Owners, source first slot,
+original initialization provenance, profile/layout/Published. Errors roll back both
+payload and collection. Missing collection/member never fabricated; no SDK/route/
+grant/provider/renderer/publication change, all role execution remains withheld.
+Old profile/first-slot comparison is still not whole Identity publication truth.
+
+55 new pgTAP assertions committed: hardening/actual role denials, Auth/metadata/
+Owner/account/completion/context, strict nested envelopes and Unicode budgets,
+foreign/missing/kind/stale/max denial, raw/all-null explicit persistence, one bump,
+stable fields/source/provenance/foreign/Published purity and rollback. Four new
+committed isolated races: same block/base one winner, different blocks share one
+aggregate winner, collection advance while waiting stale/no write, restriction while
+waiting Owner denied. CI explicitly runs them without weakening existing gates.
+Node syntax/final diff passed; DB reset/lint/advisors/pgTAP/races PENDING exact pushed
+committed CI, no local DB/live JWT/manual/provider evidence claim. Pinned CLI
+created migration; managed changelog 403, no bypass/upgrade.
+
+Frozen install/typecheck/lint/five tooling/2,803 application tests, three builds,
+nine actual Redis and all 37 Chromium cases passed. Latest exact-push Application/
+Database/Security/Guard PENDING until observed. D01/D02/S5/S6 NOT CLOSED / VERIFIED;
+Goal unfinished.
+
+Next: strict guarded current-session payload-save SDK, acknowledged block/base/input
+and minimal matching block/revision response, truthful known-denial/outcome_unknown
+handling and final subject/Owner proof; no blind retry. Ordinary membership operations,
+initialization/save reconciliation/runtime, complete Identity publication snapshots,
+other payload kinds/provider/safety/renderer activation remain open withheld gates.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
