@@ -136,6 +136,9 @@ jobs:
       - name: Run database security tests
         run: pnpm exec supabase test db --local
 
+      - name: Verify isolated Identity block initialization races
+        run: node --test tests/identity-block-initialization-concurrency.test.mjs
+
       - name: Verify concurrent Spill identity allocation
         run: node --test tests/spill-reference-concurrency.test.mjs
 

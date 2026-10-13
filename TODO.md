@@ -2622,6 +2622,63 @@ withheld until transport/current-session runtime gates; do not auto-convert the
 onboarding slot. Full Identity publication snapshot/revision, other typed payloads,
 provider/safety and renderer/scoped activation remain separate gates.
 
+### Private explicit block initialization and source provenance — 2026-10-13
+
+Starting lane `b652bd384fab6b194f7a4ab2f2d4cbcbfe1cdc5e` freshly passed all six
+exact push-event jobs: [CI 38403869243](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38403869243),
+[Security 38403869234](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38403869234),
+[Guard 38403869328](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38403869328).
+Supersedes 12.88 pending evidence: DB reset/lint/security advisors, 2,309 pgTAP
+assertions/42 files and 16 concurrency/retention cases passed. Browser cancellation
+risk remains open; green results are not root-cause repair.
+
+Refreshed Cloud/canonical checkpoint, J5/J9, pinned 7.3/9.6/11.22/11.23,
+12.83–12.88 and actual ownership/source schema, mutation lock order, pgTAP/CI.
+Locked/read back 12.89 before production SQL. Added staged private volatile hardened
+initializer: Auth.uid-derived active/completed Owner, canonical Owner-first lock,
+locked same binding recheck and successful 12.75 context. Strict explicit action,
+acknowledged safe source revision, explicit nullable recoverable title and expected
+absent collection required. No caller Owner/source kind/platform/URL/block selector.
+Existing collection => already_initialized conflict, never overwrite/reimport.
+Own source row lock, missing/stale/unsafe denial without writes. Atomically create
+collection revision 1, stable server UUID first visible ordered membership, tuple-
+matched typed payload and original private source provenance. Copy exact source
+kind/platform/URL and requested title; no normalization/guessed label/source mutation.
+Success minimal status/collection_revision/block_id; denials have no private fields.
+
+New Owner-keyed provenance has original source revision/kind/platform/destination,
+initial title/block ID and timestamp; RLS, no policies/all client/service/PUBLIC
+privileges withheld. Historical block pointer intentionally not FK to current
+membership: explicit future removal need not erase initialization provenance;
+pointer does not authorize a current block. No updater/reader/backfill/default
+provenance. Both function and table grants withheld. No route/SDK/renderer/provider/
+public/publish change; old first-slot/profile/layout/comparison/readers stay intact.
+Initialization revision 1 is not an existing-record write; later mutations need CAS.
+
+64 new pgTAP assertions committed for hardening/all-role denial, Auth/metadata/Owner/
+account/completion/context isolation, strict envelopes, missing/stale/unsafe source,
+exact Social/Generic/raw/null/control title truth, source/membership/provenance
+purity, no overwrite/empty reinitialization and transaction rollback. Four committed
+isolated race cases: one winner/one conflict, committed source update stale/no
+writes, rollback source exact import, restriction while waiting Owner lock denial.
+CI now explicitly runs these races, preserving existing gates. Node syntax/diff
+review passed; DB reset/lint/advisors/pgTAP/races PENDING exact pushed committed CI,
+no local DB/live JWT/manual/provider claim. Pinned CLI generated migration/help;
+changelog request unavailable in managed network, no bypass/upgrade.
+
+Frozen install/typecheck/lint/five tooling/2,712 application tests, three builds,
+nine actual Redis and all 37 Chromium cases passed. Final diff review/check passed.
+Latest exact-push Application/Database/Security/Guard PENDING until observed.
+D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: strict current-session initialization SDK/guarded transport with acknowledged
+expected absence/source revision and explicit title/action, truthful conflict/error/
+late-response handling and claims/state/Owner proof. Then ordinary block/link CAS
+under separate contract. Keep grants withheld until runtime/transport proof; full
+Identity publication revision/snapshot, other payloads, provider/safety and renderer
+activation remain open. Never use onboarding mutator to bypass completed-Owner
+eligibility or auto-convert/duplicate the first slot on route opening.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
