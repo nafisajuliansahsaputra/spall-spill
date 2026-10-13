@@ -2262,6 +2262,52 @@ rechecks. Fail mismatched parts, never fabricate modular blocks or mount a parti
 editor; full Identity/block persistence/media/runtime/scoped activation gates stay
 separate. D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
 
+### Guarded persisted Identity Working parts assembly — 2026-10-13
+
+Starting lane `db177cd87b8670db680e2961ed2ab08b151db50c` passed all six exact
+push-event gates, freshly observed: [CI 38326351549](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38326351549),
+[Security 38326351593](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38326351593),
+[Guard 38326351627](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38326351627).
+Supersedes 12.81 pending evidence: Database reset/lint/security advisors, 2,182
+pgTAP assertions/39 files and all 16 concurrency/retention cases passed. Existing
+browser cancellation risk remains open; green checks are not root-cause repair.
+
+Refreshed J5/J9, pinned 9.6, current 12.7/12.75/12.78/12.80/12.81 and source/tests.
+Locked/read back 12.82 before code. Separate unmounted server-only assembly of
+known-persisted Identity Working parts: verified claims UUID and strict current
+Owner-state before reads; only active/completed Owner continues. Same injected
+current-session client reads context, profile and composition concurrently.
+Requires exact Handle/personalization equality and profile revision pairing;
+missing/malformed/mismatched parts fails unavailable with no partial/default data.
+Rechecks claims, subject/Owner binding and state, then fresh context before return.
+Initial/post-read denial contains status only, never already-read private fields.
+
+Success contains only context, profile_working/layout_working/connection_working
+and private identity_work comparison. Optional Bio/photo/connection null retained;
+exact private URL/opaque key unchanged, never fetched/opened/public-link constructed.
+No redundant profile pairing field, IDs/claims, modular block fabrication, mutation,
+getSession/metadata authority/cache/retry/credential loading. Aggregate five-second
+abort/late denial stops later phases; existing reader/Owner-state boundaries kept.
+Cross-RPC equality is consistency, not atomic snapshot or post-return freshness/write
+authority. No DB/schema/grant/route/onboarding/Working/publication/provider change.
+This is not full D02, live preview, whole Identity validity or public/media readiness.
+Existing withheld execution remains withheld; D01/D02/S5/S6 NOT CLOSED / VERIFIED.
+
+48 actual pinned SDK transport/controlled claims tests passed for initial/post-read
+states, missing/forged/malformed/private data, subject/Owner/context/revision drift,
+optional values, all three read failures, aggregate/ignored-late proof/read/context
+responses and no retry/cache. Controlled claims fixtures are not live JWT/provider
+proof. Frozen install/typecheck/lint/five tooling/2,442 application tests (2,161 web
+Vitest plus 281 other), three builds, nine actual Redis and all 37 Chromium cases
+(eight Product, 29 Resource) passed on first full run. Final diff review/check passed.
+Existing DB reset/lint/advisors/pgTAP/concurrency/retention and all
+six latest exact-push Application/Database/Security/Guard gates PENDING until observed.
+
+Next: audit pinned full D02 modular block persistence/validation and establish
+bounded technical ownership before implementing full editor parts or scoped route
+activation. Full media/rendering/current-session runtime and live-provider evidence
+remain open. Goal unfinished.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
