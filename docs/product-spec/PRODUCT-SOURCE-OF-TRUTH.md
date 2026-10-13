@@ -1679,6 +1679,58 @@ preserve IDs under 11.23 with race proof. Whole Identity publication snapshot/
 acknowledgment, other block types/media/rendering/runtime/live-provider gates remain
 separate; no membership-only publishing or silently omitted blocks.
 
+#### Private typed Identity link Working payload storage — 2026-10-13
+
+Starting lane `d58b28b5887c82d91f244d7f6fdccf6b442efe29` passed all six exact
+push-event gates, freshly observed: [CI 38368911324](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38368911324),
+[Security 38368911317](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38368911317),
+[Guard 38368911306](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38368911306).
+Supersedes 12.84 pending evidence: Database reset/lint/security advisors, 2,228
+pgTAP assertions/40 files and all 16 concurrency/retention cases passed. Existing
+browser cancellation risk remains open; green CI is not root-cause repair.
+
+Refreshed J5/J9, pinned 7.3/9.6/11.23, 12.83/12.84, actual tuple-FK pattern/schema
+and local Working diagnostics. Locked/read back 12.85 before code. Added dormant
+private typed Social/Generic Link payload table: one payload per block; required
+Owner/kind tuple FK to actual membership, Social/Generic-only kind constraint,
+owner-leading index, nullable title/platform/destination and code-point envelopes
+512/40/2048. Composite parent uniqueness preserves existing PK/order constraint;
+no update cascade silently rebinds Owner/subtype. Local parent removal cleans only
+its matching payload; not a new runtime delete action.
+
+Exact null/empty/whitespace/control/markup/partial/hostile URI Working values are
+recoverable privately, no normalization/fetch/render or stored validation/public/
+provider/safety flags. PostgreSQL text cannot represent NUL; existing 12.84 rejects
+it. These engineering budgets are not historical UX/public length decisions.
+A missing payload is not an initialized empty block. No backfill/default content,
+Onboarding-slot conversion, current-reader/API/route/credential/provider/grant or
+existing profile/layout/first connection/Published/preview/onboarding change.
+RLS enabled, no policies; PUBLIC/anon/authenticated/service_role privileges withheld.
+
+45 pgTAP assertions committed for no-backfill/provisioning/required Owner/kind,
+missing/mismatched tuple/subtype/Owner denial, uniqueness, optional/recoverable raw
+fields and Unicode limits, no silent rebinding, stable hide/reorder payload,
+localized cleanup/other Owner and existing-state purity, RLS/no-policy/index/
+privilege and actual role denial. DB reset/lint/advisors/pgTAP/concurrency-retention
+PENDING exact-push committed CI. Privileged fixture writes are not runtime Owner
+authorization/CAS proof. CLI generated migration, managed changelog request 403,
+no bypass/upgrade or production DB access.
+
+Frozen install/typecheck/lint/five tooling/2,502 application tests/three builds
+passed (unchanged application Turbo cache reused); nine actual Redis and all 37
+Chromium cases passed. Final diff review/check passed. Six latest exact-push
+Application/Database/Security/Guard gates PENDING until observed. D01/D02/S5/S6
+NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: guarded current-Owner block/link Working read and strict SDK transport,
+explicit absent collection/payload truth and 12.84 local issues before provenance
+initialization/CAS mutations. Future mutators derive active authorized Owner, lock
+collection/base revision and increment once per committed block/payload change;
+require role/race proof. Whole Identity acknowledgment/snapshot must include block
+collection revision and typed content before activation; never publish membership-
+only, invalid visible payloads or silently omit blocks. Other block types/media/
+rendering/runtime/live-provider gates remain open.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
