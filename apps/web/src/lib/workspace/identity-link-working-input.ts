@@ -4,10 +4,10 @@ import { normalizeExternalDestination } from "@spall-spill/external-destination-
 
 const rawText = (max: number) => z.string().refine(value =>
   Array.from(value).length <= max && !value.includes(String.fromCharCode(0))).nullable();
-const input = z.object({ kind: z.enum(["social", "generic_link"]),
+export const identityLinkWorkingInputSchema = z.object({ kind: z.enum(["social", "generic_link"]),
   title: rawText(512), social_platform: rawText(40), destination_url: rawText(2048),
 }).strict();
-export type IdentityLinkWorkingInput = z.infer<typeof input>;
+export type IdentityLinkWorkingInput = z.infer<typeof identityLinkWorkingInputSchema>;
 export type IdentityLinkWorkingIssue = Readonly<{
   field: "title" | "social_platform" | "destination_url";
   code: "title_required" | "title_control_character" | "platform_required" | "platform_invalid"
@@ -18,7 +18,7 @@ export type IdentityLinkWorkingInputResult = { status: "invalid_working_shape" }
 
 /** Local owner-only diagnostics; no persistence, provider proof or publication authority. */
 export function inspectIdentityLinkWorkingInput(value: unknown): IdentityLinkWorkingInputResult {
-  const parsed = input.safeParse(value);
+  const parsed = identityLinkWorkingInputSchema.safeParse(value);
   if (!parsed.success) return { status: "invalid_working_shape" };
   const data = parsed.data;
   const issues: IdentityLinkWorkingIssue[] = [];

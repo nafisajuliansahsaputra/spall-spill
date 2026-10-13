@@ -2792,6 +2792,64 @@ handling and final subject/Owner proof; no blind retry. Ordinary membership oper
 initialization/save reconciliation/runtime, complete Identity publication snapshots,
 other payload kinds/provider/safety/renderer activation remain open withheld gates.
 
+### Guarded private link Working save SDK — 2026-10-13
+
+Starting lane `d584c72ac9e7640440185ceabaa14f463de62c90` freshly passed all six
+exact push-event jobs: [CI 38438442155](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38438442155),
+[Security 38438442075](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38438442075),
+[Guard 38438441892](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38438441892).
+Supersedes 12.91 pending evidence: reset/lint/security advisors, 2,428 pgTAP/44
+files and all 24 concurrency/retention cases passed. All four new link CAS races
+observed: same/different block base one winner, collection advance stale/no write,
+restriction during Owner wait denied. Browser cancellation risk remains open;
+green results are not root-cause repair.
+
+Clean workspace synchronized/refreshed after verified 12.91; current authority,
+J5/J9/pinned 11.21/11.23/12.84/12.90 proof and actual input/SDK/SQL refreshed.
+Locked/read back 12.92 before code. Separate unmounted server-only current-session
+payload-save SDK: strict block UUID/safe base revision/exact nested raw 12.84 shape,
+shared exported actual schema without changing diagnostics/validation. No caller
+Owner/source/member visibility/order/issues/provider/public authority. Malformed
+input denied before claims/RPC. Recoverable invalid/null/control/markup/partial
+fields preserved exactly; no normalize/public-validity gate/default content.
+
+Verified claims/strict Owner-state before dispatch, active/completed only; initial
+denial has no private fields/mutation. One fixed api save POST with input_working.
+Strict success requires matching requested block and exactly base+1 safe revision,
+then final same subject/Owner active/completed proof. Wrong target/revision/private
+or malformed response => outcome_unknown, never acknowledgment/no-write claim.
+Known 12.91 no-write negative statuses return only fixed denial; unsupported kind
+is technical payload scope. No inferred current revision or retry/merge permission.
+
+Aggregate five-second state/claims/mutation deadline/late cancellation follows
+12.90: unavailable before dispatch; transport/HTTP/malformed/timeout/error or failed
+success proof after dispatch attempt => outcome_unknown. Already-issued save may
+commit despite abort/lost response; no rollback/not Saved inference or automatic
+replay/cache/refresh/queued offline mutation. Reconcile authorized authoritative
+collection/provenance/payload and preserve intent before a new acknowledged-base
+write. No Owner/claims/raw content/public actions/full Identity comparison returned.
+
+104 new pinned SDK/controlled claims cases and all 60 existing local-input cases
+passed targeted: exact args/schema/method, strict nested/UUID/revision/code-point/
+NUL/forged field boundaries, raw same-kind recovery, all initial/post-proof denial/
+subject/Owner/session/error/timeout paths, known negatives, matching next revision/
+target/max and minimal acknowledgment, ignored late response and no retry/cache.
+No DB/schema/grant/route/source/provenance/onboarding/Working/Published/provider
+change, all execution remains withheld. No live JWT/provider/manual evidence claim.
+
+Frozen install/typecheck/lint/five tooling/2,907 application tests (2,626 web Vitest
+plus 281 other), three builds, nine actual Redis and all 37 Chromium cases passed.
+Final diff review/check passed. Latest exact-push Application/Database/Security/
+Guard PENDING until observed; committed DB reset/lint/advisors/pgTAP/24 concurrency-
+retention cases still required. D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: bounded membership visibility/reorder CAS with stable IDs/aggregate revision,
+Own-Owner locks, stale/cross-Owner/race proof and keyboard-compatible movement
+semantics under new contract. Add/remove, initialization/save reconciliation/runtime,
+other typed payloads, complete Identity publication acknowledgment/snapshots,
+provider/safety/renderer activation remain separate withheld gates. Never use old
+profile/first-slot comparison as whole Identity truth or blindly retry unknown saves.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
