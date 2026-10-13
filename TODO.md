@@ -2517,6 +2517,56 @@ comparison, other typed payloads, provenance/CAS/race proof, renderer/scoped
 activation/current-session runtime/live-provider gates remain separate. Never
 publish membership-only/invalid visible payloads or silently omit blocks.
 
+### Guarded known-persisted block/link Working assembly — 2026-10-13
+
+Starting lane `f71a00b190cf136b74f0d9242e69a09608121b42` freshly passed all six
+exact push-event jobs: [CI 38389967474](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38389967474),
+[Security 38389967462](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38389967462),
+[Guard 38389967425](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38389967425).
+Supersedes 12.86 pending evidence: committed Database reset/lint/security advisors,
+2,309 pgTAP assertions/42 files and existing concurrency/retention gate passed.
+Browser cancellation risk remains open; green results are not root-cause repair.
+
+Refreshed mandatory Cloud authority/checkpoint, J5/J9, pinned 7.3/9.6,
+12.82/12.83/12.86 and actual source/SDK/migration/tests. Locked/read back 12.87
+before code. Added separate unmounted server-only current-session block/link
+assembly, no caller Owner or metadata authority. Strict claims and 12.7 state
+before private reads; context/block read pair, same subject/Owner proof, fresh
+context/block pair, then final claims/state proof. Any denial drops private fields.
+Context mismatch, collection presence/revision or exact parsed content drift fails
+unavailable; full content comparison also rejects changes without revision bump.
+Returns original strict snapshot only after consistency checks. Null collection is
+not initialized empty; hidden/raw invalid recoverable links, missing/present/
+not_implemented and local issues remain truthful without capability denial.
+
+Bounded cross-RPC observations, not atomic snapshot/ABA protection/post-return
+freshness/CAS/write authorization/live JWT or whole Identity comparison. Aggregate
+five-second cancellation prevents subsequent phases/late revival; already-issued
+private requests may finish privately. No retries/cache/env credentials/fetch/open/
+normalization/default creation/initialization/mutation/DB/schema/grant/route/
+onboarding/publication/provider change. Existing withheld execution remains so.
+No renderer or full Identity/scoped activation; empty issues is not Saved/Live.
+
+84 targeted actual pinned SDK/controlled claims tests passed: all three proof
+phases, session/state/subject/binding denial, both read/context failures, presence/
+revision/content drift, private field rejection, null/empty/all-kind truth, raw
+hidden invalid payload, all seven request and three claims late-timeout phases,
+no retry/cache. No live JWT/provider/manual claim.
+
+Frozen install/typecheck/lint/five tooling/2,643 application tests (2,362 web Vitest
+plus 281 other), three builds, nine actual Redis and all 37 Chromium cases passed.
+Final diff review/check passed. Latest exact-push Application/Database/Security/
+Guard PENDING until observed; existing DB reset/lint/advisors/pgTAP/concurrency/
+retention verified via committed CI, no local database claim.
+D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: audit and lock bounded collection initialization/provenance from pinned
+D02/Working first-persistence authority before CAS block/link mutations. Do not
+silently convert the first onboarding connection (Generic Link label missing),
+create defaults, omit existing content or claim whole Identity publication truth.
+Other typed payloads, full publication revision/snapshot, current-session runtime,
+provider/safety and renderer/scoped activation remain open separate gates.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
