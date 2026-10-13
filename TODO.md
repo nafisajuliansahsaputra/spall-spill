@@ -2308,6 +2308,56 @@ bounded technical ownership before implementing full editor parts or scoped rout
 activation. Full media/rendering/current-session runtime and live-provider evidence
 remain open. Goal unfinished.
 
+### Private Identity block membership foundation — 2026-10-13
+
+Starting lane `94ebdda2f2725662b7add016785302063064050d` passed all six exact
+push-event gates, freshly observed: [CI 38355541422](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38355541422),
+[Security 38355541475](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38355541475),
+[Guard 38355541482](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38355541482).
+Supersedes 12.82 pending evidence: Database reset/lint/advisors, 2,182 pgTAP
+assertions/39 files and all 16 concurrency/retention cases passed. Browser
+cancellation risk remains open despite green runs; no root-cause repair claim.
+
+Refreshed J5/J9, pinned 7.3 FR-IDN-007–014/9.6/11.23, schema and 12.82. Existing
+first onboarding connection is not a full modular block set; Generic Link lacks
+full title/stable modular identity, so no guessed backfill. Locked/read back 12.83
+before code. Added dormant private Working membership foundation: one Owner
+collection with positive safe bigint revision; stable generated block UUIDs, own
+collection FK, six locked kinds, visibility and positive Owner-local position.
+Owner-leading deferrable unique order supports transactional swaps preserving IDs,
+not X/Y/pixel sizing or separate breakpoint documents. Cascade cleanup is private
+referential integrity, not a new runtime deletion action.
+
+Both core tables RLS enabled, no policies/client privileges; all PUBLIC/anon/
+authenticated/service_role table privileges withheld. No API/RPC/definer/provider/
+route/grant/credential or existing profile/layout/connection/Published/onboarding
+change. No automatic creation for existing/new Owners, fabricated typed content,
+label/URL/provider/media/preset/CTA, validation result, empty canvas or public-ready
+claim. Missing collection is distinct from future explicitly initialized empty.
+12.75–12.82 readers remain unchanged, not full D02/block renderer or publication.
+
+46 pgTAP assertions committed for exact kind set, empty/no-backfill/provisioning,
+required/default fields, UUID uniqueness, own collection FK, safe revision/order,
+per-Owner positions, deferred swap/stable hide IDs, localized removal, existing
+state purity and actual role denial/RLS/no-policy/no-privilege boundaries. Database
+reset/lint/security advisors/pgTAP/concurrency/retention PENDING exact-push committed
+CI; no local DB or privileged-fixture runtime authorization/CAS claim. Pinned CLI
+generated migration; changelog request returned proxy 403, no bypass or upgrade.
+
+Frozen install/typecheck/lint/five tooling/2,442 application tests/three builds
+passed (unchanged application Turbo cache reused). Nine actual Redis and 37
+Chromium cases passed; final diff review/check passed. Latest exact-push
+Application/Database, Secret Scan/SAST/Dependency Scan and Guard PENDING until
+observed. D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: bounded typed Social/Generic Link Working payload/validation contract,
+recoverable invalid content, title/platform/destination semantics and safe
+onboarding-slot provenance. Future mutators must lock collection, enforce base
+revision and increment once with stale-write/race proof under 11.23. Typed content
+and whole Identity publication acknowledgment/snapshot binding gates must precede
+activation; never publish membership-only skeletons or silently omit blocks.
+Other typed blocks/media/rendering/runtime/live-provider gates remain open.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
