@@ -1482,6 +1482,55 @@ inputs and failure truth before guarded editor assembly/scoped route activation;
 no missing-block fabrication. Claims/state/post-read recheck/media/current-session/
 provider evidence remain separate. D01/D02/S5/S6 NOT CLOSED / VERIFIED.
 
+#### Returning-Owner D02 persisted composition inputs — 2026-10-13
+
+Starting lane `33bf8049fa9dee6c2f0413750658833c348daf48` passed all six exact
+push-event gates, freshly observed: [CI 38309407101](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38309407101),
+[Security 38309407273](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38309407273),
+[Guard 38309407056](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38309407056).
+Supersedes 12.80 pending evidence: Database reset/lint/security advisors, 2,139
+pgTAP assertions/38 files and existing concurrency/retention passed. Existing
+browser cancellation risk remains open; green runs are not root-cause repair.
+
+Refreshed J5/J9, pinned 9.6, actual persisted schema and 12.75/12.77/12.80. Locked
+[12.81](./technical-architecture/12.81-returning-owner-composition-working-read-contract.md) before code. Staged zero-target stable read-only current-Owner composition
+reader: active/completed Owner, exact current Handle/personalization and successful
+12.77 comparison; same statement snapshot of own required profile/layout and
+optional first connection slot. Success includes profile revision for later pairing
+with 12.80, saved starter/revision, explicit nullable connection slot with exact
+private URL/platform/revision and private never_published/unchanged/unpublished_changes.
+Missing/unsafe/inconsistent state fails unavailable; no default or inferred removal.
+All publication lifecycles are history, not public readiness. Primary Use Case
+never filters starter/slot. No IDs/timestamps/Published snapshots, mutation,
+credential/table privilege or execution grant; all four RPC grants withheld.
+12.80 and onboarding read/save eligibility remain unchanged. This is not full D02,
+modular block canvas, Preview, Save/Publish action or route activation.
+
+Separate unmounted strict SDK reader validates safe revisions, four starters,
+explicit null/generic/social slot, actual stored platform/HTTP URL shape and
+PostgreSQL code-point URL limits, preserving exact bytes without fetch/open/
+normalization/public-link construction. Zero args, five-second abort/late-null,
+no retry/cache/environment credential. 63 SDK-fetch tests passed. 43 pgTAP
+assertions committed for actor/metadata/context/account isolation, optional/required
+rows, starter/slot/private URL/revision comparison, all publication lifecycles,
+unsafe/inconsistent denial, pure reads and hardened withheld grants. Database
+reset/lint/advisors/pgTAP/concurrency/retention PENDING exact-push committed CI;
+no local DB/live auth/provider/public enablement claim. Pinned CLI generated the
+migration; changelog request failed through managed proxy, no bypass or upgrade.
+
+Frozen install, typecheck/lint, five tooling, 2,394 application tests (2,113 web
+Vitest plus 281 other), three builds and nine actual Redis cases passed.
+All 37 Chromium cases (eight Product, 29 Resource) and final diff review/check
+passed on the first full run.
+Latest exact-push Application/Database, Secret Scan/SAST/Dependency Scan and
+Autopilot Guard PENDING until observed.
+
+Next: bounded guarded D02 known-persisted-parts assembly with claims/current
+Owner-state, post-read subject/binding/state/context and profile-revision pairing
+rechecks. Fail mismatched parts, never fabricate modular blocks or mount a partial
+editor; full Identity/block persistence/media/runtime/scoped activation gates stay
+separate. D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
