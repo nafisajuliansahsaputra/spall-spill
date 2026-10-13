@@ -1948,6 +1948,65 @@ Identity publication revision/snapshot, other payloads, provider/safety and rend
 activation remain open. Never use onboarding mutator to bypass completed-Owner
 eligibility or auto-convert/duplicate the first slot on route opening.
 
+#### Guarded private block initialization SDK transport — 2026-10-13
+
+Starting lane `10f05752a2116ffbb2ee5155c7ea0fa3632b80db` freshly passed all six
+exact push-event jobs: [CI 38412151233](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38412151233),
+[Security 38412150990](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38412150990),
+[Guard 38412150970](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38412150970).
+Supersedes 12.89 pending evidence: reset/lint/security advisors, 2,373 pgTAP/43
+files, all four new initialization races and 16 existing concurrency/retention
+cases passed. One winner/one conflict, committed source stale/no writes, rollback
+source exact import and restriction while waiting Owner lock all observed in CI.
+Browser cancellation risk remains open; green evidence is not root-cause repair.
+
+Clean workspace synchronized/refreshed after verified 12.89; read current changed
+checkpoint/contract/source and 12.88/12.87 proof patterns. Locked/read back 12.90
+before code. Separate unmounted current-session initializer SDK: strict shared
+12.88 intent plus explicit null base_collection_revision; malformed input denied
+before claims/RPC. No caller Owner/source/kind/URL/member/public selectors. Reused
+exported actual intent schema without changing import-preparation behavior. Raw
+null/blank/control/markup title stays recoverable, no public-validity gate or rewrite.
+
+Verified claims/strict 12.7 state before dispatch, only active/completed proceeds;
+known initial denials return status only. Exactly one fixed api mutation POST with
+input_intent. Strict negative 12.89 responses return only known no-write status;
+conflicts require refresh, not automatic replay. Strict success collection_revision
+literal 1/canonical block UUID requires final claims/state same subject/Owner active/
+completed proof. No Owner/claims/source/private payload/public action fields.
+
+Aggregate five-second cancellation: failure before mutation unavailable; dispatch
+attempt followed by transport/HTTP/malformed/timeout/error or failed success proof
+returns only outcome_unknown. Mutation may have committed despite lost response or
+ignored abort; no claim of rollback/not Saved and no blind retry/cache. Post-commit
+session/subject/binding/account change drops private acknowledgment rather than
+misrepresenting authoritative persistence. Checks after each await stop later phases
+and late revival. Reconciliation must later load authorized authoritative collection/
+provenance; unknown outcome alone does not authorize retry or imply Saved/Live.
+
+91 new pinned SDK/controlled-claims cases plus all 69 import cases passed targeted:
+exact args/API schema/method, strict request/response, every initial/post-proof
+state/subject/Owner/session/error path, fixed known negatives, raw title/safe bounds,
+unknown outcome and every state/mutation/claims deadline with ignored late response,
+no retries/cache/private fields. Initial test fixture default masked explicit
+undefined; corrected fixture while keeping denial assertion, then all 160 passed.
+No live JWT/provider/manual claim. No DB/schema/grant/route/source/provenance/
+onboarding/Working/Published change; all withheld execution remains so.
+
+Frozen install/typecheck/lint/five tooling/2,803 application tests (2,522 web Vitest
+plus 281 other), three builds, nine actual Redis and all 37 Chromium cases passed.
+Final diff review/check passed. Latest exact-push Application/Database/Security/
+Guard PENDING until observed; committed DB reset/lint/advisors/pgTAP/20 concurrency-
+retention gates still required. D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: bounded ordinary block/link CAS mutation contract with current Owner/collection
+lock, acknowledged base revision, one bump and own cross-Owner/stale/race proof.
+Keep grants withheld; initialization outcome reconciliation/current-session runtime,
+complete Identity publication acknowledgment/snapshot, other typed payloads,
+provider/safety and renderer activation remain open separate gates. Never blindly
+retry unknown initialization or use prior profile/first-slot comparison as whole
+Identity publication truth.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

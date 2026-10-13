@@ -3,7 +3,7 @@ import { z } from "zod";
 import { ownerConnectionWorkingSchema } from "./owner-composition-working";
 import { inspectIdentityLinkWorkingInput, type IdentityLinkWorkingInput, type IdentityLinkWorkingIssue } from "./identity-link-working-input";
 
-const intentSchema = z.object({
+export const identityConnectionBlockImportIntentSchema = z.object({
   action: z.literal("import_onboarding_connection"),
   source_revision: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
   title: z.custom<string | null>(title => inspectIdentityLinkWorkingInput({
@@ -21,7 +21,7 @@ export type IdentityConnectionBlockImportResult = {
 
 /** Pure proposal only. Source must later be Owner-derived and rechecked in the initialization transaction. */
 export function prepareIdentityConnectionBlockImport(source: unknown, intent: unknown): IdentityConnectionBlockImportResult {
-  const parsedIntent = intentSchema.safeParse(intent);
+  const parsedIntent = identityConnectionBlockImportIntentSchema.safeParse(intent);
   if (!parsedIntent.success) return { status: "invalid_import_intent" };
   const parsedSource = ownerConnectionWorkingSchema.nullable().safeParse(source);
   if (!parsedSource.success) return { status: "unavailable_source" };
