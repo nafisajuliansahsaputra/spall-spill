@@ -3036,6 +3036,53 @@ current-session runtime, other typed payloads, complete Identity publication
 acknowledgment/snapshots/revisions, provider/safety/media/renderer activation remain
 separate withheld gates. Goal unfinished; public enablement not authorized by saves.
 
+### Private confirmed block Working removal CAS — 2026-10-14
+
+Fresh clean lane `1305b13d69037d6e8d0ca031d738c3e99c8d81ad` passed all six
+exact push-event jobs: [CI 38484748037](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38484748037),
+[Security 38484748011](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38484748011),
+[Guard 38484748029](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38484748029).
+Supersedes 12.96/12.97 pending evidence: reset/lint/security advisors, 46 files/
+2,588 pgTAP and 35 concurrency/retention cases passed, including full Chromium
+regression and deterministic page-readiness fix. Cancellation risk remains open.
+
+Refreshed canonical authority/J5/J9/pinned D02 Remove confirmation/11.23/12.83/
+12.85/12.89 and actual schema/source/tests. Choose removal before add allocation;
+locked/read back 12.98 before code. Staged private current-Owner removal API with
+strict block UUID/base/confirm_removal:true intent, Owner first lock/binding recheck/
+active/completed/context, own collection/member locks and aggregate CAS. Confirmation
+is explicit intent, never ownership. Missing/false/coerced/extra input invalid;
+foreign/absent target same denial, stale/max/unauthorized no write. Six kinds/hidden/
+missing payload supported independently of PUC. Only target membership removed;
+existing tuple FK cascades only bound private link payload. One removal bumps N→N+1
+once/minimal block+revision ack; no idempotent success, implicit resurrection or retry.
+
+Keep collection identity/created_at even after last member; authoritative explicit
+empty blocks and advanced revision, initializer still already_initialized. Retain
+other members/IDs/order/visibility/timestamps/payloads, source, historical retired
+initial-block provenance, Owner/Handle/profile/layout/receipts/Published. Errors
+rollback membership/payload/revision. No physical media/Spill reference/public entity
+or production deletion, no new cascade/grant/policy/UI/route/provider/credential.
+All-role execution withheld. No retained deleted-content/Undo guarantee; exact Undo
+window/interaction remains open. Future mounted UI requires explicit contextual
+confirmation since backend does not retain recovery, never autosave/Hide removal.
+
+88 pgTAP cases and seven isolated Node races committed for actual PostgreSQL CI:
+same/different removals, remove versus payload/visibility/move, collection advance
+and restriction during waits. Assert exact winner presence/content/order, localized
+cascade, full rollback/foreign purity/last-empty/no reimport/provenance/role denials.
+DB reset/lint/security advisors/pgTAP/all42 concurrency-retention and latest exact
+push six gates PENDING until observed. Frozen install/typecheck/lint/five tooling/
+3,149 application tests/three builds passed (unchanged application Turbo cache
+reused), nine actual Redis and all37 Chromium passed. Diff/check reviewed. No live
+JWT/manual/provider evidence. D01/D02/S5/S6 NOT CLOSED / VERIFIED; Goal unfinished.
+
+Next: strict guarded confirmed removal SDK with exact target/base+1 and final
+subject/Owner proof, truthful outcome_unknown after attempted removal/lost response,
+no blind retry/recreation. Add allocation/typed intent, reconciliation/runtime, other
+payload kinds/full Identity publication snapshots/revision/provider/safety/media/
+renderer activation remain separate withheld gates; old comparison not whole truth.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
