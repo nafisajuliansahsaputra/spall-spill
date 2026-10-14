@@ -2530,6 +2530,42 @@ conflict/provenance purity, separate from onboarding source import. Pagination,
 other payloads/reconciliation/runtime/full Identity publication/media/renderer/
 provider/safety/Remove Undo UI remain separate open gates; all grants withheld.
 
+#### Explicit first link collection initialization intent — 2026-10-14
+
+Fresh clean lane `70a6dab42a7e1309b812f17d37bde428db088dfc` passed all six
+exact push-event jobs: [CI 38549565817](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38549565817),
+[Security 38549565598](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38549565598),
+[Guard 38549565338](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38549565338).
+Supersedes 12.102 pending evidence: actual reset/lint/advisors, 48 files/2,781 pgTAP/
+all49 concurrency-retention and 37 Chromium passed. D01/D02/S5/S6 still open.
+
+Refreshed canonical/J5/J9/pinned D02 and 11.22 first-persistence, actual 12.100/
+12.102 input/source/tests. Domain validation precedes the initializer transaction.
+Locked/read back 12.103 before code: separate pure server-only strict initialization
+intent extending unchanged addition schema, initialize_link_block action and
+explicit null base. Missing/undefined/coerced/numeric base invalid; null expresses
+expected absence, never proof an empty collection exists or authority to replace.
+Reuse raw nullable Social/Generic payload/explicit bool/12.84 envelopes and fixed
+local issues. Recoverable raw values retained; no guessed label/provider/type/source,
+no caller Owner/ID/position/provenance/public authority or input mutation. Parser
+never claims authoritative first persistence/Saved/Live or auto-creates on UI open.
+No auth/RPC/DB/migration/grant/route/UI/ID/cache/network/runtime side effect.
+
+89 focused cases passed: explicit-null/missing/wrong/coerced bases, both kinds/bools,
+outer/nested authority, raw recovery/Unicode/NUL/local issues and no fetch/allocation.
+Frozen install/typecheck/lint/five tooling/3,575 application tests/three builds passed
+(unchanged other packages Turbo cache reused), nine actual Redis and all37 actual
+Chromium passed; final diff/check reviewed. New exact push six gates and unchanged
+DB reset/lint/advisors/2,781 pgTAP/all49 concurrency-retention PENDING until observed.
+No live JWT/manual/provider/CSRF proof; Goal unfinished, no checkpoint closure.
+
+Next: lock/implement private absence-guarded manual first-link initializer, active/
+completed Owner-first locks, any existing collection including empty => conflict,
+atomic collection1/server block ID/position1/raw matched payload/explicit visibility,
+no import provenance/source mutation; prove rollback and manual-versus-source
+initializer races. Guarded SDK, pagination/reconciliation/other payloads/full Identity
+publication/media/renderer/provider/Remove Undo runtime safety remain open.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
