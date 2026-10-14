@@ -154,6 +154,9 @@ jobs:
       - name: Verify isolated Identity link block allocation CAS races
         run: node --test tests/identity-link-block-allocation-cas-concurrency.test.mjs
 
+      - name: Verify isolated manual first link initialization races
+        run: node --test tests/identity-first-link-initialization-concurrency.test.mjs
+
       - name: Verify concurrent Spill identity allocation
         run: node --test tests/spill-reference-concurrency.test.mjs
 

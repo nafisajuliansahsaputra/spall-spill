@@ -2566,6 +2566,42 @@ no import provenance/source mutation; prove rollback and manual-versus-source
 initializer races. Guarded SDK, pagination/reconciliation/other payloads/full Identity
 publication/media/renderer/provider/Remove Undo runtime safety remain open.
 
+### Private manual first-link initialization — 2026-10-14
+
+Fresh clean baseline ff7aa98880091257033ea0798906da0a1f3c13ac passed exact
+push-event [CI 38563341856](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38563341856),
+[Security 38563341860](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38563341860),
+[Guard 38563341855](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38563341855).
+Supersedes 12.103 pending evidence; D01/D02/S5/S6 remain open, last closed S4.
+
+Refreshed mandatory authority/J5/J9/pinned D02/11.22, actual initializer/allocation
+SQL, fixtures, input and CI. Locked/read back 12.104 before code. New private
+api.initialize_current_owner_blocks_from_link uses strict 12.103 intent and
+Owner-first/binding/context locks, active/completed current Owner. Any existing
+collection, even empty, conflicts without overwrite. Atomic absent collection1/
+server UUID/position1/raw Social or Generic payload/explicit visibility, no source
+requirement/fallback/mutation or fabricated import provenance. Minimal ack only;
+all PUBLIC/anon/authenticated/service_role execution withheld. No routes/UI/public
+activation, no inferred Saved/Live, no re-onboarding, retry, Undo or restoration.
+
+Committed 101 pgTAP assertions cover actual role/auth/context/strict envelopes,
+Unicode/raw/null/no-source, minimal ack/Owner isolation, existing/empty conflict,
+post-call and payload-insert rollback plus source/provenance/profile/layout/public/
+receipt/Owner/Handle purity. Six isolated races cover manual/manual, manual/import
+simultaneously and both ordered winners, restriction and empty collection during
+Owner waits. DB reset/lint/security advisors/pgTAP/all55 concurrency-retention and
+new exact-push six CI/Security/Guard jobs remain PENDING until actually observed.
+No local database or live JWT/manual/provider/CSRF evidence claimed.
+
+Frozen install/typecheck/lint/five tooling/3,575 application tests/three builds
+passed (unchanged-source Turbo cache reused); nine actual Redis and all37 actual
+Chromium passed. Node race syntax and final diff/check reviewed. Goal unfinished;
+no journey/checkpoint closure. Next: lock/implement guarded manual first-link SDK,
+strict intent/current subject+Owner/final proof/literal revision1/minimal ack,
+truthful outcome_unknown after attempted call, no automatic retry/source fallback.
+Pagination/reconciliation/other payloads/full Identity publication/media/renderer/
+provider/Remove Undo runtime safety remain separate open gates.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
