@@ -151,6 +151,9 @@ jobs:
       - name: Verify isolated Identity block Working removal CAS races
         run: node --test tests/identity-block-removal-cas-concurrency.test.mjs
 
+      - name: Verify isolated Identity link block allocation CAS races
+        run: node --test tests/identity-link-block-allocation-cas-concurrency.test.mjs
+
       - name: Verify concurrent Spill identity allocation
         run: node --test tests/spill-reference-concurrency.test.mjs
 

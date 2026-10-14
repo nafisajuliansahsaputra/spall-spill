@@ -2439,6 +2439,51 @@ purity and add versus edit/removal races; then guarded SDK. Missing-collection
 initialization, other payloads/reconciliation/runtime/full Identity publication/
 renderer/media/provider/safety and exact Remove/Undo UI remain separate open gates.
 
+#### Private existing-collection link block allocation CAS — 2026-10-14
+
+Fresh clean lane `ff184e09751cb9be7a3865499fe7a602d43faeea` passed all six
+exact push-event jobs: [CI 38516147389](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38516147389),
+[Security 38516147399](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38516147399),
+[Guard 38516147413](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38516147413).
+Supersedes 12.100 pending evidence: actual DB reset/lint/security advisors, 47 files/
+2,676 pgTAP/all42 concurrency-retention and 37 Chromium passed. Goal unfinished.
+
+Refreshed canonical/J5/J9/pinned 7.3/9.6/12.83–12.86/12.100 and actual schema/
+CAS/fixtures/workflow. Locked/read back 12.101 before code; created migration via
+pinned Supabase CLI. Staged api.add_current_owner_link_block_working(input_intent):
+Owner-first binding/context/active/completed, strict explicit action/base/bool/raw
+Social/Generic payload, existing own collection lock and aggregate CAS. Missing
+collection unavailable, never inferred empty/imported. Own empty appends at1;
+nonempty own max including hidden/all kinds appends max+1. Int32 overflow returns
+position_exhausted without renumber/gap reuse. >=500 rows unavailable while current
+complete reader supports <=500: temporary engineering availability, not MVP quota;
+pagination/reconciliation contract required before lifting. No existing truncation.
+
+Server-default UUID/new actual Owner-kind tuple, raw payload and one collection
+revision bump atomic; minimal block/revision ack. Preserve collection created_at,
+other members/IDs/order/visibility/timestamps/payload, source/historical provenance,
+Owner/Handle/profile/layout/receipts/Published. Constraint/error rollback all records.
+Old-base repeat stale/no duplicate; fresh explicit new base can add separate stable
+block even identical content, not idempotent retry. Lost-response guarded SDK/
+reconciliation still separate. All-role execution withheld; no table/policy/route/
+UI/provider/credential/publication/onboarding activation or production operation.
+
+105 new pgTAP cases and seven isolated Node races committed: add/add versus payload/
+visibility/move/removal, collection advance and restriction during waits, strict
+role/auth/context/raw budgets, stable old records, rollback/empty/max/499→500/no
+truncation and provenance purity. Node syntax and final diff/check reviewed.
+Frozen install/typecheck/lint/five tooling/3,353 application tests/three builds
+passed (unchanged application Turbo cache reused); nine actual Redis and all37
+actual Chromium passed. DB reset/lint/advisors/pgTAP/all49 races-retention and new
+exact-push six gates PENDING until observed. No live JWT/manual/provider evidence;
+D01/D02/S5/S6 NOT CLOSED / VERIFIED.
+
+Next: strict guarded allocation SDK reusing 12.100 intent, exact safe base+1/new
+block acknowledgment and final subject/Owner proof, five-second aggregate and
+truthful outcome_unknown/no blind duplicate retry. Missing-collection initialization,
+pagination, other payloads/reconciliation/runtime/full Identity publication/media/
+renderer/provider/safety/Remove Undo UI remain separate withheld gates.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
