@@ -3333,6 +3333,44 @@ truthful outcome_unknown after attempted call, no automatic retry/source fallbac
 Pagination/reconciliation/other payloads/full Identity publication/media/renderer/
 provider/Remove Undo runtime safety remain separate open gates.
 
+### Guarded private manual first-link initialization SDK — 2026-10-14
+
+Clean synchronized cddab6035436cd016657f2fb5fb13592bbdff748 passed all six
+exact push-event jobs: [CI 38579863555](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38579863555),
+[Security 38579863612](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38579863612),
+[Guard 38579863512](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38579863512).
+Supersedes 12.104 pending evidence: actual reset/lint/security advisors, 49 files/
+2,882 pgTAP and all55 concurrency-retention including six manual/import/Owner-wait
+races passed. Actual Application/Redis/all37 Chromium passed. S4 remains last closed.
+
+Refreshed changed authority/12.103–12.104/12.90 and actual input/SDK/tests;
+locked/read back 12.105 before production code. Unmounted server-only injected
+createOwnerFirstLinkInitialization.initialize reuses strict unchanged 12.103 input,
+proves current verified subject/strict active-completed Owner, sends one fixed
+api.initialize_current_owner_blocks_from_link POST, validates minimal literal1/
+canonical UUID ack and re-proves exact same subject/Owner before success. Database
+12.104 remains authority for newness/absence/atomic matched payload, not UUID shape.
+Preserve raw repairable Social/Generic fields/explicit bool; no public-validity gate.
+Five-second aggregate deadline/ignored-late cancellation; errors before attempted
+mutation unavailable, after attempt outcome_unknown. No auto retry/cache/source
+fallback/recreation/Undo or claim nothing was saved. No new DB/grant/route/UI/public
+activation, live JWT/provider/manual/browser persistence or CSRF evidence.
+
+139 focused tests passed: strict nested input/authority/both kinds/bools/raw/Unicode/
+NUL, actual pinned SDK exact method/schema/arguments, initial/final claims/Owner
+changes, known status-only negatives/forged/source ack, network/HTTP/aggregate
+ignored-late phases and unknown-then-explicit-conflict/no auto retry. Frozen install,
+typecheck/lint/five tooling/3,714 application tests/three builds passed (unchanged
+other packages Turbo cache reused), nine actual Redis/all37 actual Chromium passed;
+final diff/check reviewed. New exact-push six jobs and unchanged DB reset/lint/
+advisors/2,882 pgTAP/all55 concurrency-retention PENDING until actually observed.
+Goal unfinished; D01/D02/S5/S6 not CLOSED / VERIFIED.
+
+Next: audit/lock bounded complete collection pagination/reconciliation contract,
+preserving exact aggregate revision and complete own ordered payload truth before
+lifting the 500 engineering availability boundary. Other payload/runtime/full
+Identity publication/media/renderer/provider/Remove Undo safety remain separate.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
