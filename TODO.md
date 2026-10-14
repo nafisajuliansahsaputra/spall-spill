@@ -3083,6 +3083,52 @@ no blind retry/recreation. Add allocation/typed intent, reconciliation/runtime, 
 payload kinds/full Identity publication snapshots/revision/provider/safety/media/
 renderer activation remain separate withheld gates; old comparison not whole truth.
 
+### Guarded confirmed block Working removal SDK — 2026-10-14
+
+Clean refresh at `71bb960ea482bdc7bbc1c783b94711512864c491`; all six exact
+push-event jobs passed: [CI 38510489043](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38510489043),
+[Security 38510488949](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38510488949),
+[Guard 38510488909](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38510488909).
+Supersedes 12.98 pending evidence: actual DB reset/lint/security advisors, 47 files/
+2,676 pgTAP and all42 concurrency/retention cases passed, including all seven new
+removal races and all37 Chromium. No live JWT/manual/provider inference.
+
+Refreshed changed canonical checkpoint/J5/J9/12.98 and existing 12.96 SDK/source;
+locked/read back 12.99 before production code. Added separate unmounted server-only
+createOwnerBlockWorkingRemoval(client).remove(unknown), injected current-session
+auth/schema only. Strict lowercase block UUID/safe base/confirm_removal literal true,
+no coercion/default/caller authority. Invalid input before claims/RPC. Verified
+getClaims/strict zero-arg Owner state before dispatch; active/completed only; one
+fixed api.remove_current_owner_block_working POST/input_working/abort signal.
+Minimal exact target/base+1 safe acknowledgment requires final same subject/Owner
+active/completed proof. Known status-only denials never return private state or
+new revision; missing block never becomes idempotent success or inferred rollback.
+
+Single five-second aggregate deadline, checks after awaits; unavailable before
+attempt, outcome_unknown after attempted mutation on lost/error/malformed/late
+response or failed final proof. Issued removal may still commit despite abort.
+No blind retry/recreation/reimport/cache/merge/local membership mutation/Undo or
+recovery promise. Preserve original intent and reconcile authoritative membership/
+collection/provenance before any new action; historical first-slot provenance is
+not Undo or current payload. Future mounted UI requires contextual confirmation,
+never autosave/Hide. No database/grant/policy/route/UI/provider/credential/production/
+Working-to-Published activation; old Identity comparison remains incomplete.
+
+118 focused pinned SDK/controlled-claims/fake-clock cases passed; strict confirmation,
+all proof/denial/forged acknowledgment paths, bounds, transport errors, ignored late
+phases and missing target covered. Frozen install/typecheck/lint/five tooling/
+3,267 application tests/three builds passed (unchanged other packages Turbo cache
+reused), nine actual Redis and all37 actual Chromium passed. Final diff/check
+reviewed. Exact new-push six gates incl DB reset/lint/advisors/2,676 pgTAP/all42
+concurrency-retention PENDING until observed. D01/D02/S5/S6 NOT CLOSED / VERIFIED;
+Goal unfinished, no live JWT/route/CSRF/manual/provider claims.
+
+Next: audit/lock bounded explicit Social/Generic link membership add/allocation,
+raw typed intent/server-generated stable IDs/order overflow and aggregate CAS,
+retain historical provenance/empty collection semantics. Other payload kinds,
+authoritative reconciliation/runtime, full Identity publication snapshots/revision,
+media/renderer/provider/safety and exact Remove/Undo UI remain separate open gates.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
