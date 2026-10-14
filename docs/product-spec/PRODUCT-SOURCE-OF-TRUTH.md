@@ -2398,6 +2398,47 @@ retain historical provenance/empty collection semantics. Other payload kinds,
 authoritative reconciliation/runtime, full Identity publication snapshots/revision,
 media/renderer/provider/safety and exact Remove/Undo UI remain separate open gates.
 
+#### Explicit Social/Generic Link addition intent — 2026-10-14
+
+Fresh clean lane `ad6ebde04b2482b31e4af09244626c7a0754799f` passed all six
+exact push-event jobs: [CI 38511009360](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38511009360),
+[Security 38511009385](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38511009385),
+[Guard 38511009435](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38511009435).
+Supersedes 12.99 pending evidence: DB reset/lint/security advisors, 47 files/2,676
+pgTAP/all42 concurrency-retention and all37 Chromium passed on that exact commit.
+Goal unfinished; latest CLOSED / VERIFIED remains S4; D01/D02/S5/S6 stay open.
+
+Refreshed canonical authority/J5/J9/pinned 7.3 Add/stable IDs and 9.6 structured
+Social/Generic/Working behavior, 12.83/12.84 and actual input/import SDK/tests.
+Choose domain validation before allocation under WORKFLOW section5. Locked/read
+back 12.100 before code: pure unmounted server-only identityLinkAdditionIntentSchema
+and inspectIdentityLinkAdditionIntent. Strict explicit add_link_block action,
+positive safe acknowledged base, explicit is_visible bool, unchanged nested 12.84
+raw link payload. No caller Owner/block/position/source/provenance/public authority,
+coercion/default, fabricated title/provider, local ID, network or persistence.
+Recoverable incomplete/invalid raw payload remains intent with fixed local issues;
+wrong/extra/NUL/over-budget shape returns status-only invalid_add_intent, original
+input retained. Both typed kinds and visibility values independent of PUC. Empty
+issues is not authorization/CAS/Saved/Live/provider safety evidence. Null/missing
+base invalid in this existing-collection scope; absent collection never inferred
+empty/source-imported. No schema/migration/grant/RPC/route/UI/public activation.
+
+86 focused cases passed, including strict nested authority, all missing/coerced
+fields, safe bounds, Unicode/NUL, exact raw recovery/multiple issues and no fetch/
+ID allocation/caller mutation. Frozen install/typecheck/lint/five tooling/3,353
+application tests/three builds passed (unchanged other packages Turbo cache reused),
+nine actual Redis and all37 actual Chromium passed. Final diff/check reviewed.
+New exact push six jobs including unchanged DB reset/lint/advisors/pgTAP/all42
+concurrency-retention PENDING until observed. No live JWT/manual/provider claim.
+
+Next: lock/implement private existing-collection link allocation transaction using
+12.100 intent, active/completed Owner-first locks and aggregate CAS, server stable
+UUID, safe append position/overflow, atomic payload+membership+one revision bump,
+explicit-empty behavior, reader bound without product quota, rollback/provenance
+purity and add versus edit/removal races; then guarded SDK. Missing-collection
+initialization, other payloads/reconciliation/runtime/full Identity publication/
+renderer/media/provider/safety and exact Remove/Undo UI remain separate open gates.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
