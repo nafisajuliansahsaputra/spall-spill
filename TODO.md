@@ -3215,6 +3215,52 @@ truthful outcome_unknown/no blind duplicate retry. Missing-collection initializa
 pagination, other payloads/reconciliation/runtime/full Identity publication/media/
 renderer/provider/safety/Remove Undo UI remain separate withheld gates.
 
+### Guarded existing-collection link allocation SDK — 2026-10-14
+
+Clean refresh at `6e467bc12e9f748f089c810069db99c2ee3322ed`; all six exact
+push-event jobs passed: [CI 38548632014](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38548632014),
+[Security 38548631776](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38548631776),
+[Guard 38548631875](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38548631875).
+Supersedes 12.101 pending evidence: actual DB reset/lint/security advisors, 48 files/
+2,781 pgTAP/all49 concurrency-retention passed, including seven new allocation
+races and 37 Chromium. No live JWT/manual/provider inference; Goal unfinished.
+
+Refreshed changed checkpoint/12.100/12.101 and actual private CAS/SDK/source/tests;
+locked/read back 12.102 before production code. Added separate unmounted server-only
+createOwnerLinkBlockAllocation(client).add(unknown), current-session auth/schema
+injected only. Reuse strict shared explicit action/base/bool/raw nested link intent;
+invalid before claims/RPC, recoverable raw fields never blocked for local issues.
+Verified getClaims/strict state before dispatch; active/completed only; one fixed
+api.add_current_owner_link_block_working POST/input_intent and abort signal.
+Minimal canonical block UUID/safe exact base+1 ack requires final same subject/Owner
+active/completed proof. No requested block ID exists: newness/atomic ownership and
+payload allocation are verified backend truth, not UUID shape/standalone SDK proof.
+No echoed payload/visibility/action/position/private/public data or client ID.
+
+Five-second aggregate with checks after awaits; unavailable before attempt,
+outcome_unknown after attempted allocation on errors/lost/malformed/late ack or
+failed final proof. Issued add may still commit despite abort. No rollback/not
+Saved inference, automatic retry/base refresh/cache/merge/offline queue/import/
+init/recreate/reindex. Preserve original intent and reconcile authorized membership/
+payload/collection before fresh acknowledged-base action. Known stale/max/position/
+unavailable denials status-only, no fake quota or missing-collection creation.
+No schema/migration/grant/policy/route/UI/provider/credential/publication activation.
+
+133 focused pinned SDK/controlled-claims/fake-clock cases passed: exact raw kinds/
+bools/args, strict fields and private ack rejection, proof/account/subject/Owner
+changes, safe bounds, HTTP/network/claims errors, ignored late phases, no retry and
+unknown then stale truth. Frozen install/typecheck/lint/five tooling/3,486 application
+tests/three builds passed (unchanged other packages Turbo cache reused), nine actual
+Redis and all37 actual Chromium passed. Final diff/check reviewed. New exact push
+six gates including DB reset/lint/advisors/2,781 pgTAP/all49 concurrency-retention
+PENDING until observed. D01/D02/S5/S6 NOT CLOSED / VERIFIED; no live/CSRF/manual claim.
+
+Next: audit/lock bounded explicit missing-collection initialization for first typed
+link intent, absence precondition/server IDs/atomic raw membership+payload and
+conflict/provenance purity, separate from onboarding source import. Pagination,
+other payloads/reconciliation/runtime/full Identity publication/media/renderer/
+provider/safety/Remove Undo UI remain separate open gates; all grants withheld.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
