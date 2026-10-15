@@ -3668,6 +3668,58 @@ subject/Owner binding and Saved≠Live. Other payload/full Identity publication/
 renderer/provider/Remove Undo gates remain open; never mount partial D02 or enable
 withheld grants from these bounded parts alone.
 
+### Review inisialisasi link pertama dan readback privat — 2026-10-15
+
+Baseline bersih 6629c8be106c95244153f19654b3fe5de6ac7778 lulus enam job
+push-event yang tepat: [CI 38768986644](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38768986644),
+[Security 38768986476](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38768986476),
+[Guard 38768986438](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38768986438).
+Ini menggantikan evidence PENDING12.112: reset/lint/security advisors,50 file/
+2,991 pgTAP/59 concurrency-retention, Application/Redis/37 Chromium lulus. Goal
+belum selesai; checkpoint terakhir yang sepenuhnya CLOSED / VERIFIED tetap S4.
+
+Authority wajib/J5/J9/pinned D02/11.22/12.104–12.105/12.112 serta source, migration
+dan tes aktual dibaca ulang. Kontrak12.113 dikunci/dibaca sebelum coding. Factory
+server-only privat initialize(unknown) menerima hanya intent initialize_link_block,
+base null eksplisit, visibility dan raw typed link. Tidak ada inisialisasi saat
+read/editor dibuka. SDK12.105 dipanggil sekali; already_initialized/negative/unknown
+kembali status-only tanpa readback/add/import/retry atau replay success buatan.
+
+Mekanisme12.112 dipakai bersama melalui helper internal dengan mode tetap addition
+atau initialization, schema dan SDK yang cocok; mode invalid gagal sebelum auth.
+API/result type/jalur add lama tetap kompatibel, tanpa callback/RPC/client/Owner
+selector baru. Proof subject/Owner strict sebelum/di antara/setelah operasi dan
+proof nested tetap dipertahankan. Gagal membuktikan binding/account/session setelah
+pemanggilan mutasi => outcome_unknown tanpa acknowledgment/snapshot privat.
+
+Hasil initialized memisahkan server ID/literal revision1 dari readback. Revision1
+harus berisi tepat satu ID acknowledgment di position1 dengan kind/visibility/
+present raw payload yang persis sesuai intent. Null/empty/extra/wrong position/
+mismatch => readback unavailable, acknowledgment hanya setelah proof akhir.
+Snapshot lengkap yang lebih baru ditandai newer_revision dan boleh mencerminkan
+edit/add/removal; tidak dianggap rollback atau sama dengan intent awal. Raw invalid/
+null/local issues tetap recoverable; Saved≠Live. Maksimal delapan claims/31 RPC/
+satu mutasi/20 page calls, outer10s dan nested5s tetap. Operasi nested yang sudah
+dipanggil dapat selesai/commit setelah timeout; tidak ada klaim pembatalan/atomic
+session dispatch/ABA/global freshness/full Identity atau Published authority.
+
+217 tes baru inisialisasi dan seluruh194 regresi review addition lulus; total894
+tes terarah termasuk kedua SDK dan paged assembly. Meliputi null base/action/raw
+copied input, exact rev1/single position1/type, known/unknown/conflict tanpa fallback,
+closed-mode dispatch/type compatibility, seluruh proof/transport/late phases serta
+501/1000/1001 pada snapshot lebih baru. Frozen install/typecheck/lint/lima tooling/
+4,410 tes aplikasi/tiga build lulus (cache Turbo paket lain yang tidak berubah
+sebagian dipakai); sembilan Redis aktual dan37 Chromium aktual lulus. Final diff/
+check ditinjau. Tidak ada perubahan SQL/migration/grant/route/UI/public activation.
+Enam gate push baru dan reset/lint/advisors/2,991 pgTAP/59 races-retention masih
+PENDING sampai benar-benar diamati. Tidak mengklaim live JWT/provider/manual/CSRF
+atau penutupan D01/D02/S5/S6.
+
+Berikutnya audit/kunci bounded private editor command envelope/dispatch serta
+prasyarat request-bound session/CSRF/origin. Jangan mount editor parsial atau
+mengaktifkan grant/public sebelum gate transport/safety/runtime yang berlaku.
+Payload lain/full Identity publication/media/provider/Remove Undo tetap terbuka.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
