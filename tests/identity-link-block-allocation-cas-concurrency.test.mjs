@@ -127,3 +127,46 @@ test('restriction during Owner wait denies allocation without any new block',asy
   await reset();const held=query(`begin;update core.owners set account_state='restricted' where id='${owner}';select pg_advisory_xact_lock(1936744812,109);select pg_sleep(2);commit;`);
   try{await waitLock(109);assert.deepEqual(await add('never'),{status:'owner_not_eligible'});assert.equal(await added(),'0');assert.equal(await order(),'11,12,13,15,16,17');assert.equal(await revision(),'1');}finally{await held;}
 });
+
+test('same-base additions at999 preserve one bounded1000 winner and complete paged readback', async () => {
+  await reset();
+  await query(`insert into core.identity_blocks_working(owner_id,kind,position,is_visible)
+    select '${owner}','contact',g,false from generate_series(1001,1993) g;`);
+  assert.equal(await query(`select count(*) from core.identity_blocks_working where owner_id='${owner}';`),'999');
+  const replies = await Promise.all([add('capacity first'),add('capacity second')]);
+  assert.deepEqual(replies.map(x=>x.status).sort(),['stale_write','success']);
+  const winner = replies.find(x=>x.status==='success');
+  assert.deepEqual(Object.keys(winner).sort(),['block_id','collection_revision','status']);
+  assert.equal(winner.collection_revision,2);
+  assert.equal(await revision(),'2');
+  const expected = await query(`select jsonb_agg(block_id::text order by position) from core.identity_blocks_working where owner_id='${owner}';`);
+  assert.equal(JSON.parse(expected).length,1000);
+  const fresh = { action:'add_link_block',base_collection_revision:2,is_visible:false,
+    link_working:{kind:'generic_link',title:'must not allocate',social_platform:null,destination_url:null} };
+  assert.deepEqual(await query(`begin; ${auth} select api.add_current_owner_link_block_working('${JSON.stringify(fresh)}'::jsonb); commit;`).then(result),{status:'unavailable'});
+  assert.equal(await revision(),'2');
+  assert.equal(await query(`select jsonb_agg(block_id::text order by position) from core.identity_blocks_working where owner_id='${owner}';`),expected);
+  assert.deepEqual(await query(`begin; ${auth} select api.resolve_current_owner_blocks_working(); commit;`).then(result),{status:'unavailable'});
+  const rows = []; let request = {expected_collection_revision:null,after_position:null};
+  let terminal = false;
+  for(let pageIndex=0;pageIndex<10;pageIndex++) {
+    const page = await query(`begin; ${auth} select api.resolve_current_owner_blocks_working_page('${JSON.stringify(request)}'::jsonb); commit;`).then(result);
+    assert.equal(page.status,'success');assert.equal(page.collection.revision,2);
+    assert.equal(page.current_handle,'add-000001');assert.equal(page.primary_use_case,'personal');
+    assert.equal(page.collection.blocks.length,100);
+    rows.push(...page.collection.blocks);
+    const last = rows.at(-1).position;
+    assert.equal(page.collection.has_more,pageIndex<9);
+    assert.equal(page.collection.next_after_position,pageIndex<9?last:null);
+    if(!page.collection.has_more){terminal=true;break;}
+    request={expected_collection_revision:2,after_position:last};
+  }
+  assert.equal(terminal,true);assert.equal(rows.length,1000);
+  assert.equal(new Set(rows.map(x=>x.block_id)).size,1000);
+  assert.deepEqual(rows.map(x=>x.block_id),JSON.parse(expected));
+  assert.ok(rows.every((x,i)=>i===0||rows[i-1].position<x.position));
+  const allocated = rows.find(x=>x.block_id===winner.block_id);
+  assert.equal(allocated.position,1994);assert.equal(allocated.is_visible,false);
+  assert.deepEqual(allocated.link_working,{title:replies[0].status==='success'?'capacity first':'capacity second',social_platform:null,destination_url:'javascript:private'});
+  assert.equal(await query(`select source_connection_revision from core.identity_block_initialization_provenance where owner_id='${owner}';`),'3');
+});

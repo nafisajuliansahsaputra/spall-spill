@@ -173,12 +173,66 @@ set local request.jwt.claims='{"sub":"99000000-0000-4000-8000-000000000002"}'; d
 insert into replies values(api.add_current_owner_link_block_working('{"action": "add_link_block", "base_collection_revision": 1, "is_visible": false, "link_working": {"kind": "social", "title": null, "social_platform": null, "destination_url": null}}'::jsonb));
 select is((select position from core.identity_blocks_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),1,'Explicit empty appends at1 without importing source');
 select is((select revision from core.identity_block_collections_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),2::bigint,'Empty uses existing collection revision');
-insert into core.identity_blocks_working(owner_id,kind,position,is_visible) select (select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002'),'contact',g,false from generate_series(2,499) g;
-insert into replies values(api.add_current_owner_link_block_working('{"action": "add_link_block", "base_collection_revision": 2, "is_visible": false, "link_working": {"kind": "generic_link", "title": " <script>raw</script> ", "social_platform": "unexpected", "destination_url": "javascript:private"}}'::jsonb));
-select is((select count(*) from core.identity_blocks_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),500::bigint,'499 can append through complete-reader bound500');
-select is(api.add_current_owner_link_block_working('{"action": "add_link_block", "base_collection_revision": 3, "is_visible": false, "link_working": {"kind": "generic_link", "title": " <script>raw</script> ", "social_platform": "unexpected", "destination_url": "javascript:private"}}'::jsonb),'{"status": "unavailable"}'::jsonb,'Engineering availability at500 not product quota');
-select is((select count(*) from core.identity_blocks_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),500::bigint,'Availability denial no hidden truncation');
-select is((select revision from core.identity_block_collections_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),3::bigint,'Availability denial no bump');
+-- 12.111: bounded complete readback makes500 an obsolete allocation gate.
+create function pg_temp.read_capacity_pages() returns jsonb language plpgsql as $$
+declare request jsonb := '{"expected_collection_revision":null,"after_position":null}';
+  reply jsonb; pages jsonb := '[]';
+begin
+  for page in 1..10 loop
+    reply := api.resolve_current_owner_blocks_working_page(request);
+    pages := pages || jsonb_build_array(reply);
+    exit when reply->>'status' is distinct from 'success' or reply->'collection' is null
+      or reply->'collection'->>'has_more' is distinct from 'true';
+    request := jsonb_build_object('expected_collection_revision',reply->'collection'->'revision',
+      'after_position',reply->'collection'->'next_after_position');
+  end loop;
+  return pages;
+end; $$;
+create temporary table capacity_replies(value jsonb);
+create temporary table capacity_pages(label text,value jsonb);
+insert into core.identity_blocks_working(owner_id,kind,position,is_visible)
+  select (select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002'),'contact',g,false from generate_series(2,500) g;
+insert into capacity_replies values(api.add_current_owner_link_block_working('{"action": "add_link_block", "base_collection_revision": 2, "is_visible": false, "link_working": {"kind": "generic_link", "title": " <script>raw</script> ", "social_platform": "unexpected", "destination_url": "javascript:private"}}'::jsonb));
+select is((select count(*) from core.identity_blocks_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),501::bigint,'500 now appends through501 without truncation');
+select is((select value - 'block_id' from capacity_replies),'{"status":"success","collection_revision":3}'::jsonb,'501 minimal acknowledged revision');
+select is(api.resolve_current_owner_blocks_working(),'{"status":"unavailable"}'::jsonb,'Standalone old500 reader stays unavailable');
+insert into capacity_pages values('501',pg_temp.read_capacity_pages());
+select is((select jsonb_array_length(value) from capacity_pages where label='501'),6,'501 complete readback follows six pages');
+select is((select item->>'block_id' from capacity_pages p,jsonb_array_elements(p.value) page,
+  jsonb_array_elements(page->'collection'->'blocks') item where label='501' and (item->>'position')::int=501),
+  (select value->>'block_id' from capacity_replies),'Acknowledged server ID present in complete paged readback');
+insert into core.identity_blocks_working(owner_id,kind,position,is_visible)
+  select (select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002'),'contact',g,false from generate_series(502,999) g;
+insert into capacity_replies values(api.add_current_owner_link_block_working('{"action": "add_link_block", "base_collection_revision": 3, "is_visible": false, "link_working": {"kind": "generic_link", "title": " <script>raw</script> ", "social_platform": "unexpected", "destination_url": "javascript:private"}}'::jsonb));
+select is((select count(*) from core.identity_blocks_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),1000::bigint,'999 appends through guarded reconstruction bound1000');
+select is(api.add_current_owner_link_block_working('{"action": "add_link_block", "base_collection_revision": 3, "is_visible": false, "link_working": {"kind": "generic_link", "title": " <script>raw</script> ", "social_platform": "unexpected", "destination_url": "javascript:private"}}'::jsonb),'{"status":"stale_write"}'::jsonb,'Old base is stale before capacity denial');
+select is(api.add_current_owner_link_block_working('{"action": "add_link_block", "base_collection_revision": 4, "is_visible": false, "link_working": {"kind": "generic_link", "title": " <script>raw</script> ", "social_platform": "unexpected", "destination_url": "javascript:private"}}'::jsonb),'{"status":"unavailable"}'::jsonb,'Engineering availability at1000 not product quota');
+select is((select count(*) from core.identity_blocks_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),1000::bigint,'Availability denial no hidden truncation');
+select is((select revision from core.identity_block_collections_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),4::bigint,'Availability denial no bump');
+insert into capacity_pages values('1000',pg_temp.read_capacity_pages());
+select is((select jsonb_array_length(value) from capacity_pages where label='1000'),10,'Exactly ten terminal pages reconstruct1000');
+select ok((select bool_and(page->>'status'='success' and page->'collection'->>'revision'='4'
+  and jsonb_array_length(page->'collection'->'blocks')=100
+  and page->'collection'->>'has_more'=case when ordinal<10 then 'true' else 'false' end
+  and page->'collection'->'next_after_position'=case when ordinal<10 then to_jsonb(ordinal*100) else 'null'::jsonb end)
+  from capacity_pages p,jsonb_array_elements(p.value) with ordinality a(page,ordinal) where label='1000'),
+  'Every page binds exact revision and last cursor with terminal null');
+create temporary table capacity_rows as select item from capacity_pages p,jsonb_array_elements(p.value) page,
+  jsonb_array_elements(page->'collection'->'blocks') item where label='1000';
+select is((select count(*) from capacity_rows),1000::bigint,'No omitted rows in complete reconstruction');
+select is((select count(distinct item->>'block_id') from capacity_rows),1000::bigint,'Every stable ID appears once');
+select is((select array_agg((item->>'position')::int order by (item->>'position')::int) from capacity_rows),
+  array(select generate_series(1,1000)),'All ordered positions reconstructed');
+select ok((select bool_and(item->'is_visible'='false'::jsonb) from capacity_rows),'Hidden rows are never filtered');
+select ok((select bool_and(item->'link_working'=jsonb_build_object('title',l.title,'social_platform',l.social_platform,'destination_url',l.destination_url))
+  from capacity_rows c join core.identity_block_links_working l on l.block_id=(c.item->>'block_id')::uuid),
+  'Every stored link raw payload preserved across pages');
+update core.identity_block_collections_working set revision=5 where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002');
+select is(api.resolve_current_owner_blocks_working_page('{"expected_collection_revision":4,"after_position":100}'::jsonb),'{"status":"stale_read"}'::jsonb,'Changed revision rejects old readback continuation');
+insert into core.identity_blocks_working(owner_id,kind,position,is_visible) values((select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002'),'text',1001,false);
+select is(api.add_current_owner_link_block_working('{"action": "add_link_block", "base_collection_revision": 5, "is_visible": false, "link_working": {"kind": "generic_link", "title": " <script>raw</script> ", "social_platform": "unexpected", "destination_url": "javascript:private"}}'::jsonb),'{"status":"unavailable"}'::jsonb,'Already over bound remains unavailable without deletion');
+select is((select count(*) from core.identity_blocks_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),1001::bigint,'Existing over-bound data stays intact');
+select is((select revision from core.identity_block_collections_working where owner_id=(select owner_id from actors where auth_user_id='99000000-0000-4000-8000-000000000002')),5::bigint,'Over-bound denial no revision change');
 set local request.jwt.claims='{"sub":"99000000-0000-4000-8000-000000000003"}';
 select is(api.add_current_owner_link_block_working('{"action": "add_link_block", "base_collection_revision": 1, "is_visible": false, "link_working": {"kind": "generic_link", "title": " <script>raw</script> ", "social_platform": "unexpected", "destination_url": "javascript:private"}}'::jsonb),'{"status": "unavailable"}'::jsonb,'Missing collection not inferred empty');
 select * from finish();

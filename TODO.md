@@ -3571,6 +3571,51 @@ Next audit/lock allocation availability and authoritative post-mutation paged
 reconciliation policy before changing database bounds. Mounted current-session,
 full Identity publication/other payload/media/provider/Remove Undo gates stay open.
 
+### Private block allocation paged availability — 2026-10-15
+
+Clean synchronized f115e49250a58ef60944952a607817caaedb48c1 passed all six
+exact push jobs: [CI 38733611067](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38733611067),
+[Security 38733611053](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38733611053),
+[Guard 38733611042](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38733611042).
+Supersedes12.110 pending evidence: actual reset/lint/security advisors/50 files/
+2,974 pgTAP/all58 concurrency-retention, Application/Redis/all37 Chromium passed.
+Goal remains open; latest fully closed S4, D01/D02/S5/S6 not CLOSED / VERIFIED.
+
+Refreshed changed authority/contracts/J5/J9/pinned D02 and actual allocation CAS/
+SDK/page/assembly/index/tests. Locked/read back12.111 before code. Forward migration
+replaces allocation's temporary count LIMIT/denial500 with1000, matching verified
+complete guarded reconstruction. Original migration unchanged;12.101 explicitly
+points to narrow availability continuation. All Owner-first binding/account/context
+locks/proofs, strict raw intent/collection CAS/exhaustion, server UUID/append/typed
+payload/one bump/minimal acknowledgment and four revoked execution roles retained.
+At/above1000 unavailable without deletion/truncation/bump. Engineering availability,
+not a product quota; direct12.86 reader remains500, guarded12.110 remains1000.
+No new table/policy/grant/client/route/UI/public/Published/source/provenance change.
+
+Policy preserves causal outcome_unknown: no automatic retry/base refresh/import/ID
+inference or success/rollback claim from matching values/count/revision or absence.
+Known successful acknowledgment is allocation commit evidence, not a fabricated
+local row/current full snapshot. Complete authorized readback can fail or observe a
+later revision without undoing that write. Future composed mutation/review path must
+bind subject/Owner and preserve this distinction; it is not mounted in this slice.
+
+Extended isolated pgTAP covers500→501 acknowledgment/raw paged readback while old
+reader denies,999→1000, stale-old-base before capacity, fresh denial/no bump/truncation,
+exact ten terminal pages/1000 unique ordered IDs/hidden/raw payload/revision, stale
+continuation and preserved over-bound1001. Added near-capacity concurrent add/add:
+one winner/stale loser, fresh bounded denial, exact complete cursor readback and
+source provenance retained. Node syntax check passed; actual reset/lint/advisors/
+pgTAP/all extended races-retention PENDING committed isolated CI, not claimed local.
+
+Frozen install/typecheck/lint/five tooling/test/build passed (unchanged application
+3,999-test/three-build Turbo results reused); nine actual Redis/all37 actual Chromium
+passed; final diff/check reviewed. Six new exact-push gates PENDING until observed.
+No mounted live JWT/provider/manual persistence/CSRF or checkpoint closure claimed.
+
+Next audit/lock bounded private post-allocation readback/review composition, preserving
+subject/Owner binding and causal unknown without retries or fabricated membership.
+Other payload/full Identity publication/media/renderer/provider/Remove Undo gates open.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
