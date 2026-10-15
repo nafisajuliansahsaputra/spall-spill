@@ -2717,6 +2717,46 @@ guarded full revision/subject/Owner reconciliation with bounded resource policy
 before lifting old500 bound/grants. Other payload/full Identity publication/media/
 renderer/provider/Remove Undo runtime safety remain separate open gates.
 
+### Strict private Owner block Working page SDK — 2026-10-15
+
+Clean synchronized 03d00092cb743a6c4dcdc4146201559be6e56a66 passed all six
+exact push jobs: [CI 38704938631](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38704938631),
+[Security 38704938656](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38704938656),
+[Guard 38704938632](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38704938632).
+Supersedes 12.107 pending evidence: actual reset/lint/security advisors/50 files/
+2,974 pgTAP/all58 concurrency-retention including three statement snapshot races
+passed, plus Application/Redis/all37 Chromium. S4 remains last closed; Goal open.
+
+Refreshed changed authority/12.84/12.86/12.106–12.107/current reader source/tests.
+Locked/read back 12.108 before code. Unmounted injected schema-only page SDK reuses
+strict request and named export of unchanged existing row validator. One fixed
+API POST; strict context/<=100 rows/unique IDs/increasing int32 positions/raw typed
+payload states/local issues, exact has_more/next cursor relation. Continuation
+requires non-null collection/exact revision/positions beyond requested cursor.
+Malformed/contradictory/extra/private responses uniformly unavailable; strict
+known negatives status-only, no retry/restart/cache/default/normalization/URL fetch.
+Aggregate5s deadline/ignored-late abortion, no revived/partial data. Missing versus
+empty/terminal retained. No DB/grant/route/UI/public or old500 bound activation.
+Page validation does not prove previous pages/full reconstruction/current final
+subject/Owner authorization/Saved/Live/whole Identity publication truth.
+
+70 new focused cases plus57 unchanged complete-reader regression passed, actual
+pinned SDK exact schema/method/args/abort, input/malformed/100/lookahead/cursor/
+revision/null/payload/raw recovery/budgets/private fields/HTTP/network/timeout/no
+retry/cache, preserving existing optional Social title semantics.
+Frozen install/typecheck/lint/five tooling/3,872 application tests/three builds
+passed (unchanged other packages Turbo cache reused), nine actual Redis/all37 actual
+Chromium passed; final diff/check reviewed. New exact-push six jobs and unchanged
+DB reset/lint/advisors/2,974 pgTAP/all58 concurrency-retention PENDING until observed.
+No live JWT/provider/manual/browser persistence/CSRF or checkpoint closure claimed.
+
+Next audit/lock guarded complete page reconstruction/resource contract: bind verified
+subject/Owner/context/revision and returned cursor continuity, reject partial/stale/
+changed data, final authorization proof and fail-closed deadline/resource bounds.
+Keep old500 availability/grants until complete assembly and applicable gates pass.
+Other payload/full Identity publication/media/renderer/provider/Remove Undo safety
+remain separate; D01/D02/S5/S6 NOT CLOSED / VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

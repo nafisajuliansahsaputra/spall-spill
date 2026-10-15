@@ -17,6 +17,8 @@ const block = z.object({
     : value.payload_state === "not_implemented" && value.link_working === null;
   if (!valid) ctx.addIssue({ code: "custom", message: "Inconsistent Working payload" });
 });
+export const identityBlockWorkingRowSchema = block;
+
 const context = z.object({ status: z.literal("success"),
   current_handle: z.string().min(3).max(30).regex(/^[a-z0-9][a-z0-9._-]*[a-z0-9]$/),
   primary_use_case: z.enum(["creator", "affiliate", "business", "personal", "other"]),
