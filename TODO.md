@@ -3371,6 +3371,43 @@ preserving exact aggregate revision and complete own ordered payload truth befor
 lifting the 500 engineering availability boundary. Other payload/runtime/full
 Identity publication/media/renderer/provider/Remove Undo safety remain separate.
 
+### Strict Owner block Working page request — 2026-10-15
+
+Clean synchronized baseline 8b8403f2da5b719f1b6f318b4f51fc5361d002eb passed
+all six exact push jobs: [CI 38580946000](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38580946000),
+[Security 38580945961](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38580945961),
+[Guard 38580945829](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38580945829).
+Supersedes 12.105 pending evidence: actual DB reset/lint/security advisors, 49 files/
+2,882 pgTAP/all55 concurrency-retention, Application/Redis/all37 Chromium passed.
+Goal unfinished; S4 remains last closed, D01/D02/S5/S6 remain open.
+
+Refreshed current authority/J5/J9/pinned D02/12.83/12.86/12.87/12.101/12.105,
+actual complete reader and strict input patterns. Locked/read back 12.106 before
+production code. Pure server-only identityBlockPageRequestSchema and inspector
+require explicit start null/null or continuation positive safe revision + positive
+int32 position. Missing/coerced/unsafe/mixed pair/extra authority or query selectors
+invalid; no default start/zero sentinel. Exact parsed request only, unchanged input,
+no auth/RPC/I/O/ID/time/storage/cache/retry, persistence/completeness/Saved/Live proof.
+No database/migration/reader/SDK/route/UI/grant activation, no mutation or publication.
+Current 500 complete-reader/addition engineering availability boundary unchanged;
+not a product quota and never silently truncate existing work.
+
+88 focused cases passed: explicit pair/bounds/all malformed types/nonfinite/
+coercion/missing/caller filters/limits/Owner selectors, exact output/unchanged input/
+no fetch or generated identity. Frozen install/typecheck/lint/five tooling/3,802
+application tests/three builds passed (unchanged other packages Turbo cache reused),
+nine actual Redis and all37 actual Chromium passed; final diff/check reviewed.
+New exact-push six jobs plus unchanged DB reset/lint/advisors/2,882 pgTAP/all55
+concurrency-retention PENDING until observed. No live JWT/provider/manual/CSRF proof
+or journey closure claimed.
+
+Next lock/implement private revision-bound indexed seek-page reader: active current
+Owner/context, same statement snapshot, exact typed payload states/hidden/all kinds,
+bounded lookahead, explicit absence/empty/terminal/stale/invalid-cursor truth and
+own pgTAP/read consistency evidence. Then strict guarded SDK + complete revision/
+subject/Owner reconciliation before lifting 500 boundary. Full Identity publication,
+other payloads/media/provider/renderer/Remove Undo runtime safety stay separate.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
