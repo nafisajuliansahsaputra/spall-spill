@@ -2989,6 +2989,53 @@ prasyarat request-bound session/CSRF/origin. Jangan mount editor parsial atau
 mengaktifkan grant/public sebelum gate transport/safety/runtime yang berlaku.
 Payload lain/full Identity publication/media/provider/Remove Undo tetap terbuka.
 
+### Dispatcher command link editor privat — 2026-10-15
+
+Baseline bersih 7d417a2029385bdf00847473ee75a39032b8094e lulus enam job
+push-event tepat: [CI 38776876974](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38776876974),
+[Security 38776876972](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38776876972),
+[Guard 38776877007](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38776877007).
+Ini menggantikan evidence PENDING12.113: Application/Database/Security/Guard,
+reset/lint/advisors/2,991 pgTAP/59 concurrency-retention lulus. Goal belum selesai;
+checkpoint terakhir sepenuhnya CLOSED / VERIFIED tetap S4.
+
+Authority/bootstrap/J5/J9/pinned7.3/D02/12.100/12.103/12.112–12.113 serta source/
+tes aktual dibaca ulang. Kontrak12.114 dikunci/dibaca sebelum coding. Schema command
+server-only memakai discriminated union dari kedua intent asli tanpa wrapper,
+selector, coercion atau default baru. initialize_link_block memerlukan base null;
+add_link_block memerlukan positive safe base. Invalid command ditolak sebelum auth.
+Dispatcher privat execute(unknown) memilih hanya satu review aktual sesuai action
+valid, menyalin input sebelum await dan mengembalikan result yang sama. Tidak ada
+fallback dari already_initialized/stale_write/outcome_unknown, retry/read tambahan,
+import, perubahan base atau inferensi keberhasilan dari nilai/absence. Bound delapan
+claims/31 RPC/20 pages/satu mutasi/outer10s/nested5s tetap mengikuti review terpilih.
+
+Audit session mencatat SSR client cookie-bound dibuat per request. Factory privat
+ini sendiri tidak membuktikan request binding/freshness/revocation/atomic session
+atau CSRF/origin. Kontrak mencatat prasyarat adapter: request-local nonprivileged
+client, admission same-origin/CSRF dan trusted host/proxy yang fail closed, body/
+action budget terbatas, no-store serta actual session/cross-Owner runtime evidence.
+Tidak ada perubahan route/action/UI/SQL/migration/grant/source/provenance/public.
+D01/D02/S5/S6, payload lain/full Identity publication/media/provider/Remove Undo
+serta live/manual/CSRF tetap terbuka. Changelog Supabase ditolak policy jaringan;
+API SDK pinned yang sudah diuji dipakai tanpa perubahan integrasi Supabase.
+
+105 tes baru melalui SDK pinned dan kedua review aktual lulus; total999 tes
+terarah termasuk411 regresi review dan SDK/assembly. Meliputi exact mutation/body/
+sequence, kedua kind/visibility/raw/null, copied input, strict base/action/selector/
+batch, terminal known/unknown/conflict tanpa fallback, session loss, network/permission,
+late reply dan readback same/newer/unavailable. Frozen install/typecheck/lint/lima
+tooling/4,515 tes aplikasi/tiga build lulus (cache Turbo paket yang tidak berubah
+sebagian dipakai). Sembilan Redis aktual dan37 Chromium aktual lulus. Browser awal
+bertabrakan dengan regenerasi aset build; seluruh browser diulang setelah build
+selesai dan lulus, tanpa perubahan source/test/gate untuk menyembunyikan kegagalan.
+Final/staged diff ditinjau; enam gate push baru termasuk DB tetap PENDING sampai
+benar-benar diamati. Tidak ada klaim live JWT/provider/manual/CSRF atau closure.
+
+Berikutnya audit/kunci bounded request metadata/transport admission sesuai12.114,
+sebelum adapter mounted/editor/grant/public activation. Tetap pertahankan gate
+session/authz/CSRF/origin/budget/no-store dan bukti runtime yang berlaku.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
