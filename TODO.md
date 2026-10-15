@@ -3531,6 +3531,46 @@ Next audit/lock bounded private paged reconstruction integration and old500
 availability policy; runtime/full Identity publication/media/other payload/provider/
 Remove Undo safety remain separate open gates. No journey/checkpoint closure.
 
+### Private block assembly page integration — 2026-10-15
+
+Clean synchronized 2ec89c68cd44dcf9511bedcc0a5f887b94051743 passed all six
+exact push jobs: [CI 38726590916](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38726590916),
+[Security 38726590936](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38726590936),
+[Guard 38726590853](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38726590853).
+Supersedes12.109 pending evidence: actual DB reset/lint/advisors/50 files/2,974
+pgTAP/all58 concurrency-retention and Application/Redis/all37 Chromium passed.
+Goal remains open; latest fully closed S4, D01/D02/S5/S6 not CLOSED / VERIFIED.
+
+Audited mandatory current authority/J5/J9/pinned D02/12.86/12.87/12.109 and actual
+consumers/readers/mutation limit/tests. Both assembly factories were unmounted;
+existing entry point still duplicated proof logic and used old500 complete reads.
+Locked/read back12.110 before code;12.87 now explicitly cross-references narrow
+transport supersession. Established factory/result type names re-export12.109,
+sharing its exact implementation: same current-session auth/schema client, no
+caller target, no old-RPC fallback/second timeout/proof/cursor strategy.
+
+Both entry points now reconstruct two complete bounded revision/cursor observations
+with three subject/Owner proofs, exact independent context/full collection match,
+final authorization denial without private data, raw/hidden/all-kind/null/empty
+truth, <=1000 rows/10 pages per pass/25 total RPCs and aggregate5s. Failures never
+return partial rows or restart/retry/cache. This does not prove atomic/ABA/global
+freshness/full Identity publication, mounted live JWT/browser/CSRF/provider safety.
+Standalone12.86 direct reader/SQL and12.101 allocation remain500; no DB/grant/
+mutation/route/UI/public activation, persisted data or product quota change.
+
+Full105-scenario pinned SDK suite now runs through both entry points plus type/
+factory compatibility:211 tests, with57 standalone-reader regressions (268 focused)
+passed. Replaced obsolete duplicate old-RPC assembly tests without dropping its
+proof/denial/drift/deadline scenarios. Frozen install/typecheck/lint/five tooling/
+3,999 application tests/three builds passed (unchanged other packages Turbo cache
+reused); nine actual Redis/all37 actual Chromium passed. Final diff/check reviewed.
+New exact-push six jobs and unchanged DB reset/lint/advisors/2,974 pgTAP/all58
+concurrency-retention PENDING until observed; no checkpoint closure claimed.
+
+Next audit/lock allocation availability and authoritative post-mutation paged
+reconciliation policy before changing database bounds. Mounted current-session,
+full Identity publication/other payload/media/provider/Remove Undo gates stay open.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
