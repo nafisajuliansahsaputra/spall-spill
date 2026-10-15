@@ -3488,6 +3488,49 @@ Keep old500 availability/grants until complete assembly and applicable gates pas
 Other payload/full Identity publication/media/renderer/provider/Remove Undo safety
 remain separate; D01/D02/S5/S6 NOT CLOSED / VERIFIED.
 
+### Guarded complete Owner block Working page reconstruction — 2026-10-15
+
+Clean synchronized eda7dc57d8a2a1f49d57552e1575be035f40e45b passed all six
+exact push jobs: [CI 38705988219](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38705988219),
+[Security 38705988165](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38705988165),
+[Guard 38705988176](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38705988176).
+Supersedes 12.108 pending evidence: actual DB reset/lint/advisors/50 files/2,974
+pgTAP/all58 concurrency-retention plus Application/Redis/all37 Chromium passed.
+Goal remains open; latest fully closed S4, D01/D02/S5/S6 not CLOSED / VERIFIED.
+
+Refreshed current authority/J5/J9/pinned D02/12.87/12.106–12.108 and actual
+state/context/page SDK/assembly/tests. Locked/read back 12.109 before code.
+Unmounted current-session auth/schema-only paged assembly reuses verified claims/
+strict Owner-state proof and private readers. Two complete traversals start null/
+null and follow only returned cursor/same revision, bind context across every page
+and independent context read; reject cross-page duplicate IDs/order/context/stale/
+presence/revision/content drift, including same-revision changes. Same subject/Owner
+proof before/between/after; denial retains no rows/context/IDs. Return first exact
+complete bounded snapshot, preserving raw/hidden/all-kind/payload-state/local issues.
+No page metadata, new IDs, defaults/retries/cache/partial merge or write/publication.
+
+Fixed engineering availability: <=10 pages/1000 rows per pass, <=20 page calls/
+25 total RPCs plus claims proofs, aggregate5s. Tenth page still has_more => unavailable
+without11th call/partial output. Exactly1000 terminal allowed; not a product quota,
+no truncation/deletion or old500 availability/grant change. Already-issued bounded
+reads may finish privately; ignored late output never revives or starts next phase.
+Two equal observations are not atomic/ABA/global-freshness/write/full Identity/
+Published/live JWT/browser/CSRF/provider proof; backend owns no-omission semantics.
+
+105 focused actual pinned SDK tests passed:501/1000/1001/exact cursor/count caps,
+null/empty/all-kind/raw, initial/middle/final proof/session/binding/account failure,
+malformed/context/revision/presence/same-revision content drift, cross-page duplicate/
+order/stale/late continuation and all ignored-late proof/context/RPC phases, no retry/
+cache/partial/private retention. Frozen install/typecheck/lint/five tooling/3,977
+application tests/three builds passed (unchanged other packages Turbo cache reused),
+nine actual Redis/all37 actual Chromium passed; final diff/check reviewed. New
+exact-push six jobs and unchanged DB reset/lint/advisors/2,974 pgTAP/all58 concurrency-
+retention PENDING until observed. No DB/migration/grant/route/UI/public activation.
+
+Next audit/lock bounded private paged reconstruction integration and old500
+availability policy; runtime/full Identity publication/media/other payload/provider/
+Remove Undo safety remain separate open gates. No journey/checkpoint closure.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
