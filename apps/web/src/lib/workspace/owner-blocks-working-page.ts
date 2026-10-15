@@ -22,7 +22,8 @@ const response = z.discriminatedUnion("status", [
   }).strict(),
   z.object({ status: z.enum(["unavailable", "invalid_page_request", "stale_read"]) }).strict(),
 ]).transform(value => {
-  if (value.status !== "success" || value.collection === null) return value;
+  if (value.status !== "success") return value;
+  if (value.collection === null) return { ...value, collection: null };
   return { ...value, collection: { ...value.collection, blocks: value.collection.blocks.map(row => {
     const inspected = row.link_working === null ? null : inspectIdentityLinkWorkingInput({ ...row.link_working, kind: row.kind });
     return { ...row, issues: inspected?.status === "working" ? inspected.issues : [] };

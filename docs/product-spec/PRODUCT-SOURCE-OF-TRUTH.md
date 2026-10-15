@@ -2885,6 +2885,58 @@ Next audit/lock bounded private post-allocation readback/review composition, pre
 subject/Owner binding and causal unknown without retries or fabricated membership.
 Other payload/full Identity publication/media/renderer/provider/Remove Undo gates open.
 
+### Private link allocation/readback review composition — 2026-10-15
+
+Clean synchronized dd06f96d6ce304f00a1ee952f234c61b91a59430 passed all six
+exact push jobs: [CI 38734626201](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38734626201),
+[Security 38734626220](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38734626220),
+[Guard 38734626247](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38734626247).
+Supersedes12.111 pending evidence: actual reset/lint/advisors/50 files/2,991 pgTAP/
+all59 concurrency-retention, including near-capacity race/readback, plus Application/
+Redis/all37 Chromium passed. Goal open; S4 remains last fully closed checkpoint.
+
+Refreshed mandatory authority/J5/J9/pinned D02/11.21/11.23/current contracts and
+actual SDK/page/assembly/tests. Locked/read back12.112 before code. Unmounted
+current-session auth/schema-only add composition validates/copies exact intent,
+proves strict subject/Owner before/between/after, invokes12.102 allocation once,
+then12.110 complete guarded readback only after its strict success acknowledgment.
+Known status-only negatives/unknown never trigger readback/retry/new intent/base
+refresh/import/init/optimistic append. Outer post-attempt proof/deadline failure
+returns only outcome_unknown without private output; not proof of rollback.
+
+Allocated output separates backend ID/committed revision from readback. Same revision
+requires exact acknowledged membership/kind/visibility/present raw typed payload;
+older/null/missing/malformed/stale/changed data gives unavailable readback while
+retaining known acknowledgment only after final outer proof. A newer complete
+snapshot is explicitly newer_revision, allowing later edit/removal without claiming
+it equals the original intent. Non-active/session-loss readback denial strips all
+private output. Eight claims proofs/at most31 RPCs/one mutation/20 page calls and
+aggregate10s; nested SDK/assembly retain their own bounded5s lifecycles. Already-
+invoked allocation can still commit after outer timeout; no cancellation/rollback/
+atomic session dispatch/ABA/global freshness/full Identity or Published claim.
+
+Typecheck exposed12.108's inferred DTO retaining a raw non-null row variant without
+issues despite runtime derivation. Contract clarified the narrow type correction:
+explicit success/null return branch now preserves derived issues in every non-null
+successful page type, with wire validation/diagnostics/availability unchanged.
+
+194 new actual pinned SDK tests plus regressions passed (665 focused): exact raw
+both kinds/visibility, copied intent, all outer/nested proof states/binding/errors,
+known/unknown ack, same/older/null/newer edited/removed snapshots,501/1000/1001,
+continuation faults/late responses and explicit nested commit possibility after
+outer timeout. Frozen install/typecheck/lint/five tooling/4,193 application tests/
+three builds passed (unchanged other-package Turbo results reused), nine actual
+Redis/all37 Chromium passed; final diff/check reviewed. No SQL/migration/grant/
+route/UI/public activation. New exact-push six jobs and unchanged DB reset/lint/
+advisors/2,991 pgTAP/all59 races-retention PENDING until observed. No mounted live
+JWT/provider/manual/CSRF evidence or D01/D02/S5/S6 closure claimed.
+
+Next audit/lock explicit missing-collection initialization/readback composition and
+shared guarded editor transport prerequisites; preserve causal unknown, current
+subject/Owner binding and Saved≠Live. Other payload/full Identity publication/media/
+renderer/provider/Remove Undo gates remain open; never mount partial D02 or enable
+withheld grants from these bounded parts alone.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
