@@ -3408,6 +3408,46 @@ own pgTAP/read consistency evidence. Then strict guarded SDK + complete revision
 subject/Owner reconciliation before lifting 500 boundary. Full Identity publication,
 other payloads/media/provider/renderer/Remove Undo runtime safety stay separate.
 
+### Private revision-bound Owner block Working page read — 2026-10-15
+
+Clean synchronized 62787bca21c5515b0e673303666ab29687c54757 passed all six
+exact push jobs: [CI 38697881334](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38697881334),
+[Security 38697881340](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38697881340),
+[Guard 38697881338](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38697881338).
+Supersedes 12.106 pending evidence: reset/lint/security advisors/49 files/2,882 pgTAP/
+all55 concurrency-retention and Application/Redis/all37 Chromium passed. Goal open;
+S4 remains last closed; D01/D02/S5/S6 not CLOSED / VERIFIED.
+
+Refreshed authority/J5/J9/pinned D02/12.83/12.85–12.87/12.101/12.106, actual
+complete reader/schema/input/pgTAP/workflow. Locked/read back 12.107 before SQL.
+New withheld stable api.resolve_current_owner_blocks_working_page derives current
+active/completed Owner/context, validates exact null/null start or safe revision/
+int32 continuation, rejects missing/mismatched collection stale_read and invalid
+own cursor invalid_page_request. Same statement snapshot, indexed own position
+seek LIMIT101 before typed join, <=100 raw rows with explicit has_more/next cursor.
+Preserve hidden/all six kinds/gaps/missing versus all-null-present/nonimplemented;
+missing collection null versus explicit empty/terminal [] distinct. No defaults,
+fetch/normalization/write/lock/revision bump, Owner/public/source leakage or quota.
+No grants/routes/UI/public activation; old complete-reader/addition500 bound stays.
+
+Committed 92 pgTAP assertions cover role/auth/context/input/order/payload/purity,
+100/101/501 traversal without duplicates/omission, terminal/gaps/stale/safe max and
+old500 denial. Three isolated concurrent tests cover start/continuation snapshots
+while canonical addition commits (later read revision2/stale), and concurrent
+restriction snapshot versus fresh denial. A page/snapshot is not complete collection,
+final fresh authorization/live JWT/CSRF/whole Identity comparison or Saved/Live proof.
+
+Frozen install/typecheck/lint/five tooling/3,802 application tests/three builds
+passed (unchanged-source Turbo cache reused), nine actual Redis/all37 actual Chromium
+passed; race syntax/final diff/check reviewed. New exact-push six jobs plus DB reset/
+lint/advisors/new pgTAP/all58 concurrency-retention PENDING until actually observed.
+No local DB or manual/provider evidence claimed; no checkpoint closure.
+
+Next strict unmounted page SDK response parser/transport under new contract, then
+guarded full revision/subject/Owner reconciliation with bounded resource policy
+before lifting old500 bound/grants. Other payload/full Identity publication/media/
+renderer/provider/Remove Undo runtime safety remain separate open gates.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
