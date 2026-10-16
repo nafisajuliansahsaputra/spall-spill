@@ -10,6 +10,7 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "pnpm run test:auth-navigation && pnpm run test:unit",
     "test:click-budget-redis": "node --test tests/product-click-budget-redis.test.mjs",
+    "test:editor-budget-redis": "node --test tests/identity-link-editor-budget-redis.test.mjs",
     "test:resource-budget-redis": "node --test tests/resource-open-budget-redis.test.mjs",
     "test:resource-browser": "vitest run --config vitest.resource-browser.config.mts",
     "test:click-browser": "vitest run --config vitest.browser.config.mts",

@@ -3188,6 +3188,57 @@ Berikutnya audit/kunci private action budget policy/subject derivation dan isola
 adapter verification; jangan mount D02 parsial atau broaden credentials/grants
 sebelum distributed permit dan actual session/Owner/proxy/CSRF/transport gate lulus.
 
+### Budget admission jaringan command editor privat — 2026-10-16
+
+Baseline bersih aa9530ca848a907e4e868c80d70203d52256a860 lulus enam job
+push-event tepat: [CI 38849992624](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38849992624),
+[Security 38849992726](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38849992726),
+[Guard 38849992596](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38849992596).
+Ini menggantikan evidence PENDING12.117; DB reset/lint/advisors/2,991 pgTAP/59
+concurrency-retention lulus. Goal belum selesai; checkpoint CLOSED / VERIFIED tetap S4.
+
+Bootstrap/authority/J5/J9/pinned7.3/D02/12.114–12.117/12.40/12.43/12.69 dan
+source/tes/workflow dibaca ulang. Kontrak12.118 dikunci/dibaca sebelum coding.
+Primitive server-only unmounted menerima policy strict eksplisit yang disnapshot,
+key HMAC server disalin dan trusted runtime metadata reader; tidak membaca credential,
+env, body, cookie atau forwarded headers sebagai identity. Subject domain khusus
+editor memisahkan Product/Resource; algoritma canonical IP/HMAC lama tetap utuh.
+Namespace subject dan Redis berasal dari snapshot policy yang sama. Ini admission
+sebelum body/SSR, bukan authenticated Owner quota atau pengganti AuthN/AuthZ.
+
+Fixed action identity_link_command mengisi dua counter atomik private command/work
+pada cluster slot sama, dengan Lua Redis TIME lama tanpa perubahan. Biaya31 unit
+mewakili maksimum31 RPC review untuk kedua command; claims/body/Redis bounded
+terpisah, bukan unit DB-RPC. Policy tanpa default wajib menyediakan kapasitasnya.
+Grant hanya numeric1; denied/error/corrupt state tidak memberi permit. Subject500ms,
+permit aggregate2s dengan cek monotonic finite/nonbackward dan prompt request/operation
+abort; cleanup timer/listeners. Late identity tidak memulai EVAL; late EVAL boleh
+menghabiskan kapasitas tanpa output revival/refund/rollback/retry/fallback.
+
+59 tes baru dan seluruh718 regresi editor serta99 regresi subject Product/Resource
+lulus (876 terarah). Tes memakai actual canonical subject + permit + body reader;
+Redis EVAL dependency terkontrol pada unit test, sedangkan enam tes runtime Redis
+mengeksekusi Lua committed aktual pada Unix socket terisolasi. Membuktikan31-unit
+atomic competing grants, request/work exhaustion tanpa kenaikan saat denied,
+pemisahan key Product/Resource, TTL/rollover dan corrupt/future-state denial.
+Tes Redis baru wajib di Application CI, tanpa skip saat runtime tidak tersedia.
+Fixture command integrasi awal salah shape dan ditolak schema aktual; fixture
+kemudian disesuaikan schema terkunci, tanpa pelonggaran validator/behavior.
+
+Frozen install/typecheck/lint tanpa warning/lima tooling/4,776 tes aplikasi/tiga
+build lulus (cache Turbo paket tak berubah sebagian dipakai);15 Redis aktual dan37
+Chromium aktual lulus. Final/staged diff/check ditinjau. Tidak ada SQL/migration/
+grant/route/Server Action/UI/provider configuration/public change atau closure D01/D02/S5/S6.
+Enam gate push baru termasuk DB unchanged tetap PENDING sampai benar-benar diamati.
+Actual proxy provenance, cookie/JWT/Owner/CSRF/browser transport, live Upstash/
+cluster/capacity/deployment limits belum dibuktikan; HMAC bukan anonimitas/AuthZ.
+Working/Saved tidak menjadi Published/Live. Fixed-window adjacent bursts tetap
+harus diperhitungkan sebelum activation.
+
+Berikutnya audit/kunci confined Upstash transport untuk exact editor EVAL dan
+budgeted HTTP composition satu snapshot policy. Jangan aktifkan route/grant atau
+mount D02 parsial sebelum seluruh runtime/session/proxy/CSRF/provider gate lulus.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
