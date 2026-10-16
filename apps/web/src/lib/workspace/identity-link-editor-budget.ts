@@ -5,17 +5,17 @@ import { productClickBudgetScript } from "../public/product-click-budget";
 import { createIdentityLinkEditorNetworkSubject } from "./identity-link-editor-budget-subject";
 
 const positive = z.number().int().min(1).max(1000000);
-const policySchema = z.object({ namespace: z.string().regex(/^[a-z][a-z0-9-]{0,47}$/),
+export const identityLinkEditorBudgetPolicySchema = z.object({ namespace: z.string().regex(/^[a-z][a-z0-9-]{0,47}$/),
   window_ms: z.number().int().min(1000).max(3600000), command_limit: positive,
   work_limit: positive.min(31) }).strict();
 type Dependencies = Omit<Parameters<typeof createIdentityLinkEditorNetworkSubject>[0], "namespace"> & {
-  policy: z.infer<typeof policySchema>;
+  policy: z.infer<typeof identityLinkEditorBudgetPolicySchema>;
   redis: { eval: (script: string, keys: readonly string[], args: readonly string[]) => Promise<unknown> };
 };
 
 /** Network admission only; existing authenticated Owner authorization remains mandatory. */
 export function createIdentityLinkEditorDistributedPermit({ policy, redis, key, readTrustedMetadata }: Dependencies) {
-  const parsed = policySchema.safeParse(policy);
+  const parsed = identityLinkEditorBudgetPolicySchema.safeParse(policy);
   const identity = parsed.success ? createIdentityLinkEditorNetworkSubject({ namespace: parsed.data.namespace, key, readTrustedMetadata }) : null;
   return async (request: Request, action: "identity_link_command", operationSignal: AbortSignal): Promise<boolean> => {
     let active = true, timer: ReturnType<typeof setTimeout> | undefined;

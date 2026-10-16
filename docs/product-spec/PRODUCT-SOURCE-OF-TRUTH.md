@@ -3285,6 +3285,55 @@ belum selesai. Berikutnya kunci budgeted HTTP composition: satu snapshot policy/
 namespace untuk subject+transport+permit, mandatory trusted reader, actual pipeline
 regression. Jangan mount D02 parsial/enable grant sebelum seluruh activation gate.
 
+### Komposisi HTTP editor dengan budget terdistribusi — 2026-10-16
+
+Baseline bersih b92f9d9819e47d6c4f670dddb5e92d57caa1588d lulus enam job
+push-event tepat: [CI 38874175466](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38874175466),
+[Security 38874175522](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38874175522),
+[Guard 38874175623](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38874175623).
+Ini menggantikan evidence PENDING12.119; reset/lint/advisors/2,991 pgTAP/59
+concurrency-retention lulus. Goal belum selesai; checkpoint CLOSED / VERIFIED tetap S4.
+
+Bootstrap/authority/J5/J9/pinned D02/12.114–12.119/source/tes/workflow dibaca ulang.
+Kontrak12.120 dikunci/dibaca sebelum coding. Factory server-only unmounted mengambil
+strict config trustedOrigin/policy/upstash dan server key/mandatory trusted reader/
+optional fetcher. Snapshot config sebelum await; hanya policy.namespace menjadi
+namespace subject+permit+transport. Schema12.118 diekspor tanpa perubahan validator,
+limit atau default. Extra Owner/client/permit/namespace/RPC selectors ditolak.
+Handler hasil factory menerima Request saja, mengikat actual Request pada permit
+closure lalu memakai actual12.117 HTTP/body/dispatcher/review/pinned SDK.
+
+Config invalid memakai empty trusted origin sehingga actual metadata gate menolak
+sebelum reader/body/SSR/claims/RPC. Provider semantic config invalid dapat membaca
+subject sekali, tetapi tidak fetch/SSR. Satu subject/EVAL maksimum dan cost31
+sebelum body; invalid body setelah grant boleh menghabiskan kapasitas tetapi tidak
+mengautentikasi/memutasi. Admission bukan Owner authorization; SSR factory per
+invocation dan seluruh proof/status/no-store/raw Working/known-versus-unknown serta
+nested deadline/late work truth lama dipertahankan. Tidak ada retry/refund/rollback/
+import/fallback/cache/client bersama atau public-state change.
+
+73 tes baru dan951 regresi terkait lulus (1,024 terarah). Memakai actual subject,
+permit, Upstash adapter, Request/body/HTTP/dispatcher/review/pinned SDK; hanya SSR
+factory/claims dan provider fetch terkontrol. Membuktikan kedua command, exact wire/
+key/cost dan EVAL-before-body-before-SSR,8 claims/31 RPC/20 pages/one mutation bound,
+invalid config/dependencies/body/provider/identity, no spoofed-header fallback,
+config/key mutation, concurrent shared composition dengan client/snapshot terpisah,
+claim loss/conflict/unknown, abort/metadata/deadline/late subject/provider dan no-store.
+
+Frozen install/typecheck/lint tanpa warning/lima tooling/4,924 tes aplikasi/tiga
+build lulus (cache Turbo paket lain yang tidak berubah sebagian dipakai);15 Redis
+aktual dan37 Chromium aktual lulus. Final/staged diff/check ditinjau. Enam gate
+push baru termasuk unchanged DB tetap PENDING sampai diamati. Tidak ada SQL/
+migration/grant/route/Server Action/UI/provider configuration/deployment/public
+activation atau closure D01/D02/S5/S6. Skill Supabase diperiksa; changelog ditolak
+policy jaringan HTTP403, tidak ada perubahan API/SDK/provider yang bergantung padanya.
+
+Next audit/kunci actual request-context/session/proxy/CSRF transport evidence
+prerequisites sebelum mounted adapter. Actual Next cookie/JWT/Owner/proxy reader,
+live Upstash/cluster/TTL/capacity/deployment limits/browser transport belum terbukti;
+fixture bukan live/manual/provider evidence. Jangan mount D02 parsial/enable grant
+sebelum semua activation gates; lanjutkan independent safe work bila human gate muncul.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
