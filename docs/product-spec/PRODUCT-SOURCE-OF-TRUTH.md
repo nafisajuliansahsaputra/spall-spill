@@ -3239,6 +3239,52 @@ Berikutnya audit/kunci confined Upstash transport untuk exact editor EVAL dan
 budgeted HTTP composition satu snapshot policy. Jangan aktifkan route/grant atau
 mount D02 parsial sebelum seluruh runtime/session/proxy/CSRF/provider gate lulus.
 
+### Transport Upstash command editor privat — 2026-10-16
+
+Baseline bersih6952be8de65d61220ba814b3355e08071e7a8c67 lulus enam job
+push-event tepat: [CI 38873137782](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38873137782),
+[Security 38873137625](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38873137625),
+[Guard 38873137608](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38873137608).
+Ini menggantikan evidence PENDING12.118: DB reset/lint/advisors/2,991 pgTAP/59
+concurrency-retention lulus; Application termasuk15 Redis/37 Chromium lulus.
+Workspace bersih di-refresh/sinkronkan dan authority berubah dibaca ulang sebelum
+slice berikutnya. Kontrak12.119 dikunci/dibaca sebelum coding berdasarkan12.118,
+read-back REST12.41/12.62, J5/J9 dan pinned D02; tidak ada keputusan produk baru.
+
+Adapter server-only unmounted men-snapshot strict origin/namespace/token server.
+Hanya exact Lua lama dan dua key editor same-slot command/work dengan cost31 serta
+argumen canonical string bounded diterima. Product/Resource/other action/key,
+script/cost/namespace mismatch dan coercion angka/array ditolak sebelum network.
+POST JSON EVAL pada exact canonical HTTPS single-label Upstash root memakai
+no-store/redirect error, token hanya Authorization; tanpa env/credential reads,
+provider configuration/access, retry, fallback atau general Redis API.
+
+Aggregate1.5s finite/nonbackward monotonic fetch/body/decision, controller abort dan
+cleanup; HTTP200/JSON/exact final URL/no redirect, actual4096 bytes/4097 reads,
+Content-Length canonical sama actual, copied Uint8Array chunks, fatal UTF8/BOM
+denial dan literal sole result0/1. Extra/duplicate/escaped/error keys, truncated/
+oversize/noncanonical framing ditolak. Abandoned reader dicancel best-effort tanpa
+menunggu cancellation yang hang, lock dilepas sesudah settlement. Late response
+tidak menghidupkan output; EVAL yang sudah dimulai dapat menghabiskan kapasitas,
+tanpa refund/rollback claim. Outer12.118 budget/abort dan12.117 HTTP tidak diubah.
+
+75 tes baru lulus, termasuk actual canonical network subject/permit dengan
+controlled fetch; exact wire/token/key/cost/config snapshot, denial/error/framing,
+copy/byte cap/read cap/timeout/late/ignored cancellation/cleanup. Review memperketat
+runtime string type agar tidak menerima numeric/array coercion;14 denial tambahan
+lulus, lalu typecheck/lint/full test/build/Chromium diulang pada source final.
+Frozen install/lima tooling/typecheck/lint tanpa warning/4,851 tes aplikasi/tiga
+build lulus (paket lain sebagian cache Turbo);15 Redis aktual dan37 Chromium aktual
+lulus. Full/staged diff/check ditinjau. Enam gate push baru termasuk unchanged DB
+masih PENDING sampai diamati. Tidak ada SQL/migration/grant/route/Server Action/UI/
+public activation atau closure D01/D02/S5/S6. Checkpoint CLOSED / VERIFIED tetap S4.
+
+Fixture HTTP bukan live Upstash/TIME/replication/cluster/TTL/capacity/deployment
+limits atau actual proxy/cookie/JWT/Owner/CSRF/browser transport evidence. Goal
+belum selesai. Berikutnya kunci budgeted HTTP composition: satu snapshot policy/
+namespace untuk subject+transport+permit, mandatory trusted reader, actual pipeline
+regression. Jangan mount D02 parsial/enable grant sebelum seluruh activation gate.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
