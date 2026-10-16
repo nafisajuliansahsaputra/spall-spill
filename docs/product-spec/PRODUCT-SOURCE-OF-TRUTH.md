@@ -3036,6 +3036,47 @@ Berikutnya audit/kunci bounded request metadata/transport admission sesuai12.114
 sebelum adapter mounted/editor/grant/public activation. Tetap pertahankan gate
 session/authz/CSRF/origin/budget/no-store dan bukti runtime yang berlaku.
 
+### Admission metadata request editor privat — 2026-10-16
+
+Baseline bersih e119032fc7bbb0d61cab8692b9314bb580a715f7 lulus enam job
+push-event tepat: [CI 38822119354](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38822119354),
+[Security 38822119355](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38822119355),
+[Guard 38822119373](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38822119373).
+Ini menggantikan evidence PENDING12.114; reset/lint/security advisors/2,991 pgTAP/
+59 concurrency-retention lulus. Goal belum selesai; checkpoint terakhir sepenuhnya
+CLOSED / VERIFIED tetap S4.
+
+Bootstrap/authority/current checkpoint/J5/J9/pinned D02/12.114/source aktual dibaca
+ulang; kontrak12.115 dikunci/dibaca sebelum coding. Predicate server-only privat
+memeriksa metadata sebelum body/budget/auth/dispatch: trusted HTTPS origin canonical
+hanya dari konfigurasi server, POST, explicit Origin/Host cocok, URL sama tanpa
+credentials/query/hash, body tersedia/unused/unlocked, JSON media/encoding/fetch
+metadata strict dan Content-Length canonical <=32768 jika disertakan. Header
+forwarded tidak dipercaya untuk memperbaiki mismatch atau menentukan trusted origin.
+Batas transport menampung worst-case JSON escapes dari raw storage envelope lama,
+bukan kuota produk atau bukti panjang aktual/validitas body.
+
+Predicate tidak membaca/clone/lock/cancel/decode stream, memanggil auth/budget/RPC,
+mengeluarkan private acknowledgment atau menentukan route/proxy trust deployment.
+Admission bukan permission/Owner proof/command validation/CSRF runtime proof. Tidak
+ada perubahan SQL/migration/grant/route/action/UI/source/provenance/publication;
+Working/Saved tetap terpisah dari Published/Live. D01/D02/S5/S6, live JWT/provider/
+manual/session/CSRF dan actual trusted proxy/host deployment tetap terbuka.
+
+89 tes admission baru dan seluruh516 regresi dispatcher/review lulus (605 terarah).
+Meliputi method/config/URL/Origin/Host/media/encoding/fetch/length ambiguity, empty
+query/fragment delimiter, forwarded spoofing, abort/used/locked/missing body, stream
+tanpa pull/cancel serta worst-case escaped Unicode storage envelope. Frozen install,
+typecheck/lint/lima tooling/4,604 tes aplikasi/tiga build lulus (cache Turbo paket
+lain yang tidak berubah sebagian dipakai); sembilan Redis aktual dan37 Chromium
+aktual lulus setelah build. Final/staged diff/check ditinjau. Enam gate push baru
+termasuk DB reset/lint/advisors/2,991 pgTAP/59 races-retention tetap PENDING sampai
+benar-benar diamati; tidak ada klaim closure/live/manual/CSRF.
+
+Berikutnya kunci bounded body/admission-budget composition dengan actual stream
+byte/read/deadline/UTF8/schema checks, sebelum request-local authenticated dispatch,
+no-store adapter dan mounted/runtime gate. Tidak mount editor parsial atau grant.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
