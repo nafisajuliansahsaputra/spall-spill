@@ -1,9 +1,7 @@
 import "server-only";
 import { identityLinkEditorCommandSchema, type IdentityLinkEditorCommand } from "./identity-link-editor-command";
-import { identityLinkEditorMaximumBodyBytes as maximum, isIdentityLinkEditorRequestAdmitted } from "./identity-link-editor-request";
+import { identityLinkEditorMaximumBodyBytes as maximum, isIdentityLinkEditorRequestAdmitted, identityLinkEditorRequestMetadata as metadata } from "./identity-link-editor-request";
 
-const policyHeaders = ["origin", "host", "content-type", "content-length", "content-encoding", "transfer-encoding", "sec-fetch-site", "sec-fetch-mode", "sec-fetch-dest"] as const;
-const metadata = (request: Request) => JSON.stringify(policyHeaders.map(name => request.headers.get(name)));
 type Permit = (action: "identity_link_command", signal: AbortSignal) => Promise<unknown>;
 
 /** Unmounted transport only; permit must be a trusted distributed server adapter before activation. */

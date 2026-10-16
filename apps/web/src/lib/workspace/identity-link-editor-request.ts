@@ -2,6 +2,11 @@ import "server-only";
 
 export const identityLinkEditorMaximumBodyBytes = 32768;
 
+const policyHeaders = ["origin", "host", "content-type", "content-length", "content-encoding", "transfer-encoding", "sec-fetch-site", "sec-fetch-mode", "sec-fetch-dest"] as const;
+/** Fixed policy observations only; this is not a session or authorization proof. */
+export const identityLinkEditorRequestMetadata = (request: Request) => JSON.stringify(policyHeaders.map(name => request.headers.get(name)));
+
+
 /** Metadata only. trustedOrigin must come from server configuration, never request headers. */
 export function isIdentityLinkEditorRequestAdmitted(request: Request, trustedOrigin: string): boolean {
   try {

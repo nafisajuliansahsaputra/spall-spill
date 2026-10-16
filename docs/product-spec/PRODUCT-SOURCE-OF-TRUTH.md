@@ -3132,6 +3132,62 @@ Berikutnya audit/kunci request-local authenticated command execution dan private
 no-store response composition. Actual distributed permit dan mounted/runtime gate
 session/Owner/proxy/CSRF tetap harus dibuktikan terpisah sebelum activation.
 
+### Komposisi HTTP command editor privat — 2026-10-16
+
+Baseline bersih ae3777004db422bc8b4ef6c2601b09243c2aceea lulus enam job
+push-event tepat: [CI 38844831536](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38844831536),
+[Security 38844831532](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38844831532),
+[Guard 38844831458](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38844831458).
+Ini menggantikan evidence PENDING12.116; reset/lint/advisors/2,991 pgTAP/59 races-
+retention lulus. Goal belum selesai; checkpoint terakhir CLOSED / VERIFIED tetap S4.
+
+Bootstrap/authority/J5/J9/pinned D02/12.114–12.116/source/tetangga tes dibaca ulang.
+Kontrak12.117 dikunci/dibaca sebelum coding. Handler server-only unmounted memakai
+body reader aktual; metadata/permit/body invalid =>403 unavailable tanpa client SSR,
+claims atau RPC. Hanya command valid memanggil factory SSR cookie-context yang ada
+sekali di dalam invocation, lalu dispatcher aktual sekali. Factory SSR/provider/
+credential/config/session API tidak diubah; tidak ada caller client/Owner/RPC/receipt.
+Fingerprint fixed policy headers dipindah tanpa perubahan semantik ke request module
+agar body/handler memakai observasi yang sama; regresi admission/body dipertahankan.
+
+Satu deadline monotonic20s meliputi seluruh handler; body5s/review10s/nested5s tetap.
+Metadata/abort/deadline dicek antar await dan setelah serialisasi. Sebelum dispatch
+kegagalan memberi unavailable; setelah invocation memberi outcome_unknown tanpa
+ack/snapshot. Factory terlambat tidak dapat dispatch; nested work yang sudah invoked
+bisa selesai/commit sendiri, tanpa outward revival/rollback/session freeze/ABA claim.
+Tidak ada retry/base refresh/import/fallback atau bukti sukses dari nilai readback.
+
+Result domain guarded tetap utuh, dipetakan ke200 success/401 unauthenticated/400
+invalid intent/409 conflict-exhaustion/403 Owner denial/503 unavailable-unknown;
+body denial403 dan server exception sebelum dispatch503. Semua respons memakai
+private no-store/max-age0/Pragma/Expires, JSON UTF8, no-referrer/nosniff, tanpa raw
+error/log/redirect/CORS/cookie forwarding. Snapshot JSON >4MiB hanya mempertahankan
+ack guarded dengan readback unavailable; tidak ada snapshot parsial atau klaim
+rollback. Ini transport bound, bukan kuota produk/full Identity/Published truth.
+
+Factory per invocation dan SDK pipeline dibuktikan dengan SSR provider/claims
+terkontrol; actual Next cookie/JWT/session/Owner/proxy/CSRF/backend/browser transport
+belum diklaim. Distributed permit/fixed route/mounted activation tetap withheld.
+Tidak ada SQL/migration/grant/route/Server Action/UI/public change atau closure
+D01/D02/S5/S6/live/manual/provider. Skill Supabase/auth ditinjau; changelog Supabase
+ditolak policy jaringan, API pinned lama dipakai tanpa perubahan integrasi provider.
+
+48 tes HTTP baru dan seluruh670 regresi body/admission/dispatcher/review lulus
+(718 terarah). Menguji actual SDK/Request/Response pipeline tanpa mocked service,
+SSR factory sekali/request, exact mutation/proof count/raw JSON/no-store/status map,
+invalid body/permit sebelum SSR, factory error/hang/late, known/unknown/conflict,
+claim loss, abort/header/elapsed phases, concurrent client isolation dan snapshot
+1000-row >4MiB =>ack-only dengan20 page/31 RPC/8 claims tanpa read tambahan.
+Frozen install/typecheck/lint tanpa warning/lima tooling/4,717 tes aplikasi/tiga
+build lulus (cache Turbo paket lain yang tidak berubah sebagian dipakai); sembilan
+Redis aktual dan37 Chromium aktual lulus. Final/staged diff/check ditinjau. Enam
+gate push baru termasuk DB reset/lint/advisors/2,991 pgTAP/59 races-retention tetap
+PENDING sampai benar-benar diamati; tidak ada klaim closure/live/manual/CSRF.
+
+Berikutnya audit/kunci private action budget policy/subject derivation dan isolated
+adapter verification; jangan mount D02 parsial atau broaden credentials/grants
+sebelum distributed permit dan actual session/Owner/proxy/CSRF/transport gate lulus.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
