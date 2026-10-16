@@ -3077,6 +3077,61 @@ Berikutnya kunci bounded body/admission-budget composition dengan actual stream
 byte/read/deadline/UTF8/schema checks, sebelum request-local authenticated dispatch,
 no-store adapter dan mounted/runtime gate. Tidak mount editor parsial atau grant.
 
+### Pembaca body command editor privat berbatas — 2026-10-16
+
+Baseline bersih f4498be4a0baa1c8239d33cc7d6f91ff2a4a2e48 lulus enam job
+push-event tepat: [CI 38828471627](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38828471627),
+[Security 38828471774](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38828471774),
+[Guard 38828471497](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38828471497).
+Ini menggantikan evidence PENDING12.115; reset/lint/advisors/2,991 pgTAP dan59
+concurrency-retention lulus. Goal belum selesai; checkpoint terakhir sepenuhnya
+CLOSED / VERIFIED tetap S4.
+
+Bootstrap/authority/J5/J9/pinned D02/12.114–12.115/source/tes aktual dibaca ulang.
+Kontrak12.116 dikunci/dibaca sebelum coding. Reader server-only privat menjalankan
+admission metadata lama sebelum permit/reader; snapshot fixed policy headers dicek
+ulang setelah permit, sebelum/sesudah read dan sebelum output. Permit server
+terinjeksi dipanggil sekali dengan action tetap identity_link_command/AbortSignal;
+hanya literal true boleh mengambil reader. Metadata/permit gagal tidak membaca
+atau membatalkan stream milik caller. Tidak ada selector budget dari body/Owner.
+
+Satu deadline monotonic5s mencakup permit dan seluruh body/validation; request abort
+berhenti segera. Post-await/pre-phase checks mencegah permit/read terlambat memulai
+fase berikutnya atau menghidupkan output. Abort bersifat cooperative, bukan bukti
+permit eksternal berhenti/refund/rollback. Reader yang diambil dibatalkan best effort
+saat gagal tanpa menunggu cancellation yang dapat menggantung; lock dilepas setelah
+cancel selesai, success drain/release, timer/listener dibersihkan pada setiap exit.
+
+Batas32768 byte aktual independen dari declared length dan32769 read termasuk
+terminal; empty chunk tetap dihitung. Oversize/non-byte ditolak sebelum copy/aggregate,
+chunk disalin tanpa alias producer, declared length harus cocok. Fatal UTF8 decoder
+mempertahankan BOM agar JSON invalid ditolak; JSON.parse menjadi decoder tunggal,
+lalu strict schema12.114 yang sama. Output hanya command parsed atau null, tanpa raw
+diagnostic/private persistence acknowledgment. Raw invalid/null dalam storage
+envelope tetap recoverable; tidak ada implicit initialization/retry/dispatch.
+
+Tidak ada perubahan auth/client/RPC/SQL/migration/grant/route/UI/source/provenance/
+public state. Permit fixture bukan distributed budget evidence, metadata observation
+bukan atomic session/header freeze/ABA/CSRF proof. Actual distributed adapter,
+request-local session/Owner/proxy/CSRF/no-store mounted/runtime evidence dan
+D01/D02/S5/S6/live/manual/provider tetap terbuka.
+
+65 tes body baru dan seluruh605 regresi admission/dispatcher/review lulus (670
+terarah). Meliputi literal permit/order/no-reader denial, kedua action/kind/raw/null,
+byte/read cap termasuk exact one-byte terminal, declared lies, UTF8/BOM/schema,
+alias copy, shared monotonic deadline, abort/hung/late permit/read/cancel, metadata
+drift, cleanup dan no retry. Frozen install/typecheck/lint tanpa warning/lima tooling/
+4,669 tes aplikasi/tiga build lulus (cache Turbo paket lain yang tidak berubah
+sebagian dipakai); sembilan Redis aktual dan37 Chromium aktual lulus. Resource awal
+mengalami satu Invalid InterceptionId pada harness CDP; suite Resource diulang
+terisolasi dan29/29 lulus, tanpa perubahan harness/assertion/gate. Final/staged diff/
+check ditinjau. Enam gate push baru termasuk DB reset/lint/advisors/2,991 pgTAP/59
+races-retention tetap PENDING sampai benar-benar diamati. Tidak ada klaim closure.
+
+Berikutnya audit/kunci request-local authenticated command execution dan private
+no-store response composition. Actual distributed permit dan mounted/runtime gate
+session/Owner/proxy/CSRF tetap harus dibuktikan terpisah sebelum activation.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
