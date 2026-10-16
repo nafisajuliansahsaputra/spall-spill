@@ -4065,6 +4065,54 @@ live Upstash/cluster/TTL/capacity/deployment limits/browser transport belum terb
 fixture bukan live/manual/provider evidence. Jangan mount D02 parsial/enable grant
 sebelum semua activation gates; lanjutkan independent safe work bila human gate muncul.
 
+### Fixture runtime Next SSR request-cookie — 2026-10-16
+
+Baseline bersih925182f36bf411efa84fa6a82f3775e7fba939f4 lulus enam job
+push-event tepat: [CI 38879211984](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38879211984),
+[Security 38879211999](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38879211999),
+[Guard 38879212013](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38879212013).
+Ini menggantikan evidence PENDING12.120; DB reset/lint/advisors/2,991 pgTAP/59
+concurrency-retention lulus. Goal belum selesai; checkpoint CLOSED / VERIFIED tetap S4.
+
+Bootstrap/authority/J5/pinned D02/12.5/12.114–12.120/source/tes/workflow dibaca ulang.
+Kontrak12.121 dikunci/dibaca sebelum coding. Delapan tes runtime baru menjalankan
+Next16.3.8 webpack pada loopback dengan temporary app/route di mkdtemp, import
+factorySSR/env produksi tanpa perubahan, actual next/headers.cookies dan actual
+SSR/Supabase SDK getClaims. Tidak ada mocked factory/claims/storage. Session cookie
+dibuat actual SSR setSession; provider Auth-shaped loopback memverifikasi JWT HS256
+uji dengan key ephemeral, issuer/audience/expiry/known subject, dan menolak refresh.
+Pinned getClaims fallback HS256/getUser dibaca dari SDK sebelum implementasi.
+
+HTTP aktual membuktikan anonymous/header/URL-hint-only dan malformed actual cookie
+denial, dua subject terpisah sequential/concurrent tanpa leakage, missing-cookie
+sesudah request valid tetap unauthenticated, signature-key mismatch/provider
+rejection denial, serta expired cookie gagal saat refresh ditolak. Provider
+mengamati request bersamaan; hasil hanya status/verified subject fixture, private
+no-store. Tidak ada raw token/cookie/key/header log atau response session echo.
+Child memakai URL/public key fixture sendiri; parent env/provider credentials tidak
+diubah. Startup/request/test bounded; child process group/server/socket/temp app
+dibersihkan. Runtime hilang adalah failure, bukan skip. Script wajib di Application CI.
+
+Percobaan pertama menemukan alias source @/ belum ter-resolve di temporary Next
+app; alias webpack fixture diperbaiki tanpa perubahan factory/validator/session
+produksi. Delapan tes runtime actual lulus ulang, tanpa mock/bypass gate. Skill
+Supabase/auth/runtime diperiksa; changelog Supabase ditolak policy jaringan403,
+SDK/API pinned yang ada dipakai tanpa perubahan provider/config/dependency.
+
+Frozen install/typecheck/lint tanpa warning/lima tooling/4,924 tes aplikasi/tiga
+build lulus (cache Turbo paket lain sebagian dipakai);8 Next HTTP runtime baru,
+15 Redis aktual dan37 Chromium aktual lulus. Final/staged diff/check ditinjau.
+Enam gate push baru termasuk unchanged DB tetap PENDING sampai diamati. Tidak ada
+production source/proxy/route/SQL/migration/grant/public/provider configuration
+change, intended-navigation action, atau closure D01/D02/S5/S6.
+
+Evidence hanya isolasi actual Next HTTP request context/cookie + SDK dengan provider
+terkontrol. Bukan live Supabase/JWKS/refresh, browser SameSite/CSRF, proxy trusted-IP,
+Owner/DB-grant runtime, revocation/freshness/ABA atau production isolation guarantee.
+Berikutnya kunci extension fixture terisolasi ke actual budgeted editor handler dan
+controlled Owner/RPC pipeline sebelum mounted origin/proxy/CSRF audit; semua route/
+grant activation tetap withheld. Tidak perlu tindakan Owner untuk fixture aman ini.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
