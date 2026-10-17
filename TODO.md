@@ -4113,6 +4113,57 @@ Berikutnya kunci extension fixture terisolasi ke actual budgeted editor handler 
 controlled Owner/RPC pipeline sebelum mounted origin/proxy/CSRF audit; semua route/
 grant activation tetap withheld. Tidak perlu tindakan Owner untuk fixture aman ini.
 
+### Fixture runtime HTTPS editor dengan sesi aktual — 2026-10-17
+
+Baseline bersih `9b7ce3622b5f9c443c5a97365bb731e0b546900a` lulus enam job
+push-event tepat: [CI 38915072826](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38915072826),
+[Security 38915072720](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38915072720),
+[Guard 38915072910](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/38915072910).
+Ini menggantikan evidence PENDING 12.121; Application termasuk delapan tes Next SSR,
+DB reset/lint/advisors/2,991 pgTAP dan 59 concurrency-retention lulus. Goal belum
+selesai; checkpoint penuh CLOSED / VERIFIED tetap S4, D01/D02/S5/S6 terbuka.
+
+Bootstrap AGENTS/Cloud Runbook/protocol/checkpoint/J5/pinned D02/kontrak/source/SDK/
+workflow dibaca ulang; HEAD sama persis dengan remote dan workspace bersih sebelum
+edit. Kontrak 12.122 dikunci/dibaca sebelum coding. Fixture baru mengimpor actual
+12.120 budgeted handler, request-local SSR/cookies, dispatcher/reviews dan pinned
+SDK tanpa mock factory/claims. Route hanya ada dalam temporary Next app loopback.
+
+Next dev HTTPS memakai certificate/key uji ephemeral buatan openssl di mkdtemp;
+Node HTTPS client memakai CA fixture dengan verifikasi sertifikat/hostname aktif.
+Tes tanpa CA memastikan koneksi ditolak. Observasi awal menunjukkan Next dev
+mengubah origin URL loopback menjadi localhost; origin konfigurasi fixture kini
+konsisten localhost dengan koneksi IPv4 loopback, tanpa merekonstruksi Request atau
+melemahkan metadata gate. Adapter budget terkontrol memeriksa origin/Lua/keys/args,
+mengambil respons loopback dan mengembalikan Response sintetis; ini bukan live
+Upstash URL/provider evidence. Tidak ada request eksternal Upstash.
+
+Provider Auth/RPC loopback memverifikasi ephemeral HS256 JWT/issuer/audience/expiry/
+subject/public key dan api profile/allowlist RPC/argumen native SDK. Mapping subject
+ke Owner berbeda dan Working model in-memory tetap terpisah. Tiga belas tes HTTPS
+membuktikan initialization/addition dengan satu EVAL, delapan claims dan satu
+mutation terpilih; raw Working invalid tetap recoverable dan hidden, readback
+lengkap guarded, dua Owner berurutan/bersamaan tanpa leakage dan missing cookie
+sesudah valid tetap ditolak. Metadata/JSON/selector/budget denial mendahului Auth/
+RPC; cookie kosong/palsu tidak diganti Authorization/Owner hints; restricted Owner
+ditolak; stale/already-initialized terminal tanpa fallback/retry. Unknown ack hanya
+outcome_unknown meski model fixture sudah berubah, tanpa klaim rollback.
+
+Frozen install, typecheck, lint akhir tanpa warning, lima tooling, 4,924 tes aplikasi,
+tiga build, 15 Redis aktual dan 37 Chromium aktual lulus. Script SSR wajib di CI
+kini menjalankan 21 tes runtime: 13 HTTPS editor baru dan delapan cookie sebelumnya
+(tetap utuh). Final diff/check ditinjau. Enam gate push baru tetap PENDING sampai
+diamati pada SHA implementasi tepat; tidak ada perubahan production source/proxy/
+route/Auth config/dependency/SQL/migration/grant/publication atau closure journey.
+
+Evidence terbatas pada actual Next HTTPS request + cookie/SDK dengan provider dan
+metadata jaringan fixture. Bukan PostgreSQL/RLS/grant/atomicity, browser cookie/
+SameSite/CSRF, trusted production proxy/IP, live Supabase/JWKS/refresh/Upstash,
+revocation/freshness/ABA atau production readiness. Semua activation tetap withheld.
+Berikutnya audit/kunci fixture browser actual same-origin/cookie transport untuk
+handler ini, lalu pisahkan prerequisite trusted production proxy/provider; jangan
+menebak provider trust atau meminta credential untuk fixture independen yang aman.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

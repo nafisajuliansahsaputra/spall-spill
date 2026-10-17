@@ -70,7 +70,7 @@ jobs:
           pnpm --filter @spall-spill/web test:resource-budget-redis
           pnpm --filter @spall-spill/web test:editor-budget-redis
 
-      - name: Isolated Next SSR request-cookie tests
+      - name: Isolated Next SSR cookie and editor HTTPS tests
         run: pnpm --filter @spall-spill/web test:ssr-runtime
 
       - name: Production build
