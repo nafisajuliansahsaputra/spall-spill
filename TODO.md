@@ -4524,6 +4524,52 @@ existing bukan browser evidence. Trusted deployment/fixed endpoint/IP provenance
 live providers/DB grants/whole D02 dan D01/S5/S6 tetap terpisah dan withheld.
 Jangan mount partial editor, enable public/RPC access atau claim production ready.
 
+### Actual Chromium melalui compiled raw gateway — 2026-10-18
+
+Setelah12.129, clean fetch/reset membuktikan HEAD/origin sama persis
+`b362b0f50b7e721ee63b730702dda46c6d01b8af`. Keenam push-event job SUCCESS:
+[CI39144521025](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39144521025),
+[Security39144520872](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39144520872),
+[Guard39144520870](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39144520870).
+Application log135 runtime/4940 aplikasi/15 Redis/37 Chromium; DB log50 files2991
+pgTAP PASS dan16 groups59 native concurrency-retention PASS. PENDING12.129 terganti.
+
+Changed canonical/checkpoint/12.129 dan source direfresh; J5/J9/pinned D02 tetap
+unchanged.12.130 dikunci sebelum coding dari actual pinned Next API/initURL source.
+Mode baru production gateway-browser memiliki logical frontend origin yang benar-
+benar dilayani native HTTPS gateway, backend Next HTTPS loopback di port berbeda,
+API configured hostname/port sama dengan logical origin. Port direservasi bersamaan
+agar berbeda. Upstream memakai backend port dan original method/header/body,
+explicit CA/servername; actual Next Request/SSR/SDK/Owner chain tetap asli. Tidak
+ada trustHostHeader/forwarded repair/interception/credential/body reconstruction.
+
+Seluruh60 gateway-mode tests PASS tanpa skip. Lima existing actual Chromium kini
+benar-benar melewati gateway, dibuktikan exact counters: wrong-SPKI nol HTTP;
+A/B/missing-cookie empat forwards; cross-site dua atau sibling same-site satu;
+refresh success/explicit409/cookie-loss empat forwards tanpa refresh/mutasi ulang.
+Actual Set-Cookie disimpan/reused Chromium, tanpa CDP cookie replacement setelah
+refresh. Raw Working/Owner/private-no-store/claims-budget assertions tetap lulus.
+Tes keenam Chromium mengirim query nonempty: gateway403/private-no-store sebelum
+handler observation/budget/Auth/RPC/mutasi, satu rejection sesudah navigation GET.
+Tidak mengklaim browser mempertahankan dot/bare-query raw target seperti Node.
+
+Default dev76 dan production-direct59 tetap PASS terpisah; total195 runtime,
+termasuk lima browser direct pada masing-masing mode lama dan enam melalui gateway.
+Frozen install/typecheck/lint tanpa lint warning/lima tooling/4940 aplikasi/tiga
+build/15 actual Redis/37 separate Chromium regressions PASS; sebagian unchanged
+Turbo cache. Final diff/check/review selesai. CI wajib menjalankan mode tambahan
+`test:editor-gateway-browser-runtime` sesudah76+59 runtime. Production source/route/
+matcher/config/env/dependency/SQL/grant/publication dan J1–J9 topology tidak berubah.
+Enam exact-push job baru PENDING sampai observed, termasuk unchanged DB gates.
+
+Goal belum selesai, S4 tetap terakhir CLOSED / VERIFIED. Ini controlled fixture,
+bukan Vercel/CDN/IP/raw ingress provenance, live Auth/JWKS/Upstash/PostgREST atau
+whole D02 readiness. D01/D02/S5/S6 serta endpoint/public/RPC activation withheld.
+Berikutnya audit/kunci dua actual Chromium sessions concurrent melalui gateway
+untuk expired-cookie refresh, separate Owner Working/response-cookie continuity,
+explicit stale follow-up dan cookie-loss isolation; Node concurrent proof yang
+existing bukan concurrent-browser evidence. Jangan mengaktifkan endpoint/grants.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

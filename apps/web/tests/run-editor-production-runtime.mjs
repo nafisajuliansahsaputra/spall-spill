@@ -4,6 +4,9 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+if (process.argv.length > 3 || (process.argv[2] !== undefined && process.argv[2] !== "--gateway")) throw new Error("Unsupported fixture argument");
+const browserGateway = process.argv[2] === "--gateway";
+
 // Trust only in the isolated child; preserve inherited public CA certificates.
 const directory = await mkdtemp(join(tmpdir(), "spall-editor-production-ca-"));
 try {
@@ -15,6 +18,7 @@ try {
   await writeFile(bundlePath, `${inherited}\n${await readFile(certPath, "utf8")}`);
   const child = spawn(process.execPath, ["--test", fileURLToPath(new URL("./next-editor-runtime.test.mjs", import.meta.url))], {
     stdio: "inherit", env: { ...process.env, SPALL_TEST_EDITOR_PRODUCTION: "1", SPALL_TEST_EDITOR_CERT_DIRECTORY: directory,
+      SPALL_TEST_EDITOR_BROWSER_GATEWAY: browserGateway ? "1" : "0",
       NODE_EXTRA_CA_CERTS: bundlePath },
   });
   process.exitCode = await new Promise((resolve, reject) => { child.once("error", reject); child.once("exit", code => resolve(code ?? 1)); });

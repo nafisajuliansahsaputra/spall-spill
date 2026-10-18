@@ -17,6 +17,8 @@ const require = createRequire(import.meta.url);
 const web = fileURLToPath(new URL("..", import.meta.url));
 const source = resolve(web, "src");
 const productionRuntime = process.env.SPALL_TEST_EDITOR_PRODUCTION === "1";
+const browserGateway = productionRuntime && process.env.SPALL_TEST_EDITOR_BROWSER_GATEWAY === "1";
+let backendPort;
 const publicKey = "isolated-public-placeholder";
 const signingKey = randomBytes(32);
 const subjects = ["91000000-0000-4000-8000-000000000001", "91000000-0000-4000-8000-000000000002"];
@@ -26,8 +28,8 @@ let gatewayServer, gatewayPort, gatewayForwards = 0, gatewayRejections = 0;
 const refreshSubjects = new Map(); let acceptRefresh = false; let mutationCommits = 0;
 let userCalls = 0, authRequests = 0, refreshCalls = 0, events = [], inFlight = 0, maximumInFlight = 0;
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-const listen = server => new Promise((resolve, reject) => {
-  server.once("error", reject); server.listen(0, "127.0.0.1", () => resolve(server.address().port));
+const listen = (server, port = 0) => new Promise((resolve, reject) => {
+  server.once("error", reject); server.listen(port, "127.0.0.1", () => resolve(server.address().port));
 });
 function token(subject, lifetime = 3600) {
   const now = Math.floor(Date.now() / 1000);
@@ -102,7 +104,7 @@ async function rpc(req, subject) {
 function request(cookie, value = command(), extraHeaders = {}, suffix = "", method = "POST", wire = {}) {
   const body = typeof value === "string" ? value : JSON.stringify(value);
   return new Promise((resolve, reject) => {
-    const req = httpsRequest(nextOrigin, { path: wire.path ?? `/api/editor${suffix}`, ...(wire.gateway ? { port: gatewayPort } : {}),
+    const req = httpsRequest(nextOrigin, { path: wire.path ?? `/api/editor${suffix}`, ...(wire.gateway ? { port: gatewayPort } : browserGateway ? { port: backendPort } : {}),
       method, ca: certificate, family: 4, servername: "localhost",
       headers: { host: new URL(nextOrigin).host, origin: nextOrigin, "content-type": "application/json", "content-length": Buffer.byteLength(body),
         ...(cookie ? { cookie } : {}), ...extraHeaders }, signal: AbortSignal.timeout(15000) }, res => {
@@ -177,7 +179,13 @@ before(async () => {
     }
   });
   providerOrigin = `${productionRuntime ? "https" : "http"}://127.0.0.1:${await listen(provider)}`;
-  const reservation = createServer(); const port = await listen(reservation); await new Promise(resolve => reservation.close(resolve));
+  const reservation = createServer(); const port = await listen(reservation);
+  backendPort = port;
+  if (browserGateway) {
+    const backendReservation = createServer(); backendPort = await listen(backendReservation);
+    await new Promise(resolve => backendReservation.close(resolve));
+  }
+  await new Promise(resolve => reservation.close(resolve));
   nextOrigin = `https://localhost:${port}`;
   directory = await mkdtemp(join(tmpdir(), "spall-next-editor-"));
   const keyPath = join(directory, "fixture-key.pem"), certPath = join(directory, "fixture-cert.pem");
@@ -263,7 +271,7 @@ const app = next({ dev: false, dir: __dirname, hostname: "localhost", port: ${po
 app.prepare().then(() => {
   const handle = app.getRequestHandler();
   https.createServer({ key: fs.readFileSync(${JSON.stringify(keyPath)}), cert: fs.readFileSync(${JSON.stringify(certPath)}) },
-    (req, res) => handle(req, res)).listen(${port}, "127.0.0.1");
+    (req, res) => handle(req, res)).listen(${backendPort}, "127.0.0.1");
 }).catch(() => process.exit(1));
 `);
     runtimeArgs = [serverPath];
@@ -292,7 +300,7 @@ app.prepare().then(() => {
       outgoing.end('{"status":"unavailable"}'); return;
     }
     gatewayForwards++;
-    const upstream = httpsRequest(nextOrigin, { path: incoming.url, method: incoming.method, headers: incoming.headers,
+    const upstream = httpsRequest(nextOrigin, { port: backendPort, path: incoming.url, method: incoming.method, headers: incoming.headers,
       ca: certificate, family: 4, servername: "localhost", signal: AbortSignal.timeout(15000) }, response => {
       outgoing.writeHead(response.statusCode ?? 503, response.headers);
       response.on("error", () => outgoing.destroy()); response.pipe(outgoing);
@@ -305,7 +313,7 @@ app.prepare().then(() => {
     outgoing.on("close", () => upstream.destroy());
     incoming.pipe(upstream);
   });
-  gatewayPort = await listen(gatewayServer);
+  gatewayPort = await listen(gatewayServer, browserGateway ? port : 0);
   cookieA = await encodeSession(subjects[0]); cookieB = await encodeSession(subjects[1]);
 }, { timeout: productionRuntime ? 180000 : 60000 });
 beforeEach(() => {
@@ -372,8 +380,8 @@ for (const reason of ["origin", "query", "json", "selector", "budget"]) {
 test("candidate matcher retains actual Proxy authentication on a separate control path", { timeout: 60000 }, async () => {
   async function control(cookie) {
     return new Promise((resolve, reject) => {
-      const req = httpsRequest(`${nextOrigin}/api/session`, { ca: certificate, family: 4,
-        headers: cookie ? { cookie } : {}, signal: AbortSignal.timeout(15000) }, res => {
+      const req = httpsRequest(`${nextOrigin}/api/session`, { ...(browserGateway ? { port: backendPort } : {}), ca: certificate, family: 4,
+        headers: { host: new URL(nextOrigin).host, ...(cookie ? { cookie } : {}) }, signal: AbortSignal.timeout(15000) }, res => {
         let raw = ""; res.setEncoding("utf8"); res.on("data", part => { raw += part;
           if (Buffer.byteLength(raw) > 4096) req.destroy(new Error("fixture control response too large")); });
         res.on("error", reject); res.on("end", () => {
@@ -523,7 +531,7 @@ async function navigate(browser, origin) {
 async function browserPost(browser, options = {}) {
   const reply = await browser.command("Runtime.evaluate", { awaitPromise: true, returnByValue: true,
     expression: `(async () => {
-      const response = await fetch(${JSON.stringify(nextOrigin + "/api/editor")}, {
+      const response = await fetch(${JSON.stringify(nextOrigin + (options.path ?? "/api/editor"))}, {
         method: "POST", credentials: "include", ${options.cross ? 'mode: "no-cors",' : ''}
         headers: { "content-type": ${JSON.stringify(options.cross ? "text/plain" : "application/json")} },
         body: ${JSON.stringify(JSON.stringify(command()))},
@@ -544,6 +552,7 @@ test("actual Chromium rejects the fixture certificate when only an unrelated SPK
     const result = await browser.command("Page.navigate", { url: `${nextOrigin}/api/editor` });
     assert.equal(result.errorText, "net::ERR_CERT_AUTHORITY_INVALID");
     assert.equal(budgetCalls, 0); assert.equal(userCalls, 0); assert.deepEqual(calls, []); assert.deepEqual(observations, []);
+    if (browserGateway) { assert.equal(gatewayForwards, 0); assert.equal(gatewayRejections, 0); }
   } finally { await browser.close(); }
 });
 test("actual Chromium attaches SSR cookies to same-origin editor POST, switches Owner and denies cookie loss", { timeout: 60000 }, async () => {
@@ -562,6 +571,7 @@ test("actual Chromium attaches SSR cookies to same-origin editor POST, switches 
     await browserSession(browser, undefined); const before = calls.length;
     const result = await browserPost(browser); assert.equal(result.status, 401); assert.deepEqual(result.body, { status: "unauthenticated" });
     assert.equal(calls.length, before); assert.equal(observations.at(-1).hasCookie, false);
+    if (browserGateway) { assert.equal(gatewayForwards, 4); assert.equal(gatewayRejections, 0); }
   } finally { await browser.close(); }
 });
 for (const sameSite of [false, true]) {
@@ -575,6 +585,7 @@ for (const sameSite of [false, true]) {
       assert.deepEqual(observations, [{ origin, site: sameSite ? "same-site" : "cross-site", type: "text/plain", hasCookie: sameSite, status: 403 }]);
       assert.equal(budgetCalls, 0); assert.equal(userCalls, 0); assert.equal(authRequests, 0); assert.equal(refreshCalls, 0);
       assert.deepEqual(events, []); assert.deepEqual(calls, []); assert.equal(models.size, 0);
+      if (browserGateway) { assert.equal(gatewayForwards, sameSite ? 1 : 2); assert.equal(gatewayRejections, 0); }
     } finally { await browser.close(); }
   });
 }
@@ -599,6 +610,7 @@ test("actual Chromium stores editor refresh Set-Cookie and reuses it on a separa
     await browserSession(browser, undefined); const prior = calls.length;
     assert.equal((await browserPost(browser)).status, 401); assert.equal(calls.length, prior);
     assert.equal(refreshCalls, 1);
+    if (browserGateway) { assert.equal(gatewayForwards, 4); assert.equal(gatewayRejections, 0); }
   } finally { await browser.close(); }
 });
 
@@ -741,4 +753,16 @@ test("raw target denial never refreshes an expired cookie even when provider wou
   assert.equal(result.status, "initialized"); assert.deepEqual(events.slice(0, 2), ["budget", "refresh"]);
   assert.equal(gatewayForwards, 1); assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 9);
   assert.equal(mutationCommits, 1);
+});
+
+if (browserGateway) test("actual Chromium query target is denied by raw gateway before command I/O", { timeout: 60000 }, async () => {
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, cookieA); await navigate(browser, nextOrigin);
+    const result = await browserPost(browser, { path: "/api/editor?untrusted=1" });
+    assert.equal(result.status, 403); assert.equal(result.cache, "private, no-store, max-age=0");
+    assert.deepEqual(result.body, { status: "unavailable" }); noCommandIo();
+    assert.deepEqual(observations, []); assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 1);
+  } finally { await browser.close(); }
 });
