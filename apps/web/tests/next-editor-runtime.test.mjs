@@ -21,6 +21,7 @@ const signingKey = randomBytes(32);
 const subjects = ["91000000-0000-4000-8000-000000000001", "91000000-0000-4000-8000-000000000002"];
 let provider, child, directory, providerOrigin, nextOrigin, cookieA, cookieB, certificate, siblingServer, siblingOrigin;
 let observations = [];
+const refreshSubjects = new Map(); let acceptRefresh = false; let mutationCommits = 0;
 let userCalls = 0, authRequests = 0, refreshCalls = 0, events = [], inFlight = 0, maximumInFlight = 0;
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const listen = server => new Promise((resolve, reject) => {
@@ -51,7 +52,8 @@ async function encodeSession(subject, lifetime) {
       if (options?.maxAge === 0) jar.delete(name); else jar.set(name, value);
     } },
   } });
-  const { error } = await client.auth.setSession({ access_token: token(subject, lifetime), refresh_token: "isolated-refresh-placeholder" });
+  const refresh = `isolated-refresh-${randomBytes(16).toString("hex")}`; refreshSubjects.set(refresh, subject);
+  const { error } = await client.auth.setSession({ access_token: token(subject, lifetime), refresh_token: refresh });
   assert.equal(error, null, "fixture session issuance must succeed through actual SSR SDK");
   assert.ok(jar.size > 0, "actual SSR SDK must encode cookies");
   return [...jar].map(([name, value]) => `${name}=${encodeURIComponent(value)}`).join("; ");
@@ -91,7 +93,7 @@ async function rpc(req, subject) {
   const { kind, ...link_working } = value.link_working;
   const revision = name === I ? 1 : model.revision + 1;
   const row = { block_id: blockIds[i], kind, position: 1, is_visible: value.is_visible, payload_state: "present", link_working };
-  models.set(subject, { revision, rows: [row] });
+  models.set(subject, { revision, rows: [row] }); mutationCommits++;
   return malformedAck ? { status: "success", private_fixture_marker: "must-not-escape" }
     : { status: "success", block_id: blockIds[i], collection_revision: revision };
 }
@@ -140,7 +142,17 @@ before(async () => {
       if (req.url.startsWith("/auth/v1/")) authRequests++;
       if (req.method === "POST" && req.url === "/auth/v1/token?grant_type=refresh_token") {
         events.push("refresh"); refreshCalls++;
-        res.writeHead(400); res.end(JSON.stringify({ code: "refresh_token_not_found", message: "Fixture refresh denied" })); return;
+        assert.equal(req.headers.apikey, publicKey);
+        let raw = ""; for await (const part of req) { raw += part; assert.ok(Buffer.byteLength(raw) <= 4096); }
+        const body = JSON.parse(raw); assert.deepEqual(Object.keys(body), ["refresh_token"]);
+        const subject = refreshSubjects.get(body.refresh_token);
+        if (!acceptRefresh || !subject) {
+          res.writeHead(400); res.end(JSON.stringify({ code: "refresh_token_not_found", message: "Fixture refresh denied" })); return;
+        }
+        const rotated = `isolated-rotated-${randomBytes(16).toString("hex")}`; refreshSubjects.set(rotated, subject);
+        res.end(JSON.stringify({ access_token: token(subject), refresh_token: rotated, token_type: "bearer", expires_in: 3600,
+          expires_at: Math.floor(Date.now() / 1000) + 3600, user: { id: subject, aud: "authenticated", role: "authenticated",
+            email: "fixture@example.test", app_metadata: {}, user_metadata: {}, identities: [], created_at: "2026-01-01T00:00:00Z" } })); return;
       }
       if (req.url === "/auth/v1/user") events.push("auth");
       if (req.url.startsWith("/rest/v1/rpc/")) events.push("rpc");
@@ -242,6 +254,7 @@ export async function GET() { return new Response('<!doctype html><html><head><l
 beforeEach(() => {
   models.clear(); observations = []; calls = []; userCalls = 0; budgetCalls = 0;
   authRequests = 0; refreshCalls = 0; events = [];
+  acceptRefresh = false; mutationCommits = 0; refreshSubjects.clear();
   budgetResult = 1; malformedAck = false; restricted = false; fixtureError = undefined; maximumInFlight = 0;
 });
 test("HTTPS fixture requires its explicit CA and retains certificate verification", { timeout: 60000 }, async () => {
@@ -336,6 +349,63 @@ test("expired cookie cannot refresh before editor metadata and budget admission"
   assert.equal(authRequests, 1); assert.equal(refreshCalls, 1); assert.equal(userCalls, 0);
   assert.equal(budgetCalls, 2); assert.deepEqual(calls, []); assert.equal(models.size, 0);
   assert.ok(admitted.headers["set-cookie"]?.some(value => /max-age=0/i.test(value)), "actual route SSR must clear rejected refresh cookie");
+});
+async function expiredSessions(selectedSubjects) {
+  const cookies = await Promise.all(selectedSubjects.map(subject => encodeSession(subject, 2)));
+  await delay(2100);
+  authRequests = 0; userCalls = 0; refreshCalls = 0; events = []; maximumInFlight = 0;
+  acceptRefresh = true; return cookies;
+}
+function responseSession(response) {
+  const values = (response.headers["set-cookie"] ?? []).filter(value => value.startsWith("sb-") && !/max-age=0/i.test(value));
+  assert.ok(values.length > 0, "actual Next route must return refreshed SSR cookie");
+  return values.map(value => value.split(";")[0]).join("; ");
+}
+for (const action of ["initialize_link_block", "add_link_block"]) {
+  test(`successful editor ${action} refresh follows budget and preserves private response cookies`, { timeout: 60000 }, async () => {
+    const [expired] = await expiredSessions([subjects[0]]);
+    if (action === "add_link_block") models.set(subjects[0], { revision: 3, rows: [] });
+    const response = await request(expired, command(action)), result = check(response, 200);
+    assert.equal(result.status, action === "initialize_link_block" ? "initialized" : "allocated");
+    assert.equal(result.readback.snapshot.current_handle, "fixture-owner-0");
+    assert.equal(result.readback.snapshot.collection.blocks[0].is_visible, false);
+    assert.equal(result.readback.snapshot.collection.blocks[0].link_working.destination_url, "javascript:private");
+    assert.deepEqual(events.slice(0, 2), ["budget", "refresh"]);
+    assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 9); assert.equal(userCalls, 8);
+    assert.equal(mutationCommits, 1); assert.equal(calls.length, 13); assert.ok(calls.every(value => value.subject === subjects[0]));
+    assert.ok(!/access_token|refresh_token/.test(response.raw));
+    const rotated = responseSession(response); assert.ok(rotated !== expired, "response must contain a new session cookie");
+    // A separate explicit command is allowed to reach the same fixed RPC and reject; it must not commit again.
+    check(await request(rotated, command(action)), 409, { status: action === "initialize_link_block" ? "already_initialized" : "stale_write" });
+    assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 2); assert.equal(mutationCommits, 1);
+    assert.equal(models.get(subjects[0]).revision, action === "initialize_link_block" ? 1 : 4);
+  });
+}
+test("successful editor refresh never overrides restricted Owner denial", { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]); restricted = true;
+  const response = await request(expired); check(response, 403, { status: "restricted" }); responseSession(response);
+  assert.deepEqual(events, ["budget", "refresh", "auth", "rpc"]);
+  assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 1); assert.equal(authRequests, 2);
+  assert.equal(mutationCommits, 0); assert.equal(models.size, 0); assert.deepEqual(calls.map(value => value.name), [S]);
+});
+test("concurrent expired editor sessions retain separate Owner data and replay cookies without refresh", { timeout: 60000 }, async () => {
+  const expired = await expiredSessions(subjects);
+  const responses = await Promise.all(expired.map((cookie, i) => request(cookie, command("initialize_link_block", `refresh-owner-${i}`))));
+  const rotated = responses.map(responseSession);
+  assert.ok(rotated[0] !== rotated[1], "different subjects must return separate response sessions");
+  for (let i = 0; i < 2; i++) {
+    const result = check(responses[i], 200); assert.equal(result.block_id, blockIds[i]);
+    assert.equal(result.readback.snapshot.current_handle, `fixture-owner-${i}`);
+    assert.equal(result.readback.snapshot.collection.blocks[0].link_working.title, `refresh-owner-${i}`);
+    assert.equal(calls.filter(value => value.subject === subjects[i] && value.name === I).length, 1);
+  }
+  assert.equal(refreshCalls, 2); assert.equal(budgetCalls, 2); assert.equal(authRequests, 18); assert.equal(userCalls, 16);
+  assert.equal(mutationCommits, 2); assert.ok(maximumInFlight >= 2);
+  await Promise.all(rotated.map(cookie => request(cookie).then(response => check(response, 409, { status: "already_initialized" }))));
+  assert.equal(refreshCalls, 2); assert.equal(budgetCalls, 4); assert.equal(mutationCommits, 2);
+  for (const subject of subjects) assert.equal(calls.filter(value => value.subject === subject && value.name === I).length, 2);
+  const prior = calls.length; check(await request(undefined), 401, { status: "unauthenticated" });
+  assert.equal(calls.length, prior); assert.equal(refreshCalls, 2);
 });
 test("missing and forged cookies cannot use Authorization/Owner hints to reach RPC", { timeout: 60000 }, async () => {
   for (const cookie of [undefined, cookieA.split("=")[0] + "=invalid"]) {
@@ -449,3 +519,26 @@ for (const sameSite of [false, true]) {
     } finally { await browser.close(); }
   });
 }
+
+test("actual Chromium stores editor refresh Set-Cookie and reuses it on a separate explicit command", { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, expired); await navigate(browser, nextOrigin);
+    const first = await browserPost(browser);
+    assert.equal(first.status, 200); assert.equal(first.cache, "private, no-store, max-age=0");
+    assert.equal(first.body.status, "initialized"); assert.equal(first.body.readback.snapshot.current_handle, "fixture-owner-0");
+    assert.deepEqual(events.slice(0, 2), ["budget", "refresh"]);
+    assert.equal(refreshCalls, 1); assert.equal(authRequests, 9); assert.equal(budgetCalls, 1); assert.equal(mutationCommits, 1);
+    // No CDP cookie replacement between requests: Chromium must apply the real response Set-Cookie.
+    const second = await browserPost(browser);
+    assert.equal(second.status, 409); assert.deepEqual(second.body, { status: "already_initialized" });
+    assert.equal(second.cache, "private, no-store, max-age=0");
+    assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 2); assert.equal(mutationCommits, 1);
+    assert.ok(calls.every(value => value.subject === subjects[0]));
+    await browserSession(browser, undefined); const prior = calls.length;
+    assert.equal((await browserPost(browser)).status, 401); assert.equal(calls.length, prior);
+    assert.equal(refreshCalls, 1);
+  } finally { await browser.close(); }
+});

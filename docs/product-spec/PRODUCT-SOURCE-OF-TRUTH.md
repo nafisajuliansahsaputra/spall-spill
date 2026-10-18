@@ -3590,6 +3590,57 @@ tanpa extra Proxy Auth/EVAL. Fixed endpoint/matcher produksi, trusted metadata,
 host/path normalization, live provider/DB-grant dan seluruh gate activation tetap
 terbuka. Jangan mount editor parsial atau mengaktifkan withheld grants.
 
+### Fixture successful refresh editor setelah budget — 2026-10-18
+
+Baseline `ea2294803b181761da92ecfbce9f81669f554f4f` difetch dan disinkronkan
+pada Cloud bersih; seluruh enam job push-event kini terkonfirmasi completed/SUCCESS:
+[CI39114812693](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39114812693),
+[Security39114812691](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39114812691),
+[Guard39114812671](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39114812671).
+Status Database yang sempat tertinggal in_progress sudah resolved. Ini menggantikan
+PENDING12.125, bukan closure Goal/D01/D02/S5/S6; S4 tetap terakhir CLOSED / VERIFIED.
+
+Authority/Runbook/J5/J9/pinned D02/current checkpoint serta actual Proxy/SSR/handler/
+SDK12.114–12.125 direfresh. Kontrak12.126 dikunci/dibaca sebelum coding. Bentuk
+refresh response dibaca dari pinned auth-js2.112.4/SSR0.12.4 dan fixture12.124.
+Perubahan hanya test dan dokumentasi; tidak ada source/route/matcher/config/env/
+dependency/SQL/grant/publication produksi berubah atau trusted metadata baru.
+
+Provider loopback dapat menerima refresh token acak fixture yang dipetakan ke
+subject; body bounded/public fixture key diverifikasi, response session/rotated
+token untuk subject sama. Default tetap reject sehingga denial12.125 tetap diuji.
+Cookie berumur dua detik dibuat actual SSR setSession dan expiry nyata ditunggu.
+Ini bukan live Auth/JWKS atau model invalidation/grace/revocation/ABA produksi.
+
+Lima tes baru lulus: kedua command sukses setelah satu budget EVAL lalu satu refresh,
+delapan claims/13 RPC/satu mutasi fixture dan complete raw Working readback; actual
+Next response membawa Set-Cookie serta private-no-store/Expires0/Pragma/header aman
+12.117. Factory tidak diklaim meneruskan semua SSR callback cache headers: handler
+menetapkan anti-cache sendiri. Command eksplisit berikutnya memakai cookie response,
+menolak already_initialized/stale_write tanpa refresh atau mutasi Working baru.
+RPC penolakan eksplisit bukan otomatis retry atau commit baru.
+
+Refresh sukses tetap menolak restricted Owner403/tanpa snapshot/mutasi. Dua subject
+expired concurrent menghasilkan Owner/raw Working/cookie response terpisah, masing-
+masing satu EVAL/refresh, lalu cookie baru mempertahankan Owner yang sama tanpa
+refresh tambahan; request tanpa cookie401/tanpa RPC. Actual Chromium menyimpan
+response Set-Cookie secara alami dan fetch eksplisit kedua409 tanpa refresh ulang;
+tidak ada CDP cookie replacement antara fetch, interception atau synthetic response.
+Hapus cookie lalu401. Provisioning awal tetap fixture, bukan production cookie
+policy/login evidence. Tidak ada raw token/cookie/key/Working log.
+
+Frozen install/typecheck/lint tanpa warning/lima tooling/4,940 aplikasi/tiga build/
+15 Redis aktual/37 Chromium regresi terpisah lulus; sebagian paket unchanged memakai
+cache Turbo. Gabungan runtime42 lulus:25 editor (lima Chromium aktual),8 SSR,9 Proxy.
+Final diff/check ditinjau. Enam job push baru tetap PENDING sampai diamati pada SHA
+tepat, termasuk unchanged DB reset/lint/security advisors/2991 pgTAP/59 concurrency.
+Tidak ada live-provider/CDN/deployment atau atomic session binding claim.
+
+Berikutnya audit dan kunci normalisasi fixed pathname/host serta kandidat matcher
+pada actual Next runtime terisolasi, termasuk alternate path/query/method dan
+forwarded-hint denial. Jangan memilih trusted production metadata atau mengaktifkan
+endpoint/RPC grants sebelum gate deployment/provider/DB/whole D02 terkait terbukti.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
