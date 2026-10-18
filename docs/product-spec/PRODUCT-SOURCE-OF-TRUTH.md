@@ -3839,6 +3839,58 @@ untuk expired-cookie refresh, separate Owner Working/response-cookie continuity,
 explicit stale follow-up dan cookie-loss isolation; Node concurrent proof yang
 existing bukan concurrent-browser evidence. Jangan mengaktifkan endpoint/grants.
 
+### Concurrent actual Chromium Owner refresh isolation — 2026-10-18
+
+Bootstrap bersih difetch/reset ke exact `1582961c1c9137e57fec7e0c2e6465f48a45d721`.
+Keenam push-event job baseline SUCCESS diamati kembali:
+[CI39162733781](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39162733781),
+[Security39162733750](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39162733750),
+[Guard39162733779](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39162733779).
+PENDING12.130 terganti. Goal belum selesai; S4 tetap terakhir CLOSED / VERIFIED.
+
+AGENTS/Runbook/Protocol/canonical checkpoint/J5/J9/pinned D02/12.128–12.130 dan
+actual source/SSR/SDK/fixture/Chromium helper direfresh.12.131 dikunci/dibaca sebelum
+coding. Hanya fixture test dan technical contract/tracking berubah; production
+source/route/matcher/topology/provider policy/config/env/dependency/SQL/grants/
+publication dan J1–J9 tetap unchanged. BrowserPost helper menerima explicit fixture
+command agar title berbeda per subject; body tetap native Chromium fetch JSON.
+
+Dua gateway-production browser tests baru PASS untuk initialize dan add. Masing-
+masing memakai dua actual Chromium process/profile/CDP terpisah, actual SSR cookie
+expired melalui waktu nyata, dan requests concurrent. Setiap response200/private-
+no-store membawa block/Owner handle/raw Working/hidden/revision/readback benar.
+Tiap subject13 RPC/satu selected mutation; totals dua budgets/dua refresh/16 user
+checks/26 RPC/dua model commits. Tidak ada caller Owner authority atau fake claims.
+
+Review memperketat overlap proof sebelum instrumentation: maximumInFlight saja
+bisa menghitung same-Owner parallel calls. Observational counter active verified
+subjects ditambah tanpa mengubah delay/request/response/Auth policy; reset sesudah
+session issuance mencegah encodeSession menjadi bukti browser overlap. Kedua tes
+membuktikan dua subject berbeda aktif bersamaan pada fase command browser.
+
+Concurrent explicit follow-up409 already_initialized/stale_write tidak refresh/
+commit Working lagi; masing-masing browser memakai real relayed Set-Cookie sendiri,
+tanpa CDP cookie replacement. Clear hanya cookieA lalu401 tanpa RPC; browserB tetap
+409/original Owner, tiga RPC terakhir hanyaB. Final totals enam budgets/dua refresh/
+dua commits/delapan gateway forwards/zero rejection. Negative RPC attempt bukan
+commit dan tidak ada automatic replay/refund/rollback guarantee. Semua browser
+successfully created ditutup dalam finally; deadlines/TLS/cleanup tetap berlaku.
+
+Final62 gateway/76 dev-SSR-Proxy/59 production-direct PASS tanpa skip:197 runtime.
+Frozen install/typecheck/lint tanpa lint warning/lima tooling/4940 aplikasi/tiga
+build/15 actual Redis/37 separate Chromium regressions PASS; unchanged packages
+sebagian memakai Turbo cache. Root checks dan runtime relevan diulang setelah
+instrumentation refinement. Final diff/check/review selesai. Enam exact-push jobs
+baru tetap PENDING sampai observed, termasuk unchanged DB reset/lint/advisors/
+50 files2991 pgTAP/16 groups59 native concurrency-retention. Tidak ada CLOSED atau
+production activation claim; D01/D02/S5/S6 dan public/RPC execution withheld.
+
+Ini controlled fixture dua Owner/browser, bukan same-session multi-tab rotation,
+live Auth/JWKS/invalidation/grace/revocation/ABA, actual DB race atau Vercel/CDN/IP
+provenance. Berikutnya audit/kunci actual Chromium gateway failure paths untuk
+restricted Owner403 dan malformed acknowledgment outcome_unknown503; pertahankan
+response-cookie/private-data isolation, no automatic retry dan truthful outcome.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

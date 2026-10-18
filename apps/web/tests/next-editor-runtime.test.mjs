@@ -26,6 +26,7 @@ let provider, child, directory, providerOrigin, nextOrigin, cookieA, cookieB, ce
 let observations = [];
 let gatewayServer, gatewayPort, gatewayForwards = 0, gatewayRejections = 0;
 const refreshSubjects = new Map(); let acceptRefresh = false; let mutationCommits = 0;
+const inFlightSubjects = new Map(); let maximumDistinctSubjectsInFlight = 0;
 let userCalls = 0, authRequests = 0, refreshCalls = 0, events = [], inFlight = 0, maximumInFlight = 0;
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const listen = (server, port = 0) => new Promise((resolve, reject) => {
@@ -171,7 +172,12 @@ before(async () => {
       if (!subject) { res.writeHead(401); res.end(JSON.stringify({ code: "bad_jwt", message: "Fixture credential denied" })); return; }
       if (req.url.startsWith("/rest/v1/rpc/")) { res.end(JSON.stringify(await rpc(req, subject))); return; }
       assert.equal(req.method, "GET"); assert.equal(req.url, "/auth/v1/user");
-      userCalls++; inFlight++; maximumInFlight = Math.max(maximumInFlight, inFlight); await delay(20); inFlight--;
+      userCalls++; inFlight++; maximumInFlight = Math.max(maximumInFlight, inFlight);
+      inFlightSubjects.set(subject, (inFlightSubjects.get(subject) ?? 0) + 1);
+      maximumDistinctSubjectsInFlight = Math.max(maximumDistinctSubjectsInFlight, inFlightSubjects.size);
+      await delay(20); inFlight--;
+      const remaining = inFlightSubjects.get(subject) - 1;
+      if (remaining) inFlightSubjects.set(subject, remaining); else inFlightSubjects.delete(subject);
       res.end(JSON.stringify({ id: subject, aud: "authenticated", role: "authenticated", email: "fixture@example.test",
         app_metadata: {}, user_metadata: {}, identities: [], created_at: "2026-01-01T00:00:00Z" }));
     } catch (error) {
@@ -321,6 +327,7 @@ beforeEach(() => {
   gatewayForwards = 0; gatewayRejections = 0;
   authRequests = 0; refreshCalls = 0; events = [];
   acceptRefresh = false; mutationCommits = 0; refreshSubjects.clear();
+  inFlightSubjects.clear(); maximumDistinctSubjectsInFlight = 0;
   budgetResult = 1; malformedAck = false; restricted = false; fixtureError = undefined; maximumInFlight = 0;
 });
 test("HTTPS fixture requires its explicit CA and retains certificate verification", { timeout: 60000 }, async () => {
@@ -420,7 +427,7 @@ test("expired cookie cannot refresh before editor metadata and budget admission"
 async function expiredSessions(selectedSubjects) {
   const cookies = await Promise.all(selectedSubjects.map(subject => encodeSession(subject, 2)));
   await delay(2100);
-  authRequests = 0; userCalls = 0; refreshCalls = 0; events = []; maximumInFlight = 0;
+  authRequests = 0; userCalls = 0; refreshCalls = 0; events = []; maximumInFlight = 0; maximumDistinctSubjectsInFlight = 0;
   acceptRefresh = true; return cookies;
 }
 function responseSession(response) {
@@ -534,7 +541,7 @@ async function browserPost(browser, options = {}) {
       const response = await fetch(${JSON.stringify(nextOrigin + (options.path ?? "/api/editor"))}, {
         method: "POST", credentials: "include", ${options.cross ? 'mode: "no-cors",' : ''}
         headers: { "content-type": ${JSON.stringify(options.cross ? "text/plain" : "application/json")} },
-        body: ${JSON.stringify(JSON.stringify(command()))},
+        body: ${JSON.stringify(JSON.stringify(options.value ?? command()))},
       });
       return ${options.cross ? '{ type: response.type, status: response.status }' : '{ status: response.status, cache: response.headers.get("cache-control"), body: await response.json() }'};
     })()`,
@@ -766,3 +773,56 @@ if (browserGateway) test("actual Chromium query target is denied by raw gateway 
     assert.deepEqual(observations, []); assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 1);
   } finally { await browser.close(); }
 });
+
+if (browserGateway) for (const action of ["initialize_link_block", "add_link_block"]) {
+  test(`concurrent actual Chromium ${action} refreshes retain separate Owners and cookie continuity`, { timeout: 60000 }, async () => {
+    const expired = await expiredSessions(subjects), browsers = [];
+    const values = subjects.map((_, i) => command(action, `browser-owner-${i}-${action}`));
+    const revision = action === "initialize_link_block" ? 1 : 4, mutation = action === "initialize_link_block" ? I : A;
+    const negative = { status: action === "initialize_link_block" ? "already_initialized" : "stale_write" };
+    if (action === "add_link_block") for (const subject of subjects) models.set(subject, { revision: 3, rows: [] });
+    try {
+      for (let i = 0; i < 2; i++) browsers.push(await chromiumFixture({ certificateSpki: fixturePin() }));
+      await Promise.all(browsers.map(async (browser, i) => {
+        await browser.command("Page.enable"); await browser.command("Network.enable");
+        await browserSession(browser, expired[i]); await navigate(browser, nextOrigin);
+      }));
+      const responses = await Promise.all(browsers.map((browser, i) => browserPost(browser, { value: values[i] })));
+      for (let i = 0; i < 2; i++) {
+        const result = responses[i]; assert.equal(result.status, 200); assert.equal(result.cache, "private, no-store, max-age=0");
+        assert.equal(result.body.status, action === "initialize_link_block" ? "initialized" : "allocated");
+        assert.equal(result.body.block_id, blockIds[i]); assert.equal(result.body.collection_revision, revision);
+        assert.equal(result.body.readback.status, "current"); assert.equal(result.body.readback.relation, "same_revision");
+        const snapshot = result.body.readback.snapshot;
+        assert.equal(snapshot.current_handle, `fixture-owner-${i}`);
+        assert.equal(snapshot.collection.blocks[0].is_visible, false);
+        assert.equal(snapshot.collection.blocks[0].link_working.title, values[i].link_working.title);
+        assert.equal(calls.filter(value => value.subject === subjects[i]).length, 13);
+        assert.equal(calls.filter(value => value.subject === subjects[i] && value.name === mutation).length, 1);
+      }
+      assert.equal(events[0], "budget"); assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 2);
+      assert.equal(userCalls, 16); assert.equal(authRequests, 18); assert.equal(calls.length, 26);
+      assert.equal(mutationCommits, 2); assert.ok(maximumInFlight >= 2); assert.ok(maximumDistinctSubjectsInFlight >= 2); assert.equal(gatewayForwards, 4);
+      // No cookie replacement: each browser must reuse its own relayed refresh Set-Cookie.
+      const followups = await Promise.all(browsers.map((browser, i) => browserPost(browser, { value: values[i] })));
+      for (const response of followups) {
+        assert.equal(response.status, 409); assert.equal(response.cache, "private, no-store, max-age=0"); assert.deepEqual(response.body, negative);
+      }
+      assert.equal(budgetCalls, 4); assert.equal(refreshCalls, 2); assert.equal(mutationCommits, 2);
+      for (let i = 0; i < 2; i++) {
+        assert.equal(models.get(subjects[i]).revision, revision);
+        assert.equal(models.get(subjects[i]).rows[0].link_working.title, values[i].link_working.title);
+        assert.equal(calls.filter(value => value.subject === subjects[i] && value.name === mutation).length, 2);
+      }
+      await browserSession(browsers[0], undefined); const before = calls.length;
+      const missing = await browserPost(browsers[0], { value: values[0] });
+      assert.equal(missing.status, 401); assert.equal(missing.cache, "private, no-store, max-age=0");
+      assert.deepEqual(missing.body, { status: "unauthenticated" }); assert.equal(calls.length, before);
+      const remaining = await browserPost(browsers[1], { value: values[1] });
+      assert.equal(remaining.status, 409); assert.equal(remaining.cache, "private, no-store, max-age=0"); assert.deepEqual(remaining.body, negative);
+      assert.equal(calls.length, before + 3); assert.ok(calls.slice(-3).every(value => value.subject === subjects[1]));
+      assert.equal(budgetCalls, 6); assert.equal(refreshCalls, 2); assert.equal(mutationCommits, 2);
+      assert.equal(gatewayForwards, 8); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+    } finally { await Promise.all(browsers.map(browser => browser.close())); }
+  });
+}
