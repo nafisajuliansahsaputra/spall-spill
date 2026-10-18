@@ -3489,6 +3489,59 @@ Berikutnya audit/kunci fixture actual Next Proxy session-refresh dan cache/cooki
 response safety menurut12.5 sebelum memilih trusted production metadata adapter;
 jangan menganggap fixture IP atau pin sebagai provenance/trust provider produksi.
 
+### Fixture actual Next Proxy refresh/cache — 2026-10-18
+
+Baseline bersih `db560da5642f4d3d7324a1370ad08a4e28934f84` lulus enam job
+push-event tepat: [CI 39093048077](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39093048077),
+[Security 39093048083](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39093048083),
+[Guard 39093048080](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39093048080).
+Ini menggantikan evidence PENDING12.123; 25 runtime serta DB reset/lint/advisors/
+2,991 pgTAP dan59 concurrency-retention lulus. Goal belum selesai; checkpoint penuh
+CLOSED / VERIFIED tetap S4, D01/D02/S5/S6 tetap terbuka.
+
+Bootstrap/authority/J5/12.5/12.121–12.123/proxy/SSR/SDK/test/workflow dibaca ulang;
+workspace bersih dan HEAD sama persis dengan remote sebelum edit. Kontrak12.124
+dikunci/dibaca sebelum coding. Fixture temporary Next app loopback mengimpor actual
+fungsi proxy produksi (termasuk CSP), factory SSR/cookies/env dan SDK tanpa mock
+claims/refresh/storage. Matcher fixture hanya dua path diagnostik yang termasuk
+matcher produksi; response hanya verified subject fixture, tanpa Owner data/RPC/
+mutation/editor. Tidak ada source/proxy/route/config/dependency/SQL/grant produksi
+yang berubah. Child env fixture terpisah; key ephemeral dan cookies tidak dilog.
+
+Bentuk refresh/cache headers dibaca dari pinned auth-js2.112.4/SSR0.12.4 sebelum
+coding. Session cookie berumur dua detik dibuat actual SSR setSession, lalu expiry
+nyata ditunggu; provider Auth loopback memverifikasi signature/issuer/audience/
+expiry/known subject serta menerima refresh token fixture yang dikenal, merespons
+session baru dengan token rotasi. Provider juga dapat menolak refresh400. Ini bukan
+live Auth/JWKS atau model rotasi/revocation/freshness produksi.
+
+Sembilan tes HTTP aktual lulus: anonymous protected307/login/intended destination
+internal/HttpOnly/SameSite dan private-no-store; bearer/Owner hint tidak mengganti
+cookie; sequential/concurrent subject isolation; refresh sukses pada protected dan
+unprotected path tepat sekali dengan cookie diteruskan ke diagnostik dalam request
+sama; Set-Cookie dan exact SSR anti-cache headers dipertahankan; replay cookie baru
+tidak refresh lagi; refresh denial protected307 atau unprotected401 mempertahankan
+clearing cookie/Expires0/Pragma no-cache/private-no-store; dua refresh subject
+bersamaan tetap terpisah. Diagnostik tidak memasang cache headers sendiri sehingga
+assertion mengukur actual Proxy, bukan header fixture. Percobaan awal menemukan
+Location relatif `/login`; assertion diperbaiki dengan resolusi same-origin, tanpa
+perubahan produksi atau pelonggaran destination safety.
+
+Frozen install/typecheck/lint tanpa warning/lima tooling/4,940 tes aplikasi/tiga
+build/15 Redis aktual/37 regresi Chromium lulus; sebagian paket unchanged memakai
+cache Turbo. Script runtime wajib kini mencakup34 tes:25 sebelumnya (termasuk empat
+Chromium editor) dan sembilan Proxy baru. Final diff/check ditinjau. Enam gate push
+baru tetap PENDING sampai diamati pada SHA tepat; tidak ada closure journey/public.
+
+Evidence terbatas pada Next dev HTTP loopback + provider terkontrol, bukan browser/
+production HTTPS login/refresh, CDN cache/proxy/IP provenance, live provider, Owner
+AuthZ/DB-grant atau session atomicity/ABA/revocation guarantee. Proxy auth maintenance
+memanggil getClaims sebelum route; fixture ini tidak membuktikan action-specific
+pre-auth budget. Sebelum mounting editor, berikutnya kunci kontrak urutan matcher/
+Proxy–admission–budget menurut12.114/12.120 dan verifikasi denial metadata/budget
+mendahului Auth pada transport terisolasi. Jangan menebak trusted production reader
+atau mengaktifkan route/grant sebelum gate produksi terkait dibuktikan.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

@@ -70,7 +70,7 @@ jobs:
           pnpm --filter @spall-spill/web test:resource-budget-redis
           pnpm --filter @spall-spill/web test:editor-budget-redis
 
-      - name: Isolated Next SSR cookie and editor HTTPS/browser tests
+      - name: Isolated Next session, Proxy and editor transport tests
         run: |
           export SPALL_TEST_BROWSER="$(command -v google-chrome || command -v chromium)"
           test -n "$SPALL_TEST_BROWSER"
