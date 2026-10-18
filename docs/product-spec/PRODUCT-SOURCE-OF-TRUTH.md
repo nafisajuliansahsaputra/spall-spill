@@ -3693,6 +3693,58 @@ raw target. Berikutnya kunci/uji refresh Set-Cookie dan concurrent Owner isolati
 melalui gateway canonical, bukan hanya direct Next; lalu audit production ingress
 provenance secara terpisah. Jangan mount partial D02 atau mengaktifkan withheld RPC.
 
+### Fixture gateway refresh/cookie Owner isolation — 2026-10-18
+
+Setelah12.127, workspace bersih difetch dan sama persis dengan
+`9c6b5c09a07c8caa7d7b5ab306c6837873b99320`. Seluruh enam push-event job baseline
+SUCCESS: [CI39123108663](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39123108663),
+[Security39123108624](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39123108624),
+[Guard39123108655](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39123108655).
+Application70 runtime serta DB50 files/2991 pgTAP/59 native concurrency-retention
+confirmed dari log. PENDING12.127 tergantikan; Goal belum selesai, S4 tetap terakhir
+CLOSED / VERIFIED. D01/D02/S5/S6 dan activation gates tetap terbuka.
+
+Checkpoint canonical/12.126–12.127, J5/J9, actual gateway/SSR/SDK/handler/
+review source direfresh;12.128 dikunci/dibaca sebelum coding. Hanya menambah tes
+pada fixture native HTTPS loopback yang sudah ada. Tidak ada perubahan production
+source/route/matcher/config/env/dependency/SQL/grant/publication atau gateway policy.
+Original headers/body/method tetap sampai actual Next Request dan actual12.120/
+SSR/cookies/SDK/Owner pipeline. Tidak ada fake permit/claims, credential rewrite,
+body reconstruction, extra EVAL, automatic retry/refund atau caller Owner authority.
+
+Enam tes gateway baru lulus. Kedua command menggunakan expired cookie actual SSR
+setSession setelah expiry nyata: satu EVAL sebelum satu refresh/delapan claims/
+13 RPC/satu mutasi fixture; raw Working/hidden/readback benar. Relayed response
+mempertahankan Set-Cookie/private-no-store/Expires0/Pragma/header12.117. Command
+canonical eksplisit berikutnya dengan cookie response menolak already_initialized/
+stale_write tanpa refresh atau mutasi Working baru; RPC penolakan bukan commit baru.
+
+Dua subject expired concurrent tetap Owner/raw Working/response session terpisah;
+masing-masing satu EVAL/refresh. Replay cookie baru tetap Owner sama tanpa refresh
+lagi dan missing-cookie401 tanpa RPC. Refresh sukses tetap restricted403 tanpa
+snapshot/mutasi, meski response memuat session cookie. Controlled refresh rejection
+401 mempertahankan clearing cookie dan anti-cache melalui gateway, tanpa RPC.
+
+Dua noncanonical raw target bare query/dot-segment dengan expired cookie dan provider
+accept-refresh tetap403 sebelum gateway forward/budget/Auth/refresh/RPC. Command
+canonical terpisah kemudian benar-benar refresh/berhasil dengan satu EVAL. Tidak
+ada bypass raw target, refresh sebelum admission atau session rollback guarantee.
+Ini controlled Node HTTPS/provider-shaped fixture evidence, bukan browser-through-
+gateway, live Auth/JWKS/invalidation/grace/revocation/ABA atau production ingress.
+
+Frozen install/typecheck/lint tanpa warning/lima tooling/4,940 aplikasi/tiga build/
+15 Redis aktual/37 Chromium regresi terpisah lulus; sebagian unchanged memakai cache
+Turbo. Seluruh76 runtime lulus tanpa skip:59 editor (lima Chromium direct fixture),
+8 SSR,9 Proxy. Final diff/check ditinjau. Enam job push baru tetap PENDING sampai
+diamati pada SHA tepat, termasuk unchanged DB reset/lint/advisors/2991 pgTAP/59
+concurrency-retention. Tidak ada production/deployment/CDN readiness claim.
+
+Berikutnya audit/kunci fixture actual Next production build/start terisolasi dari
+CLI/API pinned sebelum coding, tanpa deployment atau credential baru. Evidence dev
+fixture ini tidak membuktikan production host/ingress raw-target provenance. Trusted
+production adapter/fixed endpoint/provider/DB grants dan whole D02 tetap gate
+terpisah; jangan mount partial editor atau mengaktifkan withheld RPC/public access.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

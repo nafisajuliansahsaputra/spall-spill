@@ -640,3 +640,73 @@ test("raw ingress retains TLS CA and hostname verification before any HTTP I/O",
   }
   noCommandIo(); assert.equal(gatewayForwards, 0); assert.equal(gatewayRejections, 0); assert.deepEqual(observations, []);
 });
+
+const gatewayCommand = (cookie, value = command(), path = "/api/editor") =>
+  request(cookie, value, {}, "", "POST", { path, gateway: true });
+for (const action of ["initialize_link_block", "add_link_block"]) {
+  test(`canonical gateway relays ${action} refresh cookies and terminal explicit follow-up`, { timeout: 60000 }, async () => {
+    const [expired] = await expiredSessions([subjects[0]]);
+    if (action === "add_link_block") models.set(subjects[0], { revision: 3, rows: [] });
+    const response = await gatewayCommand(expired, command(action)), result = check(response, 200);
+    assert.equal(result.status, action === "initialize_link_block" ? "initialized" : "allocated");
+    assert.equal(result.readback.snapshot.current_handle, "fixture-owner-0");
+    assert.equal(result.readback.snapshot.collection.blocks[0].is_visible, false);
+    assert.equal(result.readback.snapshot.collection.blocks[0].link_working.destination_url, "javascript:private");
+    assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 0);
+    assert.deepEqual(events.slice(0, 2), ["budget", "refresh"]);
+    assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 9); assert.equal(userCalls, 8);
+    assert.equal(calls.length, 13); assert.equal(mutationCommits, 1); assert.ok(calls.every(value => value.subject === subjects[0]));
+    assert.ok(!/access_token|refresh_token/.test(response.raw));
+    const rotated = responseSession(response); assert.ok(rotated !== expired);
+    check(await gatewayCommand(rotated, command(action)), 409, { status: action === "initialize_link_block" ? "already_initialized" : "stale_write" });
+    assert.equal(gatewayForwards, 2); assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); assert.equal(mutationCommits, 1);
+    assert.equal(models.get(subjects[0]).revision, action === "initialize_link_block" ? 1 : 4);
+  });
+}
+test("canonical gateway keeps concurrent refreshed cookies bound to separate Owners", { timeout: 60000 }, async () => {
+  const expired = await expiredSessions(subjects);
+  const responses = await Promise.all(expired.map((cookie, i) => gatewayCommand(cookie, command("initialize_link_block", `gateway-owner-${i}`))));
+  const rotated = responses.map(responseSession); assert.ok(rotated[0] !== rotated[1]);
+  for (let i = 0; i < 2; i++) {
+    const result = check(responses[i], 200); assert.equal(result.block_id, blockIds[i]);
+    assert.equal(result.readback.snapshot.current_handle, `fixture-owner-${i}`);
+    assert.equal(result.readback.snapshot.collection.blocks[0].link_working.title, `gateway-owner-${i}`);
+    assert.equal(calls.filter(value => value.subject === subjects[i] && value.name === I).length, 1);
+  }
+  assert.equal(gatewayForwards, 2); assert.equal(gatewayRejections, 0); assert.equal(budgetCalls, 2);
+  assert.equal(refreshCalls, 2); assert.equal(authRequests, 18); assert.equal(userCalls, 16); assert.equal(mutationCommits, 2);
+  assert.ok(maximumInFlight >= 2);
+  await Promise.all(rotated.map(cookie => gatewayCommand(cookie).then(response => check(response, 409, { status: "already_initialized" }))));
+  for (const subject of subjects) assert.equal(calls.filter(value => value.subject === subject && value.name === I).length, 2);
+  assert.equal(refreshCalls, 2); assert.equal(mutationCommits, 2);
+  const prior = calls.length; check(await gatewayCommand(undefined), 401, { status: "unauthenticated" });
+  assert.equal(calls.length, prior); assert.equal(refreshCalls, 2); assert.equal(gatewayForwards, 5); assert.equal(budgetCalls, 5);
+});
+test("canonical gateway relays refresh cookie while restricted Owner remains denied", { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]); restricted = true;
+  const response = await gatewayCommand(expired); check(response, 403, { status: "restricted" }); responseSession(response);
+  assert.deepEqual(events, ["budget", "refresh", "auth", "rpc"]);
+  assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 0); assert.equal(budgetCalls, 1);
+  assert.equal(refreshCalls, 1); assert.equal(authRequests, 2); assert.equal(mutationCommits, 0);
+  assert.equal(models.size, 0); assert.deepEqual(calls.map(value => value.name), [S]);
+});
+test("canonical gateway preserves refresh rejection clearing cookies and private 401", { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]); acceptRefresh = false;
+  const response = await gatewayCommand(expired); check(response, 401, { status: "unauthenticated" });
+  assert.ok(response.headers["set-cookie"]?.some(value => /max-age=0/i.test(value)), "gateway must retain actual SSR cookie clearing");
+  assert.deepEqual(events, ["budget", "refresh"]); assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 0);
+  assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 1); assert.equal(userCalls, 0);
+  assert.deepEqual(calls, []); assert.equal(mutationCommits, 0); assert.equal(models.size, 0);
+});
+test("raw target denial never refreshes an expired cookie even when provider would accept it", { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  for (const path of ["/api/editor?", "/api/../api/editor"]) {
+    check(await gatewayCommand(expired, command(), path), 403, { status: "unavailable" });
+    noCommandIo(); assert.equal(gatewayForwards, 0); assert.deepEqual(observations, []);
+  }
+  assert.equal(gatewayRejections, 2);
+  const response = await gatewayCommand(expired), result = check(response, 200); responseSession(response);
+  assert.equal(result.status, "initialized"); assert.deepEqual(events.slice(0, 2), ["budget", "refresh"]);
+  assert.equal(gatewayForwards, 1); assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 9);
+  assert.equal(mutationCommits, 1);
+});
