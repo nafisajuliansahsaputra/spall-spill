@@ -4372,6 +4372,58 @@ pada actual Next runtime terisolasi, termasuk alternate path/query/method dan
 forwarded-hint denial. Jangan memilih trusted production metadata atau mengaktifkan
 endpoint/RPC grants sebelum gate deployment/provider/DB/whole D02 terkait terbukti.
 
+### Fixture raw request-target ingress sebelum Next — 2026-10-18
+
+Baseline bersih `12d8e2e347c7da582921b464f0be75ff122a2b42` difetch/reset dan
+HEAD sama persis origin sebelum edit. Enam exact push-event job confirmed SUCCESS:
+[CI39118741431](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39118741431),
+[Security39118741451](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39118741451),
+[Guard39118741428](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39118741428).
+PENDING12.126 tergantikan; Goal belum selesai, S4 tetap terakhir CLOSED / VERIFIED,
+D01/D02/S5/S6 tetap terbuka. Authority/Runbook/J5/J9/pinned D02/contracts/source/
+SDK/tests/workflow direfresh; tidak memakai chat sebagai authority.
+
+Kontrak12.127 fase audit dikunci/dibaca sebelum probe loopback temporary. Raw target
+Node HTTPS path dipakai agar client tidak menghapus dot-segment/bare query. Probe
+menemukan `/api/editor?` dan `/api/../api/editor` dinormalisasi Next lalu mencapai
+command (satu EVAL/delapan claims); handler Request.url tidak dapat membuktikan raw
+wire target. Trailing/repeated slash308 internal tanpa I/O; encoded/lookalike path
+yang diuji404 tanpa command, dengan normal Proxy Auth. Probe Host awal berhenti di
+TLS karena implicit servername dari Host; diulang dengan explicit localhost + CA/
+hostname verification, bukan disable TLS. Probe tidak dihitung sebagai CI passing.
+
+Fase implementasi12.127 dikunci/dibaca dari audit sebelum coding. Tambahan hanya
+fixture HTTPS command-only gateway di loopback: req.url harus exact `/api/editor`
+sebelum upstream/body forwarding. Alias/query/dot/encoded/slash/lookalike ditolak403
+status-only private-no-store tanpa Auth/budget/RPC/mutation; deny Connection close.
+Canonical diteruskan original method/header/body ke actual Next HTTPS/12.120/SSR/
+SDK/Owner pipeline. Tidak ada Request reconstruction, fake claims/permit, double
+EVAL, production trustHostHeader atau production raw-target header trust.
+
+28 tes baru lulus:14 raw-target denial sebelum Next, dua direct internal308 tanpa
+command I/O, canonical success dengan satu EVAL/delapan claims/13 RPC/satu mutasi
+fixture/raw Working readback, lima Host/Origin/forwarded mismatch deny403 sebelum
+command I/O, PUT/PATCH/DELETE405 dan OPTIONS204 tanpa command, bearer/Owner hints
+tidak mengganti cookie401, serta gateway no-CA/wrong-servername gagal TLS sebelum
+HTTP. Existing25 editor termasuk lima Chromium tetap lulus. Explicit TLS servername
+localhost pada test client mengisolasi pengujian HTTP Host; verification tetap aktif.
+Gateway/client/upstream memiliki bounded request deadline/response dan cleanup.
+
+Frozen install/typecheck/lint tanpa warning/lima tooling/4,940 tes aplikasi/tiga
+build/15 Redis aktual/37 Chromium regresi terpisah lulus; sebagian unchanged memakai
+cache Turbo. Gabungan runtime70 lulus (53 editor +8 SSR +9 Proxy), tanpa skip.
+Lint diulang setelah tambahan assertion TLS, lulus. Final diff/check ditinjau.
+Enam exact-push job baru tetap PENDING sampai diamati, termasuk unchanged DB reset/
+lint/security advisors/2991 pgTAP/59 concurrency-retention. Tidak ada produksi,
+source/route/matcher/config/env/dependency/SQL/grant/publication yang diaktifkan.
+
+Raw gateway adalah candidate ingress fixture, bukan evidence Vercel/CDN/production
+build/raw-target provenance. Gate sebelum mounting tetap memerlukan trusted ingress
+adapter dan fixed endpoint yang dikunci/dibuktikan; browser header bukan authority
+raw target. Berikutnya kunci/uji refresh Set-Cookie dan concurrent Owner isolation
+melalui gateway canonical, bukan hanya direct Next; lalu audit production ingress
+provenance secara terpisah. Jangan mount partial D02 atau mengaktifkan withheld RPC.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

@@ -21,6 +21,7 @@ const signingKey = randomBytes(32);
 const subjects = ["91000000-0000-4000-8000-000000000001", "91000000-0000-4000-8000-000000000002"];
 let provider, child, directory, providerOrigin, nextOrigin, cookieA, cookieB, certificate, siblingServer, siblingOrigin;
 let observations = [];
+let gatewayServer, gatewayPort, gatewayForwards = 0, gatewayRejections = 0;
 const refreshSubjects = new Map(); let acceptRefresh = false; let mutationCommits = 0;
 let userCalls = 0, authRequests = 0, refreshCalls = 0, events = [], inFlight = 0, maximumInFlight = 0;
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
@@ -97,11 +98,12 @@ async function rpc(req, subject) {
   return malformedAck ? { status: "success", private_fixture_marker: "must-not-escape" }
     : { status: "success", block_id: blockIds[i], collection_revision: revision };
 }
-function request(cookie, value = command(), extraHeaders = {}, suffix = "", method = "POST") {
+function request(cookie, value = command(), extraHeaders = {}, suffix = "", method = "POST", wire = {}) {
   const body = typeof value === "string" ? value : JSON.stringify(value);
   return new Promise((resolve, reject) => {
-    const req = httpsRequest(`${nextOrigin}/api/editor${suffix}`, { method, ca: certificate, family: 4,
-      headers: { origin: nextOrigin, "content-type": "application/json", "content-length": Buffer.byteLength(body),
+    const req = httpsRequest(nextOrigin, { path: wire.path ?? `/api/editor${suffix}`, ...(wire.gateway ? { port: gatewayPort } : {}),
+      method, ca: certificate, family: 4, servername: "localhost",
+      headers: { host: new URL(nextOrigin).host, origin: nextOrigin, "content-type": "application/json", "content-length": Buffer.byteLength(body),
         ...(cookie ? { cookie } : {}), ...extraHeaders }, signal: AbortSignal.timeout(15000) }, res => {
       let raw = ""; res.setEncoding("utf8"); res.on("data", part => { raw += part; if (Buffer.byteLength(raw) > 4 * 1024 * 1024) req.destroy(new Error("fixture response too large")); });
       res.on("error", reject); res.on("end", () => resolve({ status: res.statusCode, headers: res.headers, raw }));
@@ -249,10 +251,34 @@ export async function GET() { return new Response('<!doctype html><html><head><l
     await delay(250);
   }
   assert.ok(ready, "isolated HTTPS Next runtime must become ready before deadline");
+  // Candidate ingress fixture only. Real deployment must independently prove raw-target provenance.
+  gatewayServer = createHttpsServer({ key: await readFile(keyPath), cert: certificate }, (incoming, outgoing) => {
+    if (incoming.url !== "/api/editor") {
+      gatewayRejections++;
+      outgoing.writeHead(403, { "content-type": "application/json; charset=utf-8", "cache-control": "private, no-store, max-age=0",
+        pragma: "no-cache", expires: "0", "referrer-policy": "no-referrer", "x-content-type-options": "nosniff", connection: "close" });
+      outgoing.end('{"status":"unavailable"}'); return;
+    }
+    gatewayForwards++;
+    const upstream = httpsRequest(nextOrigin, { path: incoming.url, method: incoming.method, headers: incoming.headers,
+      ca: certificate, family: 4, servername: "localhost", signal: AbortSignal.timeout(15000) }, response => {
+      outgoing.writeHead(response.statusCode ?? 503, response.headers);
+      response.on("error", () => outgoing.destroy()); response.pipe(outgoing);
+    });
+    upstream.on("error", () => {
+      if (!outgoing.destroyed) { fixtureError = new Error("Fixture gateway upstream failed"); outgoing.destroy(); }
+    });
+    incoming.on("aborted", () => upstream.destroy());
+    incoming.on("error", () => upstream.destroy());
+    outgoing.on("close", () => upstream.destroy());
+    incoming.pipe(upstream);
+  });
+  gatewayPort = await listen(gatewayServer);
   cookieA = await encodeSession(subjects[0]); cookieB = await encodeSession(subjects[1]);
 }, { timeout: 60000 });
 beforeEach(() => {
   models.clear(); observations = []; calls = []; userCalls = 0; budgetCalls = 0;
+  gatewayForwards = 0; gatewayRejections = 0;
   authRequests = 0; refreshCalls = 0; events = [];
   acceptRefresh = false; mutationCommits = 0; refreshSubjects.clear();
   budgetResult = 1; malformedAck = false; restricted = false; fixtureError = undefined; maximumInFlight = 0;
@@ -265,6 +291,7 @@ test("HTTPS fixture requires its explicit CA and retains certificate verificatio
   assert.equal(userCalls, 0); assert.equal(budgetCalls, 0); assert.deepEqual(calls, []);
 });
 after(async () => {
+  if (gatewayServer) { gatewayServer.closeAllConnections(); await new Promise(resolve => gatewayServer.close(resolve)); }
   if (child?.pid) {
     const exited = child.exitCode === null ? new Promise(resolve => child.once("exit", resolve)) : Promise.resolve();
     try { process.kill(-child.pid, "SIGTERM"); } catch { /* process group already stopped */ }
@@ -541,4 +568,75 @@ test("actual Chromium stores editor refresh Set-Cookie and reuses it on a separa
     assert.equal((await browserPost(browser)).status, 401); assert.equal(calls.length, prior);
     assert.equal(refreshCalls, 1);
   } finally { await browser.close(); }
+});
+
+function noCommandIo() {
+  assert.equal(fixtureError, undefined); assert.equal(budgetCalls, 0); assert.equal(authRequests, 0);
+  assert.equal(refreshCalls, 0); assert.deepEqual(calls, []); assert.deepEqual(events, []); assert.equal(mutationCommits, 0);
+}
+for (const path of ["/api/editor?", "/api/editor?x=1", "/api/../api/editor", "/api/./editor", "/api/%2e%2e/api/editor",
+  "/api/editor/", "/api//editor", "/api/%65ditor", "/api/ed%69tor", "/api%2feditor", "/api/%2565ditor",
+  "/api/EDITOR", "/api/editor.rsc", "/api/editor;extra"]) {
+  test(`raw ingress denies ${path} before Next normalization and command I/O`, { timeout: 60000 }, async () => {
+    check(await request(cookieA, command(), {}, "", "POST", { path, gateway: true }), 403, { status: "unavailable" });
+    noCommandIo(); assert.equal(gatewayForwards, 0); assert.equal(gatewayRejections, 1); assert.deepEqual(observations, []);
+  });
+}
+for (const path of ["/api/editor/", "/api//editor"]) {
+  test(`direct Next redirect for ${path} remains internal and has no command I/O`, { timeout: 60000 }, async () => {
+    const response = await request(cookieA, command(), {}, "", "POST", { path });
+    assert.equal(response.status, 308); const location = new URL(response.headers.location, nextOrigin);
+    assert.equal(location.origin, nextOrigin); assert.equal(location.pathname, "/api/editor");
+    assert.equal(location.search, ""); assert.equal(location.hash, ""); assert.equal(response.headers["set-cookie"], undefined);
+    noCommandIo(); assert.deepEqual(observations, []);
+  });
+}
+test("canonical raw ingress reaches actual budget, cookie Owner and private Working response", { timeout: 60000 }, async () => {
+  const response = await request(cookieA, command(), {}, "", "POST", { path: "/api/editor", gateway: true });
+  const result = check(response, 200); assert.equal(result.status, "initialized");
+  assert.equal(result.readback.snapshot.current_handle, "fixture-owner-0");
+  assert.equal(result.readback.snapshot.collection.blocks[0].link_working.destination_url, "javascript:private");
+  assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 0); assert.equal(budgetCalls, 1);
+  assert.equal(authRequests, 8); assert.equal(refreshCalls, 0); assert.equal(calls.length, 13); assert.equal(mutationCommits, 1);
+  assert.equal(events[0], "budget"); assert.ok(calls.every(value => value.subject === subjects[0]));
+});
+for (const reason of ["host", "host_port", "host_case", "origin", "forwarded_proto"]) {
+  test(`canonical ingress ${reason} mismatch cannot be repaired by forwarded hints`, { timeout: 60000 }, async () => {
+    const host = new URL(nextOrigin).host;
+    const hints = { forwarded: `host=${host};proto=https`, "x-forwarded-host": host, "x-forwarded-proto": "https" };
+    const headers = reason === "host" ? { ...hints, host: "evil.test" }
+      : reason === "host_port" ? { ...hints, host: "localhost:1" }
+      : reason === "host_case" ? { ...hints, host: host.toUpperCase() }
+      : reason === "origin" ? { ...hints, origin: "https://evil.test" }
+      : { "x-forwarded-host": "evil.test", "x-forwarded-proto": "http" };
+    check(await request(cookieA, command(), headers, "", "POST", { gateway: true }), 403, { status: "unavailable" });
+    noCommandIo(); assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 0);
+  });
+}
+for (const method of ["PUT", "PATCH", "DELETE", "OPTIONS"]) {
+  test(`canonical ingress ${method} never invokes editor command`, { timeout: 60000 }, async () => {
+    const response = await request(cookieA, command(), {}, "", method, { gateway: true });
+    assert.equal(response.status, method === "OPTIONS" ? 204 : 405); assert.equal(response.raw, "");
+    assert.equal(response.headers["access-control-allow-origin"], undefined);
+    noCommandIo(); assert.equal(gatewayForwards, 1); assert.deepEqual(observations, []);
+  });
+}
+test("canonical ingress forwarding never turns bearer or Owner hints into cookie authority", { timeout: 60000 }, async () => {
+  const host = new URL(nextOrigin).host;
+  const headers = { forwarded: `host=${host};proto=https`, "x-forwarded-host": host, "x-forwarded-proto": "https",
+    authorization: `Bearer ${token(subjects[0])}`, "x-owner-id": owners[0] };
+  check(await request(undefined, command(), headers, "", "POST", { gateway: true }), 401, { status: "unauthenticated" });
+  assert.equal(gatewayForwards, 1); assert.equal(budgetCalls, 1); assert.equal(authRequests, 0); assert.equal(refreshCalls, 0);
+  assert.deepEqual(calls, []); assert.equal(mutationCommits, 0);
+});
+
+test("raw ingress retains TLS CA and hostname verification before any HTTP I/O", { timeout: 60000 }, async () => {
+  for (const wrongHostname of [false, true]) {
+    await assert.rejects(new Promise((resolve, reject) => {
+      const req = httpsRequest(nextOrigin, { port: gatewayPort, family: 4, servername: wrongHostname ? "wrong.example.test" : "localhost",
+        ...(wrongHostname ? { ca: certificate } : {}), signal: AbortSignal.timeout(3000) }, resolve);
+      req.on("error", reject); req.end();
+    }), { code: wrongHostname ? "ERR_TLS_CERT_ALTNAME_INVALID" : "DEPTH_ZERO_SELF_SIGNED_CERT" });
+  }
+  noCommandIo(); assert.equal(gatewayForwards, 0); assert.equal(gatewayRejections, 0); assert.deepEqual(observations, []);
 });
