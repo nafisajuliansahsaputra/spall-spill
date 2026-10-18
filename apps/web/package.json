@@ -14,6 +14,7 @@
     "test:resource-budget-redis": "node --test tests/resource-open-budget-redis.test.mjs",
     "test:resource-browser": "vitest run --config vitest.resource-browser.config.mts",
     "test:click-browser": "vitest run --config vitest.browser.config.mts",
+    "test:editor-production-runtime": "node tests/run-editor-production-runtime.mjs",
     "test:ssr-runtime": "node --test tests/next-ssr-cookie-runtime.test.mjs tests/next-editor-runtime.test.mjs tests/next-proxy-refresh-runtime.test.mjs",
     "test:auth-navigation": "node --test tests/intended-destination.test.mjs",
     "test:unit": "vitest run"

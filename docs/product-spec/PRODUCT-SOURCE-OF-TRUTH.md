@@ -3745,6 +3745,54 @@ fixture ini tidak membuktikan production host/ingress raw-target provenance. Tru
 production adapter/fixed endpoint/provider/DB grants dan whole D02 tetap gate
 terpisah; jangan mount partial editor atau mengaktifkan withheld RPC/public access.
 
+### Compiled production-mode editor runtime fixture — 2026-10-18
+
+Resume bersih difetch/reset ke exact `3381bdfecf4912b911aa74ffad773b47da8c40e6`.
+Seluruh enam push-event job baseline SUCCESS diamati kembali:
+[CI39139961985](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39139961985),
+[Security39139961954](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39139961954),
+[Guard39139962014](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39139962014).
+PENDING12.128 tergantikan; Goal belum selesai. S4 tetap terakhir CLOSED / VERIFIED.
+
+AGENTS/Runbook/Protocol/canonical frontier/J5/J9/pinned D02/12.120/12.125–12.128
+serta source/SSR/Proxy/CSP/fixture/CI direfresh.12.129 dikunci sebelum coding dari
+actual pinned Next16.3.8 CLI/API. `next start` tidak memiliki dev HTTPS flags;
+fixture memakai actual `next build --webpack`, nonempty BUILD_ID, kemudian actual
+Next dev:false prepare/getRequestHandler melalui native HTTPS127.0.0.1 di child
+NODE_ENV production. Ini custom-server fixture output production, bukan CLI
+next-start/Turbopack/Vercel/CDN parity atau perubahan hosting produksi.
+
+Probe pertama58/59 menemukan CSP produksi secara benar menolak provider fixture
+HTTP; koreksi HTTPS dikunci sebelum coding. Provider HTTPS memakai own ephemeral
+certificate/CA bundle child-only, mempertahankan inherited public extra-CA trust.
+Certificate Next/gateway tetap berbeda dan tidak dipercaya global oleh test Node,
+sehingga no-CA/wrong-hostname/wrong-SPKI benar-benar ditolak. Probe intermediate
+certificate-sharing bukan passing evidence. Parent env/OS trust tidak berubah;
+actual SSR encodeSession/native fetch/SDK/claims/Request tetap asli. Tidak ada
+mock auth/permit, forwarded repair, Request/body reconstruction atau retry/refund.
+
+Final59/59 production-mode tests PASS tanpa skip: kedua command satu EVAL sebelum
+claims/RPC/mutasi fixture, private raw Working/readback, terminal stale/unknown,
+actual Proxy control, lima actual Chromium cookie/origin/refresh tests, raw-target
+admission dan gateway refresh/cookie/Owner isolation. BUILD_ID dan real compilation/
+typecheck/prerender berhasil. Default dev fixture dipertahankan terpisah;76/76
+existing SSR/editor/Proxy tests PASS. Lima Chromium di setiap mode masih direct
+Next fixture; browser-through-gateway dan actual deployment ingress belum dibuktikan.
+
+Frozen install/typecheck/lint tanpa lint warning/lima tooling/4940 aplikasi/tiga
+build/15 actual Redis/37 separate Chromium regressions PASS; unchanged packages
+sebagian memakai Turbo cache. Diff/check dan final review dilakukan. Command baru
+`test:editor-production-runtime` wajib dipanggil CI setelah76 existing runtime.
+Production source/route/matcher/config/env/dependency/SQL/grant/publication tidak
+berubah. Enam exact-push job baru masih PENDING sampai observed, termasuk unchanged
+DB reset/lint/error advisors/50 files2991 pgTAP/59 native concurrency-retention.
+
+Berikutnya audit/kunci topology fixture actual Chromium melalui raw gateway dengan
+logical origin/Host/TLS tetap konsisten, sebelum coding; Node port override yang
+existing bukan browser evidence. Trusted deployment/fixed endpoint/IP provenance,
+live providers/DB grants/whole D02 dan D01/S5/S6 tetap terpisah dan withheld.
+Jangan mount partial editor, enable public/RPC access atau claim production ready.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

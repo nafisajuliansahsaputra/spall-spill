@@ -16,6 +16,7 @@ import { createServerClient } from "@supabase/ssr";
 const require = createRequire(import.meta.url);
 const web = fileURLToPath(new URL("..", import.meta.url));
 const source = resolve(web, "src");
+const productionRuntime = process.env.SPALL_TEST_EDITOR_PRODUCTION === "1";
 const publicKey = "isolated-public-placeholder";
 const signingKey = randomBytes(32);
 const subjects = ["91000000-0000-4000-8000-000000000001", "91000000-0000-4000-8000-000000000002"];
@@ -121,7 +122,12 @@ function check(response, status, result) {
   const parsed = JSON.parse(response.raw); if (result) assert.deepEqual(parsed, result); return parsed;
 }
 before(async () => {
-  provider = createServer(async (req, res) => {
+  const certificateDirectory = productionRuntime ? process.env.SPALL_TEST_EDITOR_CERT_DIRECTORY : undefined;
+  assert.ok(!productionRuntime || certificateDirectory, "production fixture must run through its isolated CA runner");
+  const providerTls = productionRuntime ? { key: await readFile(join(certificateDirectory, "fixture-key.pem")),
+    cert: await readFile(join(certificateDirectory, "fixture-cert.pem")) } : undefined;
+  const providerServer = productionRuntime ? handler => createHttpsServer(providerTls, handler) : createServer;
+  provider = providerServer(async (req, res) => {
     res.setHeader("content-type", "application/json");
     try {
       if (req.url === "/fixture-observation") {
@@ -170,7 +176,7 @@ before(async () => {
       fixtureError = error; res.writeHead(500); res.end('{"status":"fixture_error"}');
     }
   });
-  providerOrigin = `http://127.0.0.1:${await listen(provider)}`;
+  providerOrigin = `${productionRuntime ? "https" : "http"}://127.0.0.1:${await listen(provider)}`;
   const reservation = createServer(); const port = await listen(reservation); await new Promise(resolve => reservation.close(resolve));
   nextOrigin = `https://localhost:${port}`;
   directory = await mkdtemp(join(tmpdir(), "spall-next-editor-"));
@@ -233,11 +239,37 @@ export async function POST(request: Request) {
 }
 export async function GET() { return new Response('<!doctype html><html><head><link rel="icon" href="data:,"></head><body>Editor fixture</body></html>', { headers: { "content-type": "text/html" } }); }
 `);
-  child = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "dev", "--webpack", "--hostname", "127.0.0.1", "--port", String(port),
-    "--experimental-https", "--experimental-https-key", keyPath, "--experimental-https-cert", certPath], {
-    cwd: directory, detached: true, stdio: ["ignore", "ignore", "ignore"],
-    env: { ...process.env, NODE_ENV: "development", NEXT_TELEMETRY_DISABLED: "1", NEXT_PUBLIC_SUPABASE_URL: providerOrigin,
-      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: publicKey },
+  const runtimeEnv = { ...process.env, NODE_ENV: productionRuntime ? "production" : "development", NEXT_TELEMETRY_DISABLED: "1",
+    NEXT_PUBLIC_SUPABASE_URL: providerOrigin, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: publicKey };
+  let runtimeArgs = [require.resolve("next/dist/bin/next"), "dev", "--webpack", "--hostname", "127.0.0.1", "--port", String(port),
+    "--experimental-https", "--experimental-https-key", keyPath, "--experimental-https-cert", certPath];
+  if (productionRuntime) {
+    await writeFile(join(directory, "app/layout.tsx"), 'export default function Layout({children}: {children: React.ReactNode}) { return <html><body>{children}</body></html>; }');
+    child = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "build", "--webpack"], {
+      cwd: directory, detached: true, stdio: ["ignore", "ignore", "ignore"], env: runtimeEnv,
+    });
+    await new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error("isolated production build exceeded deadline")), 120000);
+      child.once("error", error => { clearTimeout(timer); reject(error); });
+      child.once("exit", code => { clearTimeout(timer); code === 0 ? resolve() : reject(new Error("isolated production build failed")); });
+    });
+    assert.ok((await readFile(join(directory, ".next/BUILD_ID"), "utf8")).trim(), "production output must have an actual build ID");
+    const serverPath = join(directory, "fixture-production.cjs");
+    await writeFile(serverPath, `
+const fs = require("node:fs");
+const https = require("node:https");
+const next = require("next");
+const app = next({ dev: false, dir: __dirname, hostname: "localhost", port: ${port}, webpack: true });
+app.prepare().then(() => {
+  const handle = app.getRequestHandler();
+  https.createServer({ key: fs.readFileSync(${JSON.stringify(keyPath)}), cert: fs.readFileSync(${JSON.stringify(certPath)}) },
+    (req, res) => handle(req, res)).listen(${port}, "127.0.0.1");
+}).catch(() => process.exit(1));
+`);
+    runtimeArgs = [serverPath];
+  }
+  child = spawn(process.execPath, runtimeArgs, {
+    cwd: directory, detached: true, stdio: ["ignore", "ignore", "ignore"], env: runtimeEnv,
   });
   let spawnError; child.once("error", error => { spawnError = error; });
   const startupDeadline = performance.now() + 45000; let ready = false;
@@ -275,7 +307,7 @@ export async function GET() { return new Response('<!doctype html><html><head><l
   });
   gatewayPort = await listen(gatewayServer);
   cookieA = await encodeSession(subjects[0]); cookieB = await encodeSession(subjects[1]);
-}, { timeout: 60000 });
+}, { timeout: productionRuntime ? 180000 : 60000 });
 beforeEach(() => {
   models.clear(); observations = []; calls = []; userCalls = 0; budgetCalls = 0;
   gatewayForwards = 0; gatewayRejections = 0;

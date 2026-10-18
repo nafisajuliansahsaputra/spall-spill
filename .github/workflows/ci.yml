@@ -76,6 +76,7 @@ jobs:
           test -n "$SPALL_TEST_BROWSER"
           "$SPALL_TEST_BROWSER" --version
           pnpm --filter @spall-spill/web test:ssr-runtime
+          pnpm --filter @spall-spill/web test:editor-production-runtime
 
       - name: Production build
         run: pnpm build
