@@ -50,11 +50,18 @@ it.each([
   ["sec-fetch-site", "cross-site"], ["sec-fetch-site", "same-site"], ["sec-fetch-site", "none"],
   ["sec-fetch-mode", "navigate"], ["sec-fetch-mode", "no-cors"], ["sec-fetch-mode", "websocket"],
   ["sec-fetch-dest", "document"], ["sec-fetch-dest", "iframe"], ["sec-fetch-dest", "script"],
+  ["sec-fetch-dest", "Empty"], ["sec-fetch-dest", "EMPTY"], ["sec-fetch-dest", "empty, empty"], ["sec-fetch-dest", "empty, document"],
 ])("rejects conflicting browser hint %s=%s", (key, value) => {
   expect(admit(request({ headers: { [key]: value } }), origin)).toBe(false);
 });
 it.each(["cors", "same-origin"])("admits consistent fetch metadata %s", mode => {
   expect(admit(request({ headers: { "sec-fetch-site": "same-origin", "sec-fetch-mode": mode, "sec-fetch-dest": "", "content-encoding": "identity" } }), origin)).toBe(true);
+});
+it.each(["cors", "same-origin"])("admits actual browser empty destination token with %s", mode => {
+  const r = request({ headers: { "sec-fetch-site": "same-origin", "sec-fetch-mode": mode, "sec-fetch-dest": "empty" } });
+  expect(admit(r, origin)).toBe(true); expect(r.bodyUsed).toBe(false); expect(r.body!.locked).toBe(false);
+  r.headers.set("origin", "https://evil.test"); expect(admit(r, origin)).toBe(false);
+  r.headers.set("origin", origin); r.headers.set("sec-fetch-site", "same-site"); expect(admit(r, origin)).toBe(false);
 });
 it.each([null, "0", "1", "32768"])("admits canonical declared length %j without trusting actual bytes", length => {
   expect(admit(request({ headers: { "content-length": length }, body: "not even JSON" }), origin)).toBe(true);

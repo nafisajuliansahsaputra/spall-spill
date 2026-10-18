@@ -4164,6 +4164,62 @@ Berikutnya audit/kunci fixture browser actual same-origin/cookie transport untuk
 handler ini, lalu pisahkan prerequisite trusted production proxy/provider; jangan
 menebak provider trust atau meminta credential untuk fixture independen yang aman.
 
+### Browser cookie / same-origin editor dan koreksi fetch destination — 2026-10-18
+
+Baseline bersih `e299a14769dadd090df02c0e20cccce99ab5e91c` lulus enam job
+push-event tepat: [CI 39074805447](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39074805447),
+[Security 39074805493](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39074805493),
+[Guard 39074805477](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39074805477).
+Ini menggantikan evidence PENDING 12.122; 21 runtime sebelumnya serta DB reset/lint/
+advisors/2,991 pgTAP/59 concurrency-retention lulus. Goal belum selesai; checkpoint
+penuh CLOSED / VERIFIED tetap S4, D01/D02/S5/S6 tetap terbuka.
+
+Bootstrap/authority/J5/pinned D02/kontrak/source dibaca ulang; HEAD sama dengan
+remote dan workspace bersih sebelum edit. Kontrak 12.123 dikunci sebelum coding.
+Environment sempat dibuat ulang saat siklus aktif: delapan file perubahan yang
+dikenal tetap tersimpan, remote tidak maju; tidak dilakukan reset atas pekerjaan
+aktif. Toolchain sementara dipulihkan dan semua gate dijalankan ulang.
+
+Empat tes Chromium baru memakai actual temporary Next HTTPS + handler/SSR/cookie/
+SDK/Owner pipeline tanpa interception/fulfillment request. Cookie hasil SDK asli
+diprovisikan sebagai fixture host-only Secure/SameSite=Lax melalui CDP; request
+browser tidak diberi Cookie/Origin/Host/Sec-Fetch buatan. Same-origin JSON POST
+mengirim cookie otomatis, mengembalikan guarded initialization/no-store, memisahkan
+Owner setelah cookie diganti, dan401 tanpa RPC setelah cookie dihapus. POST sederhana
+no-cors dari cross-site tidak membawa cookie; sibling-port same-site cross-origin
+membawa cookie tetapi tetap403 sebelum budget/Auth/RPC. Browser melihat response
+opaque; sink loopback terbatas merekam status/Origin/Site/type/presence boolean saja,
+tanpa raw cookie/token/Working. Ini bukan bukti live login atau kebijakan cookie produksi.
+
+Browser memakai pin SPKI SHA256 tunggal dari certificate ephemeral. Tes aktual
+memastikan pin key lain menghasilkan ERR_CERT_AUTHORITY_INVALID; sepuluh negative
+unit menolak pin malformed/wildcard/list sebelum spawn. Tidak ada blanket TLS bypass,
+perubahan trust-store/HOME atau provider credentials. CA/hostname verification dan
+tes no-CA Node sebelumnya tetap utuh. Pin browser ini bukan chain/hostname atau
+trust deployment evidence; helper default pada37 regresi lama tetap tanpa pin.
+
+Browser menemukan bug wire nyata: Sec-Fetch-Dest bernilai token literal `empty`,
+sementara predicate lama hanya menerima absent/string kosong. MDN HTTP source dan
+request aktual mendukung makna "Dest empty only"12.115; klarifikasi12.115/12.123
+berlaku sebelum koreksi satu predicate. Enam allow/deny regresi baru menerima tepat
+`empty` tanpa melonggarkan Origin/Host/Site/Mode/destination lain/case/list. Tidak
+ada perubahan locked journey, ownership, Working/Published atau permission.
+Assertion runtime lama juga diperbaiki agar dua RPC Promise.all boleh bertukar
+urutan dalam fase masing-masing; seluruh phase barrier/count/proof/mutation tetap.
+
+Frozen install, typecheck, lint tanpa warning, lima tooling, 4,940 tes aplikasi,
+tiga build, 15 Redis aktual, 25 runtime (termasuk empat Chromium baru) dan37 regresi
+Chromium terpisah lulus; sebagian paket unchanged memakai cache Turbo. Final diff/
+check ditinjau. Gate push baru tetap PENDING sampai diamati pada SHA tepat. Tidak
+ada SQL/migration/grant/route/proxy/provider/dependency/public activation change.
+
+Evidence hanya fixture browser/Next/SDK dengan provider dan metadata terkontrol,
+bukan complete CSRF assessment, live Supabase/JWKS/refresh/Upstash, DB-grant runtime,
+trusted production proxy/IP, revocation/freshness/ABA atau production readiness.
+Berikutnya audit/kunci fixture actual Next Proxy session-refresh dan cache/cookie
+response safety menurut12.5 sebelum memilih trusted production metadata adapter;
+jangan menganggap fixture IP atau pin sebagai provenance/trust provider produksi.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

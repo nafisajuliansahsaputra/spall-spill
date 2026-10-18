@@ -37,13 +37,17 @@ export async function pageDebuggerUrl(port: string, readTargets: (signal: AbortS
     ]);
   } finally { clearTimeout(timer); }
 }
-export async function chromiumFixture() {
+export async function chromiumFixture({ certificateSpki }: { certificateSpki?: string } = {}) {
+  if (certificateSpki !== undefined && (typeof certificateSpki !== "string"
+    || !/^[A-Za-z0-9+/]{43}=$/.test(certificateSpki)
+    || Buffer.from(certificateSpki, "base64").toString("base64") !== certificateSpki)) throw new Error("Invalid fixture certificate pin");
   const directory = await mkdtemp(join(tmpdir(), "spall-click-browser-"));
   const processGroup = process.platform !== "win32";
   const child = spawn(process.env.SPALL_TEST_BROWSER ?? "chromium", ["--headless=new", "--disable-gpu",
     "--disable-background-networking", "--disable-component-update", "--disable-default-apps", "--disable-sync",
     "--no-first-run", "--no-default-browser-check", "--disable-dev-shm-usage", "--remote-debugging-port=0",
-    `--user-data-dir=${directory}`, ...(process.getuid?.() === 0 ? ["--no-sandbox"] : []), "about:blank"], { stdio: "ignore", detached: processGroup });
+    `--user-data-dir=${directory}`, ...(certificateSpki ? [`--ignore-certificate-errors-spki-list=${certificateSpki}`] : []),
+    ...(process.getuid?.() === 0 ? ["--no-sandbox"] : []), "about:blank"], { stdio: "ignore", detached: processGroup });
   let failure: Error | undefined; child.once("error", error => { failure = error; });
   const closed = new Promise<void>(resolve => child.once("close", () => resolve()));
   let socket: WebSocket | undefined; let nextId = 0;

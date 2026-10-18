@@ -25,7 +25,7 @@ export function isIdentityLinkEditorRequestAdmitted(request: Request, trustedOri
       && (encoding === null || encoding === "identity") && headers.get("transfer-encoding") === null
       && (site === null || site === "same-origin")
       && (mode === null || mode === "cors" || mode === "same-origin")
-      && (destination === null || destination === "")
+      && (destination === null || destination === "" || destination === "empty")
       && (length === null || (/^(0|[1-9][0-9]{0,4})$/.test(length) && Number(length) <= identityLinkEditorMaximumBodyBytes));
   } catch { return false; }
 }

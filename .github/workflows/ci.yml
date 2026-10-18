@@ -70,8 +70,12 @@ jobs:
           pnpm --filter @spall-spill/web test:resource-budget-redis
           pnpm --filter @spall-spill/web test:editor-budget-redis
 
-      - name: Isolated Next SSR cookie and editor HTTPS tests
-        run: pnpm --filter @spall-spill/web test:ssr-runtime
+      - name: Isolated Next SSR cookie and editor HTTPS/browser tests
+        run: |
+          export SPALL_TEST_BROWSER="$(command -v google-chrome || command -v chromium)"
+          test -n "$SPALL_TEST_BROWSER"
+          "$SPALL_TEST_BROWSER" --version
+          pnpm --filter @spall-spill/web test:ssr-runtime
 
       - name: Production build
         run: pnpm build
