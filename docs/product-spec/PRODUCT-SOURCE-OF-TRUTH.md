@@ -3542,6 +3542,54 @@ Proxy–admission–budget menurut12.114/12.120 dan verifikasi denial metadata/b
 mendahului Auth pada transport terisolasi. Jangan menebak trusted production reader
 atau mengaktifkan route/grant sebelum gate produksi terkait dibuktikan.
 
+### Fixture urutan editor/Proxy/admission — 2026-10-18
+
+Baseline `8c60d8be17b3b9c79a1821f72ea7377df3fe34e3` dikonfirmasi bersih dan
+sama persis dengan origin setelah explicit fetch/reset Cloud. Enam job push-event
+baseline diamati SUCCESS: [CI39096702290](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39096702290),
+[Security39096702434](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39096702434),
+[Guard39096702275](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39096702275).
+Evidence PENDING12.124 tergantikan; Goal belum selesai dan S4 tetap checkpoint
+terakhir CLOSED / VERIFIED. D01/D02/S5/S6 tetap terbuka.
+
+Authority/Runbook/J5/J9/pinned D02/12.5/12.114–12.124 serta actual Proxy/SSR/
+handler/SDK/tests/workflow diaudit ulang.12.125 dikunci dan dibaca sebelum coding.
+Actual Proxy memanggil claims sebelum route; memasang editor langsung di belakang
+matcher umum akan menambahkan Auth sebelum budget. Kandidat fixture HTTPS kini
+mengimpor actual Proxy dengan pengecualian exact path fixture `/api/editor`,
+sementara `/api/session` tetap matched. Ini bukan keputusan path/matcher produksi.
+Tidak ada source/route/matcher/config/dependency/SQL/grant/publication produksi
+berubah; tidak ada header permit, double EVAL atau Request reconstruction.
+
+Dua puluh tes editor lulus, termasuk empat Chromium aktual sebelumnya. Kontrol
+valid cookie membuktikan actual Proxy (CSP) dan downstream SSR masing-masing Auth
+sekali; tanpa cookie tidak memperoleh subject. Kedua command tetap satu EVAL
+sebelum delapan claims/satu mutation, dengan guarded raw Working readback.
+Origin/query/JSON/selector/budget denial tanpa Auth/refresh/RPC; query ditolak
+sebelum EVAL meski exact pathname dikecualikan. Browser cross-site/same-site tetap
+ditolak sebelum semua Auth attempts. Observation hanya label fase/count, bukan
+cookie/token/key atau raw Working.
+
+Cookie ephemeral dibuat actual SSR dengan umur dua detik dan expiry nyata ditunggu.
+Origin/budget denial tidak memicu refresh; admission valid lalu mencapai satu
+refresh yang ditolak provider dan401/private-no-store, clearing cookie, tanpa RPC.
+Successful editor refresh/rotation belum dibuktikan; sukses refresh Proxy12.124
+berlaku pada jalur Proxy, tidak otomatis berlaku pada kandidat editor ini.
+
+Frozen install/typecheck/lint tanpa warning/lima tooling/4,940 tes aplikasi/tiga
+build/15 Redis aktual/37 Chromium regresi terpisah lulus; paket unchanged sebagian
+memakai cache Turbo. Gabungan runtime37 lulus (20 editor +8 SSR +9 Proxy); setelah
+pengetatan assertion/bounded diagnostic,20 editor dan lint dijalankan lagi, lulus.
+Final diff/check ditinjau. Enam gate push baru tetap PENDING sampai diamati pada
+SHA tepat, termasuk unchanged DB reset/lint/advisors/2991 pgTAP/59 concurrency.
+Tidak ada klaim live-provider/deployment/production metadata/session atomicity.
+
+Berikutnya kunci dan verifikasi successful refresh pada kandidat jalur editor:
+actual SSR cookie mutation/response no-store serta isolation setelah budget,
+tanpa extra Proxy Auth/EVAL. Fixed endpoint/matcher produksi, trusted metadata,
+host/path normalization, live provider/DB-grant dan seluruh gate activation tetap
+terbuka. Jangan mount editor parsial atau mengaktifkan withheld grants.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

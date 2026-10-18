@@ -21,7 +21,7 @@ const signingKey = randomBytes(32);
 const subjects = ["91000000-0000-4000-8000-000000000001", "91000000-0000-4000-8000-000000000002"];
 let provider, child, directory, providerOrigin, nextOrigin, cookieA, cookieB, certificate, siblingServer, siblingOrigin;
 let observations = [];
-let userCalls = 0, inFlight = 0, maximumInFlight = 0;
+let userCalls = 0, authRequests = 0, refreshCalls = 0, events = [], inFlight = 0, maximumInFlight = 0;
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const listen = server => new Promise((resolve, reject) => {
   server.once("error", reject); server.listen(0, "127.0.0.1", () => resolve(server.address().port));
@@ -135,11 +135,15 @@ before(async () => {
         assert.match(wire[3], /^spall-identity-link-editor:editor-runtime:\{[0-9a-f]{64}\}:command$/);
         assert.equal(wire[4], wire[3].replace(/:command$/, ":work"));
         assert.deepEqual(wire.slice(5), ["60000", "100", "3100", "31"]);
-        budgetCalls++; res.end(JSON.stringify({ result: budgetResult })); return;
+        events.push("budget"); budgetCalls++; res.end(JSON.stringify({ result: budgetResult })); return;
       }
+      if (req.url.startsWith("/auth/v1/")) authRequests++;
       if (req.method === "POST" && req.url === "/auth/v1/token?grant_type=refresh_token") {
+        events.push("refresh"); refreshCalls++;
         res.writeHead(400); res.end(JSON.stringify({ code: "refresh_token_not_found", message: "Fixture refresh denied" })); return;
       }
+      if (req.url === "/auth/v1/user") events.push("auth");
+      if (req.url.startsWith("/rest/v1/rpc/")) events.push("rpc");
       assert.equal(req.headers.apikey, publicKey);
       const subject = verify((req.headers.authorization ?? "").replace(/^Bearer /, ""));
       if (!subject) { res.writeHead(401); res.end(JSON.stringify({ code: "bad_jwt", message: "Fixture credential denied" })); return; }
@@ -170,6 +174,22 @@ before(async () => {
   await writeFile(join(directory, "tsconfig.json"), JSON.stringify({ compilerOptions: { target: "ES2017", module: "esnext", moduleResolution: "bundler",
     jsx: "react-jsx", esModuleInterop: true, skipLibCheck: true, paths: { "@/*": [`${source}/*`] } } }));
   await writeFile(join(directory, "next.config.mjs"), `export default { devIndicators: false, webpack(config) { config.resolve.alias["@"] = ${JSON.stringify(source)}; return config; } };`);
+  await writeFile(join(directory, "proxy.ts"), `
+import { proxy as actualProxy } from ${JSON.stringify(join(source, "proxy"))};
+export const proxy = actualProxy;
+// Candidate topology only: production matcher and routes stay unchanged.
+export const config = { matcher: ["/((?!api/editor$|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"] };
+`);
+  await mkdir(join(directory, "app/api/session"), { recursive: true });
+  await writeFile(join(directory, "app/api/session/route.ts"), `
+import { createClient } from ${JSON.stringify(join(source, "lib/supabase/server"))};
+export const dynamic = "force-dynamic";
+export async function GET() {
+  const client = await createClient(); const { data, error } = await client.auth.getClaims();
+  return Response.json(!error && data?.claims?.sub ? { subject: data.claims.sub } : { status: "unauthenticated" },
+    { status: !error && data?.claims?.sub ? 200 : 401, headers: { "cache-control": "private, no-store" } });
+}
+`);
   await writeFile(join(directory, "app/api/editor/route.ts"), `
 import assert from "node:assert/strict";
 import { createBudgetedIdentityLinkEditorHttpBoundary } from ${JSON.stringify(join(source, "lib/workspace/identity-link-editor-budget-http"))};
@@ -221,6 +241,7 @@ export async function GET() { return new Response('<!doctype html><html><head><l
 }, { timeout: 60000 });
 beforeEach(() => {
   models.clear(); observations = []; calls = []; userCalls = 0; budgetCalls = 0;
+  authRequests = 0; refreshCalls = 0; events = [];
   budgetResult = 1; malformedAck = false; restricted = false; fixtureError = undefined; maximumInFlight = 0;
 });
 test("HTTPS fixture requires its explicit CA and retains certificate verification", { timeout: 60000 }, async () => {
@@ -254,6 +275,8 @@ for (const action of ["initialize_link_block", "add_link_block"]) {
     assert.equal(row.is_visible, false); assert.deepEqual(row.link_working, { title: value.link_working.title, social_platform: null, destination_url: "javascript:private" });
     assert.deepEqual(row.issues, [{ field: "destination_url", code: "destination_invalid" }]);
     assert.equal(budgetCalls, 1); assert.equal(userCalls, 8);
+    assert.equal(authRequests, 8); assert.equal(refreshCalls, 0);
+    assert.equal(events[0], "budget"); assert.equal(events.filter(x => x === "budget").length, 1);
     const names = calls.map(x => x.name);
     for (const start of [6, 9]) {
       assert.deepEqual(names.slice(start, start + 2).sort(), [C, P].sort()); names.splice(start, 2, C, P);
@@ -262,14 +285,58 @@ for (const action of ["initialize_link_block", "add_link_block"]) {
     assert.ok(calls.every(x => x.subject === subjects[0]));
   });
 }
-for (const reason of ["origin", "json", "selector", "budget"]) {
+for (const reason of ["origin", "query", "json", "selector", "budget"]) {
   test(`actual HTTPS ${reason} denial never reaches Auth or RPC`, { timeout: 60000 }, async () => {
     if (reason === "budget") budgetResult = 0;
     const value = reason === "json" ? "bad JSON" : reason === "selector" ? { ...command(), owner_id: owners[1] } : command();
-    check(await request(cookieA, value, reason === "origin" ? { origin: "https://evil.test", "x-forwarded-host": new URL(nextOrigin).host } : {}), 403, { status: "unavailable" });
-    assert.equal(userCalls, 0); assert.deepEqual(calls, []); assert.equal(budgetCalls, reason === "origin" ? 0 : 1);
+    const metadataDenied = reason === "origin" || reason === "query";
+    check(await request(cookieA, value, reason === "origin" ? { origin: "https://evil.test", "x-forwarded-host": new URL(nextOrigin).host } : {},
+      reason === "query" ? "?untrusted=1" : ""), 403, { status: "unavailable" });
+    assert.equal(userCalls, 0); assert.equal(authRequests, 0); assert.equal(refreshCalls, 0);
+    assert.deepEqual(events, metadataDenied ? [] : ["budget"]);
+    assert.deepEqual(calls, []); assert.equal(budgetCalls, metadataDenied ? 0 : 1);
   });
 }
+test("candidate matcher retains actual Proxy authentication on a separate control path", { timeout: 60000 }, async () => {
+  async function control(cookie) {
+    return new Promise((resolve, reject) => {
+      const req = httpsRequest(`${nextOrigin}/api/session`, { ca: certificate, family: 4,
+        headers: cookie ? { cookie } : {}, signal: AbortSignal.timeout(15000) }, res => {
+        let raw = ""; res.setEncoding("utf8"); res.on("data", part => { raw += part;
+          if (Buffer.byteLength(raw) > 4096) req.destroy(new Error("fixture control response too large")); });
+        res.on("error", reject); res.on("end", () => {
+          try { resolve({ status: res.statusCode, body: JSON.parse(raw), headers: res.headers }); } catch (error) { reject(error); }
+        });
+      });
+      req.on("error", reject); req.end();
+    });
+  }
+  const valid = await control(cookieA);
+  assert.equal(valid.status, 200); assert.deepEqual(valid.body, { subject: subjects[0] });
+  assert.ok(valid.headers["content-security-policy"], "actual production Proxy must execute on control path");
+  assert.equal(authRequests, 2); assert.equal(userCalls, 2); assert.deepEqual(events, ["auth", "auth"]);
+  const missing = await control(undefined);
+  assert.equal(missing.status, 401); assert.deepEqual(missing.body, { status: "unauthenticated" });
+  assert.equal(authRequests, 2); assert.equal(budgetCalls, 0); assert.deepEqual(calls, []); assert.equal(fixtureError, undefined);
+});
+test("expired cookie cannot refresh before editor metadata and budget admission", { timeout: 60000 }, async () => {
+  const expired = await encodeSession(subjects[0], 2);
+  await delay(2100);
+  // Issuance itself validates through Auth. Observe only the subsequent HTTP lifecycle.
+  authRequests = 0; userCalls = 0; refreshCalls = 0; events = [];
+  check(await request(expired, command(), { origin: "https://evil.test" }), 403, { status: "unavailable" });
+  assert.deepEqual(events, []); assert.equal(authRequests, 0); assert.equal(budgetCalls, 0);
+  budgetResult = 0;
+  check(await request(expired), 403, { status: "unavailable" });
+  assert.deepEqual(events, ["budget"]); assert.equal(authRequests, 0); assert.equal(refreshCalls, 0);
+  budgetResult = 1;
+  const admitted = await request(expired);
+  check(admitted, 401, { status: "unauthenticated" });
+  assert.deepEqual(events, ["budget", "budget", "refresh"]);
+  assert.equal(authRequests, 1); assert.equal(refreshCalls, 1); assert.equal(userCalls, 0);
+  assert.equal(budgetCalls, 2); assert.deepEqual(calls, []); assert.equal(models.size, 0);
+  assert.ok(admitted.headers["set-cookie"]?.some(value => /max-age=0/i.test(value)), "actual route SSR must clear rejected refresh cookie");
+});
 test("missing and forged cookies cannot use Authorization/Owner hints to reach RPC", { timeout: 60000 }, async () => {
   for (const cookie of [undefined, cookieA.split("=")[0] + "=invalid"]) {
     check(await request(cookie, command(), { authorization: `Bearer ${token(subjects[0])}`, "x-owner-id": owners[0] }), 401, { status: "unauthenticated" });
@@ -377,7 +444,8 @@ for (const sameSite of [false, true]) {
       await navigate(browser, origin);
       assert.deepEqual(await browserPost(browser, { cross: true }), { type: "opaque", status: 0 });
       assert.deepEqual(observations, [{ origin, site: sameSite ? "same-site" : "cross-site", type: "text/plain", hasCookie: sameSite, status: 403 }]);
-      assert.equal(budgetCalls, 0); assert.equal(userCalls, 0); assert.deepEqual(calls, []); assert.equal(models.size, 0);
+      assert.equal(budgetCalls, 0); assert.equal(userCalls, 0); assert.equal(authRequests, 0); assert.equal(refreshCalls, 0);
+      assert.deepEqual(events, []); assert.deepEqual(calls, []); assert.equal(models.size, 0);
     } finally { await browser.close(); }
   });
 }
