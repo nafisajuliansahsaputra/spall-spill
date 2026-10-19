@@ -4717,6 +4717,57 @@ RPC activation tetap withheld. Berikutnya audit/kunci actual Chromium expired-
 cookie budget denial sebelum Auth, lalu explicit admitted follow-up yang benar-
 benar refresh sekali; jangan menghapus cookie atau menganggap403 logout otomatis.
 
+### Actual Chromium expired-cookie budget admission — 2026-10-19
+
+Bootstrap repository/status/branch/HEAD/history bersih; fetch explicit tracking ref,
+reset dan exact equality ke `c6274440b42649924bdc3e77f08fff815da998c8` diamati.
+Enam baseline push-event jobs SUCCESS dibaca ulang:
+[CI39189297629](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39189297629),
+[Security39189297621](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39189297621),
+[Guard39189297684](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39189297684).
+PENDING12.133 terganti. Goal belum selesai; S4 tetap terakhir CLOSED / VERIFIED.
+
+AGENTS/Cloud Runbook/Protocol/canonical checkpoint/product-architecture summaries/
+J5/J9/pinned D02/12.116–12.120/12.130/12.133 dan actual HTTP/SSR/fixture/browser/
+gateway source diaudit.12.134 dikunci/dibaca sebelum coding. Dua gateway-production
+actual Chromium tests baru PASS, initialize dan add. Actual SSR2s cookie/real
+expiry2100ms/own profile/bounded SPKI, initial CDP provision saja; native fetch
+melewati gateway tanpa cookie replacement/readback/interception/header spoofing.
+
+Existing controlled budgetResult0 menolak firstPOST403 exact unavailable/private-
+no-store/JSON UTF8/Expires0/Pragma/no-referrer/nosniff tanpa Location/CORS/Auth echo.
+Events hanya budget, satu EVAL dan zero refresh/Auth/user/RPC/commits. Initialize
+model tetap absent; add tetap revision3 empty. Cookie tetap hadir; denial bukan
+logout, tidak ada automatic retry atau manufactured save/success/rollback.
+
+Ubah hanya budgetResult1 lalu explicit same-command POST200. Browser memakai
+cookie yang masih ada, satu EVAL lagi sebelum satu refresh/8 user checks/9 Auth/
+13 RPC/satu commit. Exact Owner handle/block/revision1 atau4/raw Working title/
+destination/hidden/readback dibuktikan. Explicit thirdPOST409 already_initialized/
+stale_write memakai automatic response cookie, tanpa refresh/commit tambahan.
+Final tiga budgets/satu refresh/16 RPC/dua selected mutation attempts/satu commit,
+semua calls subject0; final model sama setelah conflict. Observations403/200/409
+semua hasCookie:true, empat forwards(GET+3POST), zero gateway/provider error.
+Browser finally/deadlines/TLS/temp/process cleanup tetap unchanged.
+
+Frozen install/typecheck/lint/lima tooling/4940 aplikasi/tiga build/15 actual Redis/
+37 separate Chromium PASS.205 runtime (76 dev-SSR-Proxy,59 production-direct,70
+gateway) PASS tanpa skip. Sebagian unchanged package memakai Turbo cache; lint
+exit0 memuat satu existing no-unused-expressions warning pada fixture build
+callback. Final diff/check/review dan matching canonical checkpoint dilakukan
+sebelum commit. Enam exact-push jobs baru tetap PENDING sampai observed, termasuk
+unchanged DB reset/lint/error-security-advisors/50 files2991 pgTAP/16 groups59
+native concurrency-retention. Tidak ada CLOSED/activation claim.
+
+Hanya fixture test/contract/tracking berubah. Production source/route/matcher/
+provider behavior/topology/config/env/dependency/SQL/grants/publication dan J1–J9/
+Working-vs-Published tidak berubah. Ini controlled provider-shaped fixture, bukan
+live Upstash quota/Auth rotation/production ingress/CDN/real DB rollback/full D02
+UX. D01/D02/S5/S6 dan public/RPC activation tetap withheld. Berikutnya audit/kunci
+actual Chromium invalid-command body denial setelah budget namun sebelum refresh/
+Auth, lalu explicit corrected command; jangan menerima caller Owner selector atau
+mengubah strict schema demi membuat perintah invalid berhasil.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
