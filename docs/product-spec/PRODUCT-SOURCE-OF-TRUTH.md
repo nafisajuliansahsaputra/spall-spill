@@ -3943,6 +3943,49 @@ Berikutnya audit/kunci actual Chromium gateway rejected-refresh401: buktikan
 response clearing cookie diterapkan browser otomatis dan explicit follow-up tidak
 memulai refresh/Auth/RPC baru; jangan memakai manual cookie clear sebagai buktinya.
 
+### Actual Chromium rejected-refresh cookie clearing — 2026-10-19
+
+Siklus133 fixture-only independen dimulai dari exact pushed
+`805b520602b426ad65575a039f9ea9b55106700f`, workspace bersih dan HEAD/origin sama.
+AGENTS/Runbook/Protocol/current checkpoint/J5/J9/12.117/12.128–12.132, actual SSR/
+provider/gateway/browser helper serta existing Node rejected-refresh test diaudit.
+12.133 dikunci/dibaca sebelum coding saat push CI132 masih PENDING; tidak ada
+activation atau closure yang bergantung pada pending evidence tersebut.
+
+Dua actual Chromium gateway-production tests PASS untuk initialize/add. Existing
+controlled refresh400 refresh_token_not_found, actual SDK/SSR dan native browser
+fetch menghasilkan401 exact unauthenticated dengan seluruh private/no-store/JSON/
+Expires/Pragma/no-referrer/nosniff headers, tanpa Location/CORS/Authorization echo.
+Initial cookie berasal actual SSR2s dan real expiry2100ms; own profile/bounded SPKI.
+Hanya initial provision memakai CDP; tidak ada cookie clear/replacement/readback,
+header spoof/interception atau caller Owner authority sesudah command pertama.
+
+Initial POST membawa cookie, satu EVAL sebelum satu refresh/satu Auth, zero user
+checks/RPC/mutation commits. Chromium menerapkan clearing response otomatis;
+explicit secondPOST diamati tanpa cookie, tetap401 dan hanya menambah budget.
+Final events persis budget/refresh/budget, totals dua budgets/satu refresh/satu
+Auth/zero user/RPC/commits; GET+duaPOST melewati gateway, zero rejection/error.
+Initialize tetap absence, add tetap revision3 empty. No automatic retry/fallback/
+extra Owner read; all browser/TLS/deadline/temp/process cleanup tetap berlaku.
+
+Local frozen install/typecheck/lint/lima tooling/4940 aplikasi/tiga build/15 actual
+Redis/37 separate Chromium PASS.203 runtime executions (76 dev-SSR-Proxy,59
+production-direct,68 gateway) PASS tanpa skip. Sebagian unchanged package memakai
+Turbo cache; lint exit0 tetap memuat satu existing no-unused-expressions warning
+pada fixture build callback, tanpa melemahkan gate. Final diff/check/review dan
+canonical entry comparison dilakukan sebelum commit. Enam exact latest-push jobs
+baru tetap PENDING sampai observed, termasuk unchanged Database reset/lint/error-
+security-advisors/50 files2991 pgTAP/16 groups59 native concurrency-retention.
+
+Hanya fixture test/contract/tracking berubah. Production source/route/matcher/
+provider behavior/topology/config/env/dependency/SQL/grants/publication dan
+Working-vs-Published serta J1–J9 tidak berubah. Ini controlled provider rejection,
+bukan live Auth invalidation/grace/revocation/production ingress/CDN/real DB rollback
+atau whole D02 UX. S4 tetap terakhir CLOSED / VERIFIED; D01/D02/S5/S6 dan public/
+RPC activation tetap withheld. Berikutnya audit/kunci actual Chromium expired-
+cookie budget denial sebelum Auth, lalu explicit admitted follow-up yang benar-
+benar refresh sekali; jangan menghapus cookie atau menganggap403 logout otomatis.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

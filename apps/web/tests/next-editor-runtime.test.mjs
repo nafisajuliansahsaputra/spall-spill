@@ -875,3 +875,35 @@ if (browserGateway) for (const action of ["initialize_link_block", "add_link_blo
     } finally { await browser.close(); }
   });
 }
+
+if (browserGateway) for (const action of ["initialize_link_block", "add_link_block"]) {
+  test(`actual Chromium ${action} applies rejected refresh cookie clearing before explicit follow-up`, { timeout: 60000 }, async () => {
+    const [expired] = await expiredSessions([subjects[0]]); acceptRefresh = false;
+    const value = command(action), initial = action === "add_link_block" ? { revision: 3, rows: [] } : undefined;
+    if (initial) models.set(subjects[0], initial);
+    const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+    const unauthenticated = response => {
+      assert.equal(response.status, 401); assert.deepEqual(response.body, { status: "unauthenticated" });
+      assert.equal(response.cache, "private, no-store, max-age=0");
+      assert.deepEqual(response.privacy, { type: "application/json; charset=utf-8", expires: "0", pragma: "no-cache",
+        referrer: "no-referrer", nosniff: "nosniff", location: false, cors: false, authorization: false });
+    };
+    try {
+      await browser.command("Page.enable"); await browser.command("Network.enable");
+      await browserSession(browser, expired); await navigate(browser, nextOrigin);
+      unauthenticated(await browserPost(browser, { value }));
+      assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 1); assert.equal(userCalls, 0);
+      assert.deepEqual(events, ["budget", "refresh"]); assert.deepEqual(calls, []); assert.equal(mutationCommits, 0);
+      assert.deepEqual(models.get(subjects[0]), initial);
+      assert.deepEqual(observations, [{ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 401 }]);
+      // No cookie mutation/readback here: native Chromium must apply the actual clearing response.
+      unauthenticated(await browserPost(browser, { value }));
+      assert.deepEqual(observations.map(observation => observation.hasCookie), [true, false]);
+      assert.equal(observations[1].status, 401); assert.equal(budgetCalls, 2);
+      assert.equal(refreshCalls, 1); assert.equal(authRequests, 1); assert.equal(userCalls, 0);
+      assert.deepEqual(events, ["budget", "refresh", "budget"]); assert.deepEqual(calls, []); assert.equal(mutationCommits, 0);
+      assert.deepEqual(models.get(subjects[0]), initial);
+      assert.equal(gatewayForwards, 3); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+    } finally { await browser.close(); }
+  });
+}
