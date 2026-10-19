@@ -4240,6 +4240,53 @@ withheld grants; jangan menambah mutator/renderer/backfill sebelum kontrak dan
 applicable migration/security/pgTAP/race evidence. Contact/Media/Spill CTA, full
 Identity comparison dan complete D02 tetap pekerjaan terpisah, tidak dihapus.
 
+### Private Text Working payload storage foundation — 2026-10-19
+
+Bootstrap ulang bersih: fetch/reset exact HEAD/origin
+`846aedaaae5fb7a1200eef10998752d910b7d46e`, tanpa overlap. Goal belum selesai.
+Enam exact-push jobs12.138 SUCCESS:
+[CI39284023681](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39284023681),
+[Security39284023702](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39284023702),
+[Guard39284023677](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39284023677).
+Log4995 aplikasi/209 runtime/15 Redis/37 separate Chromium/2991 pgTAP/16 groups59
+native PASS dibaca; PENDING12.138 tergantikan. S4 tetap terakhir CLOSED / VERIFIED.
+
+Canonical checkpoint/J5/J9/pinned7.3/9.6/11.21/11.23/12.83/12.85/12.138 dan
+actual membership/link schema/pgTAP/CI direfresh.12.139 dikunci/dibaca sebelum coding.
+CLI menghasilkan migration20261019171516_private_identity_text_working_payload.sql.
+Tambah dormant core.identity_block_texts_working: block UUID PK, required Owner/kind
+text, existing composite membership FK tanpa update cascade, delete cascade lokal,
+Owner-leading index. Nullable text_content <=16384 PostgreSQL characters mempertahankan
+null/blank/CRLF/control/markup/combining/Unicode tanpa rewrite/truncate/render/fetch.
+Tidak ada guessed content/default row, per-payload revision atau validity/public flag.
+
+RLS enabled/no policies; semua table privileges PUBLIC/anon/authenticated/service_role
+withheld. Tidak ada RPC/definer/schema exposure, auto-backfill/import, runtime write/
+CAS/read/UI/Preview/Publish atau grants. Existing Link/Working/profile/layout/slot/
+publication/readers unchanged; Text masih not_implemented pada current block reader.
+Collection revision tetap future aggregate CAS token; privileged fixture writes bukan
+runtime Owner authorization, CAS/race, Saved UI, public safety atau production proof.
+
+Tambah051 pgTAP dengan50 assertions untuk empty/no-backfill, Owner/kind/missing-block
+FK, required fields/one payload, recovery/raw/Unicode envelope/no truncation, no parent
+rebinding, hide/reorder stability, localized cascade/sibling isolation, collection/
+Link/profile/layout/slot/publication/progress purity, RLS/privileges dan actual role
+read/write denial. Tes database baru belum dijalankan lokal; expected51 files3041
+pgTAP PENDING sampai observed dalam committed isolated CI reset/lint/error-security-
+advisors, bersama unchanged16 groups59 native concurrency-retention. Tidak menambah
+race suite untuk runtime mutator yang memang belum ada; future mutator wajib own proof.
+
+Frozen install/typecheck/lint/lima tooling/4995 aplikasi/tiga build PASS; unchanged
+application packages memakai Turbo cache, tooling berjalan langsung. Satu existing
+fixture lint warning, nol error. Diff/check/final review dan matching canonical entries
+sebelum commit. Enam exact-push jobs baru PENDING sampai observed, termasuk unchanged
+209 runtime/15 Redis/37 separate Chromium. Tidak ada local DB/browser/provider claim.
+
+D01/D02/S5/S6 serta12.137 deployment/IP/raw-target/live/public/RPC/production gates
+remain open. Berikutnya audit/kunci private Text read/strict DTO/local diagnostics
+serta guarded complete-block integration sebelum create/save/UI/publication. Jangan
+menyatakan dormant storage sudah terintegrasi atau publish membership-only skeleton.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
