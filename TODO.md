@@ -4768,6 +4768,63 @@ actual Chromium invalid-command body denial setelah budget namun sebelum refresh
 Auth, lalu explicit corrected command; jangan menerima caller Owner selector atau
 mengubah strict schema demi membuat perintah invalid berhasil.
 
+### Actual Chromium strict body admission — 2026-10-19
+
+Siklus135 fixture-only independen dari exact pushed
+`7f2a53e2d786d19394d7e61e47556b1b7dd2aafb`; fetch ulang/clean status/HEAD-origin
+equality diamati. AGENTS/Protocol/Runbook/checkpoint/J5/J9/pinned D02/12.114/
+12.116–12.120/12.130/12.133–12.134 dan actual strict command/body/HTTP/SSR/gateway/
+browser source diaudit.12.135 dikunci/dibaca sebelum coding saat CI134 PENDING;
+tidak ada activation/closure yang bergantung pada pending gate.
+
+Dua gateway-production actual Chromium tests baru PASS untuk initialize/add.
+Actual SSR2s cookie/real expiry2100ms/own profile/bounded SPKI dan native fetch;
+hanya initial CDP cookie provision, tanpa replacement/readback/interception/header
+spoof atau fake claims. Budget dan provider refresh acceptance tetap unchanged.
+FirstPOST menyisipkan owner_id milik subject1 pada otherwise valid command milik
+cookie subject0. Existing strict schema menolak403 exact unavailable/private-
+no-store/JSON UTF8/Expires0/Pragma/no-referrer/nosniff tanpa Location/CORS/Auth echo.
+Satu EVAL/events budget sudah dikonsumsi; zero refresh/Auth/user/RPC/mutation.
+Initialize tetap absent, add tetap revision3 empty, other subject tanpa model.
+
+Explicit corrected POST tanpa selector menghasilkan200, cookie tetap hadir dan
+satu EVAL tambahan mendahului satu refresh/8 user checks/9 Auth/13 RPC/satu commit.
+Exact Owner0 handle/block/revision1 atau4/hidden/raw Working/readback benar, bukan
+caller Owner1. Tidak ada schema relaxation/server strip/automatic repair/retry/
+fallback/refund. Third explicit correctedPOST409 already_initialized/stale_write
+memakai automatic response cookie; tidak refresh/commit lagi. Final tiga budgets/
+satu refresh/16 RPC/dua selected mutation attempts/satu commit, semua calls subject0;
+model subject0 unchanged setelah conflict dan subject1 tetap absent. Semua response
+privacy diperiksa; observations native same-origin JSON/cookie hadir403/200/409,
+empat forwards(GET+3POST), zero rejection/provider error. Browser finally/TLS/
+deadlines/temp/process cleanup tetap unchanged.
+
+Frozen install/typecheck/lint/lima tooling/4940 aplikasi/tiga build/15 actual Redis/
+37 separate Chromium PASS.207 runtime (76 dev-SSR-Proxy,59 production-direct,72
+gateway) PASS tanpa skip; sebagian unchanged package memakai Turbo cache. Lint
+exit0 tetap memuat satu existing no-unused-expressions warning pada fixture build
+callback, bukan warning-free claim. Final diff/check/review dan canonical entry
+comparison dilakukan sebelum commit. Enam exact latest-push jobs baru PENDING
+sampai observed, termasuk unchanged DB reset/lint/error-security-advisors/50 files
+2991 pgTAP/16 groups59 native concurrency-retention. Tidak ada CLOSED/activation.
+
+Setelah local verification135, enam exact-push jobs134 SUCCESS diamati:
+[CI39194052359](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39194052359),
+[Security39194052497](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39194052497),
+[Guard39194052397](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39194052397).
+Log Application205 runtime/4940 aplikasi/15 Redis/37 separate Chromium dan Database
+2991 pgTAP/16 groups59 native PASS dibaca; PENDING12.134 tergantikan.
+
+Hanya fixture test/contract/tracking berubah; production source/schema/route/
+matcher/provider behavior/topology/config/env/dependency/SQL/grants/publication dan
+Working-vs-Published/J1–J9 unchanged. Bukti controlled provider-shaped fixture ini
+bukan live Auth/Upstash/production ingress/CDN/real DB rollback atau full D02 UX.
+Goal belum selesai; S4 tetap terakhir CLOSED / VERIFIED. D01/D02/S5/S6 dan public/
+RPC activation withheld. Berikutnya audit/kunci native Chromium expired-cookie
+nonempty-query denial pada raw gateway sebelum budget/Auth, kemudian explicit
+canonical command dengan cookie yang tetap ada; jangan klaim browser mempertahankan
+bare-query/dot raw spelling yang sudah dinormalisasi oleh URL stack.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
