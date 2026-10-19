@@ -5158,6 +5158,55 @@ atomic UUID/membership/payload/single bump, rollback/purity, races dan outcome_u
 reconciliation. First Text initialization, existing-block save, full-canvas integration,
 other typed blocks dan coherent publication tetap pekerjaan terpisah.
 
+### Private existing-collection Text allocation CAS — 2026-10-19
+
+Siklus142 selesai tanpa overlap. Enam exact push-event jobs pada
+3b64583d163077c9d26c2cd64232756f30e20bf5 SUCCESS:
+[CI39333104175](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39333104175),
+[Security39333103910](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39333103910),
+[Guard39333103916](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39333103916).
+Log5258 aplikasi/5 tooling/209 runtime/15 Redis/37 separate Chromium/3079 pgTAP/
+16 groups59 native PASS dibaca. PENDING12.142 tergantikan. Workspace clean di-fetch/
+reset exact HEAD/origin; authority dan relevant contracts/source direfresh.
+
+12.143 dikunci/dibaca sebelum coding. CLI menghasilkan forward migration
+20261019221704_private_owner_text_block_allocation_cas.sql. Tambah withheld
+api.add_current_owner_text_block_working(jsonb): auth.uid/current active-completed
+Owner, Owner-first binding/context/collection locks dan exact12.142 intent. Existing
+own collection saja; missing tidak menjadi empty/initializer. Positive acknowledged
+base CAS, stale/max-safe/position exhaustion dan bounded1000 all-kind/hidden members
+sebelum server UUID/append. Membership kind=text, matching raw Text payload dan single
+N→N+1 bump atomik; internal errors propagate/rollback. Minimal status/block_id/revision
+ack, tanpa raw/private data. Raw nullable/blank/control/markup/CRLF/Unicode preserved.
+
+All PUBLIC/anon/authenticated/service_role execution revoked; no table/RLS/schema/
+route/UI/provider/access activation. Existing source/provenance/other data/Published
+retained. Bukan idempotent retry atau full-canvas authority: old pages masih Text
+not_implemented; selected raw reader tetap terpisah. Guarded mutation transport dan
+outcome_unknown reconciliation belum diimplementasikan; tidak fabricate Saved/Live.
+
+Tambah053 pgTAP: role/actor/metadata/eligibility/context, exact envelope/raw budgets,
+server allocation/empty/stale/capacity/max, failure between membership/payload rollback,
+old own/foreign Text/Link/member/source/provenance/profile/layout/receipt/public purity.
+Tambah isolated native harness sembilan races: Text/Text, Text/Link, aggregate conflict
+versus existing Link payload/visibility/move/removal, collection/restriction waits dan
+999→1000. Near-capacity pages hanya metadata/not_implemented; selected Text read
+memeriksa raw payload terpisah. Unique test identities/handles; committed CI step baru.
+Belum ada local DB reset/native race claim; seluruh bukti SQL baru PENDING CI.
+
+Frozen install/typecheck/lint/5 tooling/5258 aplikasi/tiga build PASS; unchanged app
+checks/test/build memakai Turbo cache. Node syntax harness dan diff/final review PASS.
+Satu existing lint warning, nol error. Enam exact-push jobs baru PENDING sampai observed;
+CI wajib reset/lint/error-advisors/all pgTAP/semua native groups serta209 runtime/
+15 Redis/37 Chromium. Changelog docs ditolak proxy403 tanpa bypass; supported Supabase
+Database Functions docs dan lock-order guidance dibaca. Tidak ada live provider proof.
+
+S4 terakhir CLOSED / VERIFIED; D01/D02/S5/S6/full-canvas/first Text initialization/
+existing Text save/other kinds/publication/ingress/IP/raw-target/live/public/RPC/
+production gates tetap open. Setelah DB/race/six-job evidence PASS, berikutnya audit/
+kunci guarded current-session Text allocation SDK dengan minimal strict ack, final
+Owner proof dan truthful outcome_unknown; jangan retry atau mengubah raw intent.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
