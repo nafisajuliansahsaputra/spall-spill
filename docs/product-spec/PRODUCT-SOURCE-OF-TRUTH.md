@@ -4287,6 +4287,58 @@ remain open. Berikutnya audit/kunci private Text read/strict DTO/local diagnosti
 serta guarded complete-block integration sebelum create/save/UI/publication. Jangan
 menyatakan dormant storage sudah terintegrasi atau publish membership-only skeleton.
 
+### Private selected Text Working read foundation — 2026-10-19
+
+Siklus139 dituntaskan tanpa overlap. Workspace bersih difetch/reset exact HEAD/origin
+ke `b6373024c2db5b4e69d274a1cb29b47911bc4996`. Enam push-event jobs SUCCESS:
+[CI39292827942](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39292827942),
+[Security39292827835](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39292827835),
+[Guard39292827743](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39292827743).
+Log4995 aplikasi/209 runtime/15 Redis/37 separate Chromium/51 files3041 pgTAP/
+16 groups59 native PASS dibaca; PENDING12.139 tergantikan. Goal belum selesai.
+
+J5/J9/pinned7.3/9.6/11.21/11.23/12.75/12.80/12.138/12.139 dan actual snapshot/
+paged SDK/4MiB command acknowledgment contracts/source direfresh.12.140 dikunci
+sebelum coding. Complete canvas plus long Text memerlukan resource/pagination policy
+baru; scope ini satu selected block, bukan loop/merge seluruh collection atau perubahan
+ke current link/page/assembly. CLI menghasilkan migration20261019172314.
+
+Tambah withheld api.resolve_current_owner_text_block_working(uuid), STABLE definer,
+empty search_path, server-derived active/completed current Owner/context. One own
+Text membership/collection/matching tuple payload; missing/other Owner/kind/null ID/
+missing context uniform status-only unavailable. Success minimal current context,
+collection revision dan selected block metadata/raw payload; missing/null dibedakan
+dari present/{text:null}. Hidden/raw control/Unicode/markup retained tanpa render/
+rewrite/fetch. Tidak ada write/lock/revision bump/backfill; seluruh role execution
+PUBLIC/anon/authenticated/service_role withheld, table ACL/RLS unchanged.
+
+Unmounted injected current-session schema-client SDK reader menerima exact copied
+{block_id} canonical UUID saja, satu fixed API POST/input_block_id/signal. Strict
+context/revision/selected-ID/payload-pair/nested envelope,12.138 local diagnostics,
+raw recovery, no retry/cache/session/env/client creation. Invalid/error/deadline/
+ignored late response null tanpa private retention;5s abort. DTO/source snapshot
+bukan final subject/Owner proof, CAS/ABA/freshness after return, Saved/Live atau
+whole Identity. Existing Text not_implemented pada old block readers unchanged.
+
+62 SDK tests baru PASS;117 targeted bersama Text input PASS. Tambah052 pgTAP dengan
+38 assertions untuk function hardening/roles/actual denial/current actor/metadata/
+account/context/missing/other Owner/kind/null, raw/presence/Unicode/hidden/current
+context dan read purity. Database baru belum dijalankan lokal: expected52 files3079
+pgTAP PENDING sampai actual committed isolated CI reset/lint/error-security-advisors
+beserta unchanged16 groups59 native concurrency-retention. Tidak mengklaim new write
+race/live JWT proof dari read-only privileged fixtures atau deklarasi STABLE.
+
+Frozen install/typecheck/lint/lima tooling/5057 aplikasi/tiga build PASS. Web checks/
+tests/build dieksekusi; sebagian unchanged packages Turbo cached. Satu existing
+fixture lint warning, nol error. Final diff/check/review dan matching canonical
+entries sebelum commit. Six exact-push gates baru PENDING sampai observed, termasuk
+unchanged209 runtime/15 Redis/37 separate Chromium; no new local browser/provider claim.
+
+S4 tetap terakhir CLOSED / VERIFIED. D01/D02/S5/S6, trusted ingress/IP/raw-target,
+provider/live/public/RPC/production gates terbuka. Berikutnya guarded selected-Text
+assembly/current-subject/Owner/context/revision-content proof contract, sebelum
+complete-canvas resource/read/publication integration atau create/save/UI activation.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
