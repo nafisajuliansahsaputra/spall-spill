@@ -4880,6 +4880,49 @@ boundary tepercaya sebelum normalisasi dari source/dokumentasi dan evidence yang
 masih diperlukan; jangan menerima caller raw-target header atau mengaktifkan route/
 grants/deployment berdasarkan gateway fixture.
 
+### Deployment request-target provenance audit — 2026-10-19
+
+Siklus136 selesai tanpa overlap; workspace bersih difetch/reset ke exact
+`96140f38a1cced0610ed80fed323c61b0bb7ae70`. Enam push-event jobs baseline SUCCESS:
+[CI39216371399](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39216371399),
+[Security39216371473](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39216371473),
+[Guard39216371385](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39216371385).
+Log209 runtime/4940 aplikasi/15 Redis/37 separate Chromium/2991 pgTAP/16 groups59
+native PASS dibaca; PENDING12.136 tergantikan. Goal belum selesai.
+
+12.137 dikunci sebelum audit. Source Next16.3.8 yang dipin, bundled Proxy/custom
+server docs, tracked config/actual Proxy dan official Vercel documentation search
+menghasilkan inventory boundary beserta SHA256/line anchors. Internal `initURL`
+dibentuk dari request/config; `NextRequestAdapter` membuat `new URL` sebelum
+NextRequest. Repeated slash/backslash dapat redirect308 lebih awal. Kedua skip
+flags mendokumentasikan scope tertentu, bukan original-wire provenance guarantee.
+Production config/matcher tetap unchanged dan tidak menjadi pre-auth raw guard.
+
+Vercel mendokumentasikan request.path transform yang mengubah runtime `req.url`
+dan kandidat Node HTTP-server entrypoint. Karena itu jangan menganggap runtime URL
+selalu target asli atau mengklaim semua custom Node server tidak tersedia.
+Search excerpts bukan actual deployment evidence maupun bukti bahwa provider
+mustahil memenuhi requirement. Tidak membaca secrets, lookup project, provision,
+deploy atau mengubah provider. Caller raw-target/forwarded hints bukan attestation.
+Gateway loopback tidak membuktikan CDN→runtime provenance atau backend isolation.
+
+Frozen install/typecheck/lint/lima tooling/4940 aplikasi/tiga build PASS. Aplikasi
+serta build/typecheck/lint memakai existing Turbo cache; satu existing fixture lint
+warning, nol error. Tidak mengulang209 runtime/15 Redis/37 Chromium lokal untuk
+slice docs-only. Enam jobs exact-push baru PENDING sampai observed, termasuk suite
+tersebut dan unchanged DB reset/lint/error-security-advisors/2991 pgTAP/59 native.
+Diff/check/final review dan canonical entry comparison sebelum commit.
+
+Hanya12.137/TODO/SOT berubah. Working/Draft/Published, J1–J9, code/route/matcher/
+config/dependency/SQL/grants unchanged; S4 tetap terakhir CLOSED / VERIFIED.
+D01/D02/S5/S6, trusted ingress/IP/raw-target provenance, live providers dan public/
+RPC/production gates tetap terbuka. Berikutnya audit dependency private D01
+workspace handoff terhadap J5/J9/pinned D01/D02/12.73–12.115 dan existing resolver/
+presenter/test, kemudian kunci satu gap independen yang nyata sebelum coding.
+Jangan membangun ulang existing work atau menambah variasi fixture transport
+sebagai pengganti bukti deployment. Tidak memerlukan human action baru untuk
+melakukan private handoff audit; blok hanya activation path yang belum terbukti.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
