@@ -997,3 +997,46 @@ if (browserGateway) for (const action of ["initialize_link_block", "add_link_blo
     } finally { await browser.close(); }
   });
 }
+
+if (browserGateway) for (const action of ["initialize_link_block", "add_link_block"]) {
+  test(`actual Chromium ${action} query denial preserves expired cookie before explicit canonical refresh`, { timeout: 60000 }, async () => {
+    const [expired] = await expiredSessions([subjects[0]]);
+    const value = command(action, `query-admission-${action}`), mutation = action === "initialize_link_block" ? I : A;
+    const initial = action === "add_link_block" ? { revision: 3, rows: [] } : undefined;
+    if (initial) models.set(subjects[0], initial);
+    const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+    const privateHeaders = response => {
+      assert.equal(response.cache, "private, no-store, max-age=0");
+      assert.deepEqual(response.privacy, { type: "application/json; charset=utf-8", expires: "0", pragma: "no-cache",
+        referrer: "no-referrer", nosniff: "nosniff", location: false, cors: false, authorization: false });
+    };
+    try {
+      await browser.command("Page.enable"); await browser.command("Network.enable");
+      await browserSession(browser, expired); await navigate(browser, nextOrigin);
+      const denied = await browserPost(browser, { value, path: "/api/editor?untrusted=1" }); privateHeaders(denied);
+      assert.equal(denied.status, 403); assert.deepEqual(denied.body, { status: "unavailable" });
+      noCommandIo(); assert.deepEqual(events, []); assert.equal(mutationCommits, 0);
+      assert.deepEqual(models.get(subjects[0]), initial); assert.deepEqual(observations, []);
+      assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 1);
+      // Explicit canonical command only: no cookie replacement after the gateway denial.
+      const admitted = await browserPost(browser, { value }); privateHeaders(admitted);
+      assert.equal(admitted.status, 200); assert.equal(admitted.body.status, initial ? "allocated" : "initialized");
+      assert.equal(admitted.body.block_id, blockIds[0]); assert.equal(admitted.body.collection_revision, initial ? 4 : 1);
+      const snapshot = admitted.body.readback.snapshot;
+      assert.equal(snapshot.current_handle, "fixture-owner-0"); assert.equal(snapshot.collection.revision, initial ? 4 : 1);
+      assert.equal(snapshot.collection.blocks.length, 1); assert.equal(snapshot.collection.blocks[0].is_visible, false);
+      assert.equal(snapshot.collection.blocks[0].link_working.title, value.link_working.title);
+      assert.equal(snapshot.collection.blocks[0].link_working.destination_url, value.link_working.destination_url);
+      assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 9); assert.equal(userCalls, 8);
+      assert.deepEqual(events.slice(0, 2), ["budget", "refresh"]); assert.equal(calls.length, 13); assert.equal(mutationCommits, 1);
+      const committed = structuredClone(models.get(subjects[0]));
+      const conflict = await browserPost(browser, { value }); privateHeaders(conflict);
+      assert.equal(conflict.status, 409); assert.deepEqual(conflict.body, { status: initial ? "stale_write" : "already_initialized" });
+      assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); assert.equal(mutationCommits, 1);
+      assert.equal(calls.length, 16); assert.equal(calls.filter(call => call.name === mutation).length, 2);
+      assert.ok(calls.every(call => call.subject === subjects[0])); assert.deepEqual(models.get(subjects[0]), committed);
+      assert.deepEqual(observations, [200, 409].map(status => ({ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status })));
+      assert.equal(gatewayForwards, 3); assert.equal(gatewayRejections, 1); assert.equal(fixtureError, undefined);
+    } finally { await browser.close(); }
+  });
+}

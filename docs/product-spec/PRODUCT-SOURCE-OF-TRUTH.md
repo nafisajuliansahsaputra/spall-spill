@@ -4094,6 +4094,61 @@ nonempty-query denial pada raw gateway sebelum budget/Auth, kemudian explicit
 canonical command dengan cookie yang tetap ada; jangan klaim browser mempertahankan
 bare-query/dot raw spelling yang sudah dinormalisasi oleh URL stack.
 
+### Actual Chromium expired-cookie query admission — 2026-10-19
+
+Bootstrap ulang repository/status/branch/history bersih; fetch explicit tracking,
+reset dan exact HEAD/origin equality ke `bbdfb591ef0070dd84ad0148174945b61ba21989`
+diamati. Siklus135 dituntaskan tanpa overlap implementation. Enam exact-push jobs
+baseline SUCCESS dan log207 runtime/4940 aplikasi/15 Redis/37 separate Chromium/
+2991 pgTAP/16 groups59 native PASS dibaca:
+[CI39194478575](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39194478575),
+[Security39194478558](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39194478558),
+[Guard39194478581](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39194478581).
+PENDING12.135 tergantikan. Goal belum selesai; S4 tetap terakhir CLOSED / VERIFIED.
+
+AGENTS/Protocol/Cloud Runbook/canonical checkpoint/J5/J9/pinned D02/12.117/12.127/
+12.130/12.133–12.135 dan actual gateway/browser/SSR/HTTP source direfresh.12.136
+dikunci/dibaca sebelum coding. Dua gateway-production actual Chromium tests PASS
+untuk initialize/add: actual SSR2s cookie/real expiry2100ms/own profile/bounded SPKI,
+hanya initial CDP cookie provision. Existing provider/budget acceptance unchanged.
+Native same-origin JSON POST /api/editor?untrusted=1 ditolak gateway403 exact
+unavailable, semua private/no-store/JSON/Expires/Pragma/no-referrer/nosniff headers,
+tanpa Location/CORS/Auth echo. Nol budget/refresh/Auth/RPC/commit/events atau handler
+observations; model absent/revision3 empty unchanged. Setelah GET hanya satu
+forward/satu rejection, tanpa meneruskan query ke Next. Ini nonempty-query case,
+bukan bukti browser mempertahankan bare-query/dot raw spelling.
+
+Explicit canonical same-command POST memakai cookie yang tetap ada, tanpa cookie
+replacement/readback/interception/header spoof/fake claims. Response200 menunjukkan
+Owner0 handle/block/revision1 atau4/hidden raw Working/readback benar; satu EVAL
+sebelum satu refresh/8 user checks/9 Auth/13 RPC/satu commit. Third explicit canonical
+POST409 already_initialized/stale_write memakai automatic response cookie, tanpa
+refresh/commit tambahan. Final dua budgets/satu refresh/16 RPC/dua selected mutation
+attempts/satu commit, semua calls subject0 dan model unchanged setelah conflict.
+Hanya dua handler observations200/409 dengan native same-origin JSON/cookie hadir;
+tiga forwards(GET+2 canonicalPOST)/satu rejection/zero provider error. Browser
+finally/deadlines/TLS/temp/process cleanup tetap unchanged; tidak ada automatic
+retry/refund/fallback atau manufactured success/rollback.
+
+Frozen install/typecheck/lint/lima tooling/4940 aplikasi/tiga build/15 actual Redis/
+37 separate Chromium PASS.209 runtime executions (76 dev-SSR-Proxy,59 production-
+direct,74 gateway) PASS tanpa skip; sebagian unchanged package memakai Turbo cache.
+Lint exit0 mencatat satu existing no-unused-expressions warning pada fixture build
+callback. Final diff/check/review dan canonical entry comparison dilakukan sebelum
+commit. Enam exact-push jobs baru PENDING sampai observed, termasuk unchanged DB
+reset/lint/error-security-advisors/50 files2991 pgTAP/16 groups59 native tests.
+Tidak ada CLOSED/activation atau production readiness claim.
+
+Hanya fixture test/contract/tracking berubah. Production source/route/matcher/
+gateway/provider behavior/topology/config/env/dependency/SQL/grants/publication dan
+Working-vs-Published/J1–J9 unchanged. Ini controlled loopback evidence, bukan live
+Auth/Upstash/production ingress/CDN/raw-target provenance/real DB rollback/full D02
+UX. D01/D02/S5/S6 dan public/RPC activation remain withheld. Berikutnya audit
+raw-target provenance pada adapter deployment Vercel/Next yang dipin: tentukan
+boundary tepercaya sebelum normalisasi dari source/dokumentasi dan evidence yang
+masih diperlukan; jangan menerima caller raw-target header atau mengaktifkan route/
+grants/deployment berdasarkan gateway fixture.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
