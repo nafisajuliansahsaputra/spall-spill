@@ -4622,6 +4622,58 @@ provenance. Berikutnya audit/kunci actual Chromium gateway failure paths untuk
 restricted Owner403 dan malformed acknowledgment outcome_unknown503; pertahankan
 response-cookie/private-data isolation, no automatic retry dan truthful outcome.
 
+### Actual Chromium gateway failure truth — 2026-10-19
+
+Siklus132 melanjutkan bootstrap bersih exact `57e507e343850f1cc8976f69059d7b18bcc3940e`;
+resume saat tes aktif mempertahankan dua authored files tanpa reset/overlap. Fetch
+ulang tetap baseline yang sama. Enam push-event baseline SUCCESS diamati:
+[CI39167032900](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39167032900),
+[Security39167032917](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39167032917),
+[Guard39167033008](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39167033008).
+PENDING12.131 terganti. Goal belum selesai; S4 tetap terakhir CLOSED / VERIFIED.
+
+AGENTS/Runbook/Protocol/checkpoint/J5/J9/pinned D02/12.117/12.128–12.131 dan affected
+source/fixture dibaca sebelum12.132 dikunci lalu coding. Hanya test/contract/tracking
+berubah; production source/route/matcher/topology/provider behavior/config/env/
+dependency/SQL/grants/publication dan J1–J9 tetap unchanged. Browser helper membaca
+safe response headers dan boolean presence Location/CORS/Authorization, tanpa
+mengembalikan raw Set-Cookie/token/credential. Opaque cross-origin shape tetap.
+
+Empat actual Chromium gateway-production tests PASS: initialize/add masing-masing
+restricted403 dan malformed-ack outcome_unknown503. Own profile/bounded SPKI,
+actual SSR cookie dan real expiry2100ms; native same-origin fetch melewati gateway.
+Initial provision via CDP tetap fixture-only; cookie refresh response403/503 disimpan
+dan dipakai browser otomatis tanpa replacement/interception/header spoofing.
+Semua response exact status-only JSON UTF8/private-no-store/Expires0/Pragma/no-
+referrer/nosniff tanpa Location/CORS/Authorization echo atau private payload.
+
+Restricted initial satu budget/satu refresh/satu user check/dua Auth/satu Owner
+state RPC, nol mutation commit; follow-up eksplisit tetap403 tanpa refresh/commit.
+Unknown initial satu budget/satu refresh/dua user checks/tiga Auth/dua Owner state
+RPC+selected mutation, satu fixture commit dengan hidden raw Working revision1/4.
+Response tetap outcome_unknown tanpa manufactured success/rollback/readback.
+Follow-up eksplisit409 already_initialized/stale_write tidak refresh/commit lagi.
+Negative RPC attempt bukan commit; tidak ada automatic retry/fallback/base refresh.
+Clear cookie terakhir menghasilkan401 tanpa RPC. Tiap case final tiga budgets/
+satu refresh/empat gateway forwards/zero rejection, model absent atau revision3
+empty untuk restricted dan satu hidden row revision1/4 untuk unknown. Browser
+cleanup finally serta existing TLS/deadlines/child/temp cleanup tetap berlaku.
+
+Local frozen install/typecheck/lint/lima tooling/4940 aplikasi/tiga build PASS;
+lint exit0 memuat satu existing no-unused-expressions warning pada production
+fixture build exit callback, bukan lint-error-free claim.15 actual Redis/37 separate
+Chromium regressions/201 runtime (76 dev-SSR-Proxy,59 production-direct,66 gateway)
+PASS tanpa runtime skip. Sebagian unchanged package memakai Turbo cache. Final
+diff/check/review wajib sebelum commit. Enam exact-push jobs baru PENDING sampai
+observed, termasuk unchanged DB reset/lint/advisors/50 files2991 pgTAP/16 groups59
+native concurrency-retention. Tidak ada CLOSED atau production activation claim.
+
+Ini controlled fixture, bukan live provider/production ingress/CDN/real DB rollback
+atau whole D02 UX recovery. D01/D02/S5/S6 dan public/RPC gates tetap withheld.
+Berikutnya audit/kunci actual Chromium gateway rejected-refresh401: buktikan
+response clearing cookie diterapkan browser otomatis dan explicit follow-up tidak
+memulai refresh/Auth/RPC baru; jangan memakai manual cookie clear sebagai buktinya.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

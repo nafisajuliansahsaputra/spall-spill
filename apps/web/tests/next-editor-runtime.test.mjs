@@ -543,7 +543,10 @@ async function browserPost(browser, options = {}) {
         headers: { "content-type": ${JSON.stringify(options.cross ? "text/plain" : "application/json")} },
         body: ${JSON.stringify(JSON.stringify(options.value ?? command()))},
       });
-      return ${options.cross ? '{ type: response.type, status: response.status }' : '{ status: response.status, cache: response.headers.get("cache-control"), body: await response.json() }'};
+      return ${options.cross ? '{ type: response.type, status: response.status }' : `{ status: response.status, cache: response.headers.get("cache-control"), body: await response.json(),
+        privacy: { type: response.headers.get("content-type"), expires: response.headers.get("expires"), pragma: response.headers.get("pragma"),
+          referrer: response.headers.get("referrer-policy"), nosniff: response.headers.get("x-content-type-options"),
+          location: response.headers.has("location"), cors: response.headers.has("access-control-allow-origin"), authorization: response.headers.has("authorization") } }`};
     })()`,
   });
   assert.equal(reply.exceptionDetails, undefined, "actual browser fetch must settle without script error");
@@ -824,5 +827,51 @@ if (browserGateway) for (const action of ["initialize_link_block", "add_link_blo
       assert.equal(budgetCalls, 6); assert.equal(refreshCalls, 2); assert.equal(mutationCommits, 2);
       assert.equal(gatewayForwards, 8); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
     } finally { await Promise.all(browsers.map(browser => browser.close())); }
+  });
+}
+
+if (browserGateway) for (const action of ["initialize_link_block", "add_link_block"]) for (const failure of ["restricted", "unknown"]) {
+  test(`actual Chromium ${action} ${failure} response preserves private failure truth and refreshed cookie`, { timeout: 60000 }, async () => {
+    const [expired] = await expiredSessions([subjects[0]]);
+    const value = command(action, `private-failure-${action}`), mutation = action === "initialize_link_block" ? I : A;
+    const initialRevision = action === "initialize_link_block" ? null : 3;
+    if (initialRevision !== null) models.set(subjects[0], { revision: initialRevision, rows: [] });
+    restricted = failure === "restricted"; malformedAck = failure === "unknown";
+    const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+    const privateReply = (response, status, body) => {
+      assert.equal(response.status, status); assert.equal(response.cache, "private, no-store, max-age=0");
+      assert.deepEqual(response.body, body);
+      assert.deepEqual(response.privacy, { type: "application/json; charset=utf-8", expires: "0", pragma: "no-cache",
+        referrer: "no-referrer", nosniff: "nosniff", location: false, cors: false, authorization: false });
+    };
+    const unchangedModel = () => {
+      if (restricted) {
+        assert.equal(mutationCommits, 0);
+        assert.deepEqual(models.get(subjects[0]), initialRevision === null ? undefined : { revision: 3, rows: [] });
+      } else {
+        assert.equal(mutationCommits, 1); const model = models.get(subjects[0]);
+        assert.equal(model.revision, initialRevision === null ? 1 : 4); assert.equal(model.rows.length, 1);
+        assert.equal(model.rows[0].is_visible, false); assert.equal(model.rows[0].link_working.title, value.link_working.title);
+      }
+    };
+    try {
+      await browser.command("Page.enable"); await browser.command("Network.enable");
+      await browserSession(browser, expired); await navigate(browser, nextOrigin);
+      privateReply(await browserPost(browser, { value }), restricted ? 403 : 503, { status: restricted ? "restricted" : "outcome_unknown" });
+      assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1);
+      assert.equal(userCalls, restricted ? 1 : 2); assert.equal(authRequests, restricted ? 2 : 3);
+      assert.deepEqual(calls.map(call => call.name), restricted ? [S] : [S, S, mutation]);
+      assert.equal(events[0], "budget"); assert.equal(events[1], "refresh"); unchangedModel();
+      // An explicit new command must reuse the actual browser response cookie, without retrying the first command automatically.
+      privateReply(await browserPost(browser, { value }), restricted ? 403 : 409,
+        { status: restricted ? "restricted" : action === "initialize_link_block" ? "already_initialized" : "stale_write" });
+      assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); unchangedModel();
+      assert.deepEqual(calls.map(call => call.name), restricted ? [S, S] : [S, S, mutation, S, S, mutation]);
+      assert.ok(calls.every(call => call.subject === subjects[0]));
+      await browserSession(browser, undefined); const before = calls.length;
+      privateReply(await browserPost(browser, { value }), 401, { status: "unauthenticated" });
+      assert.equal(calls.length, before); assert.equal(budgetCalls, 3); assert.equal(refreshCalls, 1); unchangedModel();
+      assert.equal(gatewayForwards, 4); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+    } finally { await browser.close(); }
   });
 }
