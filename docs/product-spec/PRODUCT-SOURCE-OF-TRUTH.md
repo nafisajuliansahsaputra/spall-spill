@@ -4387,6 +4387,46 @@ target/live/public/RPC/production gates terbuka. Berikutnya audit/kunci explicit
 creation/save intent dan collection CAS sebelum runtime mutation; full-canvas resource/
 read/publication integration serta Contact/Media/Spill CTA tetap pekerjaan terpisah.
 
+### Explicit existing-collection Text addition intent — 2026-10-19
+
+Resume clean exact HEAD/origin8a9d6f3011b542d82863d0da4936032027f31f53 diamati;
+tidak ada overlap atau unexpected local work. Enam exact push-event jobs SUCCESS
+kembali diperiksa: [CI39326713136](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39326713136),
+[Security39326713153](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39326713153),
+[Guard39326713088](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39326713088).
+PENDING12.141 tergantikan. Goal belum selesai; S4 terakhir CLOSED / VERIFIED.
+
+J5/J9/pinned7.3/D02/11.22/11.23,12.83/12.88/12.100/12.103/12.138–141 dan
+actual Text/Link input/command source direfresh.12.142 dikunci/dibaca sebelum coding.
+Tambah pure unmounted server-only Text addition intent: explicit add_text_block,
+positive safe base_collection_revision, explicit is_visible, strict nested unchanged
+12.138 text_working. Missing/null base tidak menjadi initialized-empty inference;
+creation/save/transaksi tidak terjadi karena parser sukses atau editor dibuka.
+
+Raw null/blank/invalid/control/markup/CRLF/combining/Unicode tetap recoverable dengan
+fixed existing local issues;16384-code-point/no-NUL engineering envelope unchanged.
+Reject missing/wrong/coerced envelope/extra Owner/block/order/source/provenance/public/
+provider/format authority tanpa menghapus input. Exact parsed copies dan independent
+issues/results; tidak ada fetch/UUID/retry/cache/auth/DB/side effects. Visibility atau
+empty issues bukan Saved/Live/ownership/freshness/CAS/publication proof. Existing Link
+command/readers tidak diperluas atau mengklaim full Identity canvas.
+
+110 tes baru PASS;165 targeted bersama55 Text input PASS. Frozen install/typecheck/
+lint/lima tooling/5258 aplikasi/tiga build PASS; web checks/test/build fresh, sebagian
+unchanged packages Turbo cached. Satu existing fixture lint warning, nol error.
+Final diff/check/review dan canonical entry comparison sebelum commit. Six exact-push
+jobs baru PENDING sampai observed; unchanged CI reset/lint/error-advisors/3079 pgTAP/
+59 native/209 runtime/15 Redis/37 separate Chromium tetap wajib. Tidak ada new local
+DB/browser/provider evidence; unit intent tidak membuktikan durable allocation/save.
+
+Tidak ada SQL/schema/grants/routes/UI/Preview/Publish activation atau perubahan
+Working/Draft/Published semantics/J1–J9. D01/D02/S5/S6 dan trusted ingress/IP/raw-target/
+live/public/RPC/production gates tetap terbuka. Berikutnya audit/kunci private existing-
+collection Text allocation CAS: Owner/context/collection locking, acknowledged base,
+atomic UUID/membership/payload/single bump, rollback/purity, races dan outcome_unknown
+reconciliation. First Text initialization, existing-block save, full-canvas integration,
+other typed blocks dan coherent publication tetap pekerjaan terpisah.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
