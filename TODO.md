@@ -5070,6 +5070,54 @@ provider/live/public/RPC/production gates terbuka. Berikutnya guarded selected-T
 assembly/current-subject/Owner/context/revision-content proof contract, sebelum
 complete-canvas resource/read/publication integration atau create/save/UI activation.
 
+### Guarded selected Text Working assembly — 2026-10-19
+
+Siklus140 selesai tanpa overlap; fetch/reset clean exact HEAD/origin
+`1422f2dde6e5bcfc525732dc1e9ff3805d840c24` diamati. Enam push-event jobs SUCCESS:
+[CI39294226528](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39294226528),
+[Security39294226576](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39294226576),
+[Guard39294226526](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39294226526).
+Log5057 aplikasi/209 runtime/15 Redis/37 separate Chromium/52 files3079 pgTAP/
+16 groups59 native PASS dibaca; PENDING12.140 tergantikan. Goal belum selesai.
+
+J5/J9/pinned D02/11.21/11.23/12.78/12.82/12.87/12.140 dan actual Owner proof/
+selected SDK/current context source direfresh.12.141 dikunci/dibaca sebelum coding.
+Named export untuk existing exact12.140 request schema saja; reader semantics tetap.
+Tambah unmounted current-session auth/schema-client assembly .read(unknown), copied
+strict selected block ID sebelum claims/RPC; invalid_text_block_request tanpa I/O.
+
+Tiga verified-subject/strict Owner-state observations, dua matching current-context
+reads dan dua selected Text reads melalui actual pinned SDK. Success tepat7 private
+RPCs/3 getClaims, hasil original minimal DTO termasuk hidden/raw invalid/incomplete/
+missing versus present-null dan fixed local issues. Bandingkan context, collection
+revision dan seluruh parsed DTO; same-revision content/visibility/position/presence
+change juga deny. Reprove subject/Owner active/completed sesudah final private reads.
+Missing/error claims unauthenticated; inconsistent/malformed proof/transport/drift
+unavailable; non-active states status-only denial, tanpa retained private output.
+
+Aggregate5s abort/state signal dan cancellation setelah setiap await; nested reads
+mempertahankan own bounds. Ignored late claims/SDK response tidak memulai fase lanjut
+atau menghidupkan output. Tidak ada retry/cache/Owner selector/client/env creation,
+atomic snapshot/session-freeze/ABA/global freshness/CAS/write/publication proof.
+Bounded selected observation, bukan full canvas; old collection/link/page unchanged.
+
+91 assembly tests baru PASS,153 targeted bersama selected SDK PASS, termasuk tiga
+proof phases/state denial/actor drift/malformed proof, kedua read phases/context/
+revision/content drift, raw recovery/copy/no cache,7 denied SDK phases dan late/5s
+aggregate yang tidak di-reset. Controlled claims bukan live JWT/provider evidence;
+RPC transport memakai SDK pinned. Frozen install/typecheck/lint/lima tooling/5148
+aplikasi/tiga build PASS. Web checks/tests/build berjalan, sebagian unchanged packages
+Turbo cached. Satu existing fixture lint warning, nol error. Final diff/check/review
+serta canonical entry comparison sebelum commit. Six exact-push jobs baru PENDING
+sampai observed; unchanged3079 pgTAP/59 native/reset/lint/error-advisors/209 runtime/
+15 Redis/37 separate Chromium tetap wajib CI. Tidak ada new local DB/browser claim.
+
+Tidak ada SQL/schema/grants/route/command/Preview/Publish/provider change dalam slice
+ini. S4 tetap terakhir CLOSED / VERIFIED; D01/D02/S5/S6 dan trusted ingress/IP/raw-
+target/live/public/RPC/production gates terbuka. Berikutnya audit/kunci explicit Text
+creation/save intent dan collection CAS sebelum runtime mutation; full-canvas resource/
+read/publication integration serta Contact/Media/Spill CTA tetap pekerjaan terpisah.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

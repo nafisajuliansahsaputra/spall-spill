@@ -5,6 +5,7 @@ import { identityTextWorkingInputSchema, inspectIdentityTextWorkingInput } from 
 
 const blockId = z.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
 const requestSchema = z.object({ block_id: blockId }).strict();
+export { requestSchema as ownerTextBlockWorkingRequestSchema };
 const block = z.object({
   block_id: blockId, kind: z.literal("text"), is_visible: z.boolean(),
   position: z.number().int().min(1).max(2147483647),
