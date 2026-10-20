@@ -4677,6 +4677,54 @@ current-session existing Text save SDK: reuse145 exact input, minimal exact-ID/b
 ack, final same-Owner proof dan truthful outcome_unknown, no blind retry atau private
 output on denial. Jangan mount partial D02 atau enable withheld execution.
 
+### Guarded private existing Text Working save SDK — 2026-10-20
+
+Resume clean HEAD/origin070a4a53fcb33f03686135f7adf7dec728c76161; enam exact-push
+jobs SUCCESS dan filtered logs direfresh:
+[CI39386198999](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39386198999),
+[Security39386199142](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39386199142),
+[Guard39386198994](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39386198994).
+Observed3302 pgTAP/54 files,18 native groups78 tests termasuk10 Text save races,
+5730 app/5 tooling/209 runtime/15 Redis/37 Chromium PASS menggantikan PENDING147.
+Failed1acda07 bukan final proof. Goal belum selesai; S4 terakhir CLOSED / VERIFIED.
+
+J5/J9/pinned D02/11.21/11.23 dan actual92/138/145/147 source/tests direfresh;
+12.148 dikunci/dibaca sebelum coding. Tambah unmounted server-only current-session
+createOwnerBlockTextWorkingSave(client).save(unknown), reuse unchanged145 schema dan
+block-ID response syntax. Strict parsed copy sebelum await; malformed SDK input
+invalid_text_working sesuai backend147, pure145 inspector invalid_save_intent unchanged.
+Verified claims/strict Owner active-completed sebelum one fixed save RPC, minimal
+strict exact requested ID/base+1 ack, final same subject/Owner proof. Success2 claims/
+3 RPC, tanpa source/provenance/client Owner/public authority.
+
+Raw null/blank/control/markup/CRLF/Unicode/16k retained tanpa public-validity/diagnostic/
+normalization/default gate. Known strict status-only negatives tanpa fallback/init/
+conversion/repair/retry/base refresh/cache/UUID. Aggregate5s deadline/abort, post-await
+checks; attempted-dispatch HTTP/network/SQL/malformed/lost/late reply atau failed final
+proof outcome_unknown saja, bukan rollback/not-Saved/idempotency claim. Late ignored
+phases tidak revive output/start new phase. Same-instance explicit later call re-proves;
+unknown→old-base stale bukan causal evidence prior success/failure. Backend147 tetap
+persistence/locks/membership/CAS authority; SDK bukan live JWT/atomic binding/ABA/
+revocation/global freshness/whole Identity/publication proof.
+
+144 new SDK tests dan274 targeted bersama130 intent PASS: fixed pinned SDK args/
+POST/schema, raw budgets/copy, strict input/ack/private extras/exact ID/base+1/max,
+initial/final claims/Owner/state/denial/errors, all known negatives, no retry/cache,
+unknown→stale, all late claims/three RPC phases dan slow proof consumes same deadline.
+Frozen install/typecheck/lint/5 tooling/5874 app/tiga builds PASS; web checks/test/build
+fresh, unchanged packages sebagian Turbo cached. Existing satu lint warning/nol error.
+Final/staged diff review dan canonical entry comparison sebelum commit. Tidak ada
+SQL/grants/RLS/route/UI/Link command/Published change atau new DB/browser/live proof.
+Supabase changelog proxy403 tanpa bypass; supported getClaims docs refreshed.
+
+Enam new exact-push jobs PENDING sampai observed; unchanged CI reset/lint/error-
+advisors/3302 pgTAP/78 native/209 runtime/15 Redis/37 Chromium wajib. D01/D02/S5/S6/
+full canvas/first Text initialization/other kinds/publication/ingress/IP/raw-target/
+provider/live/public/RPC/production tetap open. Setelah exact gates PASS, berikutnya
+audit/kunci bounded save/selected-readback review dengan outer same-Owner proofs,
+minimal save ack terpisah dari same/newer Text observation; visibility/order bukan
+content-save intent, unknown tidak dipromosikan dari matching text/base/count.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
