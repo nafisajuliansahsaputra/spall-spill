@@ -5108,6 +5108,57 @@ budget/request-local dispatch/no-store/mounted safety evidence. Hitung Text esca
 Unicode byte ceiling sendiri; jangan menyalin Link32768 budget atau memilih trusted
 host dari request. Semua RPC/public grants tetap withheld.
 
+### Bounded private Text request metadata admission — 2026-10-20
+
+Fresh clean HEAD/origin345dcda50d527e89a21928f0d99733f926291ee8;156 push
+CI39490302647 Application/Database masih running, Security39490302561 tiga jobs
+SUCCESS dan Guard39490302682 SUCCESS. Pending evidence bukan human gate. Slice
+pure ini independen dari runtime156, memakai unchanged138/154 dan115/123; tidak
+advance dependent dispatch atau mengklaim156 VERIFIED. Fresh canonical156,
+actual metadata predicate/tests, actual Chromium empty-token correction123,
+raw Text bounds/command schemas dan pinned J5/J9/D02 semantics diaudit ulang.
+
+12.157 locked sebelum coding. Stage unmounted server-only
+isIdentityTextEditorRequestAdmitted(Request,trustedOrigin) dengan exact canonical
+HTTPS server-config origin/URL/Host/Origin, POST/usable body, JSON/encoding/fetch
+metadata dan canonical declared length fail closed. Forwarded headers tidak
+memperbaiki denial/menetapkan proxy trust. Pure metadata tidak clone/read/pull/
+lock/cancel/decode body, auth/budget/RPC/env/cache/timer, atau import dispatcher.
+No new fingerprint/body reader/route/UI/SQL/grant/Published/dependency change.
+
+Independent Text byte ceiling262144:16384 valid non-BMP code points dapat memakai
+196608 ASCII bytes dengan JSON surrogate escapes, plus bounded fixed154 fields/
+UUID/maximum safe numeric base. Worst-case valid compact add/init/save envelopes
+fit; Link32768 unchanged dan tidak menjadi Text quota. Arbitrary whitespace tetap
+subject actual future byte ceiling. Optional Content-Length canonical max6 digits
+<=262144, bukan proof actual byte count/JSON/command/Owner/Saved/Live. Lying declared
+length/invalid JSON sengaja belum ditangani predicate; future bounded stream reader
+harus enforce actual bytes/read-count/deadline/strict UTF8/schema/admission recheck.
+
+111 new actual Request/Headers/streams tests PASS;595 targeted bersama192 pure
+command/197 dispatcher/95 existing Link metadata regressions. Covers config/URL/
+Origin/Host/method/media/encoding/fetch/length ambiguity, spoof/abort/used/locked/
+missing body, no body operations/I/O, nullable/raw commands dan every action with
+maximal surrogate/BMP/control escaping, unchanged Link ceiling, mutable metadata
+rechecked and lying actual bytes not misrepresented as enforcement. No new browser/
+manual/live JWT/provider/DB commit/CSRF proof.
+
+Frozen install/typecheck/lint/5 tooling/full7063 app/tiga builds PASS, affected web
+fresh6782 tests plus unchanged31 destination/32 media/201 scanner/17 navigation;
+unchanged package tasks may reuse Turbo cache. Existing lint warning/nol error.
+git diff --check/final/staged review dan identical canonical entries required.
+Fetch authorized remote345 unchanged sebelum push only HEAD:codex/autopilot.
+Exact latest six push jobs incl unchanged3416 pgTAP55files/88 native19groups/
+209 runtime/15 Redis/37 Chromium/reset/lint/error-advisors PENDING sampai observed;
+superseded156 runs bukan final evidence.
+
+S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/other kinds/publication/
+ingress/IP/raw-target/live/public/RPC/production open. Setelah exact latest gates
+PASS, next audit/kunci bounded Text streamed body reader memakai116 precedent,
+138/154/157: actual byte/read/deadline/strictUTF8/JSON/copied metadata rechecks,
+sebelum budget/request-local dispatch/no-store/mounted transport safety evidence.
+Semua RPC/public grants withheld; tidak mount partial D02 atau infer live evidence.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
