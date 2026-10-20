@@ -5505,6 +5505,55 @@ selected-readback review148+141 dengan outer same-Owner proofs, ack terpisah dar
 same/newer selected observation dan no unknown inference/retry. First Text runtime
 transaction/SDK/full canvas tetap terpisah; pure intent bukan runtime creation proof.
 
+### Private existing Text save / selected readback review — 2026-10-20
+
+Resume clean HEAD/origin4245d27c662e8f026fe616a434ed57516ce53b57. Enam exact-push
+jobs SUCCESS dan filtered Application/Database logs diperiksa:
+[CI39393023182](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39393023182),
+[Security39393023230](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39393023230),
+[Guard39393023271](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39393023271).
+Observed5991 application/5 tooling/3302 pgTAP/54 files/18 native groups78 tests/
+209 runtime/15 Redis/37 Chromium PASS menggantikan PENDING148/149. Goal belum selesai.
+
+Fresh J5/J9/pinned D02/11.21/11.23 dan actual145/148/140/141/146 source/tests;
+12.150 dikunci sebelum coding. Tambah unmounted server-only
+createOwnerBlockTextWorkingSaveReview(client).save(unknown), strict145 copy sebelum
+await, satu actual148 save dan actual141 selected read, tiga outer same-subject/
+Owner active-completed proofs. Success8 claims/13 RPC. SDK malformed input tetap
+invalid_text_working; raw/local issues unchanged. Minimal save ack terpisah dari
+same/newer selected observation. Same revision memerlukan exact ID/kind/present/
+original nullable raw Text; visibility/position bukan selector content save. Stable
+visibility/position valid; newer may edited/hidden/missing-payload, ack revision
+retained dan relation eksplisit. Missing/older/drifting/malformed read hanya ack+
+unavailable setelah safe final outer proof; bukan removal inference.
+
+Known negative/unknown save tidak membaca/retry/promote matching raw state. Outer
+proof/session/binding failure setelah nested invocation outcome_unknown tanpa
+private ack/snapshot; nested typed denial juga unknown. Aggregate outer10s dengan
+unchanged nested5s lifecycles; already-invoked operation mungkin commit/finish
+privately setelah cancellation, late output tidak revive/start later outer phase.
+No retry/cache/base refresh/UUID/init/repair/merge/publication; bukan atomic binding/
+session freeze/ABA/revocation/global freshness/live JWT/CSRF/full Identity proof.
+No SQL/grants/RLS/route/UI/old composition/Published change.
+
+204 new controlled-claims pinned-SDK tests PASS;439 targeted bersama144 SDK/91
+assembly tests PASS. Exact POST/schema/args/order, raw/copy/input/ack, same/newer/
+older/missing/drift, stable visibility/position, eight proof and13 request phases,
+known negatives, lost/late/network/deadline/no replay/unknown→stale covered. Frozen
+install/typecheck/lint/5 tooling/6195 application/tiga builds PASS; web checks/test/
+build fresh, unchanged packages sebagian Turbo cached. Satu existing lint warning,
+nol error. Diff/final/staged review dan identical canonical entry readback required.
+Supabase changelog proxy403 tanpa bypass; supported getClaims docs refreshed.
+
+Enam exact new push jobs PENDING sampai observed; unchanged DB reset/lint/error-
+advisors/3302 pgTAP/78 native/209 runtime/15 Redis/37 Chromium wajib. No new DB/
+browser/manual/provider/live proof. S4 terakhir CLOSED / VERIFIED; D01/D02/full
+canvas/S5/S6/first Text init/other kinds/publication/ingress/IP/raw-target/live/
+public/RPC/production gates open. Berikutnya audit/kunci private first Text
+initialization transaction149+104+139: expected absence/Owner-first locks/atomic
+collection-member-payload/raw retention/rollback/manual-vs-import concurrency,
+no invented provenance; SDK/full canvas/public activation tetap separate gates.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
