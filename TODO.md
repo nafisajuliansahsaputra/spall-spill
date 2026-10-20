@@ -5394,6 +5394,13 @@ IMPLEMENTED / UNVERIFIED, tanpa local DB/browser/live proof. Enam exact latest p
 jobs dan unchanged209 runtime/15 Redis/37 Chromium tetap wajib; PENDING bukan VERIFIED.
 Supabase Database Functions docs/consistent lock order refreshed; no provider access.
 
+CI147 pada1acda073fa10de4a59e39740c8d0b466ad07872c menemukan fixture unsafe
+revision ditolak unchanged table CHECK sebelum mutator (91 assertions sebelumnya
+PASS). Fixture dikoreksi menjadi throws23514 untuk storage denial, lalu recheck
+prior max remains revision_exhausted; constraint tidak di-drop/dilemahkan. Migration
+unchanged. Exact replacement SHA harus menjalankan ulang all six gates/DB/races;
+failed/superseded run bukan verification proof.
+
 S4 terakhir CLOSED / VERIFIED; D01/D02/S5/S6/full canvas/other kinds/first Text
 initialization/publication/ingress/IP/raw-target/provider/live/public/RPC/production
 remain open. Setelah exact DB/race/six-job gates PASS, berikutnya audit/kunci guarded

@@ -166,8 +166,9 @@ select is((select text_content from core.identity_block_texts_working where bloc
 select is((select revision from core.identity_block_collections_working where owner_id=(select owner_id from actors where auth_user_id='9f000000-0000-4000-8000-000000000001')),11::bigint,'Injected rollback retains revision');
 update core.identity_block_collections_working set revision=9007199254740991 where owner_id=(select owner_id from actors where auth_user_id='9f000000-0000-4000-8000-000000000001');
 select is(api.save_current_owner_block_text_working(pg_temp.text_save('no write',9007199254740991)),'{"status": "revision_exhausted"}'::jsonb,'Maximum/unsafe authoritative revision denies');
-update core.identity_block_collections_working set revision=9007199254740992 where owner_id=(select owner_id from actors where auth_user_id='9f000000-0000-4000-8000-000000000001');
-select is(api.save_current_owner_block_text_working(pg_temp.text_save('no write',9007199254740991)),'{"status": "unavailable"}'::jsonb,'Maximum/unsafe authoritative revision denies');
+-- Corrupt unsafe revisions are unrepresentable under the unchanged storage constraint.
+select throws_ok($$update core.identity_block_collections_working set revision=9007199254740992 where owner_id=(select owner_id from actors where auth_user_id='9f000000-0000-4000-8000-000000000001')$$,'23514',null,'Storage rejects unsafe revision without weakening its constraint');
+select is(api.save_current_owner_block_text_working(pg_temp.text_save('no write',9007199254740991)),'{"status": "revision_exhausted"}'::jsonb,'Rejected unsafe fixture leaves prior maximum revision intact');
 select is((select text_content from core.identity_block_texts_working where block_id='9f000000-0000-4000-8000-000000000013'),repeat('🐈',16384),'Revision exhaustion/unsafe denial retained content');
 select is((select jsonb_agg(to_jsonb(t) order by block_id) from core.identity_blocks_working t),(select jsonb_agg(to_jsonb(t) order by block_id) from original_members t),'All member IDs/Owner/kinds/order/visibility/timestamps unchanged');
 select is((select jsonb_agg(to_jsonb(t) order by block_id) from core.identity_block_links_working t),(select jsonb_agg(to_jsonb(t) order by block_id) from original_links t),'All Link payloads untouched');
