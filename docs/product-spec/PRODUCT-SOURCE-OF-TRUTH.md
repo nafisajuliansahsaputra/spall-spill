@@ -4823,6 +4823,53 @@ initialization transaction149+104+139: expected absence/Owner-first locks/atomic
 collection-member-payload/raw retention/rollback/manual-vs-import concurrency,
 no invented provenance; SDK/full canvas/public activation tetap separate gates.
 
+### Private manual first Text initialization transaction — 2026-10-20
+
+Slice independen setelah150 fb63f20dc6cea13443fa7c76c77b427303c317df dipush,
+clean/exact origin refreshed;150 runtime tidak dipakai. Empat Security/Guard jobs
+SUCCESS, Application/Database masih PENDING saat pemilihan:
+[CI39438903053](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39438903053),
+[Security39438903136](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39438903136),
+[Guard39438903023](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39438903023).
+Latest exact push harus memverifikasi150+151 bersama; superseded run bukan final proof.
+
+Fresh149/104/139/143/manual Link/source import/pgTAP/native CI dan pinned D02/
+11.21/11.22/11.23;12.151 dikunci sebelum coding. CLI-generated migration menambah
+private api.initialize_current_owner_blocks_from_text(input_intent). Owner-first
+lock/auth binding recheck/active-completed/canonical context; strict unchanged149
+expected-absence envelope, explicit null/visibility/nullable raw Text. Semua existing
+own collection termasuk initialized-empty already_initialized, bukan overwrite/
+replay success. Atomic creation collection revision1/server UUID/Text position1/
+visibility/matching raw payload, minimal status/block_id/collection_revision ack.
+No source requirement/import/copy/provenance atau existing CAS bump. Errors propagate
+and rollback; PUBLIC/anon/authenticated/service_role EXECUTE tetap withheld.
+No SDK/routes/UI/Published/old initializer change atau production service mutation.
+
+Committed055 pgTAP dirancang114 assertions: actual denied roles/definer hardening/
+auth/context/eligibility/strict envelopes, NUL and Unicode budgets/raw/no-source,
+exact typed membership/minack/revision/visibility, existing-empty conflict, failures
+before member/before payload/after payload with all-three rollback, nonempty actual
+foreign Text/Link/provenance dan all-row purity. New isolated native group10 races
+Text/Text, simultaneous+both-held orders Text/import dan Text/Link, Owner restriction/
+empty collection/binding removal during wait. Scope guard/unique fixture IDs/cleanup
+retained. CI Database step ditambah; required reset/lint/error-advisors/all pgTAP/
+all native races PENDING sampai observed, expected3416 pgTAP/88 native, bukan klaim
+local/live DB pass. SQL/static final review dan node --check PASS.
+
+Frozen install/typecheck/lint/5 tooling/6195 app/tiga builds PASS; unchanged app tasks
+Turbo cache dari verified local150, satu existing lint warning/nol error. No new
+browser/manual/live JWT/provider proof. Current Supabase docs/consistent lock skill
+refreshed; changelog akses tetap gagal melalui network policy, tanpa bypass.
+Diff/final/staged review dan identical canonical entry comparison required.
+
+Enam exact new push jobs PENDING, termasuk209 runtime/15 Redis/37 Chromium dan
+3416 pgTAP/88 native bila semua baru pass. PENDING bukan VERIFIED. S4 terakhir
+CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/other kinds/publication/ingress/IP/
+raw-target/live/public/RPC/production tetap open. Setelah exact DB/Security/CI gates
+PASS, berikutnya audit/kunci guarded first Text initializer SDK: reuse149 strict
+intent, current subject/Owner before-after, exact minimal revision1/new-ID ack,
+bounded deadline/attempted outcome_unknown/no retry, tanpa grant atau UI activation.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
