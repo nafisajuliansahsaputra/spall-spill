@@ -5650,6 +5650,62 @@ observation; same revision1 requires exact ID/Text/position1/visibility/present 
 Selected DTO bukan complete single-member collection proof; unknown never promoted
 from matching raw/count/absence, no retry/fallback atau full canvas activation.
 
+### Private first Text initialization / selected readback review — 2026-10-20
+
+Fresh clean exact HEAD/originfa86ebac514121ec95debc9e9bbb563b37ddf60b; enam push-event
+jobs SUCCESS dan filtered logs observed:
+[CI39447194517](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39447194517),
+[Security39447194569](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39447194569),
+[Guard39447195621](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39447195621).
+Observed6357 app/5 tooling/3416 pgTAP/88 native/209 runtime/15 Redis/37 Chromium
+PASS menggantikan PENDING152. Goal belum selesai; S4 terakhir CLOSED / VERIFIED.
+
+Fresh J5/J9/pinned D02/11.21–11.23,152 SDK/149 intent/151 SQL/141 assembly/140
+reader/146/150 Text composition dan113 complete-Link review;12.153 locked sebelum
+coding. Tambah unmounted createOwnerFirstTextInitializationReview(client).initialize,
+strict copied149 input sebelum I/O, exactly one actual152 init lalu actual141 selected
+read hanya setelah known success dan middle proof. Tiga outer same subject/Owner
+active-completed proofs; unchanged nested2+3, total8 claims/13RPC success. Known
+negative/already_initialized/unknown langsung tanpa readback/retry/add/import/fallback.
+
+Minimal initialized ack literal revision1/server ID terpisah dari unavailable atau
+current same_revision/newer_revision selected DTO. Same revision1 requires exact ID/
+Text/position1/explicit visibility/present/exact nullable raw Text. Mismatch/drift/
+missing/malformed selected observation retains ack-only setelah final safe proof;
+unavailable bukan removal/rollback/init-failed evidence. Newer stable state boleh
+edited/hidden/moved/missing payload, ack revision tetap1. Selected DTO bukan full
+collection count/single-member proof; backend151 tetap absence/newness/atomicity
+truth. Unknown tidak promoted dari matching raw/ID/count/revision/later absence.
+
+Outer proof/session/binding failure setelah nested invocation outcome_unknown tanpa
+private ack/snapshot; nested typed denial juga unknown. Aggregate10s outer dan
+unchanged5s nested bounds/post-await checks; invoked nested operation mungkin finish/
+commit privately setelah outer abort tanpa outward revival/later outer phase. No
+retry/cache/base refresh/queue/UUID/repair/merge/recreation/Undo/init-on-read. Bukan
+atomic session binding/freeze/ABA/global freshness/revocation/live JWT/CSRF/full
+Identity/publication proof. No SQL/grants/RLS/routes/UI/old SDK/composition/Published
+change. Execution tetap withheld; raw/local issues retained without public gate.
+
+206 new actual pinned SDK controlled-claims tests PASS;459 targeted bersama162
+initializer SDK/91 selected assembly tests PASS. Exact POST/schema/args/order, copy/
+raw/visibility/position1/literal1/strict ack, same/newer/invalid/missing/payload/drift,
+every eight proof/13 request/network/late/error phase, aggregate deadline/nested
+private finish, no unknown inference/cache/retry/command-family fallback covered.
+Frozen install/typecheck/lint/5 tooling/6563 app/tiga builds PASS; web tasks fresh,
+unchanged packages sebagian Turbo cached. Satu existing lint warning/nol error.
+Diff/final/staged review dan identical canonical entry comparison required. No new
+DB/browser/manual/provider/live JWT claim. Repeated resume while cycle active did
+not start another cycle; known local153 work retained through environment readiness.
+
+Enam new exact-push jobs PENDING sampai observed, termasuk unchanged DB reset/lint/
+error-advisors/3416 pgTAP/88 native/209 runtime/15 Redis/37 Chromium. PENDING bukan
+VERIFIED. D01/D02/full canvas/S5/S6/other kinds/publication/ingress/IP/raw-target/
+live/public/RPC/production tetap open. Setelah exact gates PASS, berikutnya audit/
+kunci bounded private Text command envelope/closed dispatch untuk add/save/initialize,
+reuse exact existing schemas dan outcomes, no implicit fallback atau old Link
+command/grant/mounted partial D02 activation. Full-canvas/all-kind/publication dan
+mounted session/CSRF/ingress evidence tetap terpisah.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
