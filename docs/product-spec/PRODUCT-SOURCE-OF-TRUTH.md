@@ -4725,6 +4725,55 @@ audit/kunci bounded save/selected-readback review dengan outer same-Owner proofs
 minimal save ack terpisah dari same/newer Text observation; visibility/order bukan
 content-save intent, unknown tidak dipromosikan dari matching text/base/count.
 
+### Explicit first Text initialization intent — 2026-10-20
+
+Slice pure independen dipilih saat SDK14893da4f566e62496aeaaae87627b368af5faabc2a
+sudah dipush dan CI/Security masih PENDING; directly-dependent save/readback review
+tidak dilanjutkan. Pada recheck empat Security/Guard jobs SUCCESS, Application/
+Database masih berjalan:
+[CI39392596395](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39392596395),
+[Security39392596330](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39392596330),
+[Guard39392596331](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39392596331).
+Pending/superseded run bukan final proof; exact latest push harus memverifikasi
+SDK148 dan pure149 bersama sebelum final verified checkpoint.
+
+Fresh J5/J9/pinned D02/11.21/11.22/11.23,103 expected-absence input/tests dan
+actual138/142/145/Link command direfresh.12.149 dikunci/dibaca sebelum coding.
+Tambah pure unmounted identityTextInitializationIntentSchema strict extension142:
+action initialize_text_block, base_collection_revision explicit null, unchanged
+explicit is_visible dan exact138 nullable raw Text. Missing/coerced/numeric base
+bukan default absence/empty inference, tidak fallback dari invalid/stale add/save.
+Expected absence adalah caller intent, bukan proof collection hilang/permission
+untuk mengganti initialized-empty collection atau authoritative durable creation.
+
+inspectIdentityTextInitializationIntent => status-only invalid_initialization_intent
+atau intent/exact parsed copy/fixed138 local issues. Raw null/blank/control/markup/
+CRLF/combining/Unicode retained,16384-code-point/no-NUL unchanged; no normalize/
+execute/render/fetch/linkify/sanitize/type conversion/public-validity gate/erasure.
+No auth/client/RPC/env/UUID/timers/cache/retry/side effects atau shared mutable result.
+Tidak mengubah old Text add/save/selected reader/Link command, source/provenance,
+SQL/grants/UI/Published. Minimum meaningful Product/Resource fields11.22 tidak
+ditebak untuk Text module pada existing Identity. Future initializer harus lock
+absence/eligibility/atomic creation/rollback/races/guarded unknown di kontrak lain;
+parser tidak menginisialisasi apa pun atau mount partial D02.
+
+117 new unit tests PASS,357 targeted bersama110 addition/130 save intents PASS.
+Cakupan explicit null/missing/coerced/action/bool/raw/nested/forged selectors,
+Unicode/NUL/local issues, input/result independence/no network/UUID, actual old
+add/save/Link boundary rejection dan repeated inspections. Frozen install/typecheck/
+lint/5 tooling/5991 app/tiga builds PASS; web checks/test/build fresh, unchanged
+packages sebagian Turbo cached. Existing satu lint warning/nol error. Final/staged
+diff review dan canonical comparison sebelum commit; no new DB/browser/live proof.
+
+Enam exact latest push jobs PENDING sampai observed, termasuk unchanged CI reset/
+lint/error-advisors/3302 pgTAP/78 native/209 runtime/15 Redis/37 separate Chromium.
+S4 terakhir CLOSED / VERIFIED; D01/D02/S5/S6/full canvas/other kinds/runtime first
+Text init/publication/ingress/IP/raw-target/provider/live/public/RPC/production open.
+Setelah exact latest gates PASS, prioritas kembali bounded existing Text save/
+selected-readback review148+141 dengan outer same-Owner proofs, ack terpisah dari
+same/newer selected observation dan no unknown inference/retry. First Text runtime
+transaction/SDK/full canvas tetap terpisah; pure intent bukan runtime creation proof.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
