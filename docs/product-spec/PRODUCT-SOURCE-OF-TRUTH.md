@@ -4568,6 +4568,57 @@ bounded known-ID allocation/selected-readback review dengan outer same-Owner pro
 acknowledgment versus current observation terpisah dan no inference/retry dari unknown
 tanpa server ID. Text-save mutator/SDK/full-canvas integration tetap pekerjaan terpisah.
 
+### Private Text allocation / selected readback review — 2026-10-20
+
+Resume clean exact HEAD/origin24127280b367924644ff7e8a085fb4c1cf491b6d; enam
+push-event jobs SUCCESS diperiksa:
+[CI39363585548](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39363585548),
+[Security39363585468](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39363585468),
+[Guard39363585522](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39363585522).
+Ini menggantikan PENDING SDK144/intent145 pada exact final241, bukan klaim standalone
+superseded SHA. DB logs3194 pgTAP/53 files dan17 native groups68 tests PASS dibaca;
+prior observed5532 app/209 runtime/15 Redis/37 Chromium evidence retained. Goal belum selesai.
+
+Fresh J5/J9/pinned D02/11.21/11.23, actual112 review/141 selected assembly/144 SDK/
+140 reader/143 transaction direfresh.12.146 dikunci/dibaca sebelum coding. Tambah
+unmounted server-only createOwnerTextBlockAllocationReview(client).add(unknown),
+reuse exact142 copied intent/actual144 add sekali/actual141 selected read hanya
+server-acknowledged ID. Tiga outer verified same subject/Owner active-completed proofs;
+nested proofs/deadlines unchanged. Full success8 claims/13 fixed POST/schema RPC.
+
+Allocated acknowledgment dipisahkan dari selected current observation. Same revision
+memerlukan exact ID/Text/visibility/present raw nullable text; stable newer DTO
+explicit newer_revision boleh edited/hidden/missing payload. Older/mismatched/
+malformed/drifting/unavailable selected observation retain ack-only setelah final
+outer proof. Nested nonactive/session denial atau failed outer proof sesudah SDK
+invocation outcome_unknown tanpa private fields. Unknown allocation tidak readback/
+retry/infer dari matching text/count/base+1. Tidak ada full-page/canvas inference.
+
+Aggregate10s outer ceiling/abort/post-await checks; nested5s lifecycles unchanged.
+Already-invoked nested write mungkin commit setelah outer timeout; tidak revive
+outward result/start later outer phases atau claim rollback/atomic binding/ABA/
+global freshness/live JWT/revocation/CSRF proof. No cache/UUID/base refresh/init/
+merge/normalization/render/fetch/public validity gate. Raw invalid recoverable.
+
+198 tests baru PASS,433 targeted bersama144 SDK/141 assembly PASS. Actual pinned
+SDK dengan controlled claims: exact known-ID args/order, raw16k/Unicode/null/blank/
+control/markup/both visibility, copied input, strict ack/DTO, all eight proof phases/
+denials/binding/errors, unavailable versus newer readback, unknown→stale, ignored
+late claims/all13 RPC phases, aggregate ceiling dan privately finishing nested write.
+Frozen install/typecheck/lint/5 tooling/5730 aplikasi/tiga builds PASS; web checks/
+tests/build fresh, unchanged packages sebagian Turbo cached. Existing satu lint
+warning/nol error. Final diff/staged scope dan canonical entry comparison wajib.
+
+Enam exact new push jobs PENDING sampai observed; unchanged CI reset/lint/error-
+advisors/3194 pgTAP/68 native/209 runtime/15 Redis/37 separate Chromium wajib.
+Tidak ada migration/grants/route/UI/Link reader/Published change atau new DB/browser/
+provider proof. Supabase changelog proxy403 tanpa bypass; supported getClaims docs
+refreshed. S4 terakhir CLOSED / VERIFIED; D01/D02/S5/S6/full canvas/other kinds/
+first Text initialization/existing Text save/publication/ingress/IP/raw-target/live/
+public/RPC/production tetap open. Berikutnya audit/kunci private existing Text save
+CAS memakai145 intent, explicit missing-payload policy, own member/aggregate locks/
+rollback/race evidence sebelum mutator; jangan mount partial D02 atau enable grants.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
