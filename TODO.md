@@ -5350,6 +5350,57 @@ public/RPC/production tetap open. Berikutnya audit/kunci private existing Text s
 CAS memakai145 intent, explicit missing-payload policy, own member/aggregate locks/
 rollback/race evidence sebelum mutator; jangan mount partial D02 atau enable grants.
 
+### Private existing Text Working payload save CAS — 2026-10-20
+
+Dipilih sebagai slice independen saat1463de1e3d0e5905e9588ad151fc0d82c936811887d
+masih PENDING; tidak memakai allocation/readback review sebagai dependency. Enam
+exact-push jobs146 kemudian SUCCESS dan filtered logs dibaca:
+[CI39369185131](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39369185131),
+[Security39369185143](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39369185143),
+[Guard39369185156](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39369185156).
+Observed5730 app/5 tooling/209 runtime/15 Redis/37 Chromium/3194 pgTAP/68 native
+PASS menggantikan PENDING146; bukan whole Goal/D02/publication closure.
+
+Actual145 input,139 payload FK,140 selected reader,91 Link save/pgTAP/native races,
+143 allocation dan all-kind membership mutators direfresh.12.147 dikunci/dibaca
+sebelum coding. CLI-generated forward migration menambah private volatile hardened
+api.save_current_owner_block_text_working(input_working). Owner-first/binding lock/
+recheck/active-completed/context, strict145 exact ID/base/raw Text. Existing own
+collection CAS/stale/max; own member scoped ID+Owner lock, missing/foreign same
+block_not_found, non-Text unsupported tanpa conversion/capability restriction.
+
+Explicit matching existing Text save inserts missing payload or updates raw text,
+preserving created_at/tuple identity; missing collection/member never created.
+Present null berbeda dari missing. Satu atomic aggregate bump N→N+1 termasuk identical
+save, minimal exact-ID/revision acknowledgment; errors propagate/rollback. No
+normalization/public-validity/fetch/render/merge/retry/idempotency claim. Member IDs/
+Owner/kind/order/visibility/timestamps, other own/foreign data/source/provenance/
+profile/layout/Handle/progress/receipts/Published retained. All function EXECUTE
+PUBLIC/anon/authenticated/service_role withheld; RLS/tables/policies unchanged.
+
+Tambah054 pgTAP dan10 native isolated races/committed CI step. Coverage: actual-role
+execution denial/hardening/actor/account/context, strict envelopes/raw Unicode/NUL,
+foreign/missing/unsupported targets, existing/missing/null payload, stale/max/unsafe/
+missing collection, raw exactness/one bump/created_at/purity; injected failure setelah
+payload sebelum revision untuk UPDATE dan INSERT rollback. Races: same/different
+Text, Text versus Link save/Text allocation/Link allocation/visibility/move/removal,
+collection advance saat wait, Owner restriction saat wait; exact winner/loser truth.
+
+Frozen install/typecheck/lint/5 tooling/5730 app/tiga builds commands PASS; application
+unchanged memakai Turbo cache dari verified146, warning lint lama tetap/nol error.
+Native JavaScript syntax dan diff review PASS. DB reset/lint/error-advisors/054
+pgTAP/new10 races/all existing groups belum diamati sampai committed isolated CI;
+IMPLEMENTED / UNVERIFIED, tanpa local DB/browser/live proof. Enam exact latest push
+jobs dan unchanged209 runtime/15 Redis/37 Chromium tetap wajib; PENDING bukan VERIFIED.
+Supabase Database Functions docs/consistent lock order refreshed; no provider access.
+
+S4 terakhir CLOSED / VERIFIED; D01/D02/S5/S6/full canvas/other kinds/first Text
+initialization/publication/ingress/IP/raw-target/provider/live/public/RPC/production
+remain open. Setelah exact DB/race/six-job gates PASS, berikutnya audit/kunci guarded
+current-session existing Text save SDK: reuse145 exact input, minimal exact-ID/base+1
+ack, final same-Owner proof dan truthful outcome_unknown, no blind retry atau private
+output on denial. Jangan mount partial D02 atau enable withheld execution.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
