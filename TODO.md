@@ -5794,6 +5794,51 @@ exact action-specific schema, save facade action removed before existing save SD
 one selected review/current-session client/unchanged outcomes/deadlines/no fallback.
 No mount/grant/public activation before committed transport/safety evidence.
 
+### Bounded private Text editor command dispatch — 2026-10-20
+
+Fresh clean synchronized HEAD/origin243fd631fc40d1c46fb4e6d4793dd70079fa7c30;
+exact push CI39482424496/Security39482424491/Guard39482424547 semua SUCCESS,
+keenam jobs dan completed App/DB logs diperiksa:6755 app/5 tooling/209 runtime/
+15 Redis/37 Chromium,3416 pgTAP55files/19 native groups88tests/reset/lint/error-
+advisors PASS. Goal belum selesai. Fresh J5/J9/pinned D02/11.21–11.23,154 union,
+146/150/153 reviews,141/140 selected readback dan request-cookie SSR client diaudit.
+Supabase verified getClaims docs refreshed; changelog proxy403 tanpa bypass.
+
+12.156 locked sebelum coding. Tambah unmounted server-only
+createOwnerTextEditorCommands(client).execute(unknown), strict154 copied command
+sebelum auth, invalid_text_command status-only. Construct tepat satu selected
+allocation146/initialization153/save150 review dengan same injected client.
+Save facade action explicit diproyeksikan keluar sebelum unchanged145/148 strict
+save boundary: hanya block_id/base_collection_revision/text_working. Return selected
+result unchanged; no extra proofs/RPC/readback/timer/retry/cache/fallback, no unknown
+promotion/rollback claim. Ketiga path retain8 claims/13RPC/one mutation/10s outer/
+5s nested; literal init1, requested save ID/base+1, separate selected readback.
+No route/UI/SQL/migration/grant/Published/source/provenance/dependency change.
+
+197 new actual pinned SDK controlled-claims tests PASS, bersama608 existing review
+regressions =>805 targeted PASS. Exact fixed args/order including save action
+omission, null/raw/control/markup/Unicode16384/both visibility/local issues, caller
+mutation copy, selectors/base/action rejection before auth, terminal negatives,
+malformed ack/network/permission/unknown/no fallback, final subject/Owner drift,
+newer missing payload/unavailable selected readback, ignored late mutation and
+nested completion after outer deadline, explicit later conflict without replay.
+Controlled claims bukan live JWT/provider/DB commit/CSRF/manual evidence.
+
+Frozen install/typecheck/lint/5 tooling/full6952 app/tiga builds PASS;6952 terdiri
+6671 web+31 destination+32 media+201 scanner+17 navigation. Unchanged package test
+results may reuse Turbo cache; affected web tests execute fresh. Satu existing lint
+warning/nol error. git diff --check/final/staged review dan identical canonical
+checkpoint comparison required. Push only HEAD:codex/autopilot setelah fresh fetch
+memastikan remote243 unchanged. Exact new push Application/Database/Secret/SAST/
+Dependency/Guard PENDING sampai observed; no PR skip/superseded run as evidence.
+
+S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/other kinds/publication/
+ingress/IP/raw-target/live/public/RPC/production tetap open. Next audit/kunci bounded
+pure Text request metadata admission, independently from154/115, sebelum body/
+budget/request-local dispatch/no-store/mounted safety evidence. Hitung Text escaped
+Unicode byte ceiling sendiri; jangan menyalin Link32768 budget atau memilih trusted
+host dari request. Semua RPC/public grants tetap withheld.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
