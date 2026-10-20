@@ -5750,6 +5750,50 @@ ingress/IP/raw-target/live/public/RPC/production stay open. Setelah security pat
 and all exact gates PASS, audit/kunci runtime Text closed dispatcher under next JIT;
 154 pure command schema bukan activation/full editor atau runtime evidence.
 
+### Bounded transitive Vite security remediation — 2026-10-20
+
+New exact153 Dependency Scan failure GHSA-698v-4r3x-3vcv, vite8.2.2, CVSS6.3/
+Medium, fixed8.2.4 observed in
+[Security39481628418](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39481628418).
+Actual job118831381826 failed OSV, Secret Scan/SAST/Guard PASS. Bukan temporary
+infrastructure atau accepted risk; failed8ef bukan final verification. Pure154 sudah
+locally verified/committed67e94fcba2b3a35e38c850293ef683d41ffa332b, ditahan lokal
+sampai coherent security patch siap untuk satu latest push. Known authorized local
+continuation retained; no unrelated/unexpected work discarded.
+
+12.155 locked sebelum dependency edits. Actual pnpm why found only vite8.2.2 via
+Vitest4.1.11/@vitest/mocker4.1.11 di empat packages. Registry fixed8.2.4 published
+2026-10-06T04:48:20.112Z, melewati unchanged1440min quarantine pada observed
+2026-10-20; Node engine compatible pinned24.19.0. Reviewed old/fixed dependency and
+peer metadata. Tambah narrow vite@>=8.0.0 <8.2.4 override=>exact8.2.4, actual
+pnpm11.24.0 regenerated lock. Diff hanya Vite version/integrity plus existing
+Vitest/mocker peer/importer/snapshot references; no other resolved package version
+changes. No hand-edited lock/integrity, policy exception, scanner/workflow/advisory
+ignore atau source semantic/production/access change.
+
+Frozen install passes release-age/trust supply-chain policy; pnpm why and actual
+Vitest-scoped require resolve only Vite8.2.4. pnpm audit zero info/low/moderate/high/
+critical; ini separate npm evidence, bukan pengganti required OSV.560 targeted Text
+tests PASS dan full6755 app/5 tooling/typecheck/lint/tiga builds PASS with patched
+graph, all applicable Turbo tasks fresh/zero cache. Satu existing lint warning/
+nol error. Full lock/config/final/staged diff review dan identical canonical entry
+comparison required.6755 terdiri6474 web+31 destination+32 media+201 scanner+17
+navigation. No new DB/browser/manual/provider/live evidence.
+
+Push only authorized HEAD:codex/autopilot after fresh fetch verifies remote8ef
+unchanged. New exact latest six jobs incl OSV PENDING sampai observed, together153/
+154/155; old failure/superseded runs bukan final evidence. Unchanged DB reset/lint/
+error-advisors/3416 pgTAP/88 native/209 runtime/15 Redis/37 Chromium retained. Do
+not claim security remediated/VERIFIED merely from package bump or npm audit.
+
+S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/other kinds/publication/
+ingress/IP/raw-target/live/public/RPC/production gates remain open. Setelah exact
+latest Application/Database/Secret/SAST/Dependency/Guard PASS, next audit/kunci
+bounded private runtime Text closed dispatcher under new JIT from154+146/150/153:
+exact action-specific schema, save facade action removed before existing save SDK,
+one selected review/current-session client/unchanged outcomes/deadlines/no fallback.
+No mount/grant/public activation before committed transport/safety evidence.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
