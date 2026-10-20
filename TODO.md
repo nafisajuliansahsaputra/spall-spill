@@ -5706,6 +5706,50 @@ reuse exact existing schemas dan outcomes, no implicit fallback atau old Link
 command/grant/mounted partial D02 activation. Full-canvas/all-kind/publication dan
 mounted session/CSRF/ingress evidence tetap terpisah.
 
+### Pure explicit Text editor command envelope — 2026-10-20
+
+Slice pure independen dipilih saat1538ef16432d3d932592a078c25aeae57181a9ee213
+sudah dipush, CI/Security queued/PENDING dan Guard SUCCESS. Workspace clean/exact
+origin refreshed; tidak menggunakan/advance runtime153. Fresh114 command schema/
+dispatch dan actual138/142/145/149 dibaca;12.154 locked sebelum coding.
+
+Tambah unmounted pure identityTextEditorCommandSchema dan inferred type, flattened
+strict action-discriminated union: unchanged142 add_text_block/149 initialize_text_block,
+save branch exact145 extended required literal save_text_block. No wrapper/version/
+batch/second selector/Owner/client/RPC/source/provenance/receipt/public/next revision
+resource authority. Positive base add/save, explicit null init; save needs existing
+canonical block_id and rejects visibility/position. Add/init explicit bool, no caller
+block allocation ID. Shared nullable raw138/Unicode/no-NUL/16k/copy unchanged; no
+normalize/default/public-validity/issue gate or inferred branch from null/absence.
+
+Save action facade-only, old145 unchanged rejects full command with extra action.
+Future dispatcher must forward only parsed block_id/base/text_working; pure schema
+adds no runtime dispatch/auth/client/RPC/I/O/timer/UUID/env/cache/retry/diagnostics/
+ack/readback/absence/CAS/ownership/Saved/Live proof. Existing intents/Link commands,
+SQL/grants/routes/UI/Published unchanged. Runtime dispatch belum diimplementasikan atau mounted.
+
+192 new boundary tests PASS;549 targeted together110 add/130 save/117 init intents
+PASS. Strict action/base/ID/bool/outer+nested selectors/wrappers/batch/raw budgets,
+nullable invalid recovery/copy/no fetch/UUID, old direct-intent and Link boundaries,
+action-discriminated types covered. Frozen install/typecheck/lint/5 tooling/6755
+application/tiga builds PASS; web tasks fresh, unchanged packages partly Turbo cache,
+satu existing lint warning/nol error. Diff/final/staged review/canonical comparison
+required. No new DB/browser/manual/provider/live proof.
+
+Pada verification153, Dependency Scan menemukan new Medium GHSA-698v-4r3x-3vcv:
+vite8.2.2, fixed8.2.4; bukan runner infrastructure atau risk acceptance. Secret Scan,
+SAST dan Guard SUCCESS. [Security39481628418](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39481628418)
+gagal; [CI39481628524](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39481628524)
+masih PENDING ketika temuan diperiksa. Tidak claim153/154 VERIFIED atau advance
+runtime dispatcher. Highest priority remediate exact transitive Vite patch via own
+bounded155 contract, preserve quarantine/trust/scans, then exact latest-push semua
+six gates incl3416 pgTAP/88 native/209 runtime/15 Redis/37 Chromium. No suppressions.
+
+S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/other kinds/publication/
+ingress/IP/raw-target/live/public/RPC/production stay open. Setelah security patch
+and all exact gates PASS, audit/kunci runtime Text closed dispatcher under next JIT;
+154 pure command schema bukan activation/full editor atau runtime evidence.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
