@@ -5601,6 +5601,55 @@ PASS, berikutnya audit/kunci guarded first Text initializer SDK: reuse149 strict
 intent, current subject/Owner before-after, exact minimal revision1/new-ID ack,
 bounded deadline/attempted outcome_unknown/no retry, tanpa grant atau UI activation.
 
+### Guarded private first Text initialization SDK — 2026-10-20
+
+Resume clean HEAD/origin499437654d65fe6507ee4159e45facc2aafcf6f1. Enam exact-push
+jobs SUCCESS dan filtered logs refreshed:
+[CI39439561560](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39439561560),
+[Security39439561447](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39439561447),
+[Guard39439561499](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39439561499).
+Observed6195 app/5 tooling/3416 pgTAP55 files/19 native groups88 tests/209 runtime/
+15 Redis/37 Chromium PASS menggantikan PENDING150/151. Goal belum selesai.
+
+Fresh J5/J9/pinned D02/11.21/11.22, actual105/148 SDK/tests,149/140 schema dan151
+SQL;12.152 locked sebelum coding. Tambah unmounted server-only
+createOwnerFirstTextInitialization(client).initialize(unknown), reuse149 strict copied
+input dan140 canonical UUID response syntax. Verified claims/strict active-completed
+Owner sebelum satu same-client initialize_current_owner_blocks_from_text RPC, minimal
+literal revision1/server-ID ack, final same subject/Owner proof;2 claims/3RPC success.
+Newness/absence/atomic creation/ownership tetap151 backend authority, bukan UUID syntax.
+
+Explicit expected-null/action/visibility/raw nullable Text retained tanpa local-issue/
+public-validity/normalization/default gate. Strict known negatives tanpa readback/
+retry/cache/UUID/base refresh/source fallback/repair/Undo/recreation. Aggregate5s,
+post-await cancellation; pre-attempt failures unavailable, attempted-dispatch lost/
+network/HTTP/malformed/error/timeout/failed final proof outcome_unknown tanpa private
+ack/rollback inference. Late phases tidak revive output/start later requests. Same
+instance deliberate repeat re-proves; unknown→already_initialized bukan causal
+proof prior success/failure atau replay success. Tidak mengklaim atomic session
+binding/freeze/ABA/revocation/global freshness/live JWT/CSRF/full Identity/publication.
+
+162 new actual pinned SDK controlled-claims tests PASS;279 targeted bersama117
+pure149 tests PASS. Exact schema/POST/args, null/action/bool/raw/Unicode/NUL/hostile
+selectors/copy, literal rev1/UUID/minack/private extras, both proof state/actor/Owner/
+errors, known negatives/foreign-command replies, every ignored-late request/claim,
+aggregate slow claims/no replay/cache covered. Frozen install/typecheck/lint/5 tooling/
+6357 app/tiga builds PASS; web checks/test/build fresh, unchanged packages sebagian
+Turbo cached. Satu existing lint warning/nol error. Diff/final/staged review dan
+identical canonical entry comparison required. Supabase changelog proxy403 tanpa
+bypass; supported getClaims docs refreshed. No SQL/grants/RLS/route/UI/old SDK/
+Published change atau new DB/browser/manual/provider/live JWT proof.
+
+Enam exact new push jobs PENDING sampai observed; unchanged DB reset/lint/error-
+advisors/3416 pgTAP/88 native/209 runtime/15 Redis/37 Chromium wajib. S4 terakhir
+CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/other kinds/publication/ingress/IP/
+raw-target/live/public/RPC/production gates tetap open. Setelah exact gates PASS,
+berikutnya audit/kunci bounded first Text initialization / selected readback review:
+152+141, outer same-Owner proofs, minimal init ack terpisah dari same/newer selected
+observation; same revision1 requires exact ID/Text/position1/visibility/present raw.
+Selected DTO bukan complete single-member collection proof; unknown never promoted
+from matching raw/count/absence, no retry/fallback atau full canvas activation.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
