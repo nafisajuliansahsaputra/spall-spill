@@ -5254,6 +5254,51 @@ selected-readback review composition: acknowledgment dan current selected observ
 terpisah, outer same-Owner proofs, no causal inference/retry untuk unknown tanpa ID;
 jangan menggunakan old page skeleton sebagai full Text canvas.
 
+### Explicit existing-block Text save intent — 2026-10-20
+
+Kelanjutan independen yang aman saat SDK144 pada SHA
+`7b40ed680e37273aac9c57123ec4a3cc9cc40704` sudah dipush, Security/Guard PASS dan Application/Database masih PENDING pada pemilihan
+scope. Tidak overlap source edits atau melanjutkan directly-dependent readback path.
+[CI39363186076](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39363186076),
+[Security39363186073](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39363186073),
+[Guard39363186056](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39363186056).
+Pending/superseded runs bukan bukti final; exact latest push harus memverifikasi
+SDK144 dan pure input145 bersama sebelum final verified checkpoint.
+
+J5/J9/pinned D02/11.21/11.23/12.91/12.92/12.138–143 dan actual Link save/typed Text
+payload/selected request/diagnostic source direfresh.12.145 dikunci/dibaca sebelum
+coding. Tambah pure unmounted server-only identityTextSaveIntentSchema: strict
+extension unchanged exported12.140 canonical block_id, positive safe base collection
+revision dan unchanged12.138 text_working. Seperti content-save12.91, tanpa action/
+visibility/order/source/Owner/provider/public/output fields; tidak duplicate locator
+atau raw policy dan tidak melebarkan old reader/Link command/allocation boundaries.
+
+inspectIdentityTextSaveIntent mengembalikan invalid_save_intent status-only atau
+intent/exact parsed copy/fixed Text local issues. Null/blank/control/markup/CRLF/
+combining/Unicode retained,16384-code-point/no-NUL unchanged; no normalization/
+execute/render/fetch/linkify/UUID/side effects. Block ID/base syntax bukan existence/
+ownership/freshness/CAS/Saved/Live proof. Missing field bukan default clear/merge.
+Tidak ada database save/repair, mutation SDK/route/UI atau missing collection/block
+creation; missing payload handling masih harus dikunci sebelum runtime mutator.
+
+130 unit tests baru PASS;185 targeted bersama55 raw Text input PASS. Cakupan exact
+UUID/safe-base/copy/result independence, raw invalid recovery/Unicode/NUL, outer/
+nested forged authority, explicit absence/no coercion/default, no network/UUID dan
+actual old Text-add/Link-command boundary rejection. Frozen install/typecheck/lint/
+5 tooling/5532 app/tiga build PASS; web checks/test/build fresh, sebagian unchanged
+packages Turbo cached. Satu existing lint warning, nol error. Diff/final review dan
+canonical entry comparison sebelum commit. Tidak ada migration/SQL/RLS/grants/
+provider/public/Working→Published change atau new DB/browser/live evidence.
+
+Enam exact latest push jobs PENDING sampai observed; unchanged CI3194 pgTAP/68
+native/reset/lint/error-advisors/209 runtime/15 Redis/37 separate Chromium wajib.
+S4 terakhir CLOSED / VERIFIED; D01/D02/S5/S6/full-canvas/first Text initialization/
+runtime Text save/other kinds/publication/ingress/IP/raw-target/live/public/RPC/
+production tetap open. Setelah exact latest gates PASS, prioritas berikutnya kembali
+bounded known-ID allocation/selected-readback review dengan outer same-Owner proofs,
+acknowledgment versus current observation terpisah dan no inference/retry dari unknown
+tanpa server ID. Text-save mutator/SDK/full-canvas integration tetap pekerjaan terpisah.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
