@@ -4476,6 +4476,53 @@ production gates tetap open. Setelah DB/race/six-job evidence PASS, berikutnya a
 kunci guarded current-session Text allocation SDK dengan minimal strict ack, final
 Owner proof dan truthful outcome_unknown; jangan retry atau mengubah raw intent.
 
+### Guarded private Text allocation SDK — 2026-10-20
+
+Resume clean exact HEAD/originb4a2505ab5fa545c47953f4fd341f908e98619a5 tanpa
+overlap/unexpected work. Enam push-event jobs kembali SUCCESS:
+[CI39334117300](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39334117300),
+[Security39334117257](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39334117257),
+[Guard39334117262](https://github.com/nafisajuliansahsaputra/spall-spill/actions/runs/39334117262).
+Observed3194 pgTAP/17 groups68 native termasuk9 Text races dan5258 app/209 runtime/
+15 Redis/37 separate Chromium PASS menggantikan PENDING12.143. Goal belum selesai.
+
+J5/J9/pinned D02/11.21/11.23,12.102/12.138–143 dan actual Text intent/transaction/
+Link SDK/tests/current Owner proofs direfresh.12.144 dikunci/dibaca sebelum coding.
+Tambah unmounted server-only current-session auth/schema factory .add(unknown):
+reuse exact12.142 schema, copy raw explicit intent sebelum await, invalid_add_intent
+sebelum I/O. Verified claims/strict Owner-state active-completed sebelum one fixed
+Text allocation RPC; strict minimal lowercase ID/safe revision exact base+1, lalu
+same subject/Owner proof sebelum ack. No client Owner/UUID/source/public authority.
+
+Null/blank/invalid/control/markup/CRLF/Unicode retained tanpa local-issue gate/fetch/
+normalization/conversion. Known status-only negatives tanpa retry/default/init;
+malformed/transport/timeout/lost ack/failed post-proof setelah attempted dispatch
+outcome_unknown saja, bukan rollback/nothing-Saved claim. Aggregate5s abort/cancellation
+checks, ignored late phases tidak revive output; later explicit call re-proves.
+Tidak ada cache/offline queue/auto base refresh/ID guess atau inferensi unknown dari
+stale response. Existing Link command/readers/SQL/grants/route/UI/Published unchanged.
+
+144 SDK tests baru PASS,254 targeted bersama110 intent PASS. Actual pinned SDK
+POST/schema/args dan controlled claims, bukan live JWT/provider/database commit proof.
+Cakupan raw budgets, both visibility, initial/final state/subject/binding/claims errors,
+known denials, strict ack/base+1/private extras, all request failures/ignored-late claims/
+RPC, lost→stale, same-instance no cache, copy during slow proof dan aggregate deadline
+setelah3s claims. Frozen install/typecheck/lint/5 tooling/5402 app/tiga build PASS;
+web checks/test/build fresh, unchanged packages sebagian Turbo cached. Satu existing
+lint warning, nol error. Diff/final review/canonical comparison dilakukan sebelum commit.
+
+Enam exact-push jobs baru PENDING sampai observed; unchanged CI reset/lint/error-
+advisors/3194 pgTAP/68 native/209 runtime/15 Redis/37 Chromium tetap wajib. Tidak ada
+new local DB/browser evidence. Supabase changelog proxy403 tanpa bypass; supported
+JavaScript getClaims docs dibaca, pinned SDK/SSR/dependencies tidak berubah.
+
+S4 terakhir CLOSED / VERIFIED; D01/D02/S5/S6/full-canvas/first Text initialization/
+existing Text save/other kinds/publication/ingress/IP/raw-target/live/public/RPC/
+production gates tetap open. Berikutnya audit/kunci bounded known-ID Text allocation/
+selected-readback review composition: acknowledgment dan current selected observation
+terpisah, outer same-Owner proofs, no causal inference/retry untuk unknown tanpa ID;
+jangan menggunakan old page skeleton sebagai full Text canvas.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
