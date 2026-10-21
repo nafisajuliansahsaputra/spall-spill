@@ -17,6 +17,7 @@
     "test:click-browser": "vitest run --config vitest.browser.config.mts",
     "test:editor-gateway-browser-runtime": "node tests/run-editor-production-runtime.mjs --gateway",
     "test:editor-production-runtime": "node tests/run-editor-production-runtime.mjs",
+    "test:text-editor-runtime": "node --test tests/next-text-editor-runtime.test.mjs",
     "test:ssr-runtime": "node --test tests/next-ssr-cookie-runtime.test.mjs tests/next-editor-runtime.test.mjs tests/next-proxy-refresh-runtime.test.mjs",
     "test:auth-navigation": "node --test tests/intended-destination.test.mjs",
     "test:unit": "vitest run"

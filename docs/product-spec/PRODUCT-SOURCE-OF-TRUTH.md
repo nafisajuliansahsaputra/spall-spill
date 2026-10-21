@@ -5495,6 +5495,40 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   D01/D02/full canvas/S5/S6/other kinds/publication/IP/raw-target/live/public/RPC/
   production remain open/withheld. Budget pause is not Goal completion.
 
+### Isolated Next Text editor request runtime — 2026-10-21
+
+- Fresh clean baseline6435709be7f1397e8fb806bda797325fa85a5857;166 push
+  CI39598808908 rerun Application/Database SUCCESS, Security39598808913 and
+  Guard39598809018 SUCCESS. Completed logs7558 app/5 tooling/23 Redis/209 runtime/
+  37 Chromium/3416pgTAP55files/88native19groups observed. Initial Application
+  startup failure did not reproduce locally; same-SHA rerun passed without source
+  or gate changes. Root cause unconfirmed. Goal unfinished, S4 last CLOSED / VERIFIED.
+- Locked12.167 before code. Standalone temporary Next HTTPS dev fixture imports
+  unchanged166 Text composition, SSR cookies/getClaims/dispatcher/reviews/pinned SDK.
+  Original Next Request passes directly; no mocked factory/claims/storage, production
+  route/proxy/source/grant/config/dependency changes or TLS verification bypass.
+  Ephemeral CA/signing key, actual SSR setSession encoding, controlled loopback
+  HS256 Auth/RPC provider, independent subject→Owner→Text models and exact13-unit
+  transport fixtures; generic failure diagnostics and own process/temp cleanup.
+- 23 local HTTPS tests pass without skips: CA verification, init/add/save and null/
+  raw/hidden selected Text, one grant/8 verified Auth calls/13RPC/one mutation,
+  metadata/JSON/selector/budget denial before Auth/RPC, missing/recognized-corrupt/
+  header-only/signature-mismatch cookies, restricted Owner, conflicts/foreign save
+  target/unknown acknowledgment, sequential/concurrent two-principal isolation and
+  missing-cookie after valid request. Controlled in-memory Working models are not
+  PostgreSQL/RLS/grant/atomicity/live Auth evidence. No browser/SameSite/CSRF/proxy/
+  refresh/JWKS/revocation/session-freeze or actual production IP/capacity claim.
+- Required test:text-editor-runtime package/Application CI command added, preserving
+  all209 old runtime tests (232 total after new fixture),23 Redis/37 Chromium gates.
+  Frozen install/typecheck/lint/5 tooling/7558 app tests/build/all23 native Redis
+  passed locally; final fixture23 passed, zero failures/skips. Existing lint warning
+  next-editor-runtime.test.mjs:268 unchanged. Final diff reviewed. New exact push six
+  Application/Database/Secret/SAST/Dependency/Guard gates PENDING until observed.
+- Next audit/lock isolated Text browser cookie/action evidence from123 before
+  proxy/production prerequisites. No partial D02 enabling; D01/D02/full canvas/
+  S5/S6/other kinds/publication/ingress/IP/raw-target/live/public/RPC/production
+  remain open/withheld. No new credential/provider/manual action is required here.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
