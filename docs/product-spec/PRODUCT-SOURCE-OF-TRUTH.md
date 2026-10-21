@@ -5564,6 +5564,42 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   ingress/IP/raw-target/live/public/RPC/production remain open/withheld. No new
   credential/provider/manual action required for this slice.
 
+### Isolated Text editor Proxy/admission ordering — 2026-10-21
+
+- Clean pushed baseline3c2ac59868340f92f3e48792ca6a7e8212aed6df;168 local30
+  Text runtime/7558 app/5 tooling/23 Redis/full quality gates pass. At selection,
+  CI39650914351 Application/Database PENDING; Security39650914258 all3 and
+  Guard39650914205 SUCCESS. No closure or activation from pending evidence.
+  This independent test-only ordering proof reuses167/125 foundation; latest
+  exact final push supersedes older pending runs. Goal unfinished, S4 last VERIFIED.
+- Locked12.169 before code. Temporary Text Next app imports unchanged actual
+  production Proxy with fixture-only exact /api/editor exclusion, separate actual
+  SSR/getClaims /api/session control. All methods/query retain editor admission;
+  no header permit/caller proof/Request rewrite/second EVAL. No production matcher/
+  source/routes/config/dependency/SQL/grants change or partial D02 mounting.
+- All32 Text runtime cases pass locally without failures/skips, retaining30 prior
+  HTTPS/Chromium cases. All3 commands prove one13-unit grant before exactly8 Auth
+  attempts/13RPC/one mutation, metadata/JSON/selector/budget/browser origin denials
+  zero Auth/refresh. Auth attempt counter now includes invalid credentials and
+  refresh attempts before verification; observations remain labels/counts only.
+- Separate A/B control requests each run actual Proxy plus downstream verified
+  Auth (2 calls), return own subject/private-no-store/CSP, zero budget/RPC/mutation;
+  missing cookie control401 has no additional Auth. Actual SSR2s-cookie/real2100ms
+  expiry: wrong Origin denies before admission/Auth; budget denial cannot refresh;
+  admitted request reaches one controlled nonretryable rejected refresh,401 and
+  actual SSR clearing Set-Cookie, no verified Auth/RPC/mutation. Successful refresh
+  response still unproved for Text; no live rotation/revocation/freshness claim.
+- Frozen install/typecheck/lint/5 tooling/7558 app tests/build/all23 native Redis
+  passed locally; existing Link warning268 unchanged; final diff reviewed. Mandatory
+  Application command now32 Text runtime/241 total runtimes, retaining37 separate
+  Chromium regressions. New exact push Application/Database/Secret/SAST/Dependency/
+  Guard PENDING until observed, including unchanged isolated DB reset/lint/advisors/
+  3416pgTAP55files/88native19groups. No manual/live/production evidence asserted.
+- Next audit/lock successful Text editor refresh response evidence from126, then
+  production runtime/gateway/concurrent browser prerequisites131. D01/D02/full
+  canvas/S5/S6/other kinds/publication/ingress/IP/raw-target/live/public/RPC/
+  production remain open/withheld. No new Owner credential/manual action required.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
