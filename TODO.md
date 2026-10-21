@@ -6025,6 +6025,54 @@ Text action-budget policy/13-RPC cost and trusted network subject derivation fro
 43, before Redis/Upstash adapter/HTTP integration and actual trusted metadata/session/
 Owner/CSRF/browser transport safety evidence. No partial D02 activation.
 
+### Bounded private Text budget policy / trusted network subject — 2026-10-21
+
+Fresh clean HEAD/origin9c8b964ef7730f5c2a85c4db44e5f11f57c471c5.160 push
+CI39532518478 Application119001507255/Database119001507497 still running;
+Security39532518555 Secret119001507552/Dependency119001507715/SAST119001507880 dan
+Guard39532518505 job119001507575 SUCCESS. Pending bukan human gate. This pure
+policy/subject is independent of160 HTTP; no dependent runtime integration or
+VERIFIED claim. Fresh committed160 checkpoint,43/118 shared canonical helper,
+Product/Resource/Link subject/policy tests dan stable15613-RPC maximum refreshed.
+
+12.161 locked before coding. New unmounted server-only strict Text budget policy
+with fixed conservative13 DB-RPC units per any selected add/init/save command,
+explicit namespace/window_ms/command_limit/work_limit>=13, no defaults/coercion/
+extra overrides/Owner quota/body-selected rates. Policy parse copies input. Stage
+fixed spall-identity-text-editor-network-subject-v1 wrapper and add ONLY this closed
+literal to shared helper TypeScript union/runtime allowlist. Existing canonical IP/
+HMAC/key-copy/500ms semantics and all old Product/Resource/Link bytes unchanged.
+No Redis/permit/HTTP/client/SSR/provider/env/key read/SQL/grant/Published integration.
+
+Require exact trusted runtime{address}, full IPv6/mapped IPv4 canonicalization,
+HMAC digest only, copied32..64-byte key/namespace. No headers/cookies/body/Owner/URL
+identity fallback, cache/retry/fetch/UUID/raw telemetry. Pseudonymization not anonymity
+or authorization; NAT/rotation/distributed attackers and deployed metadata/proxy
+provenance remain gates. Existing subject abort pre/post-read checks do not claim
+new prompt cancellation. No live provider/Redis atomic/mounted/manual/CSRF evidence.
+
+124 new tests PASS:72 policy+52 actual HMAC subject;282 targeted with158 existing
+Product/Resource/Link regressions. Strict limits/missing/coerced/extra policy fields,
+independent copy, exact four-domain bytes/isolation, IPv4/full/mapped IPv6, namespace/
+key/address isolation, Buffer key mutation, untyped caller domain override, invalid
+metadata/IP/no header fallback, fresh reads, errors/abort/nonfinite/backward/timeout/
+late suppression/timer cleanup/no body or network I/O. No Redis adapter is inferred.
+
+Frozen install/typecheck/lint/5 tooling/full7375 app/tiga builds PASS:7094 web+31
+destination+32 media+201 scanner+17 navigation. Affected web fresh; unchanged package
+tasks may reuse Turbo cache. Existing lint warning/nol error. git diff --check/
+final/staged review and identical canonical entry comparison required. Fresh fetch
+must retain remote9c8b964 before push only HEAD:codex/autopilot. Exact latest six
+push jobs PENDING until observed, including unchanged3416 pgTAP/88 native/209 runtime/
+15 Redis/37 Chromium/reset/lint/error-advisors; superseded160 runs not final evidence.
+
+S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/other kinds/publication/
+ingress/IP/raw-target/live/public/RPC/production remain open. Next audit/kunci Text
+distributed permit from118/40 atomic Lua with own13-unit cost/key namespace, same
+explicit161 policy/subject and mandatory isolated Redis races/corrupt/TTL tests;
+then confined Upstash transport/budgeted HTTP119/160. Do not mount/grant before
+trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
