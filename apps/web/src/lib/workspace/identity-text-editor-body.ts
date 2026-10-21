@@ -1,11 +1,8 @@
 import "server-only";
 import { identityTextEditorCommandSchema, type IdentityTextEditorCommand } from "./identity-text-editor-command";
-import { identityTextEditorMaximumBodyBytes as maximum, isIdentityTextEditorRequestAdmitted } from "./identity-text-editor-request";
+import { identityTextEditorMaximumBodyBytes as maximum, isIdentityTextEditorRequestAdmitted, identityTextEditorRequestMetadata as metadata } from "./identity-text-editor-request";
 
 export const identityTextEditorMaximumBodyReads = 32769;
-const policyHeaders = ["origin", "host", "content-type", "content-length", "content-encoding", "transfer-encoding", "sec-fetch-site", "sec-fetch-mode", "sec-fetch-dest"] as const;
-const metadata = (request: Request) => JSON.stringify(policyHeaders.map(name => request.headers.get(name)));
-
 type Permit = (action: "identity_text_command", signal: AbortSignal) => Promise<unknown>;
 
 /** Unmounted transport only; permit must be a trusted distributed server adapter before activation. */
