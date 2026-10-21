@@ -5402,6 +5402,35 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   full canvas/S5/S6/other kinds/publication/ingress/IP/raw-target/live/public/RPC/
   production and all deployment safety gates remain open/withheld.
 
+### Corrective Product/Resource transport byte ownership — 2026-10-21
+
+- Fresh clean baselineffe1317693094c20cd9def5d34f9cdbba6d8bcd0 and exact push
+  CI39561599007, Security39561599224, Guard39561599172 all six jobs SUCCESS.
+  Goal unfinished, S4 last CLOSED / VERIFIED. Locked12.164 before tests/source.
+- All14 controlled Buffer stream regressions failed against original code before
+  correction. Both Product/Resource budget adapters allowed producer mutation to
+  change original0/1 or valid UTF8; shared Product JSON/native reader allowed
+  reference27→28 or invalidUTF8 replacement to affect Product and Resource JSON/
+  native decoding. Changed only three chunk copies to new Uint8Array(value),
+  preserving original bytes before subsequent reads. Existing Link159/163 unchanged.
+- All14 regressions and503 targeted tests across11 files passed after correction.
+  Actual Request/Response streams and Resource/native decoders observed; no core/
+  store/RPC/provider calls or evidence of live exploitation. Bounds/deadlines/
+  origin/permit/key/cost/token/framing/decoder/cancellation/no-store remain exact.
+  Preserved legacy Product/Resource declared-length policy differences; no parity
+  refactor, dependency/SQL/migration/grant/route/provider/Published/Working change.
+- Frozen install/typecheck/lint/5 tooling/7450 app tests/build and all23 isolated
+  native Redis tests passed locally, zero failures/skips. Existing lint warning at
+  next-editor-runtime.test.mjs:268 unchanged. Final diff reviewed. New exact-push
+  Application/Database, Secret Scan/SAST/Dependency and Guard PENDING until observed;
+  no live Upstash/cluster/ingress/session/CSRF/provider/manual evidence inferred.
+- Read-only search found no remaining chunks.push(...slice()) in apps/web/src/lib;
+  this is a bounded ownership correction, not a claim that all stream/security
+  behavior is verified. Next audit/lock Text13-unit confined Upstash transport
+  from119/163, including owned Buffer responses and old-domain denial, after exact
+  gates; then160 HTTP composition. D01/D02/full canvas/S5/S6/other kinds/publication/
+  ingress/IP/raw-target/live/public/RPC/production remain open/withheld.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

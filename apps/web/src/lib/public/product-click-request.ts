@@ -47,7 +47,7 @@ async function readEncodedRequest(request: Request, trustedOrigin: string, actio
         if (done) break;
         size += value.byteLength;
         if (size > maximum) throw new Error("unavailable");
-        chunks.push(value.slice());
+        chunks.push(new Uint8Array(value));
       }
       if (request.signal.aborted || (length !== null && Number(length) !== size)) throw new Error("unavailable");
       const bytes = new Uint8Array(size); let offset = 0;

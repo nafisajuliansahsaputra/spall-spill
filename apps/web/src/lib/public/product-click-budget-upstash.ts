@@ -42,7 +42,7 @@ export function createProductClickUpstashBudgetTransport(config: { origin: strin
           const part = await reader.read(); if (!active || !timely()) return null;
           if (part.done) { complete = true; break; }
           size += part.value.byteLength; if (size > 4096) return null;
-          chunks.push(part.value.slice());
+          chunks.push(new Uint8Array(part.value));
         }
         const bytes = new Uint8Array(size); let offset = 0; for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
         const text = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
