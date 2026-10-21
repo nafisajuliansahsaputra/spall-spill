@@ -5431,6 +5431,38 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   gates; then160 HTTP composition. D01/D02/full canvas/S5/S6/other kinds/publication/
   ingress/IP/raw-target/live/public/RPC/production remain open/withheld.
 
+### Bounded private Text Upstash EVAL transport — 2026-10-21
+
+- Fresh clean baseline16cbd9908cd2f8053c1a1468d1d516fbfc3c38bd; exact push
+  CI39567647727, Security39567647728 and Guard39567647760 all six jobs SUCCESS.
+  Completed logs7450 app/5 tooling/23 Redis/209 runtime/37 Chromium,3416 pgTAP/
+  55files/88 native19groups observed; DB reset/lint/error-advisors SUCCESS.
+  Locked12.165 before code after refreshing canonical164,119/161/162/163,
+  J5/J9/pinned D02/11.21 and actual corrected Link transport/tests/Text permit.
+- Staged unmounted server-only Text Upstash adapter: snapshotted strict explicit
+  config; canonical single-label HTTPS origin/Bearer-only token; unchanged40 Lua,
+  Text-only matching command/work keys and literal13 cost reused from161. No
+  Product/Resource/Link keys, old3/4/31/32 cost, numeric cost, general Redis API,
+  environment/default/provider configuration, retry/cache/refund/fallback.
+- Preserved119/1631.5s aggregate monotonic fetch/body/decision bound, abort/late
+  suppression/cleanup,4096byte/4097read cap, declared equality, literal sole JSON
+  result0/1, strict UTF8/BOM denial and owned Buffer/Uint8Array response copies.
+  83 new adapter tests pass including config/protocol/key/cost/response denial,
+  hangs/clock/late cancellation, exact minimum13 capacity, Buffer mutations and
+  actual161 subject/162 permit/158 body composition on grant and denial.
+  No SSR/claims/RPC/provider calls or live evidence.
+- Frozen install/typecheck/lint/5 tooling/7533 app tests/build and all23 isolated
+  native Redis tests passed locally; zero failures/skips. Existing lint warning
+  next-editor-runtime.test.mjs:268 unchanged. Final diff reviewed. Exact new push
+  Application/Database, Secret Scan/SAST/Dependency and Guard PENDING until observed.
+  No SQL/migration/grant/route/UI/dependency/Published/Working/Draft change.
+- Goal unfinished; S4 last CLOSED / VERIFIED. Next audit/lock budgeted Text160 HTTP
+  composition with one snapshotted namespace/policy, copied key, mandatory trusted
+  reader and165 transport; invalid config must deny before SSR. No mounting before
+  actual request cookies/session/Owner/CSRF/ingress/provider/runtime gates. D01/D02/
+  full canvas/S5/S6/other kinds/publication/IP/raw-target/live/public/RPC/production
+  remain open/withheld; controlled fetch is not live Upstash/cluster/proxy proof.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
