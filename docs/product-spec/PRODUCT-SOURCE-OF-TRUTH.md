@@ -5529,6 +5529,41 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   S5/S6/other kinds/publication/ingress/IP/raw-target/live/public/RPC/production
   remain open/withheld. No new credential/provider/manual action is required here.
 
+### Isolated Text editor Chromium cookie transport — 2026-10-21
+
+- Fresh clean baseline0f7172d51e7118e46cda7ae29eae5698d72ea3ac;167 exact push
+  CI39607449460 Application/Database, Security39607449407 and Guard39607449464
+  SUCCESS. Completed logs7558 app/5 tooling/23 Redis/232 runtime/37 Chromium/
+  3416pgTAP55files/88native19groups and535 dependency packages/no issues observed.
+  Goal unfinished; S4 remains last CLOSED / VERIFIED.
+- Locked12.168 before code; extend only167 temporary Next HTTPS fixture using
+  unchanged Chromium helper/123 pattern and actual166/SSR/SDK pipeline. Original
+  Request/body/result preserved; bounded loopback status/Origin/Site/content-type/
+  cookie-presence-only observation, static HTML and sibling HTTPS port, ephemeral
+  SPKI pin and wrong-pin rejection. No interception, broad TLS bypass, product
+  source/route/proxy/config/dependency/SQL/grant change or premature enabling.
+- All30 Text runtime tests pass locally without failures/skips:23 original HTTPS
+  cases plus7 actual Chromium cases. Native same-origin init/add/save attach SSR
+  cookies; raw hidden selected Text and private/no-store headers observed with
+  one13-unit grant/8 verified Auth calls/13RPC/one mutation/exact proof phases.
+  Replacing cookies separates Owner/Working readback; removing cookies yields401
+  without further RPC. Cross-site simple POST arrives403 with Lax cookie absent;
+  same-site cross-origin sibling port arrives403 with cookie present. Both deny
+  before budget/Auth/RPC, proved by server observations; browser response opaque0.
+- Fixture provisioning is not live login/cookie policy choice. Automated isolated
+  Chromium/Next/HS256/in-memory models are not manual/live Auth/JWKS/revocation/
+  freshness/DB/RLS/atomicity/proxy/refresh/IP/raw-target/deployment trust evidence.
+  Existing metadata157 already accepts actual empty destination; no relaxation.
+- Frozen install/typecheck/lint/5 tooling/7558 app tests/build/all23 native Redis
+  passed locally; existing Link lint warning at268 unchanged. Final diff reviewed.
+  Existing Application CI command now runs30 Text tests (239 runtime total),
+  retaining37 separate browser regressions. Exact new push Application/Database/
+  Secret/SAST/Dependency/Guard evidence PENDING until observed; no journey closure.
+- Next audit/lock Text proxy/session-refresh prerequisites from124–126 before
+  production131 prerequisites. D01/D02/full canvas/S5/S6/other kinds/publication/
+  ingress/IP/raw-target/live/public/RPC/production remain open/withheld. No new
+  credential/provider/manual action required for this slice.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

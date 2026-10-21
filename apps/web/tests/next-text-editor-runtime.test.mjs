@@ -1,8 +1,8 @@
 import { before, beforeEach, after, test } from "node:test";
 import assert from "node:assert/strict";
-import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { createHash, createHmac, randomBytes, timingSafeEqual, X509Certificate } from "node:crypto";
 import { createServer } from "node:http";
-import { request as httpsRequest } from "node:https";
+import { createServer as createHttpsServer, request as httpsRequest } from "node:https";
 import { spawn, execFileSync } from "node:child_process";
 import { mkdtemp, mkdir, writeFile, readFile, symlink, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -10,15 +10,16 @@ import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { createServerClient } from "@supabase/ssr";
+import { chromiumFixture, until } from "./chromium-fixture.ts";
 
 const require = createRequire(import.meta.url), web = fileURLToPath(new URL("..", import.meta.url)), source = resolve(web, "src");
 const publicKey = "isolated-public-placeholder", signingKey = randomBytes(32), refreshSubjects = new Map();
 const subjects = ["91000000-0000-4000-8000-000000000001", "91000000-0000-4000-8000-000000000002"];
 const owners = ["92000000-0000-4000-8000-000000000001", "92000000-0000-4000-8000-000000000002"];
 const ids = ["93000000-0000-4000-8000-000000000001", "93000000-0000-4000-8000-000000000002"];
-let provider, child, directory, providerOrigin, nextOrigin, certificate, cookieA, cookieB;
+let provider, child, directory, providerOrigin, nextOrigin, certificate, cookieA, cookieB, siblingServer, siblingOrigin;
 let calls = [], authCalls = 0, budgetCalls = 0, mutations = 0, budgetResult = 1, restricted = false, malformedAck = false, fixtureError;
-const models = new Map(), events = [];
+const models = new Map(), events = [], observations = [];
 const S = "resolve_current_owner_state", C = "resolve_current_owner_home_context", T = "resolve_current_owner_text_block_working";
 const I = "initialize_current_owner_blocks_from_text", A = "add_current_owner_text_block_working", W = "save_current_owner_block_text_working";
 const actions = ["initialize_text_block", "add_text_block", "save_text_block"];
@@ -116,6 +117,14 @@ before(async () => {
   provider = createServer(async (req, res) => {
     res.setHeader("content-type", "application/json");
     try {
+      if (req.url === "/fixture-observation") {
+        assert.equal(req.method, "POST");
+        let raw = ""; for await (const part of req) { raw += part; assert.ok(raw.length < 2048); }
+        const value = JSON.parse(raw);
+        assert.deepEqual(Object.keys(value).sort(), ["hasCookie", "origin", "site", "status", "type"]);
+        assert.equal(typeof value.hasCookie, "boolean"); observations.push(value);
+        res.end('{}'); return;
+      }
       if (req.url === "/fixture-budget") {
         assert.equal(req.method, "POST"); assert.equal(req.headers.authorization, "Bearer isolated-budget-placeholder");
         const wire = await body(req); assert.equal(wire.length, 9); assert.equal(wire[0], "eval"); assert.equal(wire[2], 2);
@@ -136,7 +145,12 @@ before(async () => {
   directory = await mkdtemp(join(tmpdir(), "spall-next-text-editor-")); const keyPath = join(directory, "fixture-key.pem"), certPath = join(directory, "fixture-cert.pem");
   execFileSync("openssl", ["req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "1", "-subj", "/CN=localhost",
     "-addext", "subjectAltName=DNS:localhost,IP:127.0.0.1", "-keyout", keyPath, "-out", certPath], { stdio: "ignore", timeout: 10000 });
-  certificate = await readFile(certPath); await symlink(join(web, "node_modules"), join(directory, "node_modules"), "dir");
+  certificate = await readFile(certPath);
+  siblingServer = createHttpsServer({ key: await readFile(keyPath), cert: certificate }, (_req, res) => {
+    res.setHeader("content-type", "text/html"); res.end('<!doctype html><html><head><link rel="icon" href="data:,"></head><body>Sibling fixture</body></html>');
+  });
+  siblingOrigin = `https://localhost:${await listen(siblingServer)}`;
+  await symlink(join(web, "node_modules"), join(directory, "node_modules"), "dir");
   await mkdir(join(directory, "app/api/editor"), { recursive: true }); await writeFile(join(directory, "package.json"), '{"name":"isolated-text-editor-fixture","private":true}');
   await writeFile(join(directory, "tsconfig.json"), JSON.stringify({ compilerOptions: { target: "ES2017", module: "esnext", moduleResolution: "bundler", jsx: "react-jsx",
     esModuleInterop: true, skipLibCheck: true, paths: { "@/*": [`${source}/*`] } } }));
@@ -155,8 +169,17 @@ const handle = createBudgetedIdentityTextEditorHttpBoundary({ trustedOrigin: ${J
     return new Response(reply.body, { status: reply.status, headers: reply.headers });
   },
 });
-export async function POST(request: Request) { return handle(request); }
-export async function GET() { return new Response("ready"); }
+export async function POST(request: Request) {
+  const result = await handle(request);
+  const observed = await fetch(${JSON.stringify(providerOrigin + "/fixture-observation")}, {
+    method: "POST", headers: { "content-type": "application/json" }, signal: AbortSignal.timeout(1000),
+    body: JSON.stringify({ origin: request.headers.get("origin"), site: request.headers.get("sec-fetch-site"),
+      type: request.headers.get("content-type"), hasCookie: request.headers.has("cookie"), status: result.status }),
+  });
+  if (!observed.ok) throw new Error("Fixture observation failed");
+  return result;
+}
+export async function GET() { return new Response('<!doctype html><html><head><link rel="icon" href="data:,"></head><body>Editor fixture</body></html>', { headers: { "content-type": "text/html" } }); }
 `);
   child = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "dev", "--webpack", "--hostname", "127.0.0.1", "--port", String(port),
     "--experimental-https", "--experimental-https-key", keyPath, "--experimental-https-cert", certPath], { cwd: directory, detached: true,
@@ -172,13 +195,14 @@ export async function GET() { return new Response("ready"); }
   }
   assert.ok(ready, "isolated Text HTTPS runtime must become ready"); cookieA = await encodeSession(subjects[0]); cookieB = await encodeSession(subjects[1]);
 }, { timeout: 60000 });
-beforeEach(() => { models.clear(); calls = []; authCalls = 0; budgetCalls = 0; mutations = 0; events.length = 0;
+beforeEach(() => { models.clear(); calls = []; authCalls = 0; budgetCalls = 0; mutations = 0; events.length = 0; observations.length = 0;
   budgetResult = 1; restricted = false; malformedAck = false; fixtureError = undefined; });
 after(async () => {
   if (child?.pid) { const exited = child.exitCode === null ? new Promise(resolve => child.once("exit", resolve)) : Promise.resolve();
     try { process.kill(-child.pid, "SIGTERM"); } catch { /* already stopped */ }
     await Promise.race([exited, delay(2000)]); try { process.kill(-child.pid, "SIGKILL"); } catch { /* already stopped */ }
   }
+  if (siblingServer) { siblingServer.closeAllConnections(); await new Promise(resolve => siblingServer.close(resolve)); }
   if (provider) { provider.closeAllConnections(); await new Promise(resolve => provider.close(resolve)); }
   if (directory) await rm(directory, { recursive: true, force: true });
 });
@@ -247,4 +271,105 @@ test("recognized cookie with provider signature mismatch cannot reach RPC", asyn
   signingKey[0] ^= 255;
   try { check(await request(cookieA), 401, { status: "unauthenticated" }); assert.equal(calls.length, 0); assert.equal(mutations, 0); }
   finally { signingKey[0] ^= 255; }
+});
+
+async function browserSession(browser, cookie) {
+  await browser.command("Network.clearBrowserCookies");
+  if (cookie) await browser.command("Network.setCookies", { cookies: cookie.split("; ").map(pair => {
+    const index = pair.indexOf("=");
+    return { name: pair.slice(0, index), value: decodeURIComponent(pair.slice(index + 1)), url: nextOrigin,
+      path: "/", secure: true, sameSite: "Lax" };
+  }) });
+}
+async function navigate(browser, origin) {
+  await browser.command("Page.navigate", { url: `${origin}/api/editor` });
+  await until(() => browser.evaluate(`document.readyState === 'complete' && location.origin === ${JSON.stringify(origin)}`));
+}
+async function browserPost(browser, options = {}) {
+  const reply = await browser.command("Runtime.evaluate", { awaitPromise: true, returnByValue: true,
+    expression: `(async () => {
+      const response = await fetch(${JSON.stringify(nextOrigin + (options.path ?? "/api/editor"))}, {
+        method: "POST", credentials: "include", ${options.cross ? 'mode: "no-cors",' : ''}
+        headers: { "content-type": ${JSON.stringify(options.cross ? "text/plain" : "application/json")} },
+        body: ${JSON.stringify(JSON.stringify(options.value ?? command()))},
+      });
+      return ${options.cross ? '{ type: response.type, status: response.status }' : `{ status: response.status, cache: response.headers.get("cache-control"), body: await response.json(),
+        privacy: { type: response.headers.get("content-type"), expires: response.headers.get("expires"), pragma: response.headers.get("pragma"),
+          referrer: response.headers.get("referrer-policy"), nosniff: response.headers.get("x-content-type-options"),
+          location: response.headers.has("location"), cors: response.headers.has("access-control-allow-origin"), authorization: response.headers.has("authorization") } }`};
+    })()`,
+  });
+  assert.equal(reply.exceptionDetails, undefined, "actual browser fetch must settle without script error");
+  assert.equal(fixtureError, undefined); return reply.result.value;
+}
+function fixturePin() {
+  return createHash("sha256").update(new X509Certificate(certificate).publicKey.export({ type: "spki", format: "der" })).digest("base64");
+}
+function checkBrowser(result, status) {
+  assert.equal(result.status, status); assert.equal(result.cache, "private, no-store, max-age=0");
+  assert.deepEqual(result.privacy, { type: "application/json; charset=utf-8", expires: "0", pragma: "no-cache",
+    referrer: "no-referrer", nosniff: "nosniff", location: false, cors: false, authorization: false });
+  return result.body;
+}
+test("actual Chromium rejects Text fixture certificate with unrelated SPKI", { timeout: 60000 }, async () => {
+  const browser = await chromiumFixture({ certificateSpki: randomBytes(32).toString("base64") });
+  try {
+    await browser.command("Page.enable");
+    const result = await browser.command("Page.navigate", { url: `${nextOrigin}/api/editor` });
+    assert.equal(result.errorText, "net::ERR_CERT_AUTHORITY_INVALID");
+    assert.equal(budgetCalls, 0); assert.equal(authCalls, 0); assert.deepEqual(calls, []); assert.deepEqual(observations, []);
+  } finally { await browser.close(); }
+});
+for (const action of actions) test(`actual Chromium ${action} carries SSR cookie and selected raw hidden Text`, { timeout: 60000 }, async () => {
+  if (action !== actions[0]) seed(subjects[0]);
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable"); await navigate(browser, nextOrigin);
+    await browserSession(browser, cookieA); const value = command(action);
+    const result = checkBrowser(await browserPost(browser, { value }), 200);
+    assert.equal(result.status, action === actions[0] ? "initialized" : action === actions[1] ? "allocated" : "saved");
+    assert.equal(result.block_id, ids[0]); assert.equal(result.collection_revision, action === actions[0] ? 1 : 4);
+    assert.equal(result.readback.status, "current"); assert.equal(result.readback.relation, "same_revision");
+    assert.equal(result.readback.snapshot.current_handle, "fixture-owner-0"); assert.equal(result.readback.snapshot.block.is_visible, false);
+    assert.deepEqual(result.readback.snapshot.block.text_working, { text: value.text_working.text });
+    assert.deepEqual(observations, [{ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 200 }]);
+    assert.equal(authCalls, 8); assert.equal(budgetCalls, 1); assert.equal(mutations, 1); assert.equal(events[0], "budget");
+    const names = calls.map(c => c.name); for (const start of [6, 9]) {
+      assert.deepEqual(names.slice(start, start + 2).sort(), [C, T].sort()); names.splice(start, 2, C, T);
+    }
+    assert.deepEqual(names, [S, S, action === actions[0] ? I : action === actions[1] ? A : W, S, S, S, C, T, S, C, T, S, S]);
+    assert.ok(calls.every(c => c.subject === subjects[0]));
+  } finally { await browser.close(); }
+});
+test("actual Chromium Text cookie replacement separates Owner and cookie loss denies further RPC", { timeout: 60000 }, async () => {
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable"); await navigate(browser, nextOrigin);
+    for (let i = 0; i < 2; i++) {
+      await browserSession(browser, i ? cookieB : cookieA);
+      const result = checkBrowser(await browserPost(browser, { value: command(actions[0], `Owner ${i}`) }), 200);
+      assert.equal(result.status, "initialized"); assert.equal(result.block_id, ids[i]);
+      assert.equal(result.readback.snapshot.current_handle, `fixture-owner-${i}`);
+      assert.deepEqual(result.readback.snapshot.block.text_working, { text: `Owner ${i}` });
+      assert.deepEqual(observations.at(-1), { origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 200 });
+      assert.equal(calls.filter(c => c.subject === subjects[i]).length, 13);
+    }
+    assert.equal(models.size, 2); assert.equal(authCalls, 16); assert.equal(budgetCalls, 2); assert.equal(mutations, 2);
+    await browserSession(browser, undefined); const count = calls.length;
+    assert.deepEqual(checkBrowser(await browserPost(browser), 401), { status: "unauthenticated" });
+    assert.equal(calls.length, count); assert.equal(mutations, 2); assert.equal(authCalls, 16); assert.equal(budgetCalls, 3);
+    assert.deepEqual(observations.at(-1), { origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: false, status: 401 });
+  } finally { await browser.close(); }
+});
+for (const sameSite of [false, true]) test(`actual Chromium Text ${sameSite ? "same-site cross-origin" : "cross-site"} simple POST denies before budget/Auth/RPC`, { timeout: 60000 }, async () => {
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  const origin = sameSite ? siblingOrigin : nextOrigin.replace("localhost", "127.0.0.1");
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable"); await browserSession(browser, cookieA);
+    await navigate(browser, origin);
+    assert.deepEqual(await browserPost(browser, { cross: true }), { type: "opaque", status: 0 });
+    assert.deepEqual(observations, [{ origin, site: sameSite ? "same-site" : "cross-site", type: "text/plain", hasCookie: sameSite, status: 403 }]);
+    assert.equal(budgetCalls, 0); assert.equal(authCalls, 0); assert.equal(mutations, 0);
+    assert.deepEqual(calls, []); assert.deepEqual(events, []); assert.equal(models.size, 0);
+  } finally { await browser.close(); }
 });
