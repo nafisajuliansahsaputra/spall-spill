@@ -6073,6 +6073,37 @@ explicit161 policy/subject and mandatory isolated Redis races/corrupt/TTL tests;
 then confined Upstash transport/budgeted HTTP119/160. Do not mount/grant before
 trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
 
+### Bounded private Text distributed permit — 2026-10-21
+
+- Fresh clean baseline `a106a8014a55ed3fc82b782fc2973a07d4ee378d`; exact push
+  CI39532792798, Security39532792785 and Guard39532792837 all six jobs SUCCESS.
+  Completed logs observed7375 app/5 tooling/3416 pgTAP55files/88 native19groups/
+  209 runtime/15 Redis/37 Chromium; no new live/provider/manual evidence.
+- Locked12.162 before code. Unmounted server-only Text distributed permit reuses
+  strict161 snapshotted policy, copied HMAC key/trusted subject and unchanged40
+  atomic Lua. Fixed13 DB-RPC admission units for every156 command; isolated Text
+  command/work keys, literal numeric1 only, no body/claims/RPC integration.
+  Subject500ms/aggregate2s bounds, both abort signals, finite/nonbackward clock,
+  late-work denial and cleanup preserved; no retry/refund/fallback/default policy.
+- 58 new permit tests exercise actual161 subject and158 body composition, exact
+  script/key/cost, policy/key/action denial before I/O, domain isolation, snapshot,
+  deadlines/abort/late work and cleanup. Eight new isolated native Redis tests
+  prove competing work/request ceilings, atomic denial, old-domain isolation,
+  TTL/rollover/corrupt/future state using unchanged committed Lua. New required
+  package/Application CI command preserves15 old Redis tests:23 total native Redis.
+  No claim of live Upstash, Redis cluster, ingress attestation, session or CSRF proof.
+- Frozen install, typecheck, lint,5 tooling,7433 app tests, production build and
+  all23 native Redis tests passed locally with zero failures/skips. Existing lint
+  warning at next-editor-runtime.test.mjs:268 remains. Final diff reviewed; new
+  push-event CI Application/Database, Security Secret/SAST/Dependency and Guard
+  remain PENDING until observed on the exact pushed SHA. No SQL/migration/grant,
+  dependency, provider configuration, route activation or Published change.
+- Goal unfinished; S4 last CLOSED / VERIFIED. D01/D02/full canvas/S5/S6/other kinds/
+  publication/ingress/IP/raw-target/live/public/RPC/production remain open. Next:
+  audit and lock confined Text Upstash EVAL transport from119 with13-unit/key-domain
+  confinement before160 HTTP composition; investigate inherited transport chunk
+  ownership separately if regression evidence confirms an independent defect.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

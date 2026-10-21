@@ -69,6 +69,7 @@ jobs:
           pnpm --filter @spall-spill/web test:click-budget-redis
           pnpm --filter @spall-spill/web test:resource-budget-redis
           pnpm --filter @spall-spill/web test:editor-budget-redis
+          pnpm --filter @spall-spill/web test:text-editor-budget-redis
 
       - name: Isolated Next session, Proxy and editor transport tests
         run: |
