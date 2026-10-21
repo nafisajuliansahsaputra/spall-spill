@@ -5463,6 +5463,38 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   full canvas/S5/S6/other kinds/publication/IP/raw-target/live/public/RPC/production
   remain open/withheld; controlled fetch is not live Upstash/cluster/proxy proof.
 
+### Bounded private Text budgeted HTTP composition — 2026-10-21
+
+- Fresh clean baseline07db29fa80c256a036805b9bc235b45d2471d9fd; exact push
+  CI39568709320/Security39568709096/Guard39568709105 SUCCESS. Goal unfinished,
+  S4 last CLOSED / VERIFIED. Locked12.166 before code after canonical165,
+  J5/J9/pinned D02/11.21,120 factory/tests and160/161/162/165 readback.
+- Unmounted server-only factory snapshots strict trustedOrigin/policy/upstash
+  configuration; one policy.namespace supplies actual165 transport and162 permit.
+  Copied key/mandatory trusted reader, optional controlled fetch only; no injected
+  Redis/permit/client/Owner/RPC selectors. Same Request reaches actual160 handler.
+  Structural invalid config denies before metadata/body/SSR; semantic provider/
+  identity errors fail closed through existing layers. No defaults/header fallback.
+- 25 new full-pipeline tests pass using actual body/subject/permit/transport/HTTP/
+  dispatcher/reviews/pinned SDK with only SSR factory/claims/provider fetch controlled.
+  All3 commands use one13-unit EVAL before body and one request-local SSR factory,
+  8claims/13RPC/one mutation. Exact wire ordering/key/token confinement, config/key
+  digest snapshot, strict selectors, claim loss/unknown, distinct concurrent clients,
+  late/hung/aborted provider and malformed body burning at most one grant verified.
+  Existing109 Text HTTP tests and73 Link composition tests preserved (205 targeted
+  passed before final2 body tests; all final25 new tests passed in full suite).
+- Frozen install/typecheck/lint/5 tooling/7558 app tests/build and23 native Redis
+  tests passed locally, zero failures/skips. Existing lint warning at
+  next-editor-runtime.test.mjs:268 unchanged. Final diff reviewed. Exact latest
+  push Application/Database, Secret Scan/SAST/Dependency and Guard PENDING until
+  observed. No SQL/migration/grant/route/action/UI/provider/config/credential/
+  dependency or Working/Draft/Published change. Changelog CONNECT403 without bypass;
+  docs search available; no SDK/auth API change or live JWT/cookie/DB commit claim.
+- Next audit isolated request-context/session/ingress/CSRF prerequisites from
+  121–129 for Text before any mounted integration; no partial D02 enablement.
+  D01/D02/full canvas/S5/S6/other kinds/publication/IP/raw-target/live/public/RPC/
+  production remain open/withheld. Budget pause is not Goal completion.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
