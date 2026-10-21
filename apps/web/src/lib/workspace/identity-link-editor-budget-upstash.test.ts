@@ -191,3 +191,16 @@ it.each([
 ])("denies noncanonical/mismatched key tuple %j before network", async (...selectedKeys) => {
   const f = fixture(); expect(await f.transport.eval(productClickBudgetScript, selectedKeys, args)).toBeNull(); expect(f.fetcher).not.toHaveBeenCalled();
 });
+
+
+it.each([[0, 1], [1, 0], [1, null]] as const)("owns Buffer response bytes before producer mutation %s → %s", async (original, changed) => {
+  const producer = Buffer.from(JSON.stringify({ result: original })); let pulls = 0;
+  const fetcher = vi.fn<typeof fetch>(async () => new Response(new ReadableStream<Uint8Array>({ pull(controller) {
+    if (pulls++ === 0) { controller.enqueue(producer); return; }
+    if (changed === null) producer.fill(255);
+    else producer.set(Buffer.from(JSON.stringify({ result: changed })));
+    controller.close();
+  } }, { highWaterMark: 0 }), { headers: { "content-type": "application/json", "content-length": String(producer.length) } }));
+  expect(await createIdentityLinkEditorUpstashBudgetTransport(config, fetcher).eval(productClickBudgetScript, keys, args)).toBe(original);
+  expect(pulls).toBe(2);
+});

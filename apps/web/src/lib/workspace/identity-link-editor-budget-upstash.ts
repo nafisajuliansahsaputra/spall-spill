@@ -46,7 +46,7 @@ export function createIdentityLinkEditorUpstashBudgetTransport(config: { origin:
           if (part.done) { complete = true; break; }
           if (!(part.value instanceof Uint8Array) || part.value.byteLength > 4096 - size) return null;
           size += part.value.byteLength;
-          chunks.push(part.value.slice());
+          chunks.push(new Uint8Array(part.value));
         }
         if (length !== null && Number(length) !== size) return null;
         const bytes = new Uint8Array(size); let offset = 0; for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }

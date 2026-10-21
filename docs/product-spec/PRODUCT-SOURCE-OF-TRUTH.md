@@ -5373,6 +5373,35 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   confinement before160 HTTP composition; investigate inherited transport chunk
   ownership separately if regression evidence confirms an independent defect.
 
+### Corrective private Link budget response byte ownership — 2026-10-21
+
+- Independent corrective119 slice while162 exact push CI39561392977 remained
+  PENDING; Security39561392862 and Guard39561392849 observed SUCCESS. Baseline
+  HEAD/origin783a68dd1519f1c0a5d646a92ba766e737e6b24e clean/equal at slice start.
+  Locked12.163 before regression/source edits; no dependent Text activation.
+- Actual controlled Response stream with Node Buffer producer reproduced all3
+  failures before correction: original denial0 became grant1 after producer
+  mutation, original1 became0, valid JSON became invalid UTF8/null. Existing plain
+  Uint8Array test had not covered Buffer.slice aliasing. Replaced only the owned
+  chunk copy with new Uint8Array(part.value) after existing type/size checks.
+  All3 regressions and75 existing adapter tests now pass;59 permit tests also
+  pass (137 targeted). This proves controlled stream ownership, not live provider
+  exploitation or provider/session/proxy/CSRF readiness.
+- Frozen install/typecheck/lint/5 tooling/7436 app tests/build and all23 native
+  Redis tests passed locally with zero failures/skips. Existing lint warning at
+  next-editor-runtime.test.mjs:268 unchanged. Exact119 key/31-unit/Lua/origin/token/
+  JSON/4096byte/4097read/1.5s deadline/cancel semantics preserved. No SQL/migration,
+  grants/routes/dependency/provider configuration or Working/Draft/Published change.
+  Final diff reviewed; exact latest push six jobs PENDING until observed.
+- Goal unfinished, S4 last CLOSED / VERIFIED. Read-only search also found slice()
+  chunk copies in legacy product-click-budget-upstash.ts, resource-open-budget-
+  upstash.ts and product-click-request.ts; those paths are unchanged and need
+  their own contract/audit/regression evidence before asserting the same defect.
+  Next prioritize bounded legacy chunk-ownership audit/correction if reproduced,
+  then Text13-unit confined Upstash transport before160 HTTP composition. D01/D02/
+  full canvas/S5/S6/other kinds/publication/ingress/IP/raw-target/live/public/RPC/
+  production and all deployment safety gates remain open/withheld.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
