@@ -164,3 +164,16 @@ it("admits exactly the read ceiling including the final one-byte stream terminal
 it("rejects a stream producing non-byte chunks without coercion", async () => {
   const f = fixture(["private" as unknown as Uint8Array]); expect(await f.run()).toBeNull(); expect(f.counts()).toEqual({ pulls: 1, cancels: 1 });
 });
+
+it("copies Node Buffer chunks instead of retaining Buffer.slice aliases", async () => {
+  const body = bytes(JSON.stringify(command)), first = Buffer.from(body.slice(0, 10)), second = body.slice(10);
+  let pulls = 0;
+  const stream = new ReadableStream<Uint8Array>({ pull(controller) {
+    if (pulls++ === 0) controller.enqueue(first);
+    else if (pulls === 2) { first.fill(0); controller.enqueue(second); }
+    else controller.close();
+  } }, { highWaterMark: 0 });
+  const f = fixture();
+  const init: RequestInit & { duplex: string } = { method: "POST", headers: f.request.headers, body: stream, duplex: "half" };
+  expect(await read(new Request(`${origin}/fixture`, init), origin, f.permit)).toEqual(command);
+});

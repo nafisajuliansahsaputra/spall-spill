@@ -39,7 +39,7 @@ export async function readIdentityLinkEditorCommandRequest(request: Request, tru
           if (done) break;
           if (!(value instanceof Uint8Array) || value.byteLength > maximum - size) return null;
           size += value.byteLength;
-          if (value.byteLength) chunks.push(value.slice());
+          if (value.byteLength) chunks.push(new Uint8Array(value));
         }
         if (!valid() || (length !== null && Number(length) !== size)) return null;
         const bytes = new Uint8Array(size); let offset = 0;

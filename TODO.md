@@ -5940,6 +5940,40 @@ failure before change; do not alter auth/permit/byte/read/deadline/response sema
 Then private request-local Text execution/no-store response117/156/158, still without
 mount/grant before distributed permit/session/cross-Owner/runtime safety evidence.
 
+### Bounded Link Buffer chunk-copy regression correction — 2026-10-21
+
+Fresh clean exact HEAD/origin75c3d9b4134537481c68c6d782f265370bf2af99;158 push
+CI39526546505/Security39526546591 still running, Guard39526546513 SUCCESS.
+Independent unchanged Link path already has exactcc74279 six-job proof. Fresh116
+no-producer-alias contract, actual Link reader/tests dan new158 Text evidence
+refreshed. Goal unfinished. This fixes existing required copy semantics, no new
+product/security policy or accepted risk.
+
+12.159 locked before test/source changes. New actual Request/ReadableStream/Buffer
+regression observes Link failure before source edit:65 prior tests PASS/new test
+FAIL, result null instead of original valid command after producer mutates Buffer.
+Root cause Buffer.slice aliases storage although Buffer is Uint8Array. Replace one
+admitted-chunk copy with new Uint8Array(value), retaining independent bytes. New
+regression then passes, all66 Link body tests retained. No metadata/permit/auth/
+32768-byte/32769-read/5s/decoder/error/response/route/UI/SQL/grant/dependency/Published
+change. No external provider/production/manual/CSRF evidence claim.
+
+192 targeted PASS:66 Link body+78 Text body+48 actual Link HTTP integration. Frozen
+install/typecheck/lint/5 tooling/full7142 app/tiga builds PASS:6861 web+31 destination+
+32 media+201 scanner+17 navigation. Affected web fresh; unchanged package tasks may
+reuse Turbo cache. Existing lint warning/nol error. git diff --check/final/staged
+review dan identical canonical checkpoint comparison required. Fresh fetch verifies
+remote75c3d9b unchanged before push only HEAD:codex/autopilot. Exact latest six jobs
+PENDING sampai observed, incl unchanged3416 pgTAP55files/88 native19groups/209 runtime/
+15 Redis/37 Chromium/reset/lint/error-advisors; superseded158 run not final evidence.
+
+S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/other kinds/publication/
+ingress/IP/raw-target/live/public/RPC/production remain open. Next audit/kunci private
+request-local Text HTTP execution/no-store response composition117/156/158: actual
+SSR factory per validated request, unchanged selected outcomes, full status map incl
+Text save negatives, metadata/lifecycle barriers, bounded response truth. Do not
+mount/grant before distributed permit/session/cross-Owner/mounted safety evidence.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
