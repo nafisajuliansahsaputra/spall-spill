@@ -5159,6 +5159,56 @@ PASS, next audit/kunci bounded Text streamed body reader memakai116 precedent,
 sebelum budget/request-local dispatch/no-store/mounted transport safety evidence.
 Semua RPC/public grants withheld; tidak mount partial D02 atau infer live evidence.
 
+### Bounded private Text streamed body / permit composition — 2026-10-21
+
+Fresh clean exact HEAD/origincc742790333d4a9c8c184781277c7646b2d2f12a; all six
+push jobs SUCCESS: CI39490585653 Application118862816027/Database118862816265,
+Security39490585682 SAST118862377196/Secret118862377608/Dependency118862377623,
+Guard39490585626 job118862376321. Completed logs observed7063 app/5 tooling/
+209 runtime/15 Redis/37 Chromium/3416 pgTAP55files/88 native19groups/reset/lint/
+error-advisors. Superseded156 runs bukan final proof. Goal belum selesai; fresh
+AGENTS/bootstrap/canonical/checkpoint/J5/J9/138/154/157/116/source/tests refreshed.
+
+12.158 locked sebelum coding. Unmounted server-only
+readIdentityTextEditorCommandRequest(Request,trustedOrigin,permit) memakai157
+admission, fixed policy-header snapshot/rechecks, fixed identity_text_command
+trusted-server permit exactly once/literal true sebelum reader. Satu5s monotonic
+aggregate permit/body/validation deadline, prompt request-abort, no ignored late
+revival/next reads. Cancel only owned failed reader best effort tanpa menunggu hung
+cancel; drain/release success dan clear timers/listeners. No auth/client/RPC/
+dispatch/route/UI/SQL/grant/Published/dependency change atau production permit proof.
+
+Actual262144 bytes enforced independently declared length, exact length match,
+strict UTF8/BOM/JSON/154 schema, copied raw nullable Text. Independent32769 read
+calls incl terminal/empty reads retains bounded iteration budget: exact262144 bytes
+can use32768 eight-byte chunks plus terminal; excessive one-byte/empty fragmentation
+fails closed. Body admission/permit/parsed command bukan authoritative persistence.
+Review discovered Buffer.slice aliases producer memory: new78th regression failed
+before correction (77 PASS/1 FAIL), then independent new Uint8Array(value) copy
+passes all78 Text body tests. Existing Link reader uses same old slice pattern;
+next bounded corrective audit/regression takes priority before HTTP composition.
+
+643 targeted PASS:78 new Text body +111 metadata+192 schema+197 dispatcher+65
+unchanged Link body. Covers all3 raw/null/visibility commands/maximal escaped Text,
+bytes/read cap/over/declared lies/non-byte chunks/producer mutation including Buffer,
+UTF8/BOM/strict schema, permit denial/error/order/abort/deadline/hung late read/cancel,
+metadata drift even independently valid replacements, cleanup/no fetch/UUID/retry.
+Controlled local streams bukan mounted/live JWT/provider/DB commit/manual/CSRF proof.
+
+Frozen install/typecheck/lint/5 tooling/full7141 app/tiga builds PASS after Buffer
+correction;6860 web+31 destination+32 media+201 scanner+17 navigation, affected web
+fresh, unchanged package tasks may reuse Turbo cache. Existing lint warning/nol
+error. git diff --check/final/staged review/identical canonical entry comparison
+required. Fresh fetch must retain remotecc74279 before push only HEAD:codex/autopilot;
+new exact six push jobs PENDING sampai observed, incl unchanged DB/runtime evidence.
+
+S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/other kinds/publication/
+ingress/IP/raw-target/live/public/RPC/production remain open. Next audit/kunci bounded
+Link reader Buffer alias-copy correction under116, reproduce actual Request/Buffer
+failure before change; do not alter auth/permit/byte/read/deadline/response semantics.
+Then private request-local Text execution/no-store response117/156/158, still without
+mount/grant before distributed permit/session/cross-Owner/runtime safety evidence.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
