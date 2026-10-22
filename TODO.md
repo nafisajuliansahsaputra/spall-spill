@@ -6370,6 +6370,44 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   D01/D02/full canvas/S5/S6/other kinds/publication/live/public/RPC/production
   remain open/withheld. No new Owner credential/manual action required here.
 
+### Isolated Text editor raw-target gateway — 2026-10-22
+
+- Clean pushed baseline6b47bc85e4fc43365e29066982c8b30aaa5840d6;170 local40 Text
+  runtime/7558 app/5 tooling/23 Redis/quality gates pass. CI39821156896 PENDING;
+  Guard39821156969 SUCCESS. Security39821156955 SAST/Secret SUCCESS but Dependency
+  job119972473282 FAILED:5 newly reported advisories,2 Critical/1 High/2 Medium,
+  Next16.3.8 and @vitest/mocker4.1.11; published fixes16.4.1/4.1.12 exceed24h
+  quarantine. Do not accept risk/waive gate; bounded security remediation is next
+  priority. Goal unfinished; S4 remains last CLOSED / VERIFIED.
+- Locked12.171 audit before own temporary raw-target probe outside repo, then
+  implementation phase from observations before source edits. Probe observed bare
+  query/dot/encoded-dot normalize to actual Text command(one budget/8Auth/13RPC),
+  slash308 internal/no I/O, encoded/lookalike404/no command but normal Proxy Auth1,
+  mismatch/query403/no I/O, unsupported405/204. Audit is not a passing CI gate or
+  permission to accept aliases; original raw target not established by Request.url.
+- Added only candidate native HTTPS loopback command gateway in temporary Text
+  fixture. Exact raw req.url /api/editor checked before upstream/body forwarding;
+  all others403/status-only/private-no-store/Connection close. Canonical method/
+  headers/body pass unchanged to actual Next Request/166, explicit CA/hostname
+  verification and port override only; no normalization/header proof/repair/mock/
+  extra EVAL. No production route/matcher/config/source/SQL/grant/dependency change.
+- All70 Text runtime cases pass locally without failures/skips,40 prior retained:
+  14 raw alias denials before all budget/Auth/RPC/forwarding;2 internal direct
+  slash redirects;all3 canonical Text commands one grant/8Auth/13RPC/one mutation/
+  raw hidden selected readback/exact phases;5 mismatch denials including forwarded
+  hints,4 unsupported methods, bearer/Owner hints without cookie401/no RPC, and
+  no-CA/wrong-hostname TLS failures before HTTP. Forwards/rejections observed.
+- Frozen install/typecheck/lint/5 tooling/7558 app/build/23 native Redis pass;
+  old Link lint warning268 unchanged; final diff reviewed. Required Application
+  now70 Text cases/279 total runtimes with37 other Chromium cases retained.
+  New exact push six gates PENDING; dependency finding above remains OPEN until
+  patched graph and exact final Security SUCCESS. No CLOSED/VERIFIED claim.
+- Next lock/remediate Next16.4.1/Vitest4.1.12 advisories with aligned ESLint patch,
+  quarantine/trust/pinned gates preserved; then Text gateway refresh/session128,
+  compiled129/browser gateway130/concurrency131. D01/D02/full canvas/S5/S6/other
+  kinds/publication/ingress/IP/live/public/RPC/production remain open/withheld.
+  No new Owner credential/manual action required for safe security remediation.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
