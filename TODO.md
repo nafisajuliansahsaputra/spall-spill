@@ -6331,6 +6331,45 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   canvas/S5/S6/other kinds/publication/ingress/IP/raw-target/live/public/RPC/
   production remain open/withheld. No new Owner credential/manual action required.
 
+### Isolated Text editor refresh response — 2026-10-22
+
+- Fresh clean baselinecada67e7d64ca013820eb38463ef8d1d03c20da7;169 exact push
+  CI39651527004 Application/Database, Security39651526973 and Guard39651526970
+  SUCCESS. Completed logs7558 app/5 tooling/23 Redis/241 runtime/37 Chromium/
+  3416pgTAP55files/88native19groups/535 dependency packages no issues observed.
+  Goal unfinished, S4 remains last CLOSED / VERIFIED.
+- Locked12.170 before code; only temporary Text HTTPS fixture expanded. Actual
+  SSR2s-cookie/real2100ms expiry and controlled same-subject rotated response shape
+  use unchanged pinned SDK/SSR/160/166 pipeline. Default refresh still rejected;
+  original32 tests retained. No production source/routes/matcher/env/config/SQL/
+  grant/dependency changes, request rewrite, mocked claims or partial D02 enabling.
+- All40 Text runtime cases pass locally without failures/skips. Eight new cases:
+  init/add/save HTTPS refresh, restricted Owner, concurrent expired subjects, and
+  all3 actual Chromium refresh/natural Set-Cookie reuse. Success has one13-unit
+  EVAL before refresh/8 verified Auth calls/13RPC/one mutation/exact proof phases,
+  raw hidden selected Text/current Owner/readback and private/no-store safe headers.
+  Actual SSR Set-Cookie relayed; handler owns anti-cache, not every SSR callback header.
+- Explicit follow-up with rotated cookie stays terminal409 already_initialized/
+  stale_write, no further refresh or Working commit. Restricted remains403/status-
+  only/no mutation despite refresh. Concurrent subjects retain separate cookies/
+  Owner/raw Text and verified distinct-subject Auth overlap>=2 after issuance metric
+  reset; replay retains own binding, missing cookie401/no RPC. Chromium provisions
+  expired cookie only initially, naturally applies response Set-Cookie, then explicit
+  follow-up409/no refresh and cookie clear401/no RPC. No interception/TLS bypass.
+- Controlled token mappings/in-memory Working models are not live Auth/JWKS/
+  rotation grace/revocation/ABA/freshness/session-freeze/DB/RLS/atomicity/CDN/ingress/
+  IP/raw-target/deployment evidence. No manual or production readiness claim.
+- Environment reload required isolated temporary pnpm11.24.0/Redis6.2.14 recovery;
+  repository dependency versions untouched. Frozen install/typecheck/lint/5 tooling/
+  7558 app tests/build/all23 native Redis passed locally; old Link warning268 unchanged.
+  Final diff reviewed. Required Application command now40 Text cases/249 runtimes,
+  retaining37 other Chromium tests. New exact push Application/Database/Secret/SAST/
+  Dependency/Guard PENDING until observed, including unchanged isolated DB gates.
+- Next audit/lock bounded Text raw request-target/ingress prerequisites from127,
+  then session relay128/compiled runtime129/gateway browser130/concurrency131.
+  D01/D02/full canvas/S5/S6/other kinds/publication/live/public/RPC/production
+  remain open/withheld. No new Owner credential/manual action required here.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
