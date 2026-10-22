@@ -6408,6 +6408,41 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   kinds/publication/ingress/IP/live/public/RPC/production remain open/withheld.
   No new Owner credential/manual action required for safe security remediation.
 
+### Bounded Next/Vitest security remediation — 2026-10-22
+
+- Security39821156955 Dependency119972473282 on170 commit6b47bc8 FAILED with5
+  advisories:Next16.3.8 GHSA-2464-fhr4-w9xw/GHSA-673q-mjm6-r5xr (Critical9.5),
+  GHSA-p3m5-59mp-jv5r (High8.2);mocker4.1.11 GHSA-qxg6-89mg-rqv8 (Medium4.7),
+  GHSA-xp26-3454-mjgp (Medium5.9). No ignore/filter/skip/risk acceptance.171 raw-
+  target slice locally verified and committed a9a7df7, intentionally not yet pushed
+  before security remediation; known same-session local continuation.
+- Locked12.172 before dependency edit. Registry Next/ESLint16.4.1 Oct14 and
+  Vitest4.1.12 Oct15 publication dates exceed1440-minute quarantine; Node24.19.0/
+  React19.2.8 compatible. Pin Next/ESLint16.4.1 in3 apps and Vitest4.1.12 in4
+  consumers; actual mocker graph4.1.12. Retarget identical native-glob patch and
+  fast-glob removal override to ESLint plugin16.4.1; patch hash46cb9d3e unchanged.
+- Actual pnpm11.24.0 regenerated lock and frozen install pass. Reviewed deltas
+  limited to Next/env/SWC/ESLint and Vitest family versions/integrities/peer graph;
+  Vite8.2.4/React/Supabase/other dependencies retained. No quarantine/trust/build/
+  exotic-subdep controls weakened, trust exclusions/credentials added, production
+  source/routes/matcher/config/SQL/grants/provider/deployment semantics changed.
+- Actual resolved Next/ESLint16.4.1/mocker/Vitest4.1.12 verified for all consumers;
+  old vulnerable Next/mocker lock package entries absent. pnpm audit0 advisories/
+  vulnerabilities, all severities0. Package patch alone is not final OSV evidence.
+- Full local verification on patched graph passes without skips/failures:5 native
+  glob tooling, typecheck/lint/7558 app/three builds/23 native Redis/279 runtimes
+  (76 SSR+70 Text+59 compiled+74 gateway)/37 separate Chromium. Old Link lint
+  warning268 retained; all prior assertions unchanged. Final/staged diff reviewed.
+- Exact final push Application/Database/Secret/SAST/Dependency/Guard remain PENDING
+  until observed, including unchanged DB reset/lint/advisors/3416pgTAP55files/
+  88native19groups. Findings not CLOSED/VERIFIED before final Security SUCCESS.
+  No live/manual/production/exploit-reachability claim. Goal unfinished; S4 last
+  CLOSED / VERIFIED. D01/D02/full canvas/S5/S6/other kinds/publication/ingress/IP/
+  live/public/RPC/production remain open/withheld.
+- After latest exact gates pass, next audit/lock Text gateway session/refresh relay
+  from128, then compiled129/browser gateway130/concurrency131. No new Owner
+  credential/manual action required for this bounded patch or next fixture slice.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
