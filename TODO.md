@@ -6443,6 +6443,39 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   from128, then compiled129/browser gateway130/concurrency131. No new Owner
   credential/manual action required for this bounded patch or next fixture slice.
 
+### Isolated Text editor gateway session relay — 2026-10-22
+
+- Fresh clean HEAD/origin9bd750b1d546cc1391acd179f7b3bc2e50f5253a. Exact push
+  CI39822696567 Application/Database, Security39822696471 Secret/SAST/Dependency,
+  Guard39822696640 SUCCESS. Completed logs7558 app/5 tooling/279 runtimes/
+  3416pgTAP55files/88native19groups/535 dependency packages without issues observed.
+- Locked12.173 before test implementation after Protocol/J5/J9/128/160/166/170/171
+  and historical pinned D02/11.21 readback. Seven additional cases use unchanged
+  actual SSR expiry/cookies and raw HTTPS gateway; all70 prior assertions retained.
+- All3 Text commands relay actual refresh Set-Cookie with one13-unit budget before
+  refresh/8 Auth/13RPC/one own mutation. Explicit follow-up with response cookie
+  remains terminal409/no extra refresh/commit. Two expired Owners overlap verified
+  Auth after issuance reset, keep distinct cookies/raw hidden Text/readback, then
+  explicit replay/missing cookie preserve Owner isolation and401/no RPC.
+- Restricted after refresh403/status-only/one Owner RPC retains session cookie;
+  rejected refresh401 relays clearing cookie/no RPC. Bare-query/dot raw targets deny
+  before forward/budget/Auth/refresh/RPC even with refresh-capable expired session;
+  separate canonical command succeeds once. Private/no-store/Pragma/Expires0/safe
+  headers, verified CA/hostname, unchanged deadlines/cleanup preserved.
+- Full local verification passes: frozen install/typecheck/lint/5 tooling/7558 app/
+  three builds/23 native Redis/286 runtimes (76 SSR+77 Text+59 compiled+74 gateway)/
+  37 separate Chromium, no failures/skips. Existing Link lint warning268 retained;
+  no source/SQL/grant/route/matcher/dependency/CI/deployment/provider configuration
+  change. Final/staged diff reviewed, git diff --check passes.
+- Exact final push Application/Database/Secret/SAST/Dependency/Guard PENDING until
+  observed, including unchanged DB reset/lint/advisors/3416pgTAP55files/88native
+  19groups. Isolated Node gateway/Next dev/HS256/model evidence only; no compiled
+  Text/browser-through-gateway/live Auth/revocation/deployed ingress/IP claim.
+  Goal unfinished; S4 last CLOSED / VERIFIED. D01/D02/full canvas/S5/S6/other kinds/
+  publication/live/public/RPC/production remain open/withheld. No Owner action needed.
+- Next bounded audit/lock compiled Text runtime from129 with all77 cases, then
+  browser gateway130/concurrency131; no endpoint activation or partial D02.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
