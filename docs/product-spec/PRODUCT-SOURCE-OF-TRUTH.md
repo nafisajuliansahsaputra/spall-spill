@@ -5745,6 +5745,48 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
 - Next bounded audit/lock compiled Text runtime from129 with all77 cases, then
   browser gateway130/concurrency131; no endpoint activation or partial D02.
 
+### Isolated compiled Text editor runtime — 2026-10-22
+
+- Fresh clean HEAD/origin414f5e6baaefb1347d77d59741f1298ce6ecc01b.173 full local
+  gates passed; exact push Guard39870878256 and Security39870878445 Secret/SAST/
+  Dependency SUCCESS; CI39870878149 Application/Database PENDING when audited.
+  Continued independent fixture evidence without public/RPC activation or closure.
+- Locked12.174 before coding after current173/Protocol/129/160/166/170/171/173,
+  Next16.4.1 CLI/type/API and source/runners audit. Explicit Text production mode
+  builds own temporary App Router app with actual next build --webpack, required
+  nonempty BUILD_ID,120s build/45s startup/180s hook. Actual Next dev:false API runs
+  child NODE_ENV production/native HTTPS loopback with original Node req/res.
+- Dedicated runner provisions own HTTPS provider certificate and child-only CA
+  bundle preserving inherited CA; Next/gateway/sibling use separate ephemeral CA.
+  Existing no-CA/wrong-hostname/wrong-SPKI assertions remain intact. No TLS bypass,
+  Request/header/body/cookie rewrite, claims/permit mock, deployment/provider config
+  change or credential expansion. Own process-group/socket/temp cleanup retained.
+- All77 existing Text tests/assertions run unchanged on compiled output and PASS:
+  init/add/save, one13-unit budget before Auth/refresh, hidden raw selected readback,
+  revisions/terminal conflicts, Owner/restricted/unknown, native Chromium natural
+  refresh reuse/cookie loss/cross-origin, actual Proxy control, raw gateway/TLS and
+  session/clearing relay. Default dev mode preserved. Added separate package command
+  and mandatory CI invocation; no existing CI test/job/security gate removed.
+- Full local frozen install/typecheck/lint/5 tooling/7558 app/three builds/23 native
+  Redis/363 runtimes (76 SSR+77 Text dev+77 Text compiled+59 Link compiled+74 Link
+  gateway)/37 separate Chromium PASS without failures/skips. New callback lint
+  warning fixed, affected77 compiled cases/lint rerun PASS; old Link warning268
+  retained. All77 test assertions byte-identical; dependency lock unchanged. Final/
+  staged diff reviewed, git diff --check passes. No production source/routes/matcher/
+  SQL/grants/Working-vs-Published semantics change.
+- 173 Database120144711184 subsequently SUCCESS; completed logs3416pgTAP55files/
+  88native19groups/no fail/skip and advisors no issues observed.173 Application
+  still PENDING at this checkpoint; no premature verified claim.
+- Exact final push Application/Database/Secret/SAST/Dependency/Guard PENDING until
+  observed, including unchanged DB reset/lint/advisors/3416pgTAP55files/88native
+  19groups. Compiled controlled fixture evidence is not next start/Turbopack parity,
+  browser-through-gateway/live Auth/rotation revocation/PostgREST/RLS/DB atomicity/
+  deployed ingress/IP/manual verification or production readiness. Goal unfinished;
+  S4 last CLOSED / VERIFIED. D01/D02/full canvas/S5/S6/other kinds/publication/live/
+  public/RPC/production remain open/withheld. No Owner action needed.
+- Next audit/lock Text Chromium through compiled raw gateway from130, retaining
+  dev77/compiled77 and exact gates, then concurrent browser131. No partial D02.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
