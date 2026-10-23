@@ -6733,6 +6733,47 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
 - Berikutnya audit/kunci Text browser query-denial cookie continuity berdasarkan136
   untuk ketiga command; pertahankan dev77/direct77/gateway96, tanpa partial D02.
 
+### Chromium Text expired-cookie query admission — 2026-10-23
+
+- Fresh Cloud work bersih, explicit fetch/reset exact HEAD/origin
+  ed2031f10bbe97499221d9abbd2cfedeb0c4cc5a; tidak ada overlap/unpushed work.
+  Exact push CI39946246279/Security39946246348/Guard39946246310 SUCCESS diamati
+  ulang. Goal belum selesai; S4 terakhir CLOSED / VERIFIED. AGENTS/Cloud/Protocol/
+  canonical checkpoint/J5/J9/pinned D02/11.21/136/160/166/180 dan actual Text/Link/
+  gateway/browser/SSR/helper/runner/CI dibaca sebelum kontrak12.181 dikunci/dibaca.
+- Tambah hanya3 compiled gateway Chromium init/add/save tests; seluruh fixture180
+  byte-identical. Actual SSR2s cookie/expiry2100ms/own profile/bounded SPKI/initial
+  CDP provision saja. Query target exact403 unavailable/private headers oleh raw
+  gateway sebelum upstream: forwards1/rejections1 setelah GET, nol budget/refresh/
+  Auth/user/RPC/commit, observations kosong dan model initial absent/own hidden
+  Textrev3 identik. Tidak mengklaim browser mempertahankan bare-query/dot spelling.
+- Command kanonis eksplisit body sama tanpa cookie mutation/readback/interception/
+  header spoof memicu satu budget sebelum satu refresh;200 initialized/allocated/
+  saved selected own handle/block/rev1atau4/current same_revision/hidden raw Text,
+  8user/9Auth/13RPC/1model commit. Command kanonis eksplisit berikutnya memakai
+  response-cookie alami dan terminal409, tanpa refresh/commit tambahan. Final
+  2budgets/1refresh/16RPC/2selected attempts/1model commit; seluruh RPCsubject0,
+  committed model unchanged setelah konflik. Hanya200/409 handler observations
+  same-origin/application-json/hasCookie:true;3forwards/1rejection/zero provider error.
+- Frozen install/typecheck/lint/5tooling/7558aplikasi/3build/23Redis/462runtime
+  (76SSR+77Textdev+77Textdirect+99Textgateway+59Linkdirect+74Linkgateway)/37Chromium
+  terpisah PASS tanpa fail/skip. Final diff/git diff --check PASS; staged review
+  wajib sebelum commit. Warning Link268 lama tetap ada. Semua assertion lama/CA/
+  TLS negatives/deadline/browser/process/socket/temp cleanup tetap dipertahankan.
+- Enam exact-final-push gate PENDING sampai diamati termasuk unchanged DB reset/
+  lint/advisors/3416pgTAP55files/88native19groups. Source/route/matcher/gateway/
+  provider/SQL/grant/dependency/config/CI/deploy/Working-vs-Published tidak berubah.
+  Isolated automated browser/model bukan live Auth/Upstash/RLS/DB atomicity/rollback/
+  deployed ingress/CDN/IP/manual evidence. D01/D02/full canvas/S5/S6/jenis lain/
+  publication/live/public/RPC/production tetap terbuka/withheld.
+- Readback137 menegaskan actual deployment provenance masih terbuka dan tidak
+  meminta variasi fixture transport tambahan. Hasil audit138 sudah memilih Text,
+  lalu139–180 sudah mengimplementasikan foundation tersebut. Berikutnya audit ulang
+  frontier private D01/D02 terhadap J5/J9/pinned D01/D02/73–115/137/138/139–181 dan
+  actual resolver/presenter/tests, pilih satu gap nyata yang belum diimplementasikan
+  sebelum JIT berikutnya. Tidak mengulang138 atau mount partial D02; tidak ada
+  tindakan Owner yang diperlukan untuk slice fixture ini.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

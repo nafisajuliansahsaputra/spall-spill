@@ -958,3 +958,32 @@ if (browserGateway) for (const action of actions) test(`actual Chromium Text ${a
     assert.equal(gatewayForwards, 4); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
   } finally { await browser.close(); }
 });
+
+if (browserGateway) for (const action of actions) test(`actual Chromium Text ${action} query denial preserves expired cookie before explicit canonical refresh`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  if (action !== actions[0]) seed(subjects[0]);
+  const initial = structuredClone(models.get(subjects[0])), value = command(action), mutation = action === actions[0] ? I : action === actions[1] ? A : W;
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, expired); await navigate(browser, nextOrigin);
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value, path: "/api/editor?untrusted=1" }), 403), { status: "unavailable" });
+    noCommandIo(); assert.equal(authCalls, 0); assert.deepEqual(observations, []);
+    assert.deepEqual(models.get(subjects[0]), initial);
+    assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 1);
+    // Explicit canonical command only; no cookie mutation or readback after the gateway denial.
+    selectedRefreshResult(checkBrowser(await browserPost(browser, { value }), 200), action, 0, value.text_working.text);
+    successfulRefreshCalls(action, subjects[0]);
+    const committed = structuredClone(models.get(subjects[0]));
+    assert.equal(committed.revision, action === actions[0] ? 1 : 4);
+    assert.equal(committed.block.block_id, ids[0]); assert.equal(committed.block.is_visible, false);
+    assert.deepEqual(committed.block.text_working, { text: value.text_working.text });
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 409),
+      { status: action === actions[0] ? "already_initialized" : "stale_write" });
+    assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); assert.equal(mutations, 1);
+    assert.equal(calls.length, 16); assert.equal(calls.filter(call => call.name === mutation).length, 2);
+    assert.ok(calls.every(call => call.subject === subjects[0])); assert.deepEqual(models.get(subjects[0]), committed);
+    assert.deepEqual(observations, [200, 409].map(status => ({ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status })));
+    assert.equal(gatewayForwards, 3); assert.equal(gatewayRejections, 1); assert.equal(fixtureError, undefined);
+  } finally { await browser.close(); }
+});
