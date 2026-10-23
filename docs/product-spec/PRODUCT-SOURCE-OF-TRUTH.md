@@ -6196,6 +6196,41 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   lanjut audit/kunci guarded selected Contact assembly mengikuti141. Tidak perlu
   tindakan Owner untuk bounded security upgrade atau isolated CI ini.
 
+### Explicit existing-collection Contact addition intent — 2026-10-23
+
+- Clean HEAD/origin87657b09f0eb041319971579950e1059f87b8377 setelah fetch/reset.
+  Exact Security40010127161/Guard40010127219 SUCCESS; completed Dependency
+  job120608057863535packages No issues found diamati. Application/Database
+  CI40010127097 masih PENDING saat slice dipilih;184 belum verified dan guarded
+  assembly tidak diimplementasikan. Pure intent ini independen dari184 SDK/RPC;
+  memakai unchanged182 input/verified183 storage dan existing142 intent pattern.
+- Fresh Protocol/checkpoint/J5/J9/142/145/source/tests/pinned7.3 FR-IDN007–011/021/
+  039/9.6/11.21/22/23 dibaca. Kontrak12.186 dikunci/dibaca sebelum coding. Tambah
+  server-only unmounted identity-contact-addition-intent: strict add_contact_block,
+  acknowledged positive safe base_collection_revision, explicit is_visible dan
+  full182 contact_working. Existing explicitly empty collection bukan missing;
+  tidak memilih first Contact initialization/import/provenance/Undo policy.
+- Exact copied data/fixed basic182 issues atau status-only invalid_add_intent;
+  all-null/blank/control/Unicode/invalid contact tetap raw recoverable. Empty issues
+  bukan target validation/safety/Publish. Tidak default/trim/normalize/convert/
+  allocate/initialize/save/fetch/UUID/auth/RPC/env/cache/retry/side effect. Parser
+  success bukan durable creation/Saved/Live/Owner/CAS authority. Future allocation
+  butuh contract active actual Owner/locks/existing collection CAS/stable server
+  ID/append/atomic tuple+single revision bump/rollback/races/outcome reconciliation.
+- Tambah121 meaningful tests: three subtypes/null/recovery/issue order/Unicode
+  bounds/NUL, strict missing/coerced/extra authority, no network/UUID, copy/isolation,
+  unchanged Link/Text command boundaries.307 targeted PASS. Frozen install/
+  typecheck/lint/5tooling/7835application/3build/git diff --check/final review PASS;
+  sebagian unchanged tasks cached, warning Link268 lama tetap. Staged review wajib.
+  Enam exact-final-push jobs wajib; pending/superseded runs bukan evidence. Tidak
+  menambah SQL atau runtime/UI; CI tetap reset/lint/error-advisors/all pgTAP057/
+  88native/462runtime/23Redis/37Chromium. Tidak ada manual/provider/live claim.
+- Goal belum selesai; S4 terakhir CLOSED / VERIFIED. Semua grants/partial D02/
+  full canvas/D01/S5/S6/Media/Spill CTA/publication/live/ingress/IP/production tetap
+  terbuka/withheld. Setelah exact all-six PASS kembali audit/kunci guarded selected
+  Contact assembly mengikuti141 sebelum attachment. Allocation/save/target-validation/
+  renderer terpisah. Tidak perlu tindakan Owner untuk isolated verification ini.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
