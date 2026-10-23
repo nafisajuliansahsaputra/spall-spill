@@ -6083,6 +6083,47 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   mutation; target-validation/action/renderer memerlukan kontrak terpisah. Tidak
   mount partial D02 atau mengulang transport fixture demi gate deployment terbuka.
 
+### Private Contact Working payload storage foundation — 2026-10-23
+
+- Fresh clean Cloud HEAD/origin51c38ed4d5c4289b42ff25f4e2d46582c9919e87 setelah
+  fetch/reset; exact push CI39994380216/Security39994380289/Guard39994380425 keenam
+  jobs SUCCESS. Completed7634aplikasi/462runtime/23Redis/37Chromium/3416pgTAP55files/
+  88native19groups tanpa fail/skip/advisors bersih diamati. Current182/Protocol/J5/J9/
+  pinned7.3/9.6/11.21/11.23/83/85/139, actual tuple/Link/Text SQL/pgTAP/CI dibaca.
+  Supabase/Postgres guidance/current RLS docs dibaca; changelog CONNECT403 tanpa
+  bypass. CLI2.115.0 migration new/help diverifikasi. Tidak ada production action.
+- Kontrak12.183 dikunci/dibaca sebelum migration CLI-generated
+  20261023173230_private_identity_contact_working_payload.sql dibuat. Tambah hanya
+  dormant core.identity_block_contacts_working: block PK/required Owner/kindcontact,
+  FK actual(block_id,owner_id,kind) tanpa update cascade, delete cascade lokal,
+  owner-leading index, nullable contact_type email/whatsapp/phone, label512/value2048
+  Unicode code points sesuai182. Required timestamps default now, tanpa payload
+  revision/trigger/mutator/automatic collection bump/backfill/default payload.
+- Raw incomplete/null/blank/control/CRLF/Unicode/combining/invalid contact tetap
+  recoverable; tidak normalize/trim/truncate/validate target/fetch/render/publish.
+  RLS enabled/no policy/all table privileges PUBLIC/anon/authenticated/service_role
+  revoked. Existing decoder tetap not_implemented; tidak ada RPC/grant/access/UI/
+  assembly/renderer/route/credential/provider/config/dependency/Published perubahan.
+- Tambah pgTAP056 dengan62 planned assertions: no backfill, actual tuple/Owner/kind/
+  required/uniqueness, nullable/three types/rejected discriminator, label+value raw/
+  bounds/failed-write preservation/NUL denial, no rebinding/hide/reorder/cascade,
+  sibling Link/Text/Owner/profile/layout/slot/publication/progress/collection purity,
+  RLS/no-policy/privilege dan actual role read/write denial. SQL direview; belum
+  diklaim PASS sebelum committed isolated CI. Tidak mereset local/production DB.
+  Tabel belum punya runtime mutator; race baru tidak applicable,88 existing native
+  tests tetap gate wajib. Privileged fixture writes bukan runtime Owner authority.
+- Frozen install/typecheck/lint/5tooling/7634aplikasi/3build/final-diff/git diff --check
+  PASS; sebagian unchanged source memakai Turbo cache. Satu warning Link268 lama
+  tetap ada. Staged review wajib sebelum commit. Enam exact-final-push gate PENDING,
+  termasuk reset/lint/error-advisors/all pgTAP/native/462runtime/23Redis/37Chromium.
+  Runtime lokal unchanged tidak diulang; gunakan actual final push CI evidence.
+- Goal belum selesai; S4 terakhir CLOSED / VERIFIED. D01/D02/full canvas/S5/S6/
+  Media/Spill CTA/full Identity/publication/live/ingress/IP/public/RPC/production
+  terbuka/withheld. Tidak ada tindakan Owner yang diperlukan untuk isolated CI ini.
+  Berikutnya audit/kunci selected current-Owner Contact Working read/strict DTO/
+  basic182 diagnostics/guarded proof sebelum attachment/mutation/renderer. Target
+  validation/action memerlukan kontrak tersendiri; jangan mount partial D02.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
