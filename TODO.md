@@ -6962,6 +6962,46 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   Contact assembly mengikuti141 sebelum attachment. Allocation/save/target-validation/
   renderer terpisah. Tidak perlu tindakan Owner untuk isolated verification ini.
 
+### Guarded selected Owner Contact Working assembly — 2026-10-23
+
+- Fresh clean Cloud HEAD/origin7d8bc702aafda6384e695f16db03e13ebd475dff setelah
+  fetch/reset/equality. Exact CI40010756164/Security40010756221/Guard40010756125
+  keenam jobs SUCCESS direfresh; prior completed7835app/462runtime/23Redis/
+  37Chromium/3520pgTAP57files/88native19groups/advisors bersih diamati. Goal belum
+  selesai;S4 terakhir CLOSED / VERIFIED. Current AGENTS/Cloud/Protocol/PRD/J5/J9/
+  12.4/78/141/184/checkpoint/source/SQL/tests/pinned D02/11.21 dibaca ulang.
+  Supabase skill/current getClaims docs dibaca; changelog HTTP403 tanpa bypass.
+- Kontrak12.187 dikunci/dibaca sebelum coding. Tambah unmounted server-only
+  owner-contact-working-assembly memakai unchanged184 selected request/DTO dan
+  existing Home context reader. Validasi/copy selector sebelum I/O; exactly3
+  verified claims/3 strict actual Owner-state proofs/2 context/2 selected reads.
+  Require active/completed same subject/Owner binding, same context dan exact
+  parsed revision/membership/presence/visibility/order/raw contact_type/label/value/
+  basic182 issues. Drift pada revision sama pun denial; tidak partial output.
+- Initial/mid/final loss atau non-active status hanya denial; malformed/transport/
+  drift unavailable. Aggregate5s abort + post-await cancellation dan retained
+  nested deadlines; ignored late claims/RPC tidak revive payload/advance phases.
+  No retry/cache/metadata/getSession/caller Owner/service-role/env/credential.
+  Stable hidden/incomplete/all-null/missing Working tetap recoverable, bukan
+  target validation/Saved/Live/atomic snapshot/ABA/fresh JWT/CAS/mutation authority.
+- Tambah95 meaningful actual pinned SDK tests: all proof phases/state/actor drift,
+  two read phases/context/subtype/label/value/revision/presence drift, stable raw
+  recovery, strict request/copy/no cache, fixed POST/API/body/abort, permission,
+  aggregate deadline dan ignored late phase denial.266 targeted Contact/Text PASS.
+  Frozen install/typecheck/lint/5tooling/7930application/3build/git diff --check/
+  final review PASS; unchanged tasks sebagian Turbo cached, warning Link268 lama
+  tetap. Staged review wajib. Enam exact-final-push jobs PENDING sampai diamati.
+- Tidak SQL/schema/grant/provider/config/dependency/UI/route/Published changes.
+  CI tetap wajib reset/lint/error-advisors/3520pgTAP57files/88native19groups/
+  462runtime/23Redis/37Chromium; unchanged suites tidak diulang lokal. Tidak ada
+  manual/browser/provider/live evidence baru. Semua public/RPC gates withheld;
+  complete Contact decoder not_implemented dan Home actions kosong tetap.
+- D01/D02/full canvas/S5/S6/Media/Spill CTA/publication/live/ingress/IP/production
+  tetap open/withheld. Berikutnya bounded existing-block Contact save intent
+  memakai verified184 request+182 input atau private existing-collection allocation
+  CAS memakai186, masing-masing kontrak sendiri. Save intent independen dari187
+  assembly; jangan advance dependent attachment/mutation selama gate pending.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
