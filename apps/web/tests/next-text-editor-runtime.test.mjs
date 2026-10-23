@@ -780,3 +780,50 @@ if (browserGateway) test("actual Chromium Text query target is denied before gat
     assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 1);
   } finally { await browser.close(); }
 });
+
+if (browserGateway) for (const action of actions) test(`concurrent Chromium Text ${action} preserves Owner refresh cookies and Working`, { timeout: 60000 }, async () => {
+  const expired = await expiredSessions(subjects), browsers = [];
+  const values = subjects.map((_, i) => ({ ...command(action, `Browser Owner ${i} ${action}`),
+    ...(action === actions[2] ? { block_id: ids[i] } : {}) }));
+  const revision = action === actions[0] ? 1 : 4, mutation = action === actions[0] ? I : action === actions[1] ? A : W;
+  const negative = { status: action === actions[0] ? "already_initialized" : "stale_write" };
+  if (action !== actions[0]) for (const subject of subjects) seed(subject);
+  try {
+    for (let i = 0; i < 2; i++) browsers.push(await chromiumFixture({ certificateSpki: fixturePin() }));
+    await Promise.all(browsers.map(async (browser, i) => {
+      await browser.command("Page.enable"); await browser.command("Network.enable");
+      await browserSession(browser, expired[i]); await navigate(browser, nextOrigin);
+    }));
+    const responses = await Promise.all(browsers.map((browser, i) => browserPost(browser, { value: values[i] })));
+    for (let i = 0; i < 2; i++) {
+      selectedRefreshResult(checkBrowser(responses[i], 200), action, i, values[i].text_working.text);
+      const own = calls.filter(value => value.subject === subjects[i]);
+      assert.equal(own.length, 13); assert.equal(own.filter(value => value.name === mutation).length, 1);
+    }
+    assert.equal(events[0], "budget"); assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 2);
+    assert.equal(authRequests, 18); assert.equal(authCalls, 16); assert.equal(calls.length, 26); assert.equal(mutations, 2);
+    assert.ok(maximumDistinctSubjectsInFlight >= 2, "verified distinct Owners must overlap after issuance reset");
+    assert.equal(gatewayForwards, 4); assert.equal(gatewayRejections, 0);
+    // Chromium reuses its own relayed Set-Cookie; no CDP cookie replacement between commands.
+    const followups = await Promise.all(browsers.map((browser, i) => browserPost(browser, { value: values[i] })));
+    for (const result of followups) assert.deepEqual(checkBrowser(result, 409), negative);
+    assert.equal(budgetCalls, 4); assert.equal(refreshCalls, 2); assert.equal(mutations, 2);
+    for (let i = 0; i < 2; i++) {
+      assert.equal(models.get(subjects[i]).revision, revision);
+      assert.equal(models.get(subjects[i]).block.is_visible, false);
+      assert.deepEqual(models.get(subjects[i]).block.text_working, { text: values[i].text_working.text });
+      assert.equal(calls.filter(value => value.subject === subjects[i] && value.name === mutation).length, 2);
+    }
+    await browserSession(browsers[0], undefined); const prior = calls.length;
+    assert.deepEqual(checkBrowser(await browserPost(browsers[0], { value: values[0] }), 401), { status: "unauthenticated" });
+    assert.equal(calls.length, prior);
+    assert.deepEqual(checkBrowser(await browserPost(browsers[1], { value: values[1] }), 409), negative);
+    assert.equal(calls.length, prior + 3); assert.ok(calls.slice(-3).every(value => value.subject === subjects[1]));
+    assert.equal(budgetCalls, 6); assert.equal(refreshCalls, 2); assert.equal(mutations, 2);
+    assert.equal(gatewayForwards, 8); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+    for (let i = 0; i < 2; i++) {
+      assert.equal(models.get(subjects[i]).revision, revision); assert.equal(models.get(subjects[i]).block.is_visible, false);
+      assert.deepEqual(models.get(subjects[i]).block.text_working, { text: values[i].text_working.text });
+    }
+  } finally { await Promise.all(browsers.map(browser => browser.close())); }
+});
