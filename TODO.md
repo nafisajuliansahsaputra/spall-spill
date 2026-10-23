@@ -6774,6 +6774,46 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   sebelum JIT berikutnya. Tidak mengulang138 atau mount partial D02; tidak ada
   tindakan Owner yang diperlukan untuk slice fixture ini.
 
+### Recoverable private Contact Working input — 2026-10-23
+
+- Fresh clean Cloud work fetch/reset exact HEAD/origin
+  adaec25a7f3e4dcefd0074b31811d9be05fa8022; baseline exact push CI39985254822/
+  Security39985254599/Guard39985254789 SUCCESS diamati ulang. Goal belum selesai,
+  S4 terakhir CLOSED / VERIFIED. AGENTS/Cloud/Protocol/current checkpoint/J5/J9/
+  137/138/181 dan actual Home disposition/Link/Text/decoder/tests dibaca ulang.
+- Pinned bb79dce4e5ee384d3e9932504386602f60d074ce:7.3 FR-IDN-021/039,9.6 structured
+  Contact/local recovery dan11.21 dibaca. Contact masih membership enum dengan
+  persisted payload not_implemented; Home actions kosong. Gap ini independen dari
+  deployment/raw-target evidence. Kontrak12.182 dikunci/dibaca sebelum coding.
+- Tambah pure unmounted server-only Contact input/schema/inspector: exact contact
+  kind, nullable email/whatsapp/phone type, nullable optional label dan raw value,
+  engineering512/2048 Unicode-code-point envelope/no NUL, strict shape/selector
+  denial tanpa coercion/erasure/private error echo. Missing type/value dan ASCII
+  control label/value mendapat fixed local issues; data/case/Unicode/spasi/breaks
+  tetap exact copy. Label tidak diwajibkan atau diisi otomatis dari tipe/value.
+- Ini shape/basic diagnostics saja; empty issues bukan valid email/nomor/region/
+  E.164/reachability/provider ownership/safety/Publish. Tidak ada normalize/country
+  default/href/mailto/tel/wa.me/URL/action/render/fetch/DNS/log/analytics. Existing
+  Link/Text commands menolak Contact; persisted decoder tetap not_implemented dan
+  menolak fabricated Contact payload. Tidak ada DB/schema/grant/attachment/assembly/
+  route/UI/provider/config/credential/dependency/Working-vs-Published perubahan.
+- 76 unit baru dan248 targeted bersama Text/Link/collection PASS. Recovery/strict
+  Owner selector/malformed envelope/control/NUL/Unicode/code-point bounds/copy/no
+  mutation/no fetch/no private issue echo serta unchanged command/decoder denials
+  teruji. Frozen install/typecheck/lint/5tooling/7634aplikasi/3build/final-diff/
+  git diff --check PASS; staged review wajib sebelum commit. Satu warning Link268
+  lama tetap ada, nol error. Sebagian unchanged packages memakai Turbo cache.
+- Enam exact-final-push jobs PENDING sampai diamati. Unchanged462runtime/23Redis/
+  37Chromium dan DB reset/lint/advisors/3416pgTAP55files/88native19groups tetap
+  committed CI gates; tidak diulang lokal untuk pure input yang belum diintegrasi.
+  Unit input bukan bukti browser/provider/persistence/Saved. D01/D02/full canvas/
+  S5/S6/Media/Spill CTA/publication/live/ingress/IP/public/RPC/production tetap
+  terbuka/withheld; tidak ada tindakan Owner yang diperlukan untuk input ini.
+- Berikutnya audit/kunci typed private Contact payload storage: actual kind/Owner/
+  collection revision/locks/RLS/rollback/race prerequisites sebelum attachment atau
+  mutation; target-validation/action/renderer memerlukan kontrak terpisah. Tidak
+  mount partial D02 atau mengulang transport fixture demi gate deployment terbuka.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
