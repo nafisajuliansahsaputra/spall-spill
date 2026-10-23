@@ -5924,6 +5924,44 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
 - Berikutnya audit/kunci browser Text expired-cookie budget-denial continuity
   berdasarkan134 untuk ketiga command; pertahankan dev77/direct77/gateway90.
 
+### Chromium Text expired-cookie budget admission — 2026-10-23
+
+- Fresh clean Cloud work disinkronkan ke50a22a5f26738f08218a65a5fe5c364f91215a05;
+  exact push CI39937804515/Security39937804508/Guard39937804525 SUCCESS diamati ulang.
+  Completed DB logs3416pgTAP55files/88native19groups tanpa fail/skip/advisors bersih.
+  Goal belum selesai; S4 terakhir CLOSED / VERIFIED. AGENTS/Cloud/Protocol/current
+  checkpoint/J5/J9/pinned D02/11.21/134/160/166/178 dan actual source/test/runner/
+  SSR/browser helper dibaca ulang. Supabase changelog CONNECT403 tanpa bypass;
+  docs getClaims HS256 server verification dibaca, tidak ada API/SDK berubah.
+- Kontrak12.179 dikunci dan dibaca balik sebelum coding. Tambah hanya3 compiled
+  gateway Chromium tests untuk init/add/save; seluruh fixture178 byte-identical.
+  Actual expired2s SSR cookie/2100ms expiry/native fetch/initial CDP provision saja.
+- Budget0 menghasilkan exact403 unavailable/private headers,1 EVAL/events[budget],
+  zero refresh/Auth/user/RPC/commit, model initial absent atau own hidden Textrev3
+  unchanged; observation hasCookie:true. Hanya ubah budgetResult=1, POST eksplisit
+  body sama tanpa cookie mutation/readback/interception/header spoof. Cookie tetap
+  hadir, budget kedua sebelum refresh;200 initialized/allocated/saved selected own
+  raw hidden Text/current same_revision/rev1atau4;8user/9Auth/13RPC/1model commit.
+- POST eksplisit ketiga memakai response-cookie alami dan terminal409 tanpa refresh/
+  commit tambahan. Final3budgets/1refresh/16RPC/2selected attempts/1model commit,
+  semua subject0, committed model unchanged setelah konflik. Observations seluruh
+  hasCookie:true/status403,200,409;4forwards/zero gateway rejection/provider error.
+  Denial bukan logout, refresh bukan authorization, model commit bukan live DB.
+- Frozen install/typecheck/lint/5tooling/7558aplikasi/3build/23Redis/456runtime
+  (76SSR+77Textdev+77Textdirect+93Textgateway+59Linkdirect+74Linkgateway)/37Chromium
+  terpisah PASS tanpa fail/skip. Final diff direview/git diff --check PASS; staged
+  review wajib sebelum commit. Satu warning Link268 lama tetap ada. Deadline/CA/
+  TLS negatives/process/socket/temp/browser cleanup dan assertion lama dipertahankan.
+- Enam exact-final-push gate PENDING sampai diamati, termasuk unchanged DB reset/
+  lint/advisors/3416pgTAP55files/88native19groups. Tidak ada source/route/matcher/SQL/
+  grant/dependency/CI/provider/deploy atau Working-vs-Published behavior berubah.
+  Bukti isolated automated browser/model bukan live Auth/Upstash quota/RLS/DB
+  atomicity/rollback/deployed ingress/IP/manual. D01/D02/full canvas/S5/S6/jenis
+  lain/publication/live/public/RPC/production tetap terbuka/withheld.
+- Berikutnya audit/kunci browser Text strict-body admission berdasarkan135 untuk
+  ketiga command; pertahankan dev77/direct77/gateway93. Tidak ada partial D02 atau
+  tindakan Owner yang diperlukan untuk fixture ini.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
