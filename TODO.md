@@ -6591,6 +6591,38 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
 - Berikutnya audit/kunci browser Text restricted/outcome_unknown berdasarkan132,
   lalu rejected refresh133; pertahankan dev77/direct77/gateway81 dan semua gate.
 
+### Chromium Text restricted/unknown outcome truth — 2026-10-23
+
+- Bootstrap bersih HEAD/origin880c964e065b74fa2b7ab87f3befe6a9d43d8814. Enam gate
+  push-event CI39900058538/Security39900058540/Guard39900058529 SUCCESS; log aplikasi
+  7558 aplikasi/5 tooling/23 Redis/444 runtime/37 Chromium tanpa fail/skip diamati.
+- Kontrak12.177 dikunci sebelum coding setelah current176/Protocol/J5/J9/132/160/
+  166/175/176/pinned D02/11.21 serta actual HTTP/SSR/fixture/runner/helper readback.
+  Docs getClaims HS256 fallback diverifikasi; changelog403 tanpa bypass. Tidak ada
+  SDK/API Auth/provider produksi berubah. Seluruh fixture176 tetap byte-identical.
+- Tambah6 compiled gateway Chromium cases: init/add/save masing-masing restricted
+  403 dan malformed-ack outcome_unknown503. Actual expired SSR cookie, native fetch,
+  natural response-cookie reuse; satu budget sebelum refresh/Auth/RPC. Restricted
+  tetap status-only/1 Owner RPC/0 commit; unknown status-only/3RPC/1 model commit,
+  tanpa marker/ID/revision/readback/optimistic success atau klaim rollback.
+- Follow-up eksplisit tetap restricted403 atau terminal409 tanpa refresh/commit
+  baru; clear cookie kemudian401/no RPC. Final3 budgets/1 refresh/4 forwards/zero
+  rejection; metadata observations [true,true,false], model/raw hidden Text sesuai.
+  Session refresh bukan authorization. Private headers/CA/TLS/deadline/cleanup dan
+  semua assertion lama dipertahankan; tidak ada retry/credential rewrite/intercept.
+- Full frozen/typecheck/lint/5 tooling/7558 aplikasi/3 build/23 Redis/450 runtime
+  (76 SSR+77 Text dev+77 Text direct+87 Text gateway+59 Link direct+74 Link gateway)/
+  37 Chromium terpisah PASS tanpa fail/skip. Final/staged diff direview dan git diff
+  --check PASS. Warning Link268 lama tetap ada; source/routes/matcher/SQL/grants/
+  dependency/CI/deploy tidak berubah.
+- Enam gate exact-final-push PENDING termasuk DB reset/lint/advisors/3416pgTAP55files/
+  88native19groups. Bukti isolated automated compiled browser/model bukan manual/
+  live Auth/revocation/RLS/DB atomicity/deployed ingress/IP. Goal belum selesai;
+  S4 terakhir CLOSED / VERIFIED. D01/D02/full canvas/S5/S6/jenis lain/publication/
+  live/public/RPC/production tetap terbuka/withheld; Working tidak menjadi Published.
+- Berikutnya audit/kunci browser Text rejected-refresh cookie clearing berdasarkan
+  133 untuk init/add/save; pertahankan dev77/direct77/gateway87 dan semua gate.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
