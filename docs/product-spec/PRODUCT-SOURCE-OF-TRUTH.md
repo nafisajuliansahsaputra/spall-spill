@@ -6124,6 +6124,48 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   basic182 diagnostics/guarded proof sebelum attachment/mutation/renderer. Target
   validation/action memerlukan kontrak tersendiri; jangan mount partial D02.
 
+### Private selected Owner Contact Working reader — 2026-10-23
+
+- Clean Cloud baseline HEAD/origin7954c431e149d5463dcd1b2cdb9ed8132c76510b;
+  exact push CI39996165149/Security39996165155/Guard39996165280 SUCCESS metadata
+  refreshed. Completed baseline7634aplikasi/462runtime/23Redis/37Chromium/
+  3478pgTAP56files/88native19groups/advisors bersih sebelumnya diamati. Fresh
+  AGENTS/Cloud/Protocol/checkpoint/J5/J9/182/183/140/141/pinned7.3/9.6/11.21 dan
+  actual Owner/context/membership/Contact storage/SDK/tests/CI dibaca ulang.
+- Kontrak12.184 dikunci/dibaca sebelum coding; CLI migration new/help digunakan
+  untuk20261023191139_private_owner_contact_block_working_read.sql. Tambah satu
+  selected Contact SQL STABLE definer empty search_path; derive active/completed
+  actual Owner, own block/kind/collection dan full tuple payload join. Denial exact
+  unavailable tanpa existence/raw echo. Current handle/use-case/revision bound;
+  missing/null tetap berbeda dari present all-null typed payload. Raw recoverable
+  contact_type/label/value tidak normalize/validate/action/publish.
+- Tambah server-only unmounted owner-contact-block-working reader/strict DTO/
+  selected request schema; satu fixed actual SDK api POST, copy sebelum await,
+  nested182 envelope/strict fields/presence pair/selected ID, recompute basic-local
+  issues,5s abort/no retry/cache/late revival. Empty issues bukan target validation
+  atau Publish. Full block decoder tetap not_implemented; Home actions tetap kosong.
+  PUBLIC/anon/authenticated/service_role execution tetap revoked; table183 tetap
+  RLS/no policies/no grants. Tidak ada UI/route/transport/provider/credential/access/
+  dependency/mutation/Published changes; Working bukan Published.
+- Tambah80 reader unit tests;213 targeted bersama Contact input/general block PASS.
+  Missing vs all-null/three types/raw controls/Unicode/bounds/diagnostics/extra fields/
+  malformed private replies/permission/network/copy/deadline/ignored late covered.
+  PgTAP05742 assertions: actual actor/Owner/kind/context, forged metadata, incomplete/
+  restricted/suspended/no auth/unbound, missing vs all-null/three types/raw bounds,
+  current revision/purity/no initialization/all role denial. SQL direview; DB PASS
+  harus dibuktikan committed isolated exact-push CI reset/lint/error-advisors/all
+  pgTAP/88native. Tidak mereset local/production DB; read-only slice tanpa race baru.
+- Frozen install/typecheck/lint/5tooling/7714aplikasi/3build/git diff --check/final
+  review PASS; unchanged Turbo tasks sebagian cached, warning Link268 lama tetap.
+  Staged review wajib sebelum commit. Enam exact-final-push jobs masih PENDING;
+  unchanged462runtime/23Redis/37Chromium dibuktikan CI, tidak diulang lokal.
+- Goal belum selesai; S4 terakhir CLOSED / VERIFIED. D01/D02/full canvas/S5/S6/
+  Media/Spill CTA/publication/live/ingress/IP/public/RPC/production terbuka/withheld.
+  Berikutnya audit/kunci guarded selected Contact assembly mengikuti141: repeated
+  current verified subject/Owner/context+exact selected DTO observations sebelum
+  attachment. Mutation/target-validation/renderer kontrak terpisah; tidak mount
+  partial D02. Tidak perlu tindakan Owner untuk authorized isolated CI ini.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
