@@ -5892,6 +5892,38 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
 - Berikutnya audit/kunci browser Text rejected-refresh cookie clearing berdasarkan
   133 untuk init/add/save; pertahankan dev77/direct77/gateway87 dan semua gate.
 
+### Chromium Text rejected-refresh cookie clearing — 2026-10-23
+
+- Baseline bersih HEAD/origin567e9ed2b7581a59db57e528af113850769f90b1;177 full lokal
+  450 runtime/23 Redis/37 Chromium/7558 aplikasi/5 tooling/3 build PASS. Saat lock178
+  Guard39905034714 SUCCESS, CI39905034662/Security39905034704 masih PENDING. Seluruh
+  enam gate177 kemudian SUCCESS; completed logs450 runtime/3416pgTAP55files/88native
+  19groups tanpa fail/skip dan advisors tanpa temuan diamati. Tidak ada activation.
+- Kontrak12.178 dikunci sebelum coding setelah current177/Protocol/J5/J9/pinned
+  D02/11.21/133/160/166/175–177 dan actual Text/Link/browser/SSR/runner/helper readback.
+  Hanya tambah3 gateway init/add/save tests; seluruh fixture177 tetap byte-identical.
+- Actual expired SSR cookie/native Chromium fetch/controlled refresh400 rejection
+  menghasilkan exact401 status-only/private headers,1 budget sebelum1 refresh/
+  1 Auth attempt/0 verified user/RPC/commit. Browser otomatis menerapkan clearing
+  Set-Cookie: POST eksplisit kedua hasCookie:false tanpa CDP clear/replacement/
+  readback di antara request. Final2 budgets/1 refresh/1 Auth attempt/0 user/RPC/
+  commit; events [budget,refresh,budget],3 forwards/zero rejection, model initial
+  unchanged. Tidak ada retry/fallback/credential rewrite/interception/extra read.
+- Full frozen/typecheck/lint/5 tooling/7558 aplikasi/3 build/23 Redis/453 runtime
+  (76 SSR+77 Text dev+77 Text direct+90 Text gateway+59 Link direct+74 Link gateway)/
+  37 Chromium terpisah PASS tanpa fail/skip. Final/staged diff direview dan git diff
+  --check PASS. Warning Link268 lama tetap ada; lock/source/routes/matcher/SQL/
+  grants/dependency/CI/provider behavior/deploy tidak berubah. Semua deadline/CA/
+  TLS negatives/browser/process-group/socket/temp cleanup dipertahankan.
+- Enam exact-final-push gate PENDING sampai diamati, termasuk DB reset/lint/advisors/
+  3416pgTAP55files/88native19groups. Controlled rejection bukan live Auth rotation/
+  revocation/grace/invalidation/RLS/DB rollback/production ingress/IP/manual evidence.
+  Goal belum selesai; S4 terakhir CLOSED / VERIFIED. D01/D02/full canvas/S5/S6/jenis
+  lain/publication/live/public/RPC/production tetap terbuka/withheld; Working tidak
+  menjadi Published. Tidak ada tindakan Owner yang diperlukan untuk fixture ini.
+- Berikutnya audit/kunci browser Text expired-cookie budget-denial continuity
+  berdasarkan134 untuk ketiga command; pertahankan dev77/direct77/gateway90.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
