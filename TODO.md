@@ -6693,6 +6693,46 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   ketiga command; pertahankan dev77/direct77/gateway93. Tidak ada partial D02 atau
   tindakan Owner yang diperlukan untuk fixture ini.
 
+### Chromium Text strict-body admission — 2026-10-23
+
+- Baseline bersih HEAD/origin69769c07b30cf3e74da5fbb2ff73ddc72ed3da5e;179 full
+  lokal456runtime/23Redis/37Chromium/7558aplikasi/5tooling/3build PASS. Saat lock180
+  CI39945395530/Security39945395533/Guard39945395562 PENDING. Kemudian Security
+  ketiga jobs/Guard/Database SUCCESS; completed DB3416pgTAP55files/88native19groups
+  tanpa fail/skip/advisors bersih diamati. Application179 masih PENDING saat catatan
+  ini; push berikutnya harus memakai SHA final, bukan run superseded sebagai bukti.
+- Kontrak12.180 dikunci dan dibaca balik sebelum coding setelah current179/Protocol/
+  J5/J9/pinned D02/11.21/135/160/166 dan actual body/schema/HTTP/SSR/Link/Text/browser/
+  runner/helper dibaca ulang. Ini fixture independen, tanpa activation gate pending.
+  Tambah hanya3 compiled gateway init/add/save tests; fixture179 byte-identical.
+- Actual expired2s SSR cookie/2100ms expiry/native fetch/initial CDP provision saja.
+  Command plus caller owner_id:owners[1] exact403 unavailable/private headers,
+  satu budget/events[budget] sebelum zero refresh/Auth/user/RPC/commit; own model
+  absent atau hidden Textrev3 unchanged, subject1 tetap tanpa model. Strict schema
+  menolak selector, bukan strip/repair/infer Owner/refund/automatic replay.
+- POST eksplisit terkoreksi menghapus hanya caller selector; tidak ada cookie
+  mutation/readback/interception/header spoof. Budget kedua sebelum refresh;200
+  initialized/allocated/saved selected own hidden raw Text/current same_revision/
+  rev1atau4 dengan8user/9Auth/13RPC/1model commit. Subject1 tetap kosong. POST ketiga
+  memakai response-cookie alami dan terminal409 tanpa refresh/commit baru. Final
+  3budgets/1refresh/16RPC/2selected attempts/1model commit; semua subject0, committed
+  model unchanged setelah konflik. Observations same-origin/application-json/
+  hasCookie:true/status403,200,409;4forwards/zero rejection/provider error.
+- Frozen install/typecheck/lint/5tooling/7558aplikasi/3build/23Redis/459runtime
+  (76SSR+77Textdev+77Textdirect+96Textgateway+59Linkdirect+74Linkgateway)/37Chromium
+  terpisah PASS tanpa fail/skip. Final diff/git diff --check PASS; staged review
+  wajib sebelum commit. Satu warning Link268 lama tetap ada. Semua assertion lama/
+  CA/TLS negatives/deadline/browser/process/socket/temp cleanup dipertahankan.
+- Enam exact-final-push gate PENDING sampai diamati termasuk unchanged DB reset/
+  lint/advisors/3416pgTAP55files/88native19groups. Source/route/matcher/SQL/grants/
+  dependency/CI/provider/deploy/Working-vs-Published behavior tidak berubah. Bukti
+  isolated automated browser/model bukan live Auth/Upstash/RLS/DB atomicity/rollback/
+  deployed ingress/IP/manual. Goal belum selesai; S4 terakhir CLOSED / VERIFIED;
+  D01/D02/full canvas/S5/S6/jenis lain/publication/live/public/RPC/production terbuka/
+  withheld. Tidak ada tindakan Owner yang diperlukan untuk fixture ini.
+- Berikutnya audit/kunci Text browser query-denial cookie continuity berdasarkan136
+  untuk ketiga command; pertahankan dev77/direct77/gateway96, tanpa partial D02.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
