@@ -7322,6 +7322,45 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   even empty, atomic collection/member/raw payload/UUID/revision/rollback/native races,
   no import provenance/source conversion/automatic creation atau premature partial D02.
 
+### Private explicit first Contact initialization transaction — 2026-10-24
+
+- Fresh clean Cloud HEAD/origin e33f40295a2d355e8d42f3dc49eef97146139861; AGENTS/
+  Runbook/Protocol/checkpoint/completion/J5/J9/12.4/151/183/189/195/actual source/
+  pgTAP/native/CI/pinned D02/11.22/23 direfresh. Exact baseline push CI40093095176/
+  Security40093095178/Guard40093095188 six jobs SUCCESS;194+195 kini punya exact
+  final evidence bersama:9122app/462runtime/23Redis/37Chromium/3798pgTAP59files/
+  111native21groups/advisors bersih. Goal belum selesai,S4 last CLOSED / VERIFIED.
+- Kontrak12.196 dikunci/dibaca sebelum coding. CLI2.115.0-generated additive migration
+  initialize_current_owner_blocks_from_contact: actual auth.uid/Owner-first lock,
+  binding lock/recheck setelah wait, active/completed/canonical Home context; exact195
+  action/explicit-null expected absence/visibility/full structured Contact. No caller
+  Owner/block/position/source authority, coercion/defaults atau guessed field threshold.
+- ANY own existing collection termasuk initialized-empty => already_initialized tanpa
+  replacement/revision bump. Absent only: atomic revision1 collection/server UUID
+  membership/kindcontact/position1/explicit visibility/matching183 full raw payload;
+  minimal status/block_id/revision1 ack. Whole nullable subtype/label/value retained
+  dalam512/2048codepoints/no NUL, no target normalization/validation/render/fetch.
+  Exceptions propagate/rollback; response loss bukan rollback/retry/idempotency proof.
+- Tambah pgTAP060 actual roles/hardening/auth/state/context/strict envelope/subtypes/
+  raw Unicode/bounds/NUL/selected read/no source/UUID/minack/replay/existing-empty/
+  three insert-boundary rollback/all-column foreign Text/Link/Contact/source/provenance/
+  Owner/public purity. Tambah13 native cases: whole-tuple Contact/Contact, simultaneous
+  dan both held winner orders versus import/Text/Link; restriction/empty collection/
+  binding deletion during Owner wait. Wire committed isolated CI, retain all old races.
+- Frozen install/typecheck/lint/5tooling/9122app/3build/diff/final review PASS; sebagian
+  unchanged tasks cached, old Link268 lint warning retained. Native node --check PASS;
+  SQL grammar5migration/184pgTAP statements parsed, bukan execution evidence. Local
+  PL/pgSQL parser unsupported core namespace; tidak diklaim runtime PASS. Tidak local
+  DB reset/test; required isolated CI reset/lint/error-advisors/all pgTAP/native dan
+  six exact final push jobs PENDING. Staged review wajib; no manual/provider/live claim.
+- No new table/schema/RLS/policy/grants/SDK/route/UI/Published/source/provenance/provider/
+  credential/access changes; PUBLIC/anon/authenticated/service_role execution withheld,
+  Home actions kosong/general Contact not_implemented. D01/D02/full canvas/S5/S6/
+  Media/Spill CTA/target safety/publication/ingress/IP/live/public/RPC/production gates
+  tetap open. Setelah all exact final gates PASS, audit/kunci guarded first Contact
+  initialization SDK:195 pre-I/O validation/same subject+Owner before/after/strict
+  revision1 ack/deadline/outcome_unknown/no retry; jangan mount premature partial D02.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
