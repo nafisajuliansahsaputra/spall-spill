@@ -6670,6 +6670,42 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   initialization review: minimal ack terpisah same/newer selected truth, raw/visibility/
   Owner proof binding/deadline/no unknown promotion; no premature partial D02/public.
 
+### Private first Contact initialization selected review — 2026-10-24
+
+- Baseline clean HEAD/origin179eee9703f3ed58ad1f739b7bee887983bc383a; fresh Cloud/
+  AGENTS/Runbook/Protocol/checkpoint/completion/J5/J9/12.4/153/187/195/197/actual
+  source/tests/196 SQL/pinned D02/11.21–23 audit. Exact push CI40115930431/
+  Security40115930430/Guard40115930424 six jobs SUCCESS direfresh;9350app/462runtime/
+  23Redis/37Chromium/3976pgTAP60files/124native22groups/advisors bersih observed.
+- Kontrak12.198 dikunci/dibaca sebelum coding. Tambah unmounted server-only
+  createOwnerFirstContactInitializationReview.initialize: strict195 copied input,
+  one actual197 initializer, actual187 selected same acknowledged block only after
+  exact ack;3 outer same-subject/Owner active/completed proofs, nested proofs retained.
+  Full success8claims/13RPC. Known negative/already_initialized/unknown no read/retry.
+- initialized acknowledgment revision1 terpisah readback unavailable/current same/
+  newer. Same revision wajib ID/kindcontact/position1/explicit visibility/present/full
+  raw nullable subtype/label/value match. Newer stable DTO boleh changed/hidden/moved/
+  missing payload, ack tetap1. Invalid/missing/drifting/mismatched selected state tidak
+  erase independently verified ack; failed outer proof after invocation outcome_unknown
+  no private ack/snapshot. Tidak infer unknown dari matching fields/count/absence.
+- Aggregate10s outer/post-await cancellation; nested5s unchanged dan dapat finish/
+  commit privately setelah timeout tanpa output revival/later outer phase. No retry/
+  cache/UUID/base refresh/repair/source fallback/normalization/target gate/publication.
+  No atomic session binding/ABA/revocation/live JWT/CSRF/full Identity claim.
+- Tambah252 meaningful actual pinned-SDK controlled-claims tests:575 targeted PASS;
+  raw/issues/visibility/position1/same-newer-missing-drift/8proof/13request failures+
+  ignored late phases/aggregate/private nested lifecycle/strict intents/no inference.
+  Frozen install/typecheck/lint/5tooling/9602app/3build/diff/final review PASS; sebagian
+  unchanged tasks cached, old Link268 warning retained. Staged review wajib. Six exact
+  final push jobs PENDING; unchanged isolated DB reset/lint/error-advisors/3976pgTAP/
+  124native/462runtime/23Redis/37Chromium required; no new local DB/manual/live evidence.
+- Tidak SQL/dependency/grant/RLS/route/UI/Published/source/provenance/provider/credential/
+  access changes. Home actions empty/general Contact not_implemented/public RPC withheld.
+  Goal unfinished,S4 last CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/Media/Spill CTA/
+  target safety/publication/ingress/IP/live/production open. Next bounded pure Contact
+  command envelope using exact186/188/195 schemas, then separately gated closed dispatch;
+  no premature partial D02. Pure envelope may proceed independently while198 CI pending.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
