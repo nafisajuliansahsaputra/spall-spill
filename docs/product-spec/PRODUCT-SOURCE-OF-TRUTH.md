@@ -6386,6 +6386,49 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   same/newer/unavailable readback, exact raw fields di same revision, no unknown-ID
   reconstruction/retry. Save mutator/target validation/full UI/publication terpisah.
 
+### Contact allocation / selected readback review — 2026-10-24
+
+- Fresh clean fetch/reset/equality HEAD/origina077b3e6ccb96d6fe1d3ba3fbdacfe95d5b4d8b7;
+  changed checkpoint/Protocol/J5/J9/146/184/187/190/actual source/tests direfresh.
+  Exact push CI40065527817/Security40065527782/Guard40065527778 keenam jobs SUCCESS.
+  Original Application120787855285 gagal Chromium fixture DevToolsActivePort startup
+  sebelum certificate assertion; satu same-SHA rerun120789103101 PASS tanpa perubahan
+  fixture/timeout/gate. Completed8279app/462runtime/23Redis/37Chromium serta
+  3661pgTAP58files/99native20groups/advisors bersih diamati.190 SDK kini verified.
+- Kontrak12.191 dikunci/dibaca sebelum coding. Tambah unmounted server-only
+  createOwnerContactBlockAllocationReview dengan strict copied186 intent, actual190
+  allocation sekali, actual187 selected read hanya memakai acknowledged server ID,
+  tiga outer subject/Owner active/completed proofs. Nested SDK/assembly proofs tetap.
+  Full success8claims/13RPC; no caller receipt/Owner/ID atau optimistic full canvas.
+- Minimal ack dipisahkan dari current same_revision/newer_revision atau unavailable
+  readback. Same revision wajib exact ID/kindcontact/visibility/present payload/raw
+  nullable subtype,label,value; no guessed append position. Newer stable selected
+  state eksplisit separate revision, boleh changed/hidden/missing payload. Missing/
+  older/drift/malformed observation tidak erase ack setelah final outer proof; lost
+  authority/unknown outcome tidak membocorkan ack/private snapshot. Unknown tanpa ID
+  tidak direkonstruksi dari matching data/count/revision/stale denial/later absence.
+- Aggregate10s outer deadline/abort/post-await guards dan nested5s tetap. Invoked
+  nested work dapat finish/commit privately setelah outer timeout, tanpa output
+  revival/next phase/retry/cache/base refresh/init/save. Raw invalid/incomplete
+  Contact/basic diagnostics tetap recoverable; bukan target safety/public validity.
+- Tambah238 meaningful actual pinned-SDK controlled-claims tests:544 targeted PASS;
+  all8 proof states/subject/Owner/errors, all13 RPC failures/deadlines/late responses,
+  raw subtype/label/value/bounds/null/control, same/newer/unavailable, copied intent,
+  unknown→stale/no readback/retry, aggregate lifecycle. Frozen install/typecheck/lint/
+  5tooling/8517app/3build/diff/final review PASS, sebagian unchanged tasks cached.
+  Warning Link268 lama tetap. Final staged review wajib; enam exact final push jobs
+  PENDING. Unchanged CI3661pgTAP/99native/reset/lint/error-advisors/462runtime/23Redis/
+  37Chromium wajib; no local DB/manual/provider/live JWT claim atau gate weakening.
+- Tidak SQL/dependency/grant/RLS/policy/route/UI/Published/provider/credential/access
+  changes. Home actions kosong/Contact general decoder not_implemented, public/RPC
+  withheld. Goal belum selesai,S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/
+  S5/S6/Media/Spill CTA/publication/ingress/IP/production tetap open.
+- Berikutnya setelah exact six PASS audit/kunci existing Contact payload save CAS
+  memakai188: actual own existing Contact membership, explicit missing-payload policy,
+  Owner-first aggregate locks, strict full raw tuple, single revision bump/rollback
+  dan native races dengan allocation/Link/Text/visibility/move/removal. Save SDK,
+  target validation/full UI/publication kontrak terpisah; jangan mount partial D02.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
