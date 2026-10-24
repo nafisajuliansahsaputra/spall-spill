@@ -6313,6 +6313,43 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   rollback/native races sebelum SDK mutation atau attachment. Jangan mount partial
   D02; save mutation/target validation/renderer/full publication kontrak terpisah.
 
+### Private existing-collection Contact allocation CAS — 2026-10-24
+
+- Baseline bersih HEAD/originaa068d4853ff75c113ee5e3b2e2ab62cabf23153;
+  bootstrap Cloud/fetch/reset/equality dan canonical checkpoint/Protocol/J5/J9/
+  security/111/143/182/183/186/188/source/migrations/tests/pinned D02/11.22/23
+  direfresh. Exact aa068 push CI40038778533/Security40038778535/Guard40038778628
+  keenam jobs SUCCESS; completed8068app/462runtime/23Redis/37Chromium/3520pgTAP
+  57files/88native19groups/advisors bersih diamati.187+188 kini terbukti bersama.
+- Kontrak12.189 dikunci/dibaca sebelum coding; CLI-generated additive migration
+  menambah private add_current_owner_contact_block_working. Actual auth binding/
+  Owner-first locks/state/context, strict186 full raw Contact intent, existing own
+  collection CAS, bounded all-kind count1000, own max append/server UUID/matched183
+  payload/single revision bump atomik. Missing collection tidak dibuat; stale replay
+  tidak duplicate; fresh deliberate add mendapat ID berbeda. Internal failure
+  propagate/rollback; tidak fabricate ack, normalize, target-validate atau render.
+- Tambah pgTAP058:141 assertions terencana untuk role/auth/state/strict shapes/raw
+  null/control/Unicode/bounds/append/stale/max/capacity/forced rollback/purity.
+  Tambah11 native race cases di committed isolated CI: Contact/Contact, Link/Text
+  allocation, Link/Text payload save, visibility/move/remove, collection/Owner wait,
+  near-capacity dan paged membership+selected raw readback. Existing88 native utuh;
+  tidak mengklaim Contact payload-save mutator atau full Contact canvas.
+- Frozen install/typecheck/lint/5tooling/8068app/3build/git diff --check/final review
+  PASS; unchanged application tasks sebagian cached, warning Link268 lama tetap.
+  SQL grammar parser dan native node --check PASS. Tidak menjalankan DB/Docker
+  lokal:141 pgTAP/11 native baru PENDING runtime evidence. Final staged review dan
+  enam exact-final-push jobs wajib; isolated DB reset/lint/error-security-advisors/
+  all pgTAP/native serta462runtime/23Redis/37Chromium tetap gates tanpa pelemahan.
+- Semua EXECUTE PUBLIC/anon/authenticated/service_role dicabut; table/schema/RLS/
+  policies/grants/route/UI/provider/Published tidak berubah. General Contact decoder
+  tetap not_implemented dan Home actions kosong. Tidak manual/provider/live claim.
+  Goal belum selesai,S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/Media/
+  Spill CTA/publication/ingress/IP/public/RPC/production tetap open/withheld.
+- Setelah exact six jobs PASS, berikutnya audit/kunci guarded Contact allocation
+  SDK: strict minimal ack, outcome_unknown/no blind retry, final Owner proof dan
+  known-ID selected review. Save mutator/target validation/full UI/publication
+  merupakan kontrak terpisah; jangan mount partial D02 atau membuka grants.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

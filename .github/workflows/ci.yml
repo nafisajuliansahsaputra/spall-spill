@@ -171,6 +171,9 @@ jobs:
       - name: Verify isolated Identity Text block allocation CAS races
         run: node --test tests/identity-text-block-allocation-cas-concurrency.test.mjs
 
+      - name: Verify isolated Identity Contact block allocation CAS races
+        run: node --test tests/identity-contact-block-allocation-cas-concurrency.test.mjs
+
       - name: Verify isolated Identity Text Working save CAS races
         run: node --test tests/identity-text-working-cas-concurrency.test.mjs
 
