@@ -7361,6 +7361,46 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   initialization SDK:195 pre-I/O validation/same subject+Owner before/after/strict
   revision1 ack/deadline/outcome_unknown/no retry; jangan mount premature partial D02.
 
+### Guarded private first Contact initialization SDK — 2026-10-24
+
+- Refreshed clean HEAD/origin c9ee3d7d9b0ffc0eb548d5fb2314412cf954d663 setelah196;
+  exact push CI40115020519/Security40115020540/Guard40115020671 six jobs SUCCESS.
+  Completed logs9122app/462runtime/23Redis/37Chromium/3976pgTAP60files/124native22groups/
+  error-advisors bersih, no fail/skip.196 kini punya178 new pgTAP/13 native actual
+  passing evidence. Checkpoint/Protocol/J5/J9/152/183/190/195/196, actual Text initializer/
+  Contact allocation/locator/input/SQL/tests/pinned D02/11.21/22/23 direfresh.
+- Kontrak12.197 dikunci/dibaca sebelum coding. Tambah unmounted server-only injected
+  createOwnerFirstContactInitialization.initialize(unknown). Reuse195 exact strict
+  schema/copy before await; invalid_initialization_intent before claims/RPC. Explicit
+  null expected absence/action/visibility/full raw Contact/512label/2048value/no NUL
+  unchanged; no diagnostic/public-validity gate/default/normalization/render/fetch.
+- Current verified getClaims subject+strict zero-arg Owner state before one fixed
+  api.initialize_current_owner_blocks_from_contact POST input_intent, same client/
+  abortSignal. Minimal success status/server lower UUID via184 locator/literal revision1;
+  final same subject+Owner active/completed proof before acknowledgment. Full success
+  2claims/3RPC; no live JWT/atomic session binding/revocation/ABA/CSRF/full Identity
+  claim. UUID syntax bukan newness/actual ownership/atomic persistence proof (196 DB).
+- Aggregate5s deadline/post-await guards. Before attempted dispatch failure unavailable;
+  after attempt lost/error/malformed/timeout/final-proof loss outcome_unknown only,
+  no ack/private echo/rollback inference. No late output revival/further phase/retry/
+  cache/UUID/base refresh/source fallback/init-on-read/repair/Undo/queue. Explicit repeat
+  re-proves intent; already_initialized setelah unknown bukan prior-outcome proof.
+- Tambah228 meaningful actual pinned-SDK controlled-claims tests:540 targeted PASS;
+  full raw subtypes/null/controls/Unicode/bounds/copy, strict action/null/base/visibility/
+  fields/authority/status/ack/revision1, both Owner proofs/lost/late every phase/slow
+  aggregate/unknown→conflict/no retry/cache/UUID. Fixtures bukan live JWT/DB/manual proof.
+  Frozen install/typecheck/lint/5tooling/9350app/3build/diff/final review PASS; sebagian
+  unchanged tasks cached, old Link268 warning retained. Staged review wajib; six exact
+  final push jobs PENDING, unchanged isolated DB reset/lint/error-advisors/3976pgTAP/
+  124native/462runtime/23Redis/37Chromium required. No new local DB/manual/provider claim.
+- No SQL/dependency/table/grants/RLS/route/UI/Published/source/provenance/provider/
+  credential/access changes. Home actions kosong/general Contact not_implemented;
+  public/RPC grants withheld. Goal unfinished,S4 last CLOSED / VERIFIED; D01/D02/full
+  canvas/S5/S6/Media/Spill CTA/target safety/publication/ingress/IP/live/production open.
+  Setelah exact final all-six PASS, next audit/kunci private first Contact selected
+  initialization review: minimal ack terpisah same/newer selected truth, raw/visibility/
+  Owner proof binding/deadline/no unknown promotion; no premature partial D02/public.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
