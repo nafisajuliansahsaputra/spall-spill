@@ -6350,6 +6350,42 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   known-ID selected review. Save mutator/target validation/full UI/publication
   merupakan kontrak terpisah; jangan mount partial D02 atau membuka grants.
 
+### Guarded existing-collection Contact allocation SDK — 2026-10-24
+
+- Fresh clean Cloud bootstrap HEAD/origin0b6a0edb1f63cf61a11678035e5b8ee042dd1f61;
+  AGENTS/Runbook/Protocol/checkpoint/completion/J5/J9/102/144/182/186/189/source/
+  tests/SQL/pinned D02/11.23 direfresh. Exact baseline push CI40044165583,
+  Security40044165588,Guard40044165780 keenam jobs SUCCESS.189 database evidence
+  kini PASS:3661pgTAP58files/99native20groups termasuk141 Contact assertions dan11
+  Contact races, advisors bersih;8068app/462runtime/23Redis/37Chromium diamati.
+- Kontrak12.190 dikunci/dibaca sebelum coding. Tambah unmounted server-only
+  createOwnerContactBlockAllocation dengan request-local injected auth/schema
+  client. Reuse186 intent/182 raw policy; strict malformed input ditolak sebelum
+  auth/I/O. Actual getClaims+strict zero-arg state proof active/completed sebelum
+  satu fixed Contact allocation POST. Strict minimal canonical UUID/exact base+1
+  ack hanya setelah final same subject/Owner proof. Backend189 tetap atomic CAS
+  authority; UUID shape/SDK tidak membuktikan newness atau database commit sendiri.
+- Single aggregate5s/abort/post-await guards; unavailable sebelum dispatch attempt,
+  outcome_unknown untuk error/lost/malformed/late reply/failed final proof sesudah
+  attempt. No blind retry/cache/UUID/default/refresh-base/create missing collection/
+  normalization/target validation/render/private echo. Raw nullable subtype/label/
+  value, blank/control/CRLF/Unicode/invalid Contact tetap recoverable; basic issues
+  bukan public-validity gate. Unknown lalu stale tidak membuktikan prior rollback.
+- Tambah211 meaningful controlled-claims actual pinned-SDK tests;476 targeted PASS.
+  Frozen install/typecheck/lint/5tooling/8279app/3build/git diff --check/final review
+  PASS; sebagian unchanged tasks cached. Warning Link268 lama tetap. Final staged
+  review wajib sebelum commit; enam exact final push jobs PENDING. Tidak ada gate
+  weakening. Unchanged CI wajib3661pgTAP/99native/reset/lint/error-advisors serta
+  462runtime/23Redis/37Chromium; tidak local DB/manual/provider/live JWT claim.
+- Tidak SQL/dependency/grant/RLS/policy/route/UI/Published/provider/credential/access
+  changes. Home actions kosong/general Contact decoder not_implemented, semua
+  public/RPC activation withheld. Goal belum selesai,S4 terakhir CLOSED / VERIFIED;
+  D01/D02/full canvas/S5/S6/Media/Spill CTA/publication/ingress/IP/production open.
+- Setelah exact six PASS berikutnya audit/kunci known-ID Contact allocation selected
+  readback review memakai190+187/184 dan146 semantics: ack dipisahkan dari current
+  same/newer/unavailable readback, exact raw fields di same revision, no unknown-ID
+  reconstruction/retry. Save mutator/target validation/full UI/publication terpisah.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
