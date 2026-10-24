@@ -118,6 +118,6 @@ jobs:
           test -d supabase
 
           grep -Fq '"packageManager": "pnpm@11.24.0"' package.json
-          grep -Fq '24.19' .nvmrc
+          grep -Fxq '24.22.1' .nvmrc
 
           echo "Autopilot repository baseline is intact."
