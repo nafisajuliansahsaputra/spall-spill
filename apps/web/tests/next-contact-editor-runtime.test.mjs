@@ -20,6 +20,7 @@ const ids = ["93000000-0000-4000-8000-000000000001", "93000000-0000-4000-8000-00
 const priorIds = ["94000000-0000-4000-8000-000000000001", "94000000-0000-4000-8000-000000000002"];
 let provider, child, directory, providerOrigin, nextOrigin, certificate, cookieA, cookieB, siblingServer, siblingOrigin;
 const deniedSubjects = new Set(), inFlightSubjects = new Map();
+let acceptRefresh = false;
 let maximumSubjectsInFlight = 0, authRequests = 0, refreshCalls = 0, denyAfterMutation = false;
 let calls = [], authCalls = 0, budgetCalls = 0, mutations = 0, budgetResult = 1, restricted = false, malformedAck = false, fixtureError;
 const models = new Map(), events = [], observations = [];
@@ -145,7 +146,15 @@ before(async () => {
         let raw = ""; for await (const part of req) { raw += part; assert.ok(Buffer.byteLength(raw) <= 4096); }
         const value = JSON.parse(raw); assert.deepEqual(Object.keys(value), ["refresh_token"]);
         assert.ok(refreshSubjects.has(value.refresh_token), "refresh must belong to an issued fixture session");
-        res.writeHead(400); res.end('{"code":"refresh_token_not_found","message":"Fixture refresh denied"}'); return;
+        if (!acceptRefresh) {
+          res.writeHead(400); res.end('{"code":"refresh_token_not_found","message":"Fixture refresh denied"}'); return;
+        }
+        const subject = refreshSubjects.get(value.refresh_token);
+        assert.ok(subjects.includes(subject), "refresh must retain an independently known subject");
+        const rotated = `isolated-rotated-${randomBytes(16).toString("hex")}`; refreshSubjects.set(rotated, subject);
+        res.end(JSON.stringify({ access_token: token(subject), refresh_token: rotated, token_type: "bearer", expires_in: 3600,
+          expires_at: Math.floor(Date.now() / 1000) + 3600, user: { id: subject, aud: "authenticated", role: "authenticated",
+            app_metadata: {}, user_metadata: {}, identities: [], created_at: "2026-01-01T00:00:00Z" } })); return;
       }
       assert.equal(req.headers.apikey, publicKey);
       assert.notEqual(req.headers.authorization, "Bearer isolated-budget-placeholder");
@@ -232,7 +241,7 @@ export async function GET() { return new Response('<!doctype html><html><head><l
   }
   assert.ok(ready, "isolated Contact HTTPS runtime must become ready"); cookieA = await encodeSession(subjects[0]); cookieB = await encodeSession(subjects[1]);
 }, { timeout: 60000 });
-beforeEach(() => { deniedSubjects.clear(); inFlightSubjects.clear(); maximumSubjectsInFlight = 0; authRequests = 0; refreshCalls = 0; denyAfterMutation = false; models.clear(); calls = []; authCalls = 0; budgetCalls = 0; mutations = 0; events.length = 0; observations.length = 0;
+beforeEach(() => { acceptRefresh = false; deniedSubjects.clear(); inFlightSubjects.clear(); maximumSubjectsInFlight = 0; authRequests = 0; refreshCalls = 0; denyAfterMutation = false; models.clear(); calls = []; authCalls = 0; budgetCalls = 0; mutations = 0; events.length = 0; observations.length = 0;
   budgetResult = 1; restricted = false; malformedAck = false; fixtureError = undefined; });
 after(async () => {
   if (child?.pid) { const exited = child.exitCode === null ? new Promise(resolve => child.once("exit", resolve)) : Promise.resolve();
@@ -495,4 +504,99 @@ test("expired Contact cookie cannot refresh before metadata and distributed admi
   assert.equal(authRequests, 1); assert.equal(refreshCalls, 1); assert.equal(authCalls, 0); assert.equal(budgetCalls, 2);
   assert.deepEqual(calls, []); assert.equal(mutations, 0); assert.equal(models.size, 0);
   assert.ok(admitted.headers["set-cookie"]?.some(value => /max-age=0/i.test(value)), "actual SSR must clear rejected refresh cookie");
+});
+
+async function expiredSessions(selectedSubjects) {
+  const cookies = await Promise.all(selectedSubjects.map(subject => encodeSession(subject, 2)));
+  await delay(2100);
+  // Exclude issuance overlap and Auth from subsequent HTTP lifecycle evidence.
+  authRequests = 0; authCalls = 0; refreshCalls = 0; events.length = 0;
+  maximumSubjectsInFlight = 0; inFlightSubjects.clear(); acceptRefresh = true;
+  return cookies;
+}
+function responseSession(response) {
+  const values = (response.headers["set-cookie"] ?? []).filter(value => value.startsWith("sb-") && !/max-age=0/i.test(value));
+  assert.ok(values.length > 0, "actual Next route must return refreshed SSR cookie");
+  return values.map(value => value.split(";")[0]).join("; ");
+}
+function selectedRefreshResult(result, action, i, contact) {
+  assert.equal(result.status, action === actions[0] ? "initialized" : action === actions[1] ? "allocated" : "saved");
+  assert.equal(result.block_id, ids[i]); assert.equal(result.collection_revision, action === actions[0] ? 1 : 4);
+  assert.equal(result.readback.status, "current"); assert.equal(result.readback.relation, "same_revision");
+  assert.equal(result.readback.snapshot.current_handle, `fixture-owner-${i}`);
+  assert.equal(result.readback.snapshot.block.is_visible, false);
+  assert.deepEqual(result.readback.snapshot.block.contact_working, { contact_type: contact.contact_type, label: contact.label, value: contact.value });
+  assert.ok(!/access_token|refresh_token/.test(JSON.stringify(result)), "session fields must remain outside response JSON");
+}
+function successfulRefreshCalls(action, subject) {
+  assert.deepEqual(events.slice(0, 2), ["budget", "refresh"]);
+  assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 9); assert.equal(authCalls, 8);
+  assert.equal(mutations, 1); assert.ok(calls.every(value => value.subject === subject));
+  const names = calls.map(c => c.name); for (const start of [6, 9]) {
+    assert.deepEqual(names.slice(start, start + 2).sort(), [C, T].sort()); names.splice(start, 2, C, T);
+  }
+  assert.deepEqual(names, [S, S, action === actions[0] ? I : action === actions[1] ? A : W, S, S, S, C, T, S, C, T, S, S]);
+}
+for (const action of actions) test(`successful Contact ${action} refresh preserves private response session and explicit conflict truth`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]); const value = command(action);
+  const response = await request(expired, value), result = check(response, 200);
+  selectedRefreshResult(result, action, 0, value.contact_working); successfulRefreshCalls(action, subjects[0]);
+  const rotated = responseSession(response); assert.ok(rotated !== expired, "response must contain a new session cookie");
+  // Separate explicit command; terminal RPC rejection is not an automatic retry or another commit.
+  check(await request(rotated, value), 409, { status: action === actions[0] ? "already_initialized" : "stale_write" });
+  assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 2); assert.equal(mutations, 1);
+  assert.ok(calls.every(value => value.subject === subjects[0]));
+  assert.equal(models.get(subjects[0]).revision, action === actions[0] ? 1 : 4);
+  assert.deepEqual(models.get(subjects[0]).block.contact_working, { contact_type: value.contact_working.contact_type, label: value.contact_working.label, value: value.contact_working.value });
+});
+test("successful Contact refresh cannot override restricted Owner denial", { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]); restricted = true;
+  const response = await request(expired); check(response, 403, { status: "restricted" }); responseSession(response);
+  assert.deepEqual(events, ["budget", "refresh", "auth", "rpc"]);
+  assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 1); assert.equal(authRequests, 2); assert.equal(authCalls, 1);
+  assert.equal(mutations, 0); assert.equal(models.size, 0); assert.deepEqual(calls, [{ name: S, subject: subjects[0] }]);
+});
+test("concurrent expired Contact sessions retain separate Owner data and replay response cookies", { timeout: 60000 }, async () => {
+  const expired = await expiredSessions(subjects);
+  const responses = await Promise.all(expired.map((cookie, i) => request(cookie, command(actions[0], working("phone", `Refresh Owner ${i}`, ` Raw ${i} `)))));
+  const rotated = responses.map(responseSession); assert.ok(rotated[0] !== rotated[1], "separate subjects need separate response cookies");
+  for (let i = 0; i < 2; i++) {
+    selectedRefreshResult(check(responses[i], 200), actions[0], i, working("phone", `Refresh Owner ${i}`, ` Raw ${i} `));
+    const own = calls.filter(value => value.subject === subjects[i]); assert.equal(own.length, 13);
+    assert.equal(own.filter(value => value.name === I).length, 1);
+  }
+  assert.equal(events[0], "budget"); assert.equal(refreshCalls, 2); assert.equal(budgetCalls, 2);
+  assert.equal(authRequests, 18); assert.equal(authCalls, 16); assert.equal(mutations, 2);
+  assert.ok(maximumSubjectsInFlight >= 2, "actual verified Auth for distinct subjects must overlap after issuance reset");
+  await Promise.all(rotated.map(cookie => request(cookie).then(response => check(response, 409, { status: "already_initialized" }))));
+  assert.equal(refreshCalls, 2); assert.equal(budgetCalls, 4); assert.equal(mutations, 2);
+  for (let i = 0; i < 2; i++) {
+    assert.equal(calls.filter(value => value.subject === subjects[i] && value.name === I).length, 2);
+    assert.equal(models.get(subjects[i]).revision, 1);
+    assert.deepEqual(models.get(subjects[i]).block.contact_working, { contact_type: "phone", label: `Refresh Owner ${i}`, value: ` Raw ${i} ` });
+  }
+  const prior = calls.length; check(await request(undefined), 401, { status: "unauthenticated" });
+  assert.equal(calls.length, prior); assert.equal(refreshCalls, 2); assert.equal(mutations, 2);
+});
+for (const action of actions) test(`actual Chromium Contact ${action} stores refreshed session naturally for explicit follow-up`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]); const value = command(action);
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, expired); await navigate(browser, nextOrigin);
+    const first = checkBrowser(await browserPost(browser, { value }), 200);
+    selectedRefreshResult(first, action, 0, value.contact_working); successfulRefreshCalls(action, subjects[0]);
+    // Chromium applies real Next Set-Cookie; no cookie replacement between these explicit commands.
+    const second = checkBrowser(await browserPost(browser, { value }), 409);
+    assert.deepEqual(second, { status: action === actions[0] ? "already_initialized" : "stale_write" });
+    assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 2); assert.equal(mutations, 1);
+    assert.ok(calls.every(value => value.subject === subjects[0]));
+    assert.equal(models.get(subjects[0]).revision, action === actions[0] ? 1 : 4);
+    assert.deepEqual(models.get(subjects[0]).block.contact_working, { contact_type: value.contact_working.contact_type, label: value.contact_working.label, value: value.contact_working.value });
+    await browserSession(browser, undefined); const prior = calls.length;
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 401), { status: "unauthenticated" });
+    assert.equal(calls.length, prior); assert.equal(refreshCalls, 1); assert.equal(mutations, 1);
+  } finally { await browser.close(); }
 });
