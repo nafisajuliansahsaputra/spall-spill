@@ -7239,6 +7239,51 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   Seperti171, independent raw-target probe dapat memakai verified210 foundation,
   bukan pending211 refresh acceptance; final closure/activation tetap butuh six PASS.
 
+### Isolated Contact raw request-target boundary — 2026-10-25
+
+- Clean pushed HEAD/origin37a5d884615b0152144d69a2192f68ac2ff25a51,211 local60
+  runtime/full quality gates PASS. Pada selection CI40225041046/Security40225040987
+  PENDING, Guard40225041002 SUCCESS; recheck tiga Security jobs PASS, Application/
+  Database masih PENDING. Seperti171, independent raw-target proof memakai verified
+  210/127 foundation0328cae six exact jobs PASS, bukan pending211 refresh acceptance.
+  Refreshed Protocol/Cloud/checkpoint/J5/J9/pinned D02/11.23/12.4/127/171/210/211,
+  actual Contact metadata/factory/Proxy/SSR/SDK/fixture/Text gateway/tests diaudit.
+- Kontrak12.212 fase audit dikunci/dibaca sebelum own temporary copy/probe di luar
+  repository. Native HTTPS path/explicit localhost servername/CA, no follow redirect,
+  hanya raw target class/status/internal Location/counts tanpa credential/Working.
+  Dua puluh empat observations aktual: canonical/bare-query/dot/encoded-dot200,
+  1EVAL/8Auth/13RPC/one mutation; dua slash aliases308 internal/no I/O; tujuh encoded/
+  lookalike404/no command/1normal Proxy Auth. Query/Host/Origin/forwarded-proto403/
+  no I/O; PUT/PATCH/DELETE405,OPTIONS204/no command. No provider failure. Probe adalah
+  audit, bukan gate/permission aliases. Own app/cert/process/socket/harness cleanup.
+- Fase implementasi dikunci dari observed probe sebelum source edit: hanya temporary
+  command-only HTTPS gateway, incoming Node req.url exact/api/editor sebelum upstream/
+  body read/forward. Lainnya403/status-only unavailable/private no-store/Expires0/
+  Pragma/no-referrer/nosniff/Connection close; tidak normalize/decode/redirect/header
+  raw-target proof. Canonical method/headers/body diteruskan ke actual Next/207/
+  original Request/no extra EVAL, logical Host/Origin tetap, client port override;
+  CA/hostname verification upstream/client, no trustHostHeader/repair/TLS bypass.
+- Tambah30 tests, seluruh90 Contact runtime PASS/no fail-skip:14raw-alias denials
+  sebelum I/O,2direct Next internal slash redirects/no command,3canonical Contact
+  commands/1grant/8Auth/13RPC/one mutation/raw hidden selected readback/proof phases,
+  5Host/Origin/forwarded mismatch,4unsupported methods,bearer/Owner hints no-cookie401/
+  no RPC,CA/hostname TLS denials sebelum gateway HTTP. Forwards/rejections terukur;
+  semua60 direct HTTPS/Chromium cases dipertahankan. Bukan body/budget/Owner validator
+  atau pilihan ingress production. Tidak production source/route/matcher/env/config/
+  dependency/SQL/grant/UI/Working/Published/provider config/credential change.
+- Frozen install/typecheck/lint/5tooling/10847app/3build/all31Redis/diff/final review
+  PASS; sebagian unchanged tasks cached, warning Link268 lama tetap. Enam final
+  exact-push jobs PENDING sebelum push, termasuk552runtime/37otherChromium/unchanged
+  isolated DB reset/lint/advisors/3976pgTAP60files/124native22groups. Staged review
+  wajib; pending bukan VERIFIED. Superseded211 cancellation obsolete jika terjadi.
+- Goal unfinished,S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/Media/
+  Spill CTA/target safety/publication/live/public/RPC/production tetap open/withheld.
+  Evidence hanya isolated Next/Chromium/HS256/in-memory model, bukan manual/live
+  provider/DB/RLS/atomicity/deployed raw-target/IP/CDN/proxy/production readiness.
+  Berikutnya audit/kunci gateway session/refresh relay128/172, setelah relevant
+  final gates PASS, sebelum compiled runtime129/browser gateway130/concurrency131/
+  deployed provenance/production activation; tidak partial D02 atau premature grants.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
