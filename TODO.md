@@ -7630,6 +7630,47 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   production open. Next audit/lock pure Contact budget policy/trusted network subject
   from118/119/161 before distributed permit/HTTP integration or any mounted activation.
 
+### Pure Contact network budget policy / trusted subject — 2026-10-25
+
+- Fresh clean HEAD/origin5d73ba27675345c2bdf9b8d2858dbd347d89bc17 after203;
+  CI40172300678 PENDING, Security40172300762/Guard40172300694 SUCCESS on203 at latest
+  observation. This pure independent slice does not invoke pending203 HTTP or
+  integrate permit/Redis. Last7b93619 exact-six evidence retained. Fresh203checkpoint/
+  Protocol/J5/J9/43/118/161/182/199/200, actual Text policy/subject/tests/shared helper/
+  old Product+Resource regressions/Contact13-RPC reviews refreshed.
+- Kontrak12.204 dikunci/dibaca sebelum coding. Add server-only unmounted strict
+  identityContactEditorBudgetPolicySchema/type and identityContactEditorCommandWorkCost
+  13: explicit bounded namespace/window1000..3600000/command1..1000000/work13..1000000;
+  no defaults/coercion/extras/capacity boost/action-selected rates.13 conservative
+  DB-RPC units for any selected200 command; claims/body/Redis bounded separately,
+  not Owner/body/product quota or granted permit.
+- Add fixed-domain createIdentityContactEditorNetworkSubject wrapper. Shared43 helper
+  adds ONLY Contact literal to TypeScript domain union/runtime allowlist; old four
+  domains/bytes/IP algorithm/timers unchanged. Copied32..64-byte key+namespace,
+  exact trusted{address}, canonical bare IPv4/full128-bit IPv6/mapped IPv4, fixed
+  HMAC-SHA256(domain NUL namespace NUL address) digest only. Untyped domain override
+  cannot select another partition. Fresh one metadata read/500ms finite/nonbackward
+  elapsed checks/late suppression/pre+postabort; no raw IP/key output/header fallback.
+- Tambah124 tests (72policy/52subject):406 targeted PASS with282 existing Text/
+  Product/Resource/Link policy+subject/permit regressions. Strict limits/malformed/
+  override/copy/type, exact HMAC bytes/allfive domains/IP canonical equivalence,
+  key/namespace/Buffer mutation, invalid metadata/IP/config/no body/fetch/UUID,
+  fresh reads/error/abort/nonfinite/backward/deadline/hung late-reader/cleanup tested.
+- Frozen install/typecheck/lint/5tooling/10658app/3build/diff/final review PASS on
+  Node24.22.1/pnpm11.24.0; unchanged tasks partly cached, old Link268 warning retained.
+  Staged review required; six exact final push jobs PENDING incl unchanged isolated
+  reset/lint/error-advisors/3976pgTAP/124native/462runtime/23Redis/37Chromium. Superseded
+  203 run obsolete; final exact SHA must pass all gates. PENDING is not VERIFIED.
+- No Redis adapter/Lua/key emission/HTTP/SSR/auth/RPC/provider/env/SQL/grant/UI/
+  Published/source/provenance/dependency/credential change. No anonymity/auth/Owner/
+  deployed proxy/live-provider/manual/browser/CSRF/capacity evidence claim. NAT/IPv6/
+  key/namespace rotation/distributed attackers remain gates. Home actions empty,
+  general Contact not_implemented/public RPC withheld. Goal unfinished,S4 last CLOSED /
+  VERIFIED; D01/D02/full canvas/S5/S6/Media/Spill CTA/target safety/publication/ingress/
+  IP/live/production open. Next audit/lock Contact distributed permit from118/162/
+  shared40 Lua with own13-unit/key domain and mandatory isolated Redis evidence;
+  then119/203 transport composition before any mounted/grant activation.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
