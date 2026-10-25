@@ -1,9 +1,6 @@
 import "server-only";
 import { identityContactEditorCommandSchema, type IdentityContactEditorCommand } from "./identity-contact-editor-command";
-import { identityContactEditorMaximumBodyBytes as maximum, isIdentityContactEditorRequestAdmitted } from "./identity-contact-editor-request";
-
-const policyHeaders = ["origin", "host", "content-type", "content-length", "content-encoding", "transfer-encoding", "sec-fetch-site", "sec-fetch-mode", "sec-fetch-dest"] as const;
-const metadata = (request: Request) => JSON.stringify(policyHeaders.map(name => request.headers.get(name)));
+import { identityContactEditorMaximumBodyBytes as maximum, isIdentityContactEditorRequestAdmitted, identityContactEditorRequestMetadata as metadata } from "./identity-contact-editor-request";
 
 export const identityContactEditorMaximumBodyReads = 32769;
 type Permit = (action: "identity_contact_command", signal: AbortSignal) => Promise<unknown>;
