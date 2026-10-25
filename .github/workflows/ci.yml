@@ -79,6 +79,7 @@ jobs:
           "$SPALL_TEST_BROWSER" --version
           pnpm --filter @spall-spill/web test:ssr-runtime
           pnpm --filter @spall-spill/web test:text-editor-runtime
+          pnpm --filter @spall-spill/web test:contact-editor-runtime
           pnpm --filter @spall-spill/web test:text-editor-production-runtime
           pnpm --filter @spall-spill/web test:text-editor-gateway-browser-runtime
           pnpm --filter @spall-spill/web test:editor-production-runtime

@@ -7798,6 +7798,54 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   runtime from121/122/167 before browser/proxy/CSRF/production activation; preserve
   original Request and actual SSR-cookie/verified-claims boundaries, no partial D02.
 
+### Isolated Contact HTTPS request runtime — 2026-10-25
+
+- Bootstrap bersih pada HEAD/originbe771e6c537ecac740c5d34c7e8f6ff2ac262735;
+  Goal belum selesai,S4 terakhir CLOSED / VERIFIED. AGENTS/Cloud/Protocol/checkpoint/
+  completion/J5/J9/12.4/121/122/167/189/203/206/207, pinned D02/11.23 dan actual
+  source/SSR/env/SDK/migration/test/CI diaudit ulang. Supabase getClaims docs terkini
+  mengonfirmasi HS256 Auth fallback; changelog CONNECT gagal, tanpa bypass/API change.
+- CI40192823336 attempt awal Application gagal pada startup DevToolsActivePort
+  Chromium sebelum certificate assertion. Pengulangan lokal76 SSR/Proxy/editor
+  PASS; satu rerun job tanpa perubahan timeout/assertion/gate: Application121179445503
+  dan Database121179447044 SUCCESS. Security40192823367/Guard40192823319 SUCCESS;
+  enam exact-push jobs be771e6 PASS. Teramati10847app/5tooling/31Redis/462runtime/
+  37Chromium/3976pgTAP60files/124native22groups/reset/lint/error-advisors bersih,
+  tanpa fail/skip. Tidak mengubah test agar melewati kegagalan startup tersebut.
+- Kontrak12.208 dikunci/dibaca sebelum coding. Tambah standalone mkdtemp Next HTTPS
+  dev fixture Contact: Request asli langsung ke207factory→body/HTTP→request-local
+  SSR cookies/getClaims→dispatcher/reviews/pinned SDK. Tidak mock claims/factory,
+  tidak reconstruct Request, tidak mount route production. Explicit CA/hostname
+  verification, ephemeral cert/signing key/loopback ports, child-only public env,
+  bounded startup/request/test dan cleanup process group/socket/temp, tanpa skips.
+- Tambah43 runtime tests: all3 explicit init/add/save, one exact Contact Lua/keypair/
+  cost13 grant sebelum Auth/RPC,8claims13RPC/one mutation, raw nullable three types/
+  label/value/controls/Unicode maxima/diagnostics/hidden selected JSON<=32768bytes,
+  private no-store/header/status truth. Controlled provider memverifikasi HS256
+  signature/issuer/audience/expiry/known subject dan closed SDK RPC/profile/args;
+  independent subject→Owner mapping dan bounded in-memory Working model.
+- Terbukti denial metadata/JSON/Owner selector/budget sebelum Auth/RPC, missing/
+  forged/header-only cookies/signature mismatch/expiry/provider rejection sebelum
+  RPC, restricted Owner/foreign target/stale/already-initialized tanpa fallback,
+  unknown ack dan claim loss sesudah mutation hanya status tanpa snapshot. Sequential
+  dan concurrent ketiga actions menunjukkan subject/Owner/Working berbeda tanpa
+  kebocoran; missing cookie setelah valid request tidak mewarisi principal.
+  Iterasi awal memperbaiki typo nama RPC dan urutan expected keys fixture; bukan
+  perubahan production behavior atau pelemahan assertion. Final43 PASS/no fail-skip.
+- Mandatory package/CI command test:contact-editor-runtime ditambahkan. Frozen
+  install/typecheck/lint/5tooling/10847app/3build/all31Redis/diff/final review PASS;
+  sebagian unchanged tasks cached, satu warning Link268 lama tetap. Retained76 SSR
+  lokal PASS. Enam final exact-push jobs PENDING sebelum push, termasuk505runtime/
+  37Chromium dan unchanged isolated DB reset/lint/advisors/3976pgTAP/124native;
+  pending bukan VERIFIED. Staged diff wajib direview sebelum commit.
+- Tidak ada production source/SSR/Auth API/dependency/SQL/grant/route/proxy/UI/
+  Published/provider config/credential change. Fixture bukan live Supabase/JWKS/
+  Upstash/DB commit/RLS/transaction/CSRF/browser/proxy/raw-target/deployed IP/
+  revocation/freshness/ABA/production evidence. Public/RPC activation tetap ditahan;
+  D01/D02/full canvas/S5/S6/Media/Spill CTA/target safety/publication/live tetap open.
+  Berikutnya audit/kunci isolated Contact browser cookie/action transport dari123/
+  168 setelah final gates PASS, sebelum proxy/refresh/ingress/production prerequisites.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
