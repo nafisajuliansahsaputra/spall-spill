@@ -7115,6 +7115,46 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   Berikutnya audit/kunci isolated Contact browser cookie/action transport dari123/
   168 setelah final gates PASS, sebelum proxy/refresh/ingress/production prerequisites.
 
+### Isolated Contact browser cookie transport — 2026-10-25
+
+- Fresh clean HEAD/origin9b39bd7a11226dbef91e4ad96b5dcef2a173d4c3. Exact push
+  CI40215616375 Application121235985777/Database121235986107 dan Security40215616365/
+  Guard40215616406 keenam jobs PASS. Completed10847app/5tooling/31Redis/505runtime/
+  37Chromium/3976pgTAP60files/124native22groups/reset/lint/error-advisors bersih,
+  no fail-skip diamati. AGENTS/Cloud/Protocol/checkpoint/completion/J5/J9/12.4/
+  123/168/208, actual Contact fixture/metadata/factory/SSR/env/SDK/Chromium dan
+  initial/current Text browser fixture/pinned D02/11.23 diaudit. Supabase getClaims
+  docs refreshed; changelog CONNECT gagal tanpa bypass. Network enforced direcheck.
+- Kontrak12.209 dikunci/dibaca sebelum coding. Hanya extend temporary fixture208:
+  static HTTPS GET document/sibling server dan bounded loopback observation sink
+  untuk Origin/Sec-Fetch-Site/content-type/cookie-presence boolean/status. Original
+  Request tetap langsung ke207, tanpa baca body/reconstruct/mengubah handler result;
+  observation failure menggagalkan fixture. Tidak ada raw cookie/JWT/key/Working logs.
+- Tujuh Chromium tests baru, seluruh50 Contact runtime PASS/no fail-skip. Explicit
+  ephemeral SPKI pin/helper unchanged; unrelated pin ditolak sebelum admission/Auth/
+  RPC. Actual SSR cookies diprovisikan host-only Secure SameSite=Lax via CDP;
+  browser native credentials:include tidak memalsukan Cookie/Origin/Host/Sec-Fetch.
+  Ketiga actions memberi known success/private no-store/raw hidden Contact JSON,
+  exact13-unit grant/8verifiedAuth/13RPC/one mutation/proof phases. Cookie replacement
+  memisahkan Owner/Working; cookie loss401 tanpa RPC tambahan. Cross-site127.0.0.1
+  no-cors POST403 dengan cookie absent; sibling same-site cross-origin403 dengan
+  cookie present; keduanya sebelum budget/Auth/RPC. Browser response tetap opaque0.
+- Seluruh43 Node cases dipertahankan. Frozen install/typecheck/lint/5tooling/
+  10847app/3build/all31Redis/diff/final review PASS; sebagian unchanged tasks cached,
+  satu warning Link268 lama tetap. Final exact-push six jobs PENDING sebelum push,
+  termasuk512runtime/37otherChromium dan unchanged isolated DB reset/lint/advisors/
+  3976pgTAP/124native. Staged review wajib; pending bukan VERIFIED.
+- Tidak ada production source/route/proxy/config/dependency/SQL/grant/Published/
+  provider/credential change. Ini automated isolated Chromium/Next/HS256/in-memory
+  model evidence; bukan manual/live provider/JWKS/refresh/revocation/freshness/DB/
+  RLS/atomicity/proxy/raw-target/deployed IP/broad CSRF/production readiness.
+  Goal unfinished,S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/Media/
+  Spill CTA/target safety/publication/live/public/RPC/production tetap open/withheld.
+  Berikutnya audit/kunci Contact proxy/admission/session-refresh dari124–126/169.
+  Seperti169, independent test-only ordering proof dapat memakai verified208
+  foundation tanpa bergantung pada209 browser acceptance; tidak closure/activation
+  sebelum keenam exact-final-push jobs PASS, tidak partial D02 atau premature grants.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
