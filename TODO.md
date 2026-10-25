@@ -8015,6 +8015,48 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   final gates PASS, sebelum compiled runtime129/browser gateway130/concurrency131/
   deployed provenance/production activation; tidak partial D02 atau premature grants.
 
+### Isolated Contact gateway session relay — 2026-10-25
+
+- Fresh clean HEAD/origin5a317783c1f64e0a9395ec0fe96628171999a552, keenam exact
+  push jobs PASS: CI40225308786 Application121265498875/Database121265498729,
+  Security40225308852 Secret121265300324/SAST121265300626/Dependency121265300633,
+  Guard40225308828 Authority121265299960. Completed10847app/5tooling/31Redis/
+  552runtime/37otherChromium/3976pgTAP60files/124native22groups dan isolated reset/
+  lint/security-advisors steps PASS diamati. Repository authority/Protocol/Cloud/
+  J5/J9/pinned D02/11.23/128/173/211/212, actual Contact gateway/207/HTTP/SSR diaudit.
+  Rujukan212 ke172 adalah nomor lama; actual Text gateway session authority173,
+  bukan dependency patch172. Tidak reopen product semantics. Supabase getClaims
+  docs refreshed, changelog CONNECT HTTP000/403 tanpa bypass/API change.
+- Kontrak12.213 dikunci/dibaca sebelum coding. Hanya tambah tujuh test cases pada
+  temporary Contact fixture, seluruh90 prior assertions dipertahankan. Actual SSR
+  expiredSessions real2s JWT/2100ms expiry/responseSession reused; original Request/
+  gateway/207/SSR/SDK/Owner source unchanged. Tidak cookie rewrite/mock claims/
+  header repair/automatic retry/refund/double EVAL/TLS bypass/credential access.
+- Seluruh97 Contact runtime PASS/no failure/cancel/skip pada first iteration.
+  Ketiga commands lewat gateway satu13-unit EVAL→one refresh→8verified Auth/13RPC/
+  one own mutation, exact raw hidden selected Contact/current Owner/revision.
+  Relayed Next Set-Cookie/private no-store/Expires0/Pragma/safe headers terbukti;
+  separate explicit response-cookie follow-up409 already_initialized/stale_write
+  tanpa additional refresh/commit. Add memakai prior seed ID berbeda/save selected.
+- Concurrent expired subjects cookie/Owner/raw Working tetap terpisah, >=2 verified
+  subjects overlap sesudah issuance reset, own replay409/no new commit; cookie loss
+  401/no RPC. Restricted403/one Owner RPC/no snapshot/mutation tetap berlaku walau
+  session refreshed. Controlled refresh rejection401 relays actual clearing cookie/
+  anti-cache/no RPC. Bare-query/dot raw targets403 sebelum forward/budget/Auth/
+  refresh/RPC; separate canonical command baru sukses sekali.
+- Frozen install/typecheck/lint/5tooling/10847app/3build/all31nativeRedis/diff/final
+  review PASS; unchanged cache reused where applicable, Link268 warning lama tetap.
+  Six final exact-push jobs PENDING sebelum push, termasuk559runtime/37otherChromium/
+  unchanged DB reset/lint/advisors/3976pgTAP60files/124native22groups. Staged review
+  wajib. Tidak production source/route/matcher/env/config/dependency/SQL/grant/UI/
+  Published/provider config change. Pending bukan CLOSED/VERIFIED.
+- Goal unfinished,S4 last CLOSED/VERIFIED; D01/D02/full canvas/S5/S6/Media/Spill CTA/
+  target safety/publication/live/public/RPC/production open/withheld. Isolated Node
+  HTTPS/Next dev/HS256/in-memory evidence bukan browser-through-gateway/compiled
+  Contact/live Auth/JWKS/revocation/session freeze/DB atomicity/RLS/deployed ingress/
+  IP/CDN/production readiness. Berikutnya audit/kunci compiled Contact runtime129/
+  174, lalu gateway browser130/concurrency131; tidak partial D02/premature grants.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

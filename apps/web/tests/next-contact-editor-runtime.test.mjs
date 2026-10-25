@@ -700,3 +700,75 @@ test("raw ingress retains TLS CA and hostname verification before any HTTP I/O",
   }
   noCommandIo(); assert.equal(gatewayForwards, 0); assert.equal(gatewayRejections, 0); assert.deepEqual(observations, []);
 });
+
+function gatewayCommand(cookie, value = command(), path = "/api/editor") {
+  return request(cookie, value, {}, "", "POST", true, { gateway: true, path });
+}
+for (const action of actions) test(`Contact gateway relays ${action} refresh session for explicit conflict follow-up`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]); const value = command(action);
+  const response = await gatewayCommand(expired, value);
+  selectedRefreshResult(check(response, 200), action, 0, value.contact_working);
+  successfulRefreshCalls(action, subjects[0]);
+  assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 0);
+  const rotated = responseSession(response); assert.ok(rotated !== expired);
+  check(await gatewayCommand(rotated, value), 409, { status: action === actions[0] ? "already_initialized" : "stale_write" });
+  assert.equal(gatewayForwards, 2); assert.equal(gatewayRejections, 0);
+  assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 2); assert.equal(mutations, 1);
+  assert.ok(calls.every(value => value.subject === subjects[0]));
+  assert.equal(models.get(subjects[0]).revision, action === actions[0] ? 1 : 4);
+  assert.deepEqual(models.get(subjects[0]).block.contact_working, { contact_type: value.contact_working.contact_type, label: value.contact_working.label, value: value.contact_working.value });
+});
+test("Contact gateway keeps concurrent refreshed Owners and response cookies separate", { timeout: 60000 }, async () => {
+  const expired = await expiredSessions(subjects);
+  const responses = await Promise.all(expired.map((cookie, i) => gatewayCommand(cookie, command(actions[0], working("phone", `Gateway Owner ${i}`, ` Raw ${i} `)))));
+  const rotated = responses.map(responseSession); assert.ok(rotated[0] !== rotated[1]);
+  for (let i = 0; i < 2; i++) {
+    selectedRefreshResult(check(responses[i], 200), actions[0], i, working("phone", `Gateway Owner ${i}`, ` Raw ${i} `));
+    const own = calls.filter(value => value.subject === subjects[i]); assert.equal(own.length, 13);
+    assert.equal(own.filter(value => value.name === I).length, 1);
+  }
+  assert.equal(gatewayForwards, 2); assert.equal(gatewayRejections, 0);
+  assert.equal(events[0], "budget"); assert.equal(refreshCalls, 2); assert.equal(budgetCalls, 2);
+  assert.equal(authRequests, 18); assert.equal(authCalls, 16); assert.equal(mutations, 2);
+  assert.ok(maximumSubjectsInFlight >= 2, "verified distinct-subject Auth must overlap after issuance reset");
+  await Promise.all(rotated.map(cookie => gatewayCommand(cookie).then(response => check(response, 409, { status: "already_initialized" }))));
+  assert.equal(refreshCalls, 2); assert.equal(budgetCalls, 4); assert.equal(mutations, 2);
+  for (let i = 0; i < 2; i++) {
+    assert.equal(calls.filter(value => value.subject === subjects[i] && value.name === I).length, 2);
+    assert.equal(models.get(subjects[i]).revision, 1);
+    assert.deepEqual(models.get(subjects[i]).block.contact_working, { contact_type: "phone", label: `Gateway Owner ${i}`, value: ` Raw ${i} ` });
+  }
+  const prior = calls.length; check(await gatewayCommand(undefined), 401, { status: "unauthenticated" });
+  assert.equal(calls.length, prior); assert.equal(refreshCalls, 2); assert.equal(mutations, 2);
+  assert.equal(budgetCalls, 5); assert.equal(gatewayForwards, 5); assert.equal(gatewayRejections, 0);
+});
+test("Contact gateway refresh cookie cannot override restricted Owner", { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]); restricted = true;
+  const response = await gatewayCommand(expired); check(response, 403, { status: "restricted" }); responseSession(response);
+  assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 0);
+  assert.deepEqual(events, ["budget", "refresh", "auth", "rpc"]);
+  assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 1); assert.equal(authRequests, 2); assert.equal(authCalls, 1);
+  assert.equal(mutations, 0); assert.equal(models.size, 0); assert.deepEqual(calls, [{ name: S, subject: subjects[0] }]);
+});
+test("Contact gateway relays clearing cookie after rejected refresh without RPC", { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]); acceptRefresh = false;
+  const response = await gatewayCommand(expired); check(response, 401, { status: "unauthenticated" });
+  assert.ok(response.headers["set-cookie"]?.some(value => /max-age=0/i.test(value)), "gateway must relay actual SSR clearing cookie");
+  assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 0);
+  assert.deepEqual(events, ["budget", "refresh"]);
+  assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 1); assert.equal(authRequests, 1); assert.equal(authCalls, 0);
+  assert.deepEqual(calls, []); assert.equal(mutations, 0); assert.equal(models.size, 0);
+});
+test("Contact gateway rejects raw targets before refresh and admits a separate canonical command", { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  for (const path of ["/api/editor?", "/api/../api/editor"]) {
+    check(await gatewayCommand(expired, command(), path), 403, { status: "unavailable" });
+    noCommandIo(); assert.equal(gatewayForwards, 0); assert.deepEqual(observations, []);
+  }
+  assert.equal(gatewayRejections, 2);
+  const value = command(), response = await gatewayCommand(expired, value);
+  selectedRefreshResult(check(response, 200), actions[0], 0, value.contact_working);
+  successfulRefreshCalls(actions[0], subjects[0]); responseSession(response);
+  assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 2);
+});
