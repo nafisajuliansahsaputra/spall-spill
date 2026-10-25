@@ -6940,6 +6940,48 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   shared40 Lua with own13-unit/key domain and mandatory isolated Redis evidence;
   then119/203 transport composition before any mounted/grant activation.
 
+### Private Contact distributed permit / isolated Redis — 2026-10-25
+
+- Fresh clean HEAD/origin7912101290d12ed04e5d0d86ab5f299ab4b1e1cf; previous pending
+  CI40172422138 now SUCCESS, Security40172422170/Guard40172422092 all six exact push
+  jobs PASS. Completed10658app/5tooling/462runtime/23Redis/37Chromium/3976pgTAP60files/
+  124native22groups/reset/lint/error-advisors/no fail-skip observed. AGENTS/Cloud/
+  Protocol/checkpoint/completion/J5/J9/12.4/40/43/118/162/200/202/204, actual Text
+  permit/tests/native harness/shared Lua/Contact policy+subject+body/CI/package/
+  pinned D02/11.23 refreshed. Node24.22.1/pnpm11.24.0/Redis6.2.14 observed locally.
+- Kontrak12.205 dikunci/dibaca sebelum coding. Add unmounted server-only
+  createIdentityContactEditorDistributedPermit: strict snapshotted204 policy/key,
+  fixed identity_contact_command only, fresh trusted subject then at most one
+  unchanged40 Lua EVAL. Explicit window/command/work limits and conservative13 cost;
+  claims/body/Redis separately bounded. No body-selected rate/Owner quota/default/
+  capacity boost/process fallback. Invalid dependencies/action/abort deny before I/O.
+- Own spall-identity-contact-editor namespace+hashed subject command/work same-slot
+  keys, isolated from Product/Resource/Link/Text. Redis TIME fixed windows, atomic
+  all-or-neither increments/TTL/corrupt or backward state denial. Numeric1 only,
+  no retry/cache/refund.500ms subject/aggregate2s finite/nonbackward deadline,
+  prompt request+operation abort/late suppression/listener+timer cleanup. Late EVAL
+  may burn capacity, no rollback/remote-cancellation promise or outward revival.
+- Tambah62 actual subject/permit/body composition tests:381 targeted PASS with
+  319 retained policy/subject/body/Text+Link permit cases. Exact HMAC/keys/script/
+  args/cost, canonical mapped IPv4/old-domain isolation, snapshots/no body/header
+  fallback, errors/nonliteral replies/both aborts/deadlines/late work/cleanup verified.
+  Tambah8 native Redis tests with actual committed Lua:work+request races, atomic
+  denial counts/allfour old domains/TTL/rollover/corrupt state/future timestamps.
+  Required package script and Application CI step added without skips.
+- All31 native Redis tests across five local isolated suites PASS/no fail-skip;
+  frozen install/typecheck/lint/5tooling/10720app/3build/diff/final review PASS.
+  Unchanged tasks partly cached; old Link268 warning retained. Staged review required;
+  six exact final push jobs PENDING incl31Redis/462runtime/37Chromium/unchanged
+  isolated DB reset/lint/error-advisors/3976pgTAP/124native. PENDING is not VERIFIED.
+- No shared Lua/HTTP/SSR/auth/RPC/mutation/SQL/grant/UI/Published/source/provenance/
+  provider/config/credential/dependency change. No live Upstash/cluster/deployed IP/
+  session/Owner/CSRF/manual/browser/capacity claim. Home actions empty/general Contact
+  not_implemented/public RPC withheld. Goal unfinished;S4 last CLOSED / VERIFIED;
+  D01/D02/full canvas/S5/S6/Media/Spill CTA/target safety/publication/ingress/IP/live/
+  production open. Next audit/lock confined Contact Upstash EVAL transport from
+  119/163/165 with fixed13-unit/key domain before203 budgeted HTTP composition;
+  actual metadata/session/Owner/CSRF/provider/runtime activation gates remain open.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
