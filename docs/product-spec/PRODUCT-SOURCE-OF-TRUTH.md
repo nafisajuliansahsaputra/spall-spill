@@ -7023,6 +7023,50 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   audit/lock budgeted Contact203 HTTP composition from120/166 with one copied
   policy/namespace/key/trusted reader and206 transport before mounted activation.
 
+### Private Contact budgeted HTTP composition — 2026-10-25
+
+- Fresh clean HEAD/origincd03b5cf94e9bc9ee723fe9049da098399b1bfcb; previous pending
+  CI40188145323 now SUCCESS, Security40188145324/Guard40188145360 all six exact push
+  jobs PASS. Completed10804app/5tooling/31Redis/462runtime/37Chromium/3976pgTAP60files/
+  124native22groups/reset/lint/error-advisors/no fail-skip observed. AGENTS/Cloud/
+  Protocol/checkpoint/completion/J5/J9/12.4/120/166/203/204/205/206, actual Text
+  factory+pipeline tests/Contact layers/SSR cookie factory/pinned D02/11.23 audited.
+  Supabase verified getClaims docs refreshed; changelog403/no bypass; no auth API change.
+- Kontrak12.207 dikunci/dibaca sebelum coding. Add unmounted server-only
+  createBudgetedIdentityContactEditorHttpBoundary: strict copied trustedOrigin/
+  policy204/upstash{origin,token}; one policy.namespace binds subject and transport.
+  Mandatory copied HMAC key/trusted reader, optional controlled/native fetch only;
+  no injected Redis/permit/client/Owner/RPC/config override or header-derived identity.
+  Actual206 transport=>205permit=>same Request in202closure=>203HTTP handler.
+- Invalid structural config denies403 unavailable/private no-store before reader/
+  body/SSR/claims/RPC; semantic provider/key/reader checks remain in original layers.
+  One fresh subject/EVAL maximum/fixed13 charge before body then request-local
+  zero-arg SSR/actual200dispatcher. Bad body may burn grant but cannot invoke SSR;
+  provider0/failure denies before SSR. Stateless composition shares no client/cache.
+  Existing statuses/32768response/8claims13RPC/one mutation/raw readback unchanged.
+  Nested500ms/1.5s/2s/5s/10s/20s bounds/late unknown preserved, no retry/refund/
+  fallback/rollback/session-freeze/revocation/ABA/freshness/Published inference.
+- Tambah43 actual full pipeline tests:401 targeted PASS with358 retained Contact
+  HTTP/transport/permit/body and Text budgeted HTTP cases. Only SSR factory/claims/
+  provider fetch controlled; exact EVAL/cost/namespace/order/save projection,
+  config/key snapshots/selector rejection/pre-SSR denial/no header fallback,
+  concurrent distinct Owner clients, raw/null/types/control/max label+value/private
+  JSON, conflict/unknown/claim loss/abort/hung+late provider verified. Provider Bearer
+  fixture never forwarded to SDK calls. Fixtures are not live JWT/cookie/DB commit/
+  production IP/proxy/CSRF/provider/browser/manual/capacity evidence.
+- Frozen install/typecheck/lint/5tooling/10847app/3build/diff/final review PASS on
+  Node24.22.1/pnpm11.24.0; all31 isolated Redis PASS/no fail-skip. Unchanged tasks
+  partly cached, old Link268 warning retained. Staged review required; six exact
+  final push jobs PENDING incl31Redis/462runtime/37Chromium/unchanged isolated DB
+  reset/lint/error-advisors/3976pgTAP/124native. Pending is not VERIFIED.
+- No old layer/SSR/auth API/dependency/SQL/grant/route/action/UI/Published/source/
+  provenance/provider configuration/credential change. Home actions empty/general
+  Contact not_implemented/public RPC withheld. Goal unfinished,S4 last CLOSED /
+  VERIFIED; D01/D02/full canvas/S5/S6/Media/Spill CTA/target safety/publication/ingress/
+  IP/live/production open. Next audit/lock isolated Contact Next HTTPS request-context
+  runtime from121/122/167 before browser/proxy/CSRF/production activation; preserve
+  original Request and actual SSR-cookie/verified-claims boundaries, no partial D02.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
