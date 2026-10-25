@@ -141,7 +141,11 @@ before(async () => {
       }
       if (req.url.startsWith("/auth/v1/")) authRequests++;
       if (req.method === "POST" && req.url === "/auth/v1/token?grant_type=refresh_token") {
-        refreshCalls++; res.writeHead(400); res.end('{"code":"refresh_token_not_found","message":"Fixture refresh denied"}'); return;
+        refreshCalls++; events.push("refresh"); assert.equal(req.headers.apikey, publicKey);
+        let raw = ""; for await (const part of req) { raw += part; assert.ok(Buffer.byteLength(raw) <= 4096); }
+        const value = JSON.parse(raw); assert.deepEqual(Object.keys(value), ["refresh_token"]);
+        assert.ok(refreshSubjects.has(value.refresh_token), "refresh must belong to an issued fixture session");
+        res.writeHead(400); res.end('{"code":"refresh_token_not_found","message":"Fixture refresh denied"}'); return;
       }
       assert.equal(req.headers.apikey, publicKey);
       assert.notEqual(req.headers.authorization, "Bearer isolated-budget-placeholder");
@@ -172,6 +176,22 @@ before(async () => {
   await writeFile(join(directory, "tsconfig.json"), JSON.stringify({ compilerOptions: { target: "ES2017", module: "esnext", moduleResolution: "bundler", jsx: "react-jsx",
     esModuleInterop: true, skipLibCheck: true, paths: { "@/*": [`${source}/*`] } } }));
   await writeFile(join(directory, "next.config.mjs"), `export default { devIndicators: false, webpack(config) { config.resolve.alias["@"] = ${JSON.stringify(source)}; return config; } };`);
+  await writeFile(join(directory, "proxy.ts"), `
+import { proxy as actualProxy } from ${JSON.stringify(join(source, "proxy"))};
+export const proxy = actualProxy;
+// Candidate topology only: production matcher and routes stay unchanged.
+export const config = { matcher: ["/((?!api/editor$|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"] };
+`);
+  await mkdir(join(directory, "app/api/session"), { recursive: true });
+  await writeFile(join(directory, "app/api/session/route.ts"), `
+import { createClient } from ${JSON.stringify(join(source, "lib/supabase/server"))};
+export const dynamic = "force-dynamic";
+export async function GET() {
+  const client = await createClient(); const { data, error } = await client.auth.getClaims();
+  return Response.json(!error && data?.claims?.sub ? { subject: data.claims.sub } : { status: "unauthenticated" },
+    { status: !error && data?.claims?.sub ? 200 : 401, headers: { "cache-control": "private, no-store" } });
+}
+`);
   await writeFile(join(directory, "app/api/editor/route.ts"), `
 import assert from "node:assert/strict";
 import { createBudgetedIdentityContactEditorHttpBoundary } from ${JSON.stringify(join(source, "lib/workspace/identity-contact-editor-budget-http"))};
@@ -433,4 +453,46 @@ for (const sameSite of [false, true]) test(`actual Chromium Contact ${sameSite ?
     assert.equal(budgetCalls, 0); assert.equal(authCalls, 0); assert.equal(authRequests, 0); assert.equal(refreshCalls, 0); assert.equal(mutations, 0);
     assert.deepEqual(calls, []); assert.deepEqual(events, []); assert.equal(models.size, 0);
   } finally { await browser.close(); }
+});
+
+test("Contact candidate matcher retains actual Proxy on a separate control path", { timeout: 60000 }, async () => {
+  async function control(cookie) {
+    return new Promise((resolve, reject) => {
+      const req = httpsRequest(`${nextOrigin}/api/session`, { ca: certificate, family: 4,
+        headers: { host: new URL(nextOrigin).host, ...(cookie ? { cookie } : {}) }, signal: AbortSignal.timeout(15000) }, res => {
+        let raw = ""; res.setEncoding("utf8"); res.on("data", part => { raw += part;
+          if (Buffer.byteLength(raw) > 4096) req.destroy(new Error("fixture control response too large")); });
+        res.on("error", reject); res.on("end", () => {
+          try { resolve({ status: res.statusCode, body: JSON.parse(raw), headers: res.headers }); } catch (error) { reject(error); }
+        });
+      }); req.on("error", reject); req.end();
+    });
+  }
+  for (let i = 0; i < 2; i++) {
+    const valid = await control(i ? cookieB : cookieA);
+    assert.equal(valid.status, 200); assert.deepEqual(valid.body, { subject: subjects[i] });
+    assert.equal(valid.headers["cache-control"], "private, no-store"); assert.equal(valid.headers.location, undefined);
+    assert.ok(valid.headers["content-security-policy"], "actual production Proxy must execute on control path");
+    assert.equal(authRequests, (i + 1) * 2); assert.equal(authCalls, (i + 1) * 2);
+  }
+  assert.deepEqual(events, ["auth", "auth", "auth", "auth"]);
+  const missing = await control(undefined);
+  assert.equal(missing.status, 401); assert.deepEqual(missing.body, { status: "unauthenticated" });
+  assert.equal(missing.headers["cache-control"], "private, no-store"); assert.ok(missing.headers["content-security-policy"]);
+  assert.equal(authRequests, 4); assert.equal(refreshCalls, 0); assert.equal(budgetCalls, 0);
+  assert.deepEqual(calls, []); assert.equal(mutations, 0); assert.equal(fixtureError, undefined);
+});
+test("expired Contact cookie cannot refresh before metadata and distributed admission", { timeout: 60000 }, async () => {
+  const expired = await encodeSession(subjects[0], 2); await delay(2100);
+  // Issuance uses real Auth; only subsequent HTTP requests count as ordering evidence.
+  authRequests = 0; authCalls = 0; refreshCalls = 0; events.length = 0;
+  check(await request(expired, command(), { origin: "https://evil.test" }), 403, { status: "unavailable" });
+  assert.deepEqual(events, []); assert.equal(authRequests, 0); assert.equal(budgetCalls, 0);
+  budgetResult = 0; check(await request(expired), 403, { status: "unavailable" });
+  assert.deepEqual(events, ["budget"]); assert.equal(authRequests, 0); assert.equal(refreshCalls, 0);
+  budgetResult = 1; const admitted = await request(expired); check(admitted, 401, { status: "unauthenticated" });
+  assert.deepEqual(events, ["budget", "budget", "refresh"]);
+  assert.equal(authRequests, 1); assert.equal(refreshCalls, 1); assert.equal(authCalls, 0); assert.equal(budgetCalls, 2);
+  assert.deepEqual(calls, []); assert.equal(mutations, 0); assert.equal(models.size, 0);
+  assert.ok(admitted.headers["set-cookie"]?.some(value => /max-age=0/i.test(value)), "actual SSR must clear rejected refresh cookie");
 });

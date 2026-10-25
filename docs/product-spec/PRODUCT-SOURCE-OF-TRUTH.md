@@ -7155,6 +7155,45 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   foundation tanpa bergantung pada209 browser acceptance; tidak closure/activation
   sebelum keenam exact-final-push jobs PASS, tidak partial D02 atau premature grants.
 
+### Isolated Contact Proxy and admission ordering — 2026-10-25
+
+- Clean pushed HEAD/origin1b60e80d30f6b6a3bcfb4771c2e0e4602618fe2a,209 local50
+  runtime dan semua quality gates PASS. Saat selection CI40220071372/Security40220071434
+  PENDING, Guard40220071371 SUCCESS; recheck Security tiga jobs SUCCESS, Application/
+  Database masih PENDING. Kontrak12.210 dikunci/dibaca sebelum coding. Seperti169,
+  independent test-only ordering proof memakai verified208 foundation9b39bd7
+  (six exact jobs PASS), tidak bergantung pada209 browser acceptance atau menutup
+  pending evidence. Refreshed Protocol/Cloud/checkpoint/J5/J9/pinned D02/11.23/
+  124–126/169/208/209, actual Proxy/updateSession/SSR/env/SDK/fixture diaudit.
+- Hanya temporary Contact HTTPS fixture ditambah candidate matcher: import actual
+  production Proxy, exclude exact pathname/api/editor (semua method/query), tetap
+  matched/api/session control. Original editor Request langsung207/actual budget/
+  SSR/Owner reviews, tanpa extra claims/EVAL/caller proof/header permit/client/
+  Request reconstruction. Tidak memilih endpoint atau matcher production.
+- Dua tests baru, seluruh52 Contact runtime PASS/no fail-skip, retained50 Node/
+  Chromium tetap. Control A/B tepat2 verified Auth calls/request (Proxy+downstream),
+  subject terpisah/private no-store/CSP; missing cookie401 tanpa Auth/budget/RPC baru.
+  Actual expired SSR cookie2s/real2100ms wait: wrong Origin zero budget/Auth;
+  budget denial satu grant attempt tanpa Auth/refresh; valid admission tepat satu
+  provider-rejected refresh401 dengan actual clearing Set-Cookie/private no-store,
+  nol RPC/mutation/model. Provider checks public key/bounded exact refresh body/
+  known random issued refresh token. Tidak successful refresh/rotation evidence.
+- Frozen install/typecheck/lint/5tooling/10847app/3build/all31Redis/git diff --check/
+  final review PASS; sebagian unchanged tasks cached, warning Link268 lama tetap.
+  Final exact push enam jobs PENDING sebelum push, termasuk514runtime/
+  37otherChromium/unchanged isolated DB reset/lint/advisors/3976pgTAP60files/
+  124native22groups. Staged review wajib; pending bukan VERIFIED. Superseded209
+  concurrency cancellation jika terjadi obsolete; target final exact commit.
+- Tidak ada production source/route/matcher/config/env/dependency/SQL/grant/UI/
+  Working/Published/provider config/credential change. Ini isolated Next/Chromium/
+  HS256/in-memory model evidence; bukan manual/live Supabase/JWKS/DB/RLS/atomicity/
+  session freshness/revocation/ABA/deployed proxy/IP/raw-target/production readiness.
+  Goal belum selesai,S4 terakhir CLOSED / VERIFIED; D01/D02/full canvas/S5/S6/Media/
+  Spill CTA/target safety/publication/live/public/RPC/production tetap open/withheld.
+  Berikutnya audit/kunci successful Contact editor refresh response dari126/170,
+  setelah relevant final gates PASS, sebelum compiled runtime/ingress/concurrent
+  browser/deployed provenance/production prerequisites; tidak partial D02/grants.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
