@@ -8218,6 +8218,44 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   production tetap open/withheld. Berikutnya audit/kunci rejected Contact refresh
   133/178; tidak partial D02/premature grants/deployment/new access.
 
+### Isolated Contact rejected-refresh cookie clearing — 2026-10-26
+
+- HEAD/origin bersih08e27a7308537f61c55436044e3f2c52b1e6f05c;217 lokal107gateway/
+  97dev/97direct/full gates PASS. Exact push CI40273532933/Security40273532880/
+  Guard40273532990 PENDING saat selection; recheck Guard dan3Security PASS,
+  Application/Database masih running. Seperti133/178, independent negative fixture
+  proof dari verified216 foundation18efffe six exact jobs PASS, bukan closure/
+  activation pending217. Protocol/Cloud/current217/J5/J9/pinned D02/11.23/133/178/
+  211–217 dan actual Contact/Text/browser/SSR/helper/runner dibaca ulang.
+- Kontrak12.218 dikunci/dibaca sebelum coding. Hanya append3 compiled gateway
+  Chromium cases init/add/save; semua source/assertions sebelumnya byte-identical.
+  Existing actual SSR2s/expiry2100ms/expiredSessions/acceptRefresh=false dipakai,
+  provider400 refresh_token_not_found tidak berubah. Init absent; add/save own rev3
+  hidden Contact, add priorIds berbeda dari allocated IDs/save own selected ID.
+- Seluruh110 gateway tests PASS tanpa fail/cancel/skip pada iterasi pertama.
+  Kedua POST eksplisit401 tepat unauthenticated/status-only/private JSON/no-store/
+  max-age0/Expires0/Pragma/no-referrer/nosniff/tanpa Location/CORS/Authorization echo.
+  POST pertama1budget→1refresh/1AuthAttempt/0verifiedUser/0RPC/0mutation, incoming
+  hasCookie:true. Tanpa CDP cookie mutation/readback, Chromium otomatis menerapkan
+  actual clearing Set-Cookie. POST kedua hasCookie:false, hanya1budget tambahan;
+  final events[budget,refresh,budget],refresh/Auth tetap1/user/RPC/commit0/model awal
+  identik/3gateway forwards/zero rejection. Tidak retry/fallback/read/auto replay/
+  header spoof/interception/mock claims; own CA/TLS/deadline/browser cleanup retained.
+- Dev97/compiled-direct97/frozen install/typecheck/lint/5tooling/10847app/3build/
+  seluruh31nativeRedis/diff/final review PASS; cache unchanged dipakai jika sesuai,
+  warning Link268 lama tetap. Enam job exact final push PENDING sebelum push,
+  termasuk766runtime/37otherChromium/unchanged isolated DB reset/lint/advisors/
+  3976pgTAP60files/124native22groups. Staged review wajib; superseded217 obsolete
+  jika concurrency cancellation terjadi. Tidak CLOSED/VERIFIED claim.
+- Goal belum selesai,S4 terakhir CLOSED/VERIFIED. Working≠Published; tidak perubahan
+  production source/route/matcher/env/dependency/CI/SQL/grants/UI/provider config.
+  Bukti controlled rejection bukan live Auth rotation/revocation/grace/invalidation/
+  DB rollback/RLS/deployed ingress/IP/manual/production readiness. D01/D02/full
+  canvas/S5/S6/Media/Spill CTA/target safety/publication/live/public/RPC/production
+  open/withheld. Berikutnya audit/kunci Contact browser budget-denial cookie continuity
+  134/179. Koreksi rujukan217:134 mengatur budget admission, bukan post-ack claim loss;
+  tidak mengubah locked semantics atau mengaktifkan partial D02/endpoint.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

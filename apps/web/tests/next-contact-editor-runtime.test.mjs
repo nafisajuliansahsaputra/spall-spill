@@ -919,3 +919,29 @@ if (browserGateway) for (const action of actions) for (const failure of ["restri
     } finally { await browser.close(); }
   });
 }
+
+if (browserGateway) for (const action of actions) test(`actual Chromium Contact ${action} applies rejected refresh clearing before explicit follow-up`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]); acceptRefresh = false;
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]);
+  const initial = models.get(subjects[0]), value = command(action);
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, expired); await navigate(browser, nextOrigin);
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 401), { status: "unauthenticated" });
+    assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 1); assert.equal(authCalls, 0);
+    assert.deepEqual(events, ["budget", "refresh"]); assert.deepEqual(calls, []); assert.equal(mutations, 0);
+    assert.deepEqual(models.get(subjects[0]), initial);
+    assert.deepEqual(observations, [{ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 401 }]);
+    // No cookie mutation/readback: Chromium must apply the real clearing Set-Cookie itself.
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 401), { status: "unauthenticated" });
+    assert.deepEqual(observations, [
+      { origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 401 },
+      { origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: false, status: 401 },
+    ]);
+    assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); assert.equal(authRequests, 1); assert.equal(authCalls, 0);
+    assert.deepEqual(events, ["budget", "refresh", "budget"]); assert.deepEqual(calls, []); assert.equal(mutations, 0);
+    assert.deepEqual(models.get(subjects[0]), initial);
+    assert.equal(gatewayForwards, 3); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+  } finally { await browser.close(); }
+});
