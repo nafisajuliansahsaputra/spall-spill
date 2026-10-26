@@ -81,6 +81,7 @@ jobs:
           pnpm --filter @spall-spill/web test:text-editor-runtime
           pnpm --filter @spall-spill/web test:contact-editor-runtime
           pnpm --filter @spall-spill/web test:contact-editor-production-runtime
+          pnpm --filter @spall-spill/web test:contact-editor-gateway-browser-runtime
           pnpm --filter @spall-spill/web test:text-editor-production-runtime
           pnpm --filter @spall-spill/web test:text-editor-gateway-browser-runtime
           pnpm --filter @spall-spill/web test:editor-production-runtime

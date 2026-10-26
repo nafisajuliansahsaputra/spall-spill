@@ -7368,6 +7368,44 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   ingress/IP/manual/production readiness. Berikutnya audit/kunci Contact gateway
   browser130/175, lalu concurrency131; tidak partial D02/premature grants.
 
+### Isolated Contact compiled browser gateway — 2026-10-26
+
+- Fresh clean HEAD/originf478d20d568e86064ce4cffc6e51b9090bbb624d, six exact push
+  jobs PASS: CI40244359199 Application121322814053/Database121322813478,
+  Security40244359194 SAST121322684016/Secret121322684178/Dependency121322684222,
+  Guard40244359216 Authority121322684169. Completed10847app/5tooling/31Redis/
+  656runtime/37otherChromium/3976pgTAP60files/124native22groups diamati; reset/lint/
+  advisors steps PASS. Refreshed AGENTS/Cloud/Protocol/current214/J5/J9/pinned D02/
+  11.23/130/175/211–214, actual Contact/Text fixture/runner/SSR/CI/package/Next
+  resolve-routes. Supabase getClaims docs refreshed; changelog CONNECT403/no bypass.
+- Kontrak12.215 dikunci/dibaca sebelum coding. Hanya new compiled gateway-browser
+  mode pada own fixture; logical frontend HTTPS benar-benar gateway, actual Next
+  API configured logical origin/native backendPort loopback berbeda. Original
+  req/res/method/headers/body/session relay dipertahankan; no trustHostHeader/
+  forwarded injection/proto repair/mock claims/permit. Node readiness/control/direct
+  ke backend, native Chromium URL frontend. Separate provider CA/no-CA/wrong-host/
+  wrong-SPKI/bounded SPKI/deadlines/own process/socket/cert cleanup retained.
+- All98 compiled gateway cases PASS/no fail-cancel-skip first iteration, termasuk
+  seluruh97 prior cases dan satu query-denial browser. Counters observed wrong-SPKI0,
+  3commands GET+POST2, Owner A/B/loss4, cross-site2/sibling1,3refresh commands4
+  forwards/zero rejection. Chromium sendiri menyimpan/reuse Next refreshed cookie
+  tanpa replacement/spoof/interception; selected raw hidden Contact/Owner/revision/
+  one13-unit budget/explicit conflict truth retained. Query403 sebelum forward/
+  observation/budget/Auth/refresh/RPC/mutation:1navigation forward/1rejection.
+- Dev97/compiled-direct97 regressions PASS. Frozen install/typecheck/lint/5tooling/
+  10847app/3build/all31nativeRedis/diff/final review PASS; cache reused unchanged
+  tasks, Link268 warning lama tetap. New package command/mandatory CI invocation
+  sesudah compiled-direct; no existing gate/test removed. Six final exact-push jobs
+  PENDING sebelum push, termasuk754runtime/37otherChromium/unchanged DB reset/lint/
+  advisors/3976pgTAP60files/124native22groups; staged review wajib, no VERIFIED claim.
+- Goal unfinished,S4 last CLOSED/VERIFIED. No production source/route/matcher/env/
+  deployment/dependency/SQL/grant/UI/Published/provider config change. Evidence
+  isolated automated compiled/browser/HS256/model, bukan manual/live Auth/JWKS/
+  revocation/session freeze/RLS/DB atomicity/deployed ingress/IP/CDN/production
+  readiness. D01/D02/full canvas/S5/S6/Media/Spill CTA/target safety/publication/live/
+  public/RPC/production open/withheld. Next audit/kunci concurrent Contact browser
+  131/176; tidak partial D02/premature grants.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

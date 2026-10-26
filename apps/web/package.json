@@ -20,6 +20,7 @@
     "test:editor-production-runtime": "node tests/run-editor-production-runtime.mjs",
     "test:text-editor-gateway-browser-runtime": "node tests/run-text-editor-production-runtime.mjs --gateway",
     "test:text-editor-production-runtime": "node tests/run-text-editor-production-runtime.mjs",
+    "test:contact-editor-gateway-browser-runtime": "node tests/run-contact-editor-production-runtime.mjs --gateway",
     "test:contact-editor-production-runtime": "node tests/run-contact-editor-production-runtime.mjs",
     "test:contact-editor-runtime": "node --test tests/next-contact-editor-runtime.test.mjs",
     "test:text-editor-runtime": "node --test tests/next-text-editor-runtime.test.mjs",
