@@ -8297,6 +8297,49 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   S5/S6/Media/Spill CTA/target safety/publication/live/public/RPC/production tetap
   open/withheld. Berikutnya audit/kunci strict-body Contact browser135/180.
 
+### Isolated Contact browser strict-body admission — 2026-10-26
+
+- HEAD/origin bersih4c43649dbb9ea671dd7975281e7b1a95bc650cca;219 lokal113gateway/
+  97dev/97direct/full gates PASS. Exact push CI40278839441 queued/Security40278839411
+  PENDING/Guard40278839493 PASS saat selection; recheck Guard/3Security PASS,
+  Application/Database masih running. Seperti135/180, independent fixture proof
+  dari verified218 foundation33e7f9b six exact jobs PASS, bukan pending219 closure/
+  activation. Protocol/Cloud/current219/J5/J9/pinned D02/11.23/135/180/199/202/207/
+  211–219 dan actual Contact body/schema/HTTP/SSR/fixture/Text/helper dibaca ulang.
+- Kontrak12.220 dikunci/dibaca sebelum coding. Hanya append3 compiled gateway
+  Chromium cases init/add/save; semua source/assertions sebelumnya byte-identical.
+  Actual SSR2s/expiry2100ms/own profile/bounded SPKI/initial CDP provisioning retained.
+  Init absent; add/save own rev3 hidden Contact, add priorIds berbeda dari allocated
+  IDs/save own selected ID. BudgetResult1/acceptRefresh=true tetap; tidak provider/
+  gateway/topology/production source/schema/policy/deadline change.
+- Seluruh116 gateway tests PASS tanpa fail/cancel/skip pada iterasi pertama.
+  Command plus owner_id:owners[1] ditolak403 unavailable sebelum SSR/refresh/Auth/
+  RPC/mutasi;1EVAL/events[budget], initial model identik/subject1 absent. Tidak
+  selector stripping/server repair/schema relaxation/Owner dari body/refund/retry.
+  POST eksplisit terkoreksi hanya menghapus caller selector, cookie subject0 tetap;
+  budget kedua sebelum1SDK refresh.200 own block/handle/rev1atau4/current
+  same_revision/raw hidden Contact,8verifiedAuth/9attempts/13RPC/1commit/events awal
+  [budget,budget,refresh]; subject1 tetap absent. Tidak cookie rewrite/readback/
+  spoof/interception/mock claims/automatic replay/fallback/extra private read.
+- POST eksplisit ketiga memakai refreshed cookie alami409 already_initialized/
+  stale_write tanpa refresh/commit baru. Final3budgets/1refresh/16RPC/2selected
+  mutation attempts/1commit, semuaRPCsubject0/committed model unchanged/subject1
+  absent. Observations hasCookie:true/status403,200,409;4forwards/zero rejection.
+  Private JSON/no-store/Expires0/Pragma/no-referrer/nosniff/tanpa Location/CORS/Auth/
+  session echo dan own CA/TLS/deadline/browser/process cleanup retained.
+- Dev97/compiled-direct97/frozen install/typecheck/lint/5tooling/10847app/3build/
+  seluruh31nativeRedis/diff/final review PASS; cache unchanged dipakai jika sesuai,
+  warning Link268 lama tetap. Enam job exact final push PENDING sebelum push,
+  termasuk772runtime/37otherChromium/unchanged isolated DB reset/lint/advisors/
+  3976pgTAP60files/124native22groups. Staged review wajib; superseded219 obsolete
+  jika concurrency cancellation terjadi. Tidak CLOSED/VERIFIED claim.
+- Goal belum selesai,S4 terakhir CLOSED/VERIFIED; Working≠Published. Tidak production
+  source/route/matcher/SQL/grant/dependency/config/CI/deploy/UI/provider change.
+  Bukti controlled browser/model bukan live Auth/Upstash/DB atomicity/rollback/RLS/
+  deployed ingress/IP/manual/production readiness. D01/D02/full canvas/S5/S6/Media/
+  Spill CTA/target safety/publication/live/public/RPC/production open/withheld.
+  Berikutnya audit/kunci query-denial Contact cookie continuity136/181.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
