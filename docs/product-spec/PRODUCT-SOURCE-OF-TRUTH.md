@@ -7873,6 +7873,52 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   publication/gate137/live/public/RPC/production tetap gate terpisah. Tidak Owner
   action untuk slice ini; tidak D01/D02/S5/S6/Media/full canvas closure/activation.
 
+### Guarded selected Media Working assembly — 2026-10-26
+
+- Baseline bersih/pushed69e6224c0f5423f7fc85f88de9d39d8b67e6d65d setelah fresh
+  fetch/reset/equality. Six exact push jobs PASS: CI40339863515 Database121631299709/
+  Application121631299942,Security40339863263 Secret121631298906/SAST121631298926/
+  Dependency121631299068,Guard40339863332/job121631298563. Completed logs11023app/
+  5tooling/31Redis/775runtime/37Chromium/4098pgTAP62files/124native22groups/reset/
+  lint/advisors PASS dibaca. S4 terakhir CLOSED/VERIFIED,Goal belum selesai.
+- Fresh AGENTS/Cloud/Protocol/checkpoint/PRD completion/J5/J9/141/187/223–226,
+  actual Home context/selected Media reader/Contact assembly+tests dan pinned D02
+  dibaca. JIT12.227 dikunci/dibaca sebelum coding. Supabase changelog CONNECT403/
+  HTTP000 tanpa bypass,current getClaims docs dibaca: JWT/JWKS verification dan
+  HS256 Auth-server fallback,tidak getSession/user_metadata sebagai authority.
+- Tambah server-only unmounted owner-media-working-assembly.ts dengan request-
+  local current-session auth/schema client. Reuse strict226 request/DTO,invalid
+  selector ditolak sebelum claims/RPC.3 verified subject/actual Owner-state proofs,
+  2 Home context dan2 selected same Media reads; exact context/DTO equality wajib
+  termasuk collection revision,membership/presence/raw key+alt/issues/asset_state.
+  Registry-state drift pada revision sama tetap unavailable tanpa partial payload.
+- Session loss unauthenticated,initial non-active/incomplete hanya status;drift/
+  missing/malformed/transport/late responses unavailable. Success hanya setelah
+  final proof,aggregate5s deadline/post-await cancellation,retained nested reader
+  deadlines;no retry/cache/fallback/deadline reset. Stable missing/all-null/raw
+  invalid/unavailable asset tetap recovery,bukan physical availability/sanitized/
+  accessibility/publication proof. Tidak atomic cross-RPC snapshot/ABA/global
+  freshness/session freeze/live revocation/CSRF/Saved/Live/CAS/write authority.
+- 93unit baru PASS memakai actual pinned SDK fixed POST/api/body/abort dengan
+  controlled claims.5targeted suites455tests PASS termasuk Media input/reader dan
+  existing Contact/Text assembly. Coverage3proof phases/all denial states/subject-
+  Owner drift,2read phases/context/revision/visibility/order/presence/raw key-alt/
+  registry drift,raw recovery,no cache/copied request,transport denial,aggregate
+  deadlines dan ignored late claims/RPC setiap phase;no later I/O/output revival.
+- Fresh frozen install/typecheck/lint/5tooling/11116app/3build/diff/final review
+  PASS;web10835Vitest+17native berjalan langsung,3unchanged package tests cached;
+  typecheck/lint/build web langsung,2service tasks cached. Warning Link268 lama
+  retained,0lint error. Tidak SQL/schema/grant/dependency/config/provider/Published
+  berubah;unchanged4098pgTAP62files/124native22groups/reset/lint/error-advisors/
+  775runtime/31Redis/37Chromium wajib di exact final-push CI. Six final jobs PENDING
+  sebelum push;tidak runtime/browser/live/DB lokal evidence baru atau closure.
+- General Media tetap not_implemented/Home actions kosong;no route/UI/full/partial
+  D02/attachment/upload/asset selection/render/Preview/Publish. Semua public/RPC/
+  deployed target-IP/gate137/S5/S6/full canvas/production gates tetap open/withheld.
+  Berikutnya audit/kunci Media save intent dan canonical asset selection eligibility
+  sebelum mutation/CAS: actual Owner/kind/collection lock+revision/consumed source/
+  metadata/rollback/race proof tetap diperlukan. Tidak Owner action untuk slice ini.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
