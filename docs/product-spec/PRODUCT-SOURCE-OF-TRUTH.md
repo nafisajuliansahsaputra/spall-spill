@@ -7825,6 +7825,54 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   Consumed intent+metadata/active Owner/runtime CAS/upload/alt-decorative policy/
   safe delivery/GC/gate137 tetap gate terpisah. Tidak Owner action untuk slice ini.
 
+### Private selected Owner Media Working read — 2026-10-26
+
+- Baseline bersih/pushed61536ebe16d5e9bda800ae18068509bdede9235b; fresh six exact
+  push jobs PASS: CI40329460436 Application121594693269/Database121594693756,
+  Security40329460450 Dependency121594693881/Secret121594694371/SAST121594694406,
+  Guard40329460632/job121594694600. Completed logs10942app/5tooling/31Redis/
+  775runtime/37Chromium/4045pgTAP61files/124native22groups/reset/lint/advisors PASS
+  dibaca. Goal belum selesai,S4 terakhir CLOSED/VERIFIED.
+- Fresh AGENTS/Cloud/Protocol/checkpoint/J5/J9/pinned FR7.3/D02/223–225/184 dan
+  actual context/Owner state/Contact selected SQL+SDK+tests/asset predicates dibaca.
+  JIT12.226 dikunci/dibaca sebelum coding. CLI2.115.0/migration new help dibaca;
+  changelog CONNECT403/HTTP000 tanpa bypass,current Supabase function docs tersedia.
+- CLI-generated20261026142432_private_owner_media_block_working_read.sql menambah
+  STABLE definer/empty-search-path selected Media read. Active/completed actual
+  Owner + own kind/media membership/collection + full payload tuple; foreign/null/
+  wrong-kind/missing/context denial hanya unavailable. Missing payload tetap null,
+  present all-null tetap object; raw key/alt tidak trim/normalize/erase.
+- Private asset_state not_selected/registered/unavailable membedakan no selection
+  dari exact same-Owner registry+consumed source+canonical metadata predicate.
+  Bounds mengikuti existing canonical descriptor12..3145728 bytes/2048 dimension/
+  4194304 pixels; bukan new-upload policy/accessibility/physical R2 availability/
+  layout/Publish proof. Raw Working tetap tersedia saat asset unavailable. Tidak
+  mengirim object key/URL/metadata/Owner/source intent/timestamps/Published atau
+  melakukan fallback ke profile selection/write/lock/bump/backfill/upload/fetch.
+- Tambah server-only unmounted owner-media-block-working.ts: strict selected ID/
+  context/revision/presence/asset-state relation/nested223 shape+lower key,5s abort,
+  no cache/retry/session creation,late/invalid/error=>null tanpa echo; local223
+  diagnostics dihitung ulang.81unit baru PASS memakai actual pinned SDK fixed POST/
+  api/selector/body/abort dengan mock HTTP;176targeted termasuk95input PASS.
+- Fresh frozen install/typecheck/lint/5tooling/11023app/3build/diff/final review
+  PASS; web10742Vitest+17native berjalan langsung,3unchanged package tests cached;
+  typecheck/lint/build web langsung,2service tasks cached. Warning Link268 lama
+  retained/0lint error. Tidak klaim browser/provider/DB lokal evidence baru.
+- pgTAP062 ditulis/review53assertions: active/completed/actual Owner/forged metadata/
+  foreign+wrong-kind/unbound/no auth/restricted/suspended/current context/missing
+  vs all-null/raw Unicode/revision/purity/all-role execute denial;registry state,
+  consumed intent/expired consumed capability/byte boundaries/private exact shape
+  tanpa implicit profile selection atau raw Working erasure. Expected4098pgTAP62files
+  (4045+53),124native22groups/reset/lint/error-advisors di committed isolated CI;
+  six exact final push gates PENDING sebelum push. Read-only tidak race baru.
+- All execute PUBLIC/anon/authenticated/service_role tetap withheld,table grants/
+  general decoder not_implemented/Home actions kosong tidak diubah. Primitive bukan
+  final current-subject/context proof/cross-RPC atomicity/ABA/Saved/Live/mutation
+  authority/full D02. Berikutnya kunci guarded selected Media assembly/proof ala
+  141/187 sebelum attachment; selection/CAS/upload/alt-decorative/delivery/GC/
+  publication/gate137/live/public/RPC/production tetap gate terpisah. Tidak Owner
+  action untuk slice ini; tidak D01/D02/S5/S6/Media/full canvas closure/activation.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
