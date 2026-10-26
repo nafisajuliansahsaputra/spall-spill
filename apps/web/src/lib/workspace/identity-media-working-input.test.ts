@@ -3,7 +3,7 @@ import { inspectIdentityMediaWorkingInput as inspect } from "./identity-media-wo
 import { identityBlockWorkingRowSchema } from "./owner-blocks-working";
 import { identityLinkEditorCommandSchema } from "./identity-link-editor-command";
 
-const asset_key = "abcdef12-3456-4789-abcd-123456789abc";
+const asset_key = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
 afterEach(() => vi.unstubAllGlobals());
 
 it.each([null, "", " ", "\u00a0", "\u3000"])("preserves unfinished alt text %j without deciding decorative policy", alt_text => {

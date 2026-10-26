@@ -8469,6 +8469,49 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   mutator. Alt/decorative/destination memerlukan gate terpisah sebelum rendering.
   Gate137 deployed raw-target/IP tetap terbuka; tidak Owner action untuk input ini.
 
+### Private Media asset binding audit dan fixture Security — 2026-10-26
+
+- Baseline bersih/pushed e668c1780896dc8764bbe893d493597fe00159c3,223 input95unit/
+  283targeted/10942app/5tooling/3build/local gates PASS. Scope12.224 dikunci/dibaca
+  sebelum audit. CI40323262803 PENDING; SAST121573334412/Dependency121573335301/
+  Guard121573334328 PASS. Audit independen dari verified222 baselinebd1a262;
+  tidak menutup pending223 atau mengaktifkan persistence/UI/publication.
+- Actual12.11 retention/immutable contract, profile-media policy/sanitizer/source/
+  finalization/object-store+tests, registry/source-intent migrations, Product reuse,
+  staged Published reader, membership composite tuple dan Link/Text/Contact payload
+  migrations/test056 dibaca. Path/line anchors dan next bounded task dicatat224.
+- Existing sanitizer single-page/autoOrient/fit-inside tanpa square crop; canonical
+  opaque UUID immutable conditional PUT lalu atomic register+consume. Profile
+  pipeline bukan otomatis new Media upload policy. Registry FK saja bukan proof
+  consumed/current bounded metadata/blob availability/sanitization/Owner auth.
+- Existing DeleteObject hanya staging; canonical key ditolak sebelum R2 connection.
+  Replace/remove Working tidak delete canonical asset; canonical GC didefer sampai
+  full reference graph. Future graph wajib mencakup Media Working/Product/Published/
+  recovery, bukan current profile saja. Ini source evidence, bukan bucket live.
+- Next JIT: dormant private Media payload table dengan actual media membership
+  tuple, raw nullable alt223 dan nullable exact same-Owner canonical registry ref.
+  Kunci DB shape/check/bounds/FK/index, asset deletion non-cascade dan no silent
+  case normalization (input UUID upper-case dapat well-shaped tetapi bukan exact
+  lower-case registry match). No upload/selection/read/mutator/backfill/grant/UI.
+  Future runtime tetap perlu active Owner/kind/collection lock-revision-CAS/consumed
+  intent+metadata/rollback/race/GC/safe-delivery contract/evidence tersendiri.
+- Exact223 Secret Scan121573333874 gagal generic-api-key untuk UUID sintetis test
+  line6, bukan credential. Fixture diganti UUID berpola jelas,95unit PASS ulang;
+  tidak gitleaksignore/config/rule/workflow/test gate diubah atau history rewrite.
+  Supabase changelog CONNECT403/HTTP000 tanpa bypass; current RLS docs dibaca melalui
+  search_docs. Tidak local/live DB/provider probe atau production access.
+- Fresh frozen install/typecheck/lint/5tooling/10942app/3build/diff/final review
+  PASS; web tests10661Vitest+17native berjalan langsung,3package tests cached;
+  typecheck/lint/build web langsung,2service tasks cached. Warning Link268 lama
+  retained/0lint error. Six exact
+  final push jobs wajib dan PENDING sebelum push;775runtime/31Redis/37Chromium/
+  3976pgTAP60files/124native22groups/reset/lint/advisors unchanged di CI.
+- Goal belum selesai,S4 terakhir CLOSED/VERIFIED. Tidak source runtime/SQL/grant/
+  dependency/provider config berubah; alt/decorative/destination/full D02/S5/S6/
+  target safety/publication/live/deployed target-IP/public/RPC/production tetap
+  open/withheld. Tidak Owner action untuk next dormant table JIT; verifikasi exact
+  latest-push gates dahulu lalu kunci kontrak tersebut sebelum migration/coding.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
