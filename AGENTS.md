@@ -1,5 +1,23 @@
 # Spall Spill — Codex Repository Instructions
 
+## Parallel Owner UI + autonomous backend lane — 2026-10-27
+
+**Scope: operational task ownership only.** This section does not alter locked product behavior, User Flows, publication/security gates, or existing Codex Cloud authorization. It divides delivery responsibilities until the Owner explicitly changes them.
+
+- **Owner design lane:** `design/ui`. The Owner independently creates all visual UX/UI, landing pages, public/profile/dashboard/onboarding presentation, responsive layout, styling, motion, design tokens, component visuals, and visual assets. The design branch can advance at any time independently of Codex.
+- **Codex backend lane:** `codex/autopilot`. Continue the same canonical Goal autonomously on the hourly schedule, prioritizing database/RLS, services, server-side auth/authorization, API/route handlers, server actions without visual markup changes, domain models, validation, publication correctness, secure media/destination workflows, rate limits, provider adapters, migrations, reliability, CI/security, backend testing, and backend-facing contracts.
+- **Protected Owner presentation surfaces:** `apps/web/src/app/**/page.tsx`, `apps/web/src/app/**/layout.tsx`, presentational `*.tsx` components, `apps/web/src/components/**`, `apps/web/src/app/**/*.css`, `apps/web/src/styles/**`, `apps/web/public/**`, visual assets, animation files, layout, typography, colors, CSS/Tailwind visual configuration, and design-system presentation. Do not create/replace/reformat these for autonomous feature work, even when placeholders exist. Existing backend-related tests may continue to use them without modifying their visual behavior.
+- **Allowed shared seams:** `apps/web/src/lib/**`, server-only `route.ts` handlers, `app/api/**`, nonvisual server actions, typed DTOs, data contracts, validators, adapters, service modules, database/schema/migrations and their tests. Read existing UI code as needed for compatibility, but do not change Owner-controlled presentation. Mixed-purpose files require an isolated nonvisual extraction or Owner-approved integration, not an unreviewed rewrite.
+- **Keep each lane isolated:** Codex MUST NOT fetch/merge/rebase/cherry-pick/push or automatically integrate `design/ui`. Changes/commits on `design/ui` are not Codex backlog, an unexpected change to `codex/autopilot`, a need to restart the Goal, or a reason to abandon a safe backend slice. Never reset, overwrite, revert, or edit Owner design work.
+- **Integration boundary:** Provide stable documented typed contracts, API response shapes, example fixtures and mock-friendly adapters for the Owner. If a feature requires a new visual form, page, CTA, interactive component, or visual E2E to close, finish independent headless work with honest test evidence, record the pending handoff in the existing TODO/checkpoint, and advance another independent safe backend task. UI integration happens only through Owner-approved review/PR; do not invent temporary UI merely to mark a journey done.
+- **Safety exception:** If an Owner-controlled presentation file contains a critical security/correctness issue, document the exact risk and a proposed minimal fix; do not silently mutate the design file. Continue safe independent remediation where possible. Do not suppress tests/security gates, incorrectly claim a feature is closed, or activate withheld public grants.
+- **No change to release authority:** only `codex/autopilot` may receive autonomous pushes; no `main` merge/deployment, no UI branch merge, no production/paid/credential mutation, no force-push, and all human/live/browser/provider/CI gates still apply.
+- **Task selection:** Within the canonical highest-priority unfinished scope, select backend/infrastructure work not requiring UI edits. Do not treat the existence of an Owner-created UI branch as an instruction to switch focus. If all safe nonvisual work is exhausted, checkpoint and report the concrete Owner handoff instead of touching presentation.
+- **Cadence/budget:** Continue the existing hourly Goal while authorized and usage is available. A usage pause is not completion. Do not spawn another Goal or recurring automation. Report meaningful progress and concrete Owner-only blockers in Indonesian without noisy repeated alerts.
+
+---
+
+
 ## 0. Mandatory bootstrap before any material work
 
 Codex must not begin implementation from conversation context, memory, TODO headings, or a single document.
