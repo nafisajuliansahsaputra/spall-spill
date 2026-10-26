@@ -7987,7 +7987,12 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   CI40394303139 Database121823135901 melewati migration/reset/lint/advisors,
   tetapi pgTAP063 berhenti pada precedence operator fixture nested JSON.
   Tanda kurung fixture diperbaiki; tidak production SQL/gate diturunkan.
-  Database evidence PENDING exact corrected push; tidak eksekusi DB lokal.
+  Exact corrected7838a6438fdae543c3dd98f6ebe2263a43af5e33 push
+  CI40394747107 Application121825220226/Database121825220555,Security40394747077
+  Secret121824688411/SAST121824688123/Dependency121824687755 dan Guard40394746956
+  job121824687954 semua PASS. Completed4255pgTAP63files (157new),141native23groups
+  (17new),reset/lint/error-advisors/11224app/775runtime/31Redis/37Chromium diamati.
+  Tidak eksekusi DB lokal/live storage/provider evidence.
 - Frozen install/node syntax/diff review PASS; typecheck/lint/11224app/3build
   PASS via unchanged Turbo cache;5tooling berjalan langsung PASS. Warning Link268
   lama retained,0lint errors. Six final push gates PENDING sebelum push;tidak
@@ -7999,6 +8004,46 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   known-ID outcome_unknown review. General decoder/full D02/S5/S6/first Publish/
   Media upload/alt policy/publication/gate137/public grants/production tetap open.
   Goal unfinished,S4 terakhir CLOSED;tidak tindakan Owner untuk slice backend ini.
+
+### Guarded Media save and selected readback transport — 2026-10-26
+
+- Baseline bersih/pushed7838a6438fdae543c3dd98f6ebe2263a43af5e33, six exact
+  push gates PASS dan229 DB evidence di atas dibaca. AGENTS Owner UI/backend lane
+  tetap aktif;JIT12.230 dikunci/dibaca sebelum source setelah193/194/226–229/
+  actual SDK/review/tests/J5/J9/checkpoint dan current getClaims docs diaudit.
+- Tambah unmounted server-only createOwnerBlockMediaWorkingSave dan
+  createOwnerBlockMediaWorkingSaveReview: reuse strict228 copied full raw intent,
+  actual request-local same client, verified claims/strict actual Owner proofs,
+  fixed229 RPC, minimal exact requested-ID/base+1 ack. Known invalid_asset tetap
+  status-only backend denial,uppercase tidak dinormalisasi/client-accepted registry.
+  Aggregate5s save/10s review,late/error/changed proof after invocation=>
+  outcome_unknown tanpa rollback claim,retry,base refresh atau pembentukan member.
+- Review memisahkan saved ack dari selected227 readback: unavailable atau current
+  same_revision (exact full raw key/alt,present) / newer_revision (stable later DTO),
+  retain original ack revision. Same raw/revision dengan registry unavailable
+  tetap registry observation,bukan physical delivery/Publish proof;registry drift
+  tanpa revision advance tidak difabrikasi stabil. Unknown tidak dipromosikan dari
+  matching raw/stale. Full success8claims/13RPC,tidak atomic/session freeze/CSRF.
+- 414new tests PASS (188save+226review);615targeted4suites PASS termasuk unchanged
+  227guard93+228intent108. Actual pinned-SDK controlled claims mencakup strict
+  copied nullable/raw Unicode/bounds/asset case/denials,exact ack/all proof phases,
+  same/older/newer/missing/asset-state drift,ignored late/timeouts/network/unknown→
+  stale tanpa retry. Fixture bukan live JWT/DB commit/browser/provider evidence.
+- Fresh frozen install/typecheck/lint/5tooling/11638app/3build/diff/final review
+  PASS;web11357Vitest+17native langsung,3unchanged package tests cached;
+  web typecheck/lint/build langsung,2service tasks cached. Warning Link268 lama
+  retained,0lint errors. Tidak SQL/RLS/grants/routes/UI/dependencies/provider/
+  Published berubah. Exact final-push six gates PENDING sebelum push,termasuk
+  unchanged4255pgTAP63files/141native23groups/reset/lint/error-advisors/
+  775runtime/31Redis/37Chromium;tidak closure dari pending/superseded evidence.
+- Handoff Owner: typed228 intent + OwnerBlockMediaWorkingSaveReviewResult dan
+  source tests menyediakan exact success/readback-unavailable/newer/unknown/error
+  fixtures untuk mock UI. SDK tetap unmounted,tidak browser-callable/public grant.
+  Next backend slice audit/kunci explicit Media membership allocation/initialization
+  memakai229 registry/Owner/CAS semantics,serta remaining publication projection
+  safety;tidak otomatis upload/general decoder/publication. UI integration terpisah
+  melalui review Owner;design/ui tidak disentuh. Goal belum selesai,S4 terakhir
+  CLOSED/VERIFIED;full D02/S5/S6/first Publish/alt policy/gate137/production open.
 
 #### Integrated implementation frontier — 2026-10-06
 
