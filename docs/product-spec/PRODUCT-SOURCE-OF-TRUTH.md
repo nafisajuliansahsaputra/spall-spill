@@ -7919,6 +7919,48 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   sebelum mutation/CAS: actual Owner/kind/collection lock+revision/consumed source/
   metadata/rollback/race proof tetap diperlukan. Tidak Owner action untuk slice ini.
 
+### Explicit existing-block Media save intent — 2026-10-26
+
+- Baseline bersih/pushed87900bc5767697f61d1d867d11127e1262a2294f;227 lokal
+  93unit/455targeted/11116app/5tooling/3build/full gates PASS. Exact push
+  CI40385150119/Security40385149991 masih PENDING saat scope228 dikunci;
+  Guard40385150052 PASS. Pure intent independen dari227 output,memakai verified226
+  foundation69e6224/223 input,tidak closure/activation dari pending227.
+- Fresh226/227/checkpoint/188/actual Contact+Text intent/tests dan pinned D02/11.21
+  dibaca;JIT12.228 dikunci/dibaca sebelum coding. Tambah server-only unmounted
+  identityMediaSaveIntentSchema/inspectIdentityMediaSaveIntent: reuse strict226
+  block selector,positive safe base_collection_revision,unchanged223 full raw
+  kind/media asset_key/alt_text. Valid=>intent/exact independent copy/basic issues;
+  wrong/missing/coerced/extra=>invalid_save_intent saja tanpa partial erasure.
+- Raw nullable alt/control/combining/Unicode/markup/2048-codepoint/noNUL dan UUID
+  asset case dipertahankan,tanpa trim/normalize/default. Uppercase syntax bukan
+  exact canonical registry match;225 lower-case/exact FK tidak diubah. Parser tidak
+  membuktikan existence/Owner/kind/CAS/consumed-source/metadata/physical blob/
+  sanitized/accessibility/Publish. Null proposed value bukan repair/init/merge.
+- 108unit baru PASS: strict selector/base/full shape/null/raw/basic diagnostics/
+  codepoint/NUL/case,outer+nested Owner/registry-state/object-key/URL/metadata/
+  action/visibility denial,no fetch/UUID/mutation/result alias,unchanged Contact/
+  Text/Link commands.4targeted suites471tests PASS termasuk95input dan existing
+  Contact/Text intents.227 unchanged93guard tests turut berjalan pada full suite.
+- Fresh frozen install/typecheck/lint/5tooling/11224app/3build/diff/final review
+  PASS;web10943Vitest+17native langsung,3unchanged package tests cached;web
+  typecheck/lint/build langsung,2service tasks cached. Warning Link268 lama
+  retained,0lint error. Tidak SQL/schema/grant/storage/runtime transport/route/
+  dependency/config/provider/Published berubah. Six exact final push gates PENDING
+  sebelum push,termasuk unchanged4098pgTAP62files/124native22groups/reset/lint/
+  advisors/775runtime/31Redis/37Chromium. Superseded runs obsolete;final SHA harus
+  membuktikan227+228 bersama,tidak VERIFIED/CLOSED dari pending.
+- Goal belum selesai,S4 terakhir CLOSED/VERIFIED;Working≠Published. General Media
+  tetap not_implemented/Home actions kosong;no UI/attachment/upload/selection/
+  allocation/initialization/persistence side effect/Saved/Live. Berikutnya kunci
+  bounded existing-Media save/CAS dan exact same-Owner canonical selection policy:
+  active Owner/kind/existing-payload/collection locks/base revision/exhaustion/
+  one bump/rollback/races/outcome_unknown,consumed source+bounded metadata sebelum
+  mutation. Missing policy tidak dipilih parser,tidak silent normalize/rebind,
+  null tidak delete registry/blob. Alt/decorative/new-upload/delivery/GC/full
+  canvas/publication/gate137/deployed target-IP/S5/S6/public/RPC/production gates
+  tetap open/withheld;tidak Owner action untuk pure intent ini.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
