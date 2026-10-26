@@ -8692,6 +8692,42 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   canvas/publication/gate137/deployed target-IP/S5/S6/public/RPC/production gates
   tetap open/withheld;tidak Owner action untuk pure intent ini.
 
+### Private existing Media Working save CAS — 2026-10-26
+
+- Baseline bersih ccaeaefc0e3e31e5e289553883b0b91e493b1cf3; AGENTS parallel
+  Owner UI/backend lane aktif dan ditaati. Exact baseline push CI40390990337,
+  Security40390990505,Guard40390972312 six jobs PASS. Completed11224app/5tooling/
+  4098pgTAP62files/124native22groups/775runtime/31Redis/37Chromium diamati.
+- JIT12.229 dikunci/dibaca sebelum coding setelah actual192 CAS/223/225–228/
+  Product asset locks/J5/J9/checkpoint dibaca. Tambah staged private
+  save_current_owner_block_media_working(jsonb): actual active completed Owner,
+  binding lock/recheck, Home context, strict228 full shape/raw nullable alt,
+  collection/member locks/base CAS/exhaustion dan exact same-Owner asset selection.
+  Registry+consumed intent FOR SHARE dikunci dengan226 metadata bounds; foreign/
+  missing/uppercase/nonconsumed/out-of-envelope =>invalid_asset tanpa normalisasi.
+- Explicit save mengisi missing payload hanya pada existing own Media member,
+  atau update full fields; all-null present. Success termasuk identical save
+  membump collection tepat satu kali secara atomic; exception rollback payload
+  dan revision. ID/order/visibility/created_at/sibling/foreign/Profile/Product/
+  Published tetap. Null tidak delete registry/blob; tidak grant/RLS/policy baru.
+- CLI-generated migration20261026201446,pgTAP063 dan17native race cases ditulis/
+  review; committed CI mencakup reset/lint/error-advisors/all pgTAP dan23native
+  groups. Coverage strict shape/auth/role/Owner/assets/raw Unicode/stale/max/
+  insert-update rollback/purity dan concurrent saves/allocations/member actions/
+  Owner/collection/asset/source-intent changes; share locks held through commit.
+  Database evidence PENDING exact pushed CI; tidak mengklaim eksekusi DB lokal.
+- Frozen install/node syntax/diff review PASS; typecheck/lint/11224app/3build
+  PASS via unchanged Turbo cache;5tooling berjalan langsung PASS. Warning Link268
+  lama retained,0lint errors. Six final push gates PENDING sebelum push;tidak
+  CLOSED/VERIFIED/physical storage/provider/browser/manual/production evidence.
+- Handoff Owner: typed intent228/selected DTO226/guarded reader227 tetap tersedia;
+  DB minimal ack success/block_id/collection_revision dan status-only denials229
+  masih staged,tidak browser-callable. UI/visual/design/ui tidak disentuh. Next
+  backend slice: guarded Media save SDK, exact ack validation/final Owner proof/
+  known-ID outcome_unknown review. General decoder/full D02/S5/S6/first Publish/
+  Media upload/alt policy/publication/gate137/public grants/production tetap open.
+  Goal unfinished,S4 terakhir CLOSED;tidak tindakan Owner untuk slice backend ini.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

@@ -184,6 +184,9 @@ jobs:
       - name: Verify isolated Identity Contact Working save CAS races
         run: node --test tests/identity-contact-working-cas-concurrency.test.mjs
 
+      - name: Verify isolated Identity Media Working save CAS races
+        run: node --test tests/identity-media-working-cas-concurrency.test.mjs
+
       - name: Verify isolated manual first Contact initialization races
         run: node --test tests/identity-first-contact-initialization-concurrency.test.mjs
 
