@@ -7446,6 +7446,47 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   Next audit/kunci Contact browser restricted/outcome_unknown dari132/177, lalu
   rejected refresh133; tidak partial D02/premature grants/deployment/new access.
 
+### Isolated Contact browser failure truth — 2026-10-26
+
+- Bootstrap bersih HEAD/origin18efffe46b70c5ed06cb0db1eeaddc32898745c5. Keenam
+  job exact push PASS: CI40249246613 Application121337493046/Database121337492856,
+  Security40249246627 Dependency121337300535/Secret121337300710/SAST121337300817,
+  Guard40249246607 Authority121337300594. Log selesai menunjukkan757runtime/
+  31Redis/37otherChromium/10847app/5tooling/3976pgTAP60files/124native22groups;
+  reset/lint/security-advisors PASS. Authority/Protocol/Cloud/checkpoint/J5/J9/
+  pinned D02/11.23/132/177/211–216 dan fixture/HTTP/SSR/helper/runner dibaca ulang.
+  Docs getClaims HS256 fallback diperbarui; changelog CONNECT403 tanpa bypass.
+- Kontrak12.217 dikunci/dibaca sebelum coding. Hanya append6 compiled gateway
+  Chromium cases, init/add/save masing-masing restricted/unknown. Source/assertions
+  sebelumnya byte-identical. Existing expiredSessions/actual SSR2s/real2100ms,
+  restricted/malformedAck dipakai; provider/topology/source/policy tidak berubah.
+  Init absent; add rev3/hidden priorIds berbeda dari allocated IDs; save own ID.
+- Seluruh107 gateway tests PASS tanpa fail/cancel/skip pada iterasi pertama.
+  Restricted403 tepat status-only/1budget→1refresh/1verifiedAuth/2attempts/1Owner
+  RPC/0commit; follow-up eksplisit403, calls[S,S], model awal identik. Refresh
+  tidak memberi authorization. Malformed ack503 tepat outcome_unknown tanpa
+  marker/block/revision/readback/sukses/rollback buatan; calls[S,S,I|A|W],2Auth/
+  3attempts/1model commit rev1atau4/raw hidden Contact tetap. Follow-up eksplisit409
+  already_initialized/stale_write memakai natural cookie, tanpa refresh/commit
+  tambahan; calls[S,S,M,S,S,M]. Model fixture bukan rekonsiliasi/rollback DB.
+- Chromium menyimpan/reuse actual relayed Set-Cookie sendiri; tidak cookie rewrite/
+  header spoof/interception/mock claims/auto retry/base refresh/extra read. Clear
+  cookie→401/noRPC; final3budgets/1refresh/4gateway forwards/zero rejection,
+  observations hasCookie[true,true,false]. JSON/private no-store/Expires0/Pragma/
+  no-referrer/nosniff/tanpa Location/CORS/Authorization dan own cleanup retained.
+- Dev97/compiled-direct97/frozen install/typecheck/lint/5tooling/10847app/3build/
+  seluruh31nativeRedis/diff/final review PASS; cache unchanged dipakai jika sesuai,
+  warning Link268 lama tetap. Enam job exact final push PENDING sebelum push,
+  termasuk763runtime/37otherChromium/unchanged isolated DB reset/lint/advisors/
+  3976pgTAP60files/124native22groups. Staged review wajib; bukan CLOSED/VERIFIED.
+- Goal belum selesai,S4 terakhir CLOSED/VERIFIED. Working≠Published; tidak perubahan
+  production source/route/matcher/env/dependency/SQL/grants/UI/provider config.
+  Bukti isolated automated compiled/browser/model bukan manual/live Auth/JWKS/
+  revocation/session freeze/DB atomicity/RLS/deployed ingress/IP/production readiness.
+  D01/D02/full canvas/S5/S6/Media/Spill CTA/target safety/publication/live/public/RPC/
+  production tetap open/withheld. Berikutnya audit/kunci rejected Contact refresh
+  133/178; tidak partial D02/premature grants/deployment/new access.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

@@ -878,3 +878,44 @@ if (browserGateway) for (const action of actions) test(`concurrent Chromium Cont
     }
   } finally { await Promise.all(browsers.map(browser => browser.close())); }
 });
+
+if (browserGateway) for (const action of actions) for (const failure of ["restricted", "unknown"]) {
+  test(`actual Chromium Contact ${action} ${failure} preserves private failure truth and refreshed session`, { timeout: 60000 }, async () => {
+    const [expired] = await expiredSessions([subjects[0]]);
+    if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]);
+    const initial = models.get(subjects[0]), value = command(action), mutation = action === actions[0] ? I : action === actions[1] ? A : W;
+    restricted = failure === "restricted"; malformedAck = failure === "unknown";
+    const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+    const unchangedModel = () => {
+      if (restricted) { assert.equal(mutations, 0); assert.deepEqual(models.get(subjects[0]), initial); }
+      else {
+        assert.equal(mutations, 1); const model = models.get(subjects[0]);
+        assert.equal(model.revision, action === actions[0] ? 1 : 4);
+        assert.equal(model.block.block_id, ids[0]); assert.equal(model.block.is_visible, false);
+        assert.deepEqual(model.block.contact_working, { contact_type: value.contact_working.contact_type, label: value.contact_working.label, value: value.contact_working.value });
+      }
+    };
+    try {
+      await browser.command("Page.enable"); await browser.command("Network.enable");
+      await browserSession(browser, expired); await navigate(browser, nextOrigin);
+      assert.deepEqual(checkBrowser(await browserPost(browser, { value }), restricted ? 403 : 503),
+        { status: restricted ? "restricted" : "outcome_unknown" });
+      assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1);
+      assert.equal(authCalls, restricted ? 1 : 2); assert.equal(authRequests, restricted ? 2 : 3);
+      assert.deepEqual(calls.map(call => call.name), restricted ? [S] : [S, S, mutation]);
+      assert.deepEqual(events.slice(0, 2), ["budget", "refresh"]); unchangedModel();
+      // A separate explicit command must reuse the actual refreshed cookie naturally.
+      assert.deepEqual(checkBrowser(await browserPost(browser, { value }), restricted ? 403 : 409),
+        { status: restricted ? "restricted" : action === actions[0] ? "already_initialized" : "stale_write" });
+      assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); unchangedModel();
+      assert.deepEqual(calls.map(call => call.name), restricted ? [S, S] : [S, S, mutation, S, S, mutation]);
+      assert.ok(calls.every(call => call.subject === subjects[0]));
+      await browserSession(browser, undefined); const prior = calls.length;
+      assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 401), { status: "unauthenticated" });
+      assert.equal(calls.length, prior); assert.equal(budgetCalls, 3); assert.equal(refreshCalls, 1); unchangedModel();
+      assert.deepEqual(observations.map(observation => observation.hasCookie), [true, true, false]);
+      assert.deepEqual(observations.map(observation => observation.status), restricted ? [403, 403, 401] : [503, 409, 401]);
+      assert.equal(gatewayForwards, 4); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+    } finally { await browser.close(); }
+  });
+}
