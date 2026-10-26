@@ -8428,6 +8428,47 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   deployed raw-target/IP tetap terbuka. Berikutnya kunci bounded Media/Image
   Working input/diagnostic contract sebelum coding, tanpa partial D02 activation.
 
+### Private Media/Image Working input foundation — 2026-10-26
+
+- Baseline bersih/pushed bd1a262e05484947e02f0f165ab724af7c00d7f7; fresh exact
+  push CI40286985719 (Application121452955568/Database121452955956),
+  Security40286985462 (SAST121452854228/Secret121452854556/Dependency121452854565)
+  dan Guard40286985552/job121452854299 semuanya PASS. Completed logs dibaca:
+  10847app/5tooling/31Redis/775runtime/37Chromium/3976pgTAP60files/124native22groups;
+  reset/lint/security advisors PASS. Bukan evidence dari PR skip atau SHA lain.
+- Fresh AGENTS/Cloud/Protocol/checkpoint/J5/J9/222/138/182/12.11/12.4 dan pinned
+  D01/D02/FR7.3 dibaca. JIT12.223 dikunci/dibaca sebelum production code; engineering
+  DTO dipilih dalam scope222, bukan mengarang field/limit historis atau upload UX.
+- Tambah server-only unmounted identity-media-working-input.ts: exact kind media,
+  asset_key UUID|null, alt_text raw|null <=2048 Unicode code points tanpa NUL.
+  Semua field explicit/strict; tidak default/coercion/trim/normalization. UUID
+  syntax mengikuti existing platform shape, dipertahankan termasuk case, tanpa
+  mengklaim asset exists/same-Owner/canonical/sanitized/attachable/publishable.
+- Well-shaped input memberi copy independen/fixed diagnostics asset_required dan
+  alt_text_control_character (ASCII controls termasuk TAB/CR/LF serta DEL), raw
+  input tetap recoverable. Malformed envelope hanya invalid_working_shape tanpa
+  echo/partial coercion. Null/empty/blank alt dipertahankan; required-alt/decorative
+  policy tetap belum diputuskan, empty issues bukan accessibility/Publish proof.
+- 95 unit baru PASS: null/recovery/strict missing-extra-selector/UUID/URL-object-key
+  denial/Unicode-code-point/control/NUL/no-fetch/input-copy-isolation/general
+  decoder+Link command denial. Targeted4files283tests PASS termasuk Text/Contact/
+  general row regression. Tidak memperluas Media persisted decoder dari
+  not_implemented atau memasang UI/transport/mutation/attachment.
+- Fresh frozen install/typecheck/lint/5tooling/10942app/3build/diff/final review
+  PASS; web10661Vitest+17native berjalan langsung,3 unchanged package tests cached;
+  web typecheck/lint/build berjalan langsung,2 service tasks cached. Warning lama
+  next-editor-runtime.test.mjs:268 retained,0lint error. Tidak SQL/dependency/
+  route/grant/provider config berubah; unchanged775runtime/31Redis/37Chromium/
+  DB reset/lint/advisors/3976pgTAP/124native wajib di final exact-push CI, PENDING
+  sebelum push. Staged review dan committed readback wajib; tidak CLOSED/VERIFIED.
+- Goal belum selesai,S4 terakhir CLOSED/VERIFIED. Working≠Published; D01/D02/full
+  canvas/S5/S6/Media/Spill CTA/target safety/publication/live/public/RPC/production
+  tetap open/withheld. Berikutnya audit/kunci compatible Media canonical asset
+  binding/pipeline/kind/same-Owner/lifecycle/collection revision-lock-CAS/rollback/
+  race/GC/safe delivery sebelum persistence; jangan langsung membuat upload atau
+  mutator. Alt/decorative/destination memerlukan gate terpisah sebelum rendering.
+  Gate137 deployed raw-target/IP tetap terbuka; tidak Owner action untuk input ini.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
