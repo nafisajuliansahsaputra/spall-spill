@@ -7781,6 +7781,50 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   open/withheld. Tidak Owner action untuk next dormant table JIT; verifikasi exact
   latest-push gates dahulu lalu kunci kontrak tersebut sebelum migration/coding.
 
+### Dormant private Media Working payload — 2026-10-26
+
+- Baseline bersih/pushed8a30c0bbd43789ffb16fedb80eb49c6188fbbca7; fresh six exact
+  push jobs PASS: CI40323766274 Application121575681900/Database121575684230,
+  Security40323766150 Secret121575050917/SAST121575051208/Dependency121575051565,
+  Guard40323766601/job121575053383. Completed logs10942app/5tooling/31Redis/
+  775runtime/37Chromium/3976pgTAP60files/124native22groups dan reset/lint/security
+  advisors PASS dibaca; fixture Secret Scan sebelumnya selesai diperbaiki.
+- Fresh AGENTS/Cloud/Protocol/checkpoint/J5/J9/223/224/183/actual membership+asset+
+  source-intent/Product reuse/payload SQL/tests/CI dan pinned FR7.3/D02 dibaca.
+  JIT12.225 dikunci/dibaca sebelum coding. Supabase2.115.0/migration new help
+  dibaca; changelog CONNECT403/HTTP000 tanpa bypass,current RLS docs tersedia.
+- CLI-generated20261026131558_private_identity_media_working_payload.sql menambah
+  dormant core.identity_block_media_working: actual membership(block_id,owner_id,
+  kind=media) FK/cascade parent cleanup,nullable lower-case exact asset_key dengan
+  same-Owner registry FK NO ACTION delete/update,nullable raw alt_text2048 code
+  points,required timestamps. PK block dan owner/asset index mendukung FK scope.
+- Null/blank/control/CRLF/combining/markup tetap recoverable; tidak default content,
+  trim/lowercase/sanitize/truncation.223 uppercase input syntax bukan exact registry
+  match; storage menolak case mismatch tanpa normalization. RLS enabled/no policy/
+  revokeall PUBLIC/anon/authenticated/service_role; tanpa reader/mutator/RPC/grant/
+  upload/backfill/revision trigger/GC/public projection. General Media tetap
+  not_implemented; storage bukan Saved/Live/accessibility/sanitization/Publish proof.
+- Tambah pgTAP061 dengan69assertions: empty/no-backfill/required+unique/actual kind+
+  Owner tuple/FK isolation,raw alt bounds/NUL/failed-write preservation,missing/
+  cross-Owner/URL/object-key/uppercase asset denial,shared same-Owner reference,
+  catalog delete/rebind denial,hide/reorder/parent localized cascade retaining
+  registry/siblings/other Owner,collection/timestamp/profile/layout/first-slot/
+  publication/progress purity,index/RLS/no-policy/privilege+actual role denial.
+  Baru ditulis/review; evidence DB menunggu exact pushed CI, bukan local reset.
+- Fresh frozen install/typecheck/lint/5tooling/10942app/3build/diff/final review
+  PASS;5tooling berjalan langsung,unchanged application/typecheck/lint/build memakai
+  Turbo cache. Warning Link268 lama retained,0lint error. Committed isolated CI
+  wajib reset/lint/error-security-advisors/4045pgTAP61files (expected3976+69)/
+  124native22groups/775runtime/31Redis/37Chromium; six final push jobs PENDING sebelum
+  push. Tidak mutator pada dormant table sehingga race baru tidak applicable.
+- Goal belum selesai,S4 terakhir CLOSED/VERIFIED. Working≠Published; tidak D01/D02/
+  full canvas/S5/S6/Media/Spill CTA/publication/live/deployed target-IP/public/RPC/
+  production closure/activation. Setelah DB+six exact push gates PASS, next kunci
+  bounded selected current-Owner Media read/strict DTO/raw223 diagnostics/guarded
+  proof; explicit absent payload/null asset/ineligible canonical asset distinction.
+  Consumed intent+metadata/active Owner/runtime CAS/upload/alt-decorative policy/
+  safe delivery/GC/gate137 tetap gate terpisah. Tidak Owner action untuk slice ini.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
