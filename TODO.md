@@ -8715,7 +8715,10 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   groups. Coverage strict shape/auth/role/Owner/assets/raw Unicode/stale/max/
   insert-update rollback/purity dan concurrent saves/allocations/member actions/
   Owner/collection/asset/source-intent changes; share locks held through commit.
-  Database evidence PENDING exact pushed CI; tidak mengklaim eksekusi DB lokal.
+  CI40394303139 Database121823135901 melewati migration/reset/lint/advisors,
+  tetapi pgTAP063 berhenti pada precedence operator fixture nested JSON.
+  Tanda kurung fixture diperbaiki; tidak production SQL/gate diturunkan.
+  Database evidence PENDING exact corrected push; tidak eksekusi DB lokal.
 - Frozen install/node syntax/diff review PASS; typecheck/lint/11224app/3build
   PASS via unchanged Turbo cache;5tooling berjalan langsung PASS. Warning Link268
   lama retained,0lint errors. Six final push gates PENDING sebelum push;tidak

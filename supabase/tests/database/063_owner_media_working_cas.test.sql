@@ -74,11 +74,11 @@ create function pg_temp.invalid_shapes() returns setof text language plpgsql as 
   return next is(api.save_current_owner_block_media_working(pg_temp.media_save()-field),'{"status":"invalid_media_working"}'::jsonb,'Required outer key '||field);
  end loop;
  foreach field in array array['kind','asset_key','alt_text'] loop
-  return next is(api.save_current_owner_block_media_working(jsonb_set(pg_temp.media_save(),'{media_working}',pg_temp.media_save()->'media_working'-field)),'{"status":"invalid_media_working"}'::jsonb,'Required nested key '||field);
+  return next is(api.save_current_owner_block_media_working(jsonb_set(pg_temp.media_save(),'{media_working}',(pg_temp.media_save()->'media_working')-field)),'{"status":"invalid_media_working"}'::jsonb,'Required nested key '||field);
  end loop;
  foreach field in array array['owner_id','asset_state','object_key','action','is_visible','position','issues','url'] loop
   return next is(api.save_current_owner_block_media_working(pg_temp.media_save()||jsonb_build_object(field,null)),'{"status":"invalid_media_working"}'::jsonb,'No extra outer '||field);
-  return next is(api.save_current_owner_block_media_working(jsonb_set(pg_temp.media_save(),'{media_working}',pg_temp.media_save()->'media_working'||jsonb_build_object(field,null))),'{"status":"invalid_media_working"}'::jsonb,'No extra nested '||field);
+  return next is(api.save_current_owner_block_media_working(jsonb_set(pg_temp.media_save(),'{media_working}',(pg_temp.media_save()->'media_working')||jsonb_build_object(field,null))),'{"status":"invalid_media_working"}'::jsonb,'No extra nested '||field);
  end loop;
  foreach v in array array['null'::jsonb,'"1"','true','0','-1','1.1','9007199254740992','[]','{}'] loop
   return next is(api.save_current_owner_block_media_working(jsonb_set(pg_temp.media_save(),'{base_collection_revision}',v)),'{"status":"invalid_media_working"}'::jsonb,'Strict safe integral base');
