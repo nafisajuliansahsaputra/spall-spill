@@ -7609,6 +7609,49 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   Spill CTA/target safety/publication/live/public/RPC/production open/withheld.
   Berikutnya audit/kunci query-denial Contact cookie continuity136/181.
 
+### Isolated Contact browser query admission — 2026-10-26
+
+- Bootstrap bersih HEAD/origin99a971bd52032b841d4a291a53ca98e152283d51. Keenam
+  exact push jobs PASS: CI40279251896 Application121428963047/Database121428963314,
+  Security40279252062 Secret121428648120/SAST121428648370/Dependency121428648396,
+  Guard40279251798 Authority121428647188. Log selesai772runtime/31Redis/37Chromium/
+  10847app/5tooling/3976pgTAP60files/124native22groups/reset/lint/advisors PASS.
+  AGENTS/Cloud/Protocol/current220/J5/J9/pinned D02/11.23/136/181/211–220 dan actual
+  Contact/Text/browser/gateway/SSR/helper/runner dibaca ulang. Docs getClaims HS256
+  fallback diperbarui; changelog CONNECT403/HTTP000 tanpa bypass/API change.
+- Kontrak12.221 dikunci/dibaca sebelum coding. Hanya append3 compiled gateway
+  Chromium cases init/add/save; semua source/assertions sebelumnya byte-identical.
+  Actual SSR2s/expiry2100ms/own profile/bounded SPKI/initial CDP retained. Init
+  absent; add/save own rev3 hidden Contact/add priorIds berbeda dari allocated IDs/
+  save own selected ID; budgetResult1/acceptRefresh=true tidak berubah.
+- Seluruh119 gateway tests PASS tanpa fail/cancel/skip pada iterasi pertama.
+  Native JSON query POST403 unavailable di raw gateway sebelum upstream; setelah
+  GET1forward/1rejection,0budget/refresh/Auth/user/RPC/commit/observations dan initial
+  model identik. Denial bukan logout/izin target lain; tidak mengklaim browser
+  mempertahankan raw bare-query/dot spelling/generalized normalization.
+- POST kanonis eksplisit body sama tanpa cookie mutation/readback/spoof/interception/
+  fake claims memberi200 own block/Owner/rev1atau4/current same_revision/raw hidden
+  Contact;1budget sebelum1SDK refresh/8verifiedAuth/9attempts/13RPC/1commit. POST
+  kanonis eksplisit berikutnya memakai refreshed cookie alami409 already_initialized/
+  stale_write tanpa refresh/commit baru. Final2budgets/1refresh/16RPC/2selected
+  mutation attempts/1commit/calls subject0/model committed unchanged; hanya200/409
+  handler observations/hasCookie:true,3forwards/1rejection. Private response headers
+  dan own CA/TLS/deadline/cleanup retained; no retry/fallback/refund/extra read.
+- Dev97/compiled-direct97/frozen install/typecheck/lint/5tooling/10847app/3build/
+  seluruh31nativeRedis/diff/final review PASS; cache unchanged dipakai jika sesuai,
+  warning Link268 lama tetap. Enam exact final push jobs PENDING sebelum push,
+  termasuk775runtime/37otherChromium/unchanged isolated DB reset/lint/advisors/
+  3976pgTAP60files/124native22groups. Staged review wajib; bukan CLOSED/VERIFIED.
+- Goal belum selesai,S4 terakhir CLOSED/VERIFIED; Working≠Published. Tidak production
+  source/route/matcher/gateway behavior/SQL/grants/dependency/config/CI/deploy berubah.
+  Controlled fixture bukan live Auth/Upstash/RLS/DB atomicity/rollback/deployed
+  ingress/IP/manual/production readiness. D01/D02/full canvas/S5/S6/Media/Spill CTA/
+  target safety/publication/live/public/RPC/production open/withheld. Berikutnya
+  ikuti137/181: audit ulang private D01/D02 frontier terhadap J5/J9/pinned D01/D02/
+  73–115/hasil138/Text139–181/Contact182–221 dan actual resolver/presenter/tests.
+  Pilih gap nyata sebelum JIT berikutnya; tidak menambah variasi fixture hanya
+  karena deployed provenance masih terbuka, mengulang138, atau partial D02 mounting.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
