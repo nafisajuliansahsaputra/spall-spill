@@ -8986,6 +8986,51 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   command envelope+dispatcher under own JIT. Full D02/S5/S6/first Publish/gate137/
   public/RPC/live/production tetap open,no Owner action untuk slice CI ini.
 
+### Explicit Media command envelope and private dispatch — 2026-10-27
+
+- Baseline bersih/pushed2da82ca8751803613308b1203f8cf407b9e221ec;AGENTS parallel
+  Owner UI/backend lane aktif. Exact CI40502273513 Application122188437963/runtime
+  122183274968/Database122183275320,Security40502273385 SAST122182644064/Dependency
+  122182644517/Secret122182644637,Guard40502273453/job122182645341 all PASS refreshed.
+  Completed12680app/775runtime/31Redis/37browser/4611pgTAP65files/179native25groups/
+  reset/lint/advisors observed. Goal unfinished,S4 last CLOSED/VERIFIED;235 job
+  split now exact-push proven,prior cancellations not used as PASS evidence.
+- JIT12.236 dikunci/dibaca sebelum source setelah canonical checkpoint/Protocol/
+  Cloud/PRD/architecture/workflow/skill/J5/J9/199/200/Media intents+reviews dan actual
+  dispatch/fixtures diaudit. Pinned bb79dce4 D02/revision lock dan current getClaims
+  docs refreshed;changelogCONNECT403 tanpa bypass/credential/provider expansion.
+- Tambah strict flattened IdentityMediaEditorCommand over unchanged231add/233init/
+  228save+explicit facade action. Caller must choose action;null/ID/absence tidak
+  infer operation. Whole nullable raw Media/key case/2048codepoints/no NUL retained;
+  no defaults/coercion/normalization/registry or readiness authority. Add/init
+  visibility explicit;save existing ID+positive safe base,no visibility/order field.
+- Tambah unmounted createOwnerMediaEditorCommands.execute unknown:validate/copy
+  sebelum I/O,invalid_media_command status-only;exactly one real232add/230save/
+  234initialize review via same request-local client. Save projects only block_id,
+  base_collection_revision,media_working;facade action never reaches strict save.
+  No extra proof/timer/readback/retry/cache/fallback/implicit init/second mutation.
+  Existing8claims/13RPC/10s outer5s nested retained;ack separate same/newer/unavailable
+  selected observation;unknown never promoted by raw match/count/later conflict.
+- 461new tests PASS (219schema+242dispatch),1136targeted5suites PASS including
+  unchanged675 three-review tests. Actual pinned SDK/real reviews (no mocked
+  dispatcher) verify exact POST/args/order/save projection/selected ID/raw nullable/
+  controls/Unicode/case/issues/visibility,hostile input before auth,terminal known
+  denials/invalid_asset/unknown/Owner loss/deadline/late/explicit conflict/no fallback.
+  Controlled claims fixtures bukan live JWT/DB commit/browser/provider evidence.
+- Fresh frozen/typecheck/lint/5tooling/13141app/3build/diff/final review PASS;
+  web12860Vitest+17native langsung,3unchanged package tests cached;web typecheck/
+  lint/build langsung,2service tasks cached. Old Link268 warning retained,0errors.
+  No SQL/RLS/grants/routes/UI/dependencies/Published changes. All exact new-push
+  gates PENDING sebelum push,including runtime+Application/Database/Security/Guard;
+  unchanged4611pgTAP/179native/reset/lint/advisors still required committed CI.
+- Handoff Owner: IdentityMediaEditorCommand/OwnerMediaEditorCommandResult and
+  source fixtures for add/save/initialize with allocated/saved/initialized plus
+  same/newer/unavailable/unknown/error outcomes. No endpoint/browser-callable RPC;
+  UI integration separate Owner-reviewed PR. Next backend bounded Media request
+  metadata+body admission under own JIT,before trusted origin/CSRF/host/proxy/budget/
+  no-store/session isolation/mount gates. Full D02/S5/S6/first Publish/alt/upload/
+  GC/gate137/public/RPC/live/production remain open,no Owner action for this slice.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
