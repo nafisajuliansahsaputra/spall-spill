@@ -8900,6 +8900,51 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   Full D02/S5/S6/first Publish/gate137/public/RPC/live-provider/production tetap open;
   tidak Owner action untuk slice backend ini.
 
+### Guarded first Media initialization and selected readback — 2026-10-27
+
+- Baseline bersih/pushedd3fd498f9bd2b9bc4312550ce1db10a22fff5cfd; AGENTS
+  parallel Owner UI/backend lane aktif. Exact CI40460477144 attempt2 Application
+  122046157684/Database122046159767,Security40460477123 Secret122043604343/
+  SAST122043604040/Dependency122043604399,Guard40460477133/job122043603954 six
+  jobs PASS refreshed. Completed12259app/5tooling/4611pgTAP65files/179native25groups/
+  775runtime/31Redis/37Chromium observed. Initial browser startup timeout lalu
+  unchanged targeted local retry/exact-commit Application rerun PASS,no relaxed gate.
+- JIT12.234 dikunci/dibaca sebelum source setelah canonical authority/J5/J9,
+  197/198/223/226/227/232/233 dan actual initializer/allocation/readback/schema/
+  assembly/tests/SQL diaudit. Pinned bb79dce4 revision lock direfresh;current
+  getClaims docs dibaca,changelogCONNECT403 tanpa bypass. Goal unfinished,S4 last
+  CLOSED/VERIFIED;tidak UI/design/ui/production/credential changes.
+- Tambah unmounted server-only createOwnerFirstMediaInitialization dan review:
+  strict copied233 null-base intent sebelum I/O,same request-local verified claims/
+  actual active completed Owner sebelum single fixed initializer POST,minimal
+  canonical server-ID/literal revision1 ack,final same subject/Owner proof.
+  invalid_asset/already_initialized status-only;no normalization/issue readiness
+  filter,source fallback/repair/retry/UUID/base refresh/cache/second mutation.
+- 5s SDK/10s review aggregate deadline;attempted lost/error/malformed/late/final
+  proof failure outcome_unknown tanpa rollback claim. Unknown lalu explicit conflict
+  bukan causal success atau idempotent replay. Review hanya acknowledged ID via227,
+  three outer proofs plus nested SDK/assembly;8claims/13RPC. Same revision1 requires
+  ID/kindMedia/position1/explicitvisibility/present exact raw nullable key+alt;
+  newer stable DTO explicitly separate,retain ack revision1. Unavailable selected
+  may ack-only after final Owner proof;no private return after unproven actor.
+- 421new tests PASS (197SDK+224review),614targeted4suites PASS including unchanged
+  233intent100+227assembly93. Actual pinned SDK controlled claims:exact POST/order/
+  args/copy/raw/key case/visibility,strict literal1 ack/status-only/all proof phases,
+  same/newer/missing/position/registry drift,aggregate/late/network/unknown-to-conflict
+  without retry. Fixtures bukan live JWT/DB commit/browser/provider evidence.
+- Fresh frozen/typecheck/lint/5tooling/12680app/3build/diff/final source review PASS;
+  web12399Vitest+17native langsung,3unchanged package tests cached;web typecheck/
+  lint/build langsung,2service tasks cached. Old Link268 warning retained,0errors.
+  No SQL/RLS/grants/routes/UI/dependencies/Published changes. Six exact final push
+  gates PENDING sebelum push;unchanged DB4611pgTAP/179native/reset/lint/advisors dan
+  runtime/Redis/Chromium tetap required committed isolated CI,no new external claim.
+- Handoff Owner: typed233 input + OwnerFirstMediaInitializationReviewResult dan
+  source fixtures for initialized/current same/newer/unavailable/unknown/error mocks.
+  SDK unmounted/no browser-callable RPC;UI integration separate Owner-reviewed PR.
+  Next backend:closed Media command envelope/dispatch over existing add/save/
+  initialize contracts. Full D02/S5/S6/first Publish/alt/upload/GC/gate137/public/
+  RPC/live-provider/production remain open,no Owner action for this backend slice.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
