@@ -77,6 +77,7 @@ jobs:
           pnpm --filter @spall-spill/web test:editor-budget-redis
           pnpm --filter @spall-spill/web test:text-editor-budget-redis
           pnpm --filter @spall-spill/web test:contact-editor-budget-redis
+          pnpm --filter @spall-spill/web test:media-editor-budget-redis
 
       - name: Production build
         run: pnpm build

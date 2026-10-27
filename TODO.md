@@ -9069,6 +9069,44 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   composition dari118/119/161/204/205, sesudah exact gates PASS. Full D02/S5/S6/first
   Publish/alt/upload/GC/gate137/public/RPC/live/production open; no Owner action.
 
+### Integrated Media distributed budget and private HTTP boundary — 2026-10-27
+
+- Clean baseline da1136e90f80c50357093497f49f2f9279fef1e0; exact push CI40538777427
+  Application122318214377/runtime122311143147/Database122311143862, Security40538777251
+  SAST122311142727/Dependency122311142943/Secret122311143424, Guard40538777721/
+  job122311145673 semua PASS refreshed. Completed13456app/775runtime/31Redis/
+  37browser/4611pgTAP65files/179native25groups/reset/lint/advisors dibaca.
+- JIT12.238 dikunci sebelum source; canonical authority/AGENTS parallel lane/J5/J9/
+  237/204–207/shared40Lua/43subject/actual layers dan pinned11.23 dibaca. Goal
+  unfinished,S4 last CLOSED/VERIFIED. Tidak restart atau sentuh UI/design/ui.
+- Satu outcome backend: createBudgetedIdentityMediaEditorHttpBoundary mengikat
+  same Request ke trusted HMAC network subject -> atomic command/work permit ->
+  confined Upstash EVAL -> actual237body/HTTP/236add/save/initialize reviews.
+  Fixed13RPC cost; Media domain/keys terpisah dari5families lama. Strict copied
+  policy/key/config,no defaults/header fallback/client/Owner/cost selector.
+  Shared helper hanya mendapat literal domain Media pada type/runtime allowlist.
+- Preserve500ms subject/1.5s transport/2s permit/5s body/10s review/20s HTTP;
+  unproven grant ditolak sebelum body/session,one EVAL/one mutation,no retry/refund/
+  implicit init. Private no-store/invalid_asset400/conflict409/outcome_unknown503,
+  ack vs same/newer/unavailable readback tetap. Late EVAL dapat burn capacity dan
+  late SDK dapat commit; tidak rollback/session-freeze/provider proof claim.
+- 316tes baru5suites PASS; actual composed layers/pinned SDK dengan controlled
+  provider fetch/SSR factory/claims. Uji strict config/domains/IP/alias/copy/bounds/
+  abort/deadline/late/denials/raw null+UUIDcase/Owner loss/conflicts/unknown/no leak.
+  8native Media Redis PASS termasuk work+request races/TIME/TTL/corrupt/backward;
+  31old Redis PASS. Tambah satu required CI command+package script,all old retained.
+- Frozen/typecheck/lint/5tooling/13772app/3build/diff/final review PASS;
+  web13491Vitest+17native actual,264unchanged package tests cached;webtypecheck/
+  lint/build actual,2services cached. Existing Link268 warning retained,0errors.
+  Exact new-push CI runtime+Application/Database/three Security scans/Guard PENDING
+  sebelum push. No SQL/RLS/grants/route/UI/dependency/Published/provider changes.
+- Handoff: typed boundary/config/result+source fixtures untuk3actions. Masih
+  unmounted; controlled evidence bukan live Upstash/JWT/cookies/DB/browser/cluster/
+  deployed proxy/CSRF/capacity proof. Next backend outcome: isolated actual Next
+  request-cookie/session+trusted ingress context Media sebelum mounting; reuse
+  Contact208+runtime seams under own JIT. Full D02/S5/S6/first Publish/gate137/public/
+  RPC/live/production open/withheld;no Owner action untuk dormant integration ini.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

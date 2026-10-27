@@ -27,7 +27,7 @@ function canonicalAddress(address: string): string | null {
 
 /** Unmounted: the injected reader MUST attest trusted runtime metadata, never arbitrary headers. */
 export function createTrustedNetworkBudgetSubject({ domain, namespace, key, readTrustedMetadata }: {
-  domain: "spall-click-network-subject-v1" | "spall-resource-open-network-subject-v1" | "spall-identity-link-editor-network-subject-v1" | "spall-identity-text-editor-network-subject-v1" | "spall-identity-contact-editor-network-subject-v1";
+  domain: "spall-click-network-subject-v1" | "spall-resource-open-network-subject-v1" | "spall-identity-link-editor-network-subject-v1" | "spall-identity-text-editor-network-subject-v1" | "spall-identity-contact-editor-network-subject-v1" | "spall-identity-media-editor-network-subject-v1";
   namespace: string; key: Uint8Array; readTrustedMetadata: (request: Request) => Promise<unknown>;
 }) {
   const parsed = namespaceSchema.safeParse(namespace);
@@ -37,7 +37,7 @@ export function createTrustedNetworkBudgetSubject({ domain, namespace, key, read
     try {
       const started = performance.now();
       const timely = () => { const now = performance.now(); return Number.isFinite(now) && now >= started && now < started + 500; };
-      if (!["spall-click-network-subject-v1", "spall-resource-open-network-subject-v1", "spall-identity-link-editor-network-subject-v1", "spall-identity-text-editor-network-subject-v1", "spall-identity-contact-editor-network-subject-v1"].includes(domain)
+      if (!["spall-click-network-subject-v1", "spall-resource-open-network-subject-v1", "spall-identity-link-editor-network-subject-v1", "spall-identity-text-editor-network-subject-v1", "spall-identity-contact-editor-network-subject-v1", "spall-identity-media-editor-network-subject-v1"].includes(domain)
         || !parsed.success || !secret || !Number.isFinite(started) || request.signal.aborted) return null;
       const run = async () => {
         const metadata = metadataSchema.safeParse(await readTrustedMetadata(request));
