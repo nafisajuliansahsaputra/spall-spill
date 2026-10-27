@@ -8045,6 +8045,43 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   melalui review Owner;design/ui tidak disentuh. Goal belum selesai,S4 terakhir
   CLOSED/VERIFIED;full D02/S5/S6/first Publish/alt policy/gate137/production open.
 
+### Private existing-collection Media allocation — 2026-10-27
+
+- Baseline bersih/pushed2e26ddd54512a4a324b5d90ee51d17a7ba174625; AGENTS
+  parallel Owner UI/backend lane aktif. Exact push CI40418666359 Application
+  121907244580/Database121907244208,Security40418666326 Secret121907245312/
+  SAST121907245632/Dependency121907245625,Guard40418666384/job121907244511
+  six jobs PASS. Prior completed11638app/4255pgTAP63files/141native23groups/
+  775runtime/31Redis/37Chromium diamati;230 source/checkpoint dibaca kembali.
+- JIT12.231 dikunci/dibaca sebelum coding setelah canonical authority/J5/J9/
+  pinned D02/189/223/225–230/actual Contact allocation+Media CAS+tests/native/
+  CI diaudit. Supabase current Database Functions docs dibaca;changelogCONNECT403
+  tanpa bypass. Tambah strict server-only Media addition intent reuse223 dan
+  staged private add_current_owner_media_block_working(jsonb).
+- Actual Owner/binding locks+recheck/active-completed/context,existing collection
+  lock/base CAS/max safe revision,all-kind count<=1000 inherited engineering bound,
+  own max append/int32 exhaustion,server UUID+full Media payload+single bump atomic.
+  Non-null asset exact same-Owner consumed canonical registry+metadata dan source
+  locks229;case/missing/foreign/unconsumed/out-of-envelope =>invalid_asset.
+  Tidak normalize,auto-initialize,overwrite existing,upload,public/Published change,
+  registry/blob deletion atau new grants. Explicit null payload tetap recoverable.
+- 99unit baru/425targeted4suites PASS;strict envelope/raw/null/case/Unicode/control/
+  no-I/O/copy/unchanged Contact/Text/save boundaries. pgTAP064 dan18native races
+  ditulis/review untuk shape/auth/assets/raw/append/empty/missing/capacity/stale/
+  exhausted/purity/rollback,same-base/cross-content/allocation/member actions,
+  Owner/collection/asset/intent wait,dependency locks dan999→1000 paged readback.
+  Database evidence PENDING committed isolated CI reset/lint/error-advisors/
+  all pgTAP/native;tidak DB lokal/browser/manual/provider evidence baru.
+- Fresh frozen/typecheck/lint/5tooling/11737app/3build/diff/final review PASS;
+  web11456Vitest+17native langsung,3unchanged package tests cached;web
+  typecheck/lint/build langsung,2service tasks cached. Warning Link268 lama retained,
+  0lint errors. Six exact final push gates PENDING sebelum push;tidak CLOSED/VERIFIED.
+- Handoff Owner: typed addition intent/local issues231 + selected226 DTO dan staged
+  minimal ack/denials. UI/design/ui tidak disentuh;SDK allocation belum tersedia/
+  browser-callable. Next backend: guarded allocation SDK+known-ID selected readback,
+  lalu explicit first Media initialization terpisah. Goal unfinished,S4 terakhir
+  CLOSED;full D02/S5/S6/first Publish/alt/upload/GC/gate137/public/RPC/production open.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
