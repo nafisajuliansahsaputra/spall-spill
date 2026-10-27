@@ -8082,6 +8082,50 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   lalu explicit first Media initialization terpisah. Goal unfinished,S4 terakhir
   CLOSED;full D02/S5/S6/first Publish/alt/upload/GC/gate137/public/RPC/production open.
 
+### Guarded Media allocation and selected readback — 2026-10-27
+
+- Baseline bersih/pushed690cd1741c0643dd893d9cb7f22483e0dff34121; AGENTS
+  parallel Owner UI/backend lane aktif. Exact baseline CI40425763785 Application
+  121930997199/Database121930996760,Security40425763635 Secret121930996877/
+  SAST121930997062/Dependency121930996919,Guard40425763744/job121930996873
+  six jobs PASS refreshed. Prior11737app/4446pgTAP64files/159native24groups/
+  775runtime/31Redis/37Chromium diamati;231 checkpoint/contract/source dibaca.
+- JIT12.232 dikunci/dibaca sebelum source setelah canonical authority/J5/J9/
+  190/191/223/226/227/230/231/actual Contact allocation dan Media intent/reader/
+  assembly/save/SQL/tests diaudit. Current JavaScript getClaims JWKS/Auth-server
+  docs dibaca;changelogCONNECT403 tanpa bypass. Goal unfinished,S4 last CLOSED.
+- Tambah unmounted server-only createOwnerMediaBlockAllocation +
+  createOwnerMediaBlockAllocationReview, reuse231 copied strict intent dan same
+  request-local client. Verified claims/strict actual Owner proofs sebelum single
+  fixed allocation RPC,minimal canonical server-ID/exact base+1 ack dan final
+  same active completed Owner proof. invalid_asset tetap status-only backend
+  denial;raw key case tidak dinormalisasi/basic issues bukan registry authority.
+- Aggregate5s allocation/10s review;post-attempt unproven error/late/malformed/
+  deadline/changed final proof=>outcome_unknown tanpa rollback claim atau retry.
+  Review hanya known acknowledged ID: allocated ack terpisah unavailable/current
+  same_revision (exact visibility,present raw key+alt)/newer_revision (stable later
+  DTO,retain original ack revision). Tidak guess append position/server ID dari
+  matching raw/count/stale. Registry observation bukan physical delivery/Publish.
+- 422new tests PASS (197SDK+225review),614targeted4suites PASS termasuk unchanged
+  231intent99+227assembly93. Actual pinned-SDK controlled claims menguji exact
+  POST/args/order/copied nullable/raw Unicode/case/visibility,minimal strict ack/
+  denials/all proof phases,same/older/newer/missing/registry drift,timeout/ignored
+  late/network/unknown→stale tanpa retry. Bukan live JWT/DB commit/browser/provider.
+- Fresh frozen/typecheck/lint/5tooling/12159app/3build/diff/final review PASS;
+  web11878Vitest+17native langsung,3unchanged package tests cached;web
+  typecheck/lint/build langsung,2service tasks cached. Warning Link268 lama retained,
+  0lint errors. Tidak SQL/RLS/grants/routes/UI/dependencies/provider/Published
+  berubah. Six exact final push gates PENDING sebelum push,termasuk unchanged
+  4446pgTAP64files/159native24groups/reset/lint/error-advisors/775runtime/31Redis/
+  37Chromium. Tidak closure dari pending/superseded evidence atau runtime baru.
+- Handoff Owner: typed231 intent + OwnerMediaBlockAllocationReviewResult dan
+  source fixtures menyediakan allocated/current same/newer/unavailable/unknown/
+  error mocks. SDK unmounted,tidak browser-callable;UI integration perlu separate
+  Owner-reviewed PR. design/ui tidak disentuh. Next backend slice: explicit first
+  Media initialization missing-collection dengan JIT/source-provenance/asset safety/
+  atomicity terpisah. Full D02/S5/S6/first Publish/alt/upload/GC/gate137/deployed
+  target-IP/public/RPC/production tetap open;tidak Owner action untuk slice ini.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
