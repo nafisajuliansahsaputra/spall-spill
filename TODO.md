@@ -8952,6 +8952,40 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   initialize contracts. Full D02/S5/S6/first Publish/alt/upload/GC/gate137/public/
   RPC/live-provider/production remain open,no Owner action for this backend slice.
 
+### CI Application runtime job isolation — 2026-10-27
+
+- Baseline bersih/pushede44a71ed3a2b89580b09815b71eda716cc657cf9;AGENTS parallel
+  Owner UI/backend lane aktif. Goal unfinished,S4 last CLOSED/VERIFIED. Canonical
+  checkpoint/Protocol/Cloud/PRD/architecture/workflow/skill/J1–J9 index/J5/J9/234 dan
+  actual CI/runtime launchers dibaca. Tidak memulai Media dispatch di atas gate pending.
+- Exact CI40493951572 Application122154543959 CANCELLED,not PASS. Raw timestamps
+  11:09:05–11:24:08=15m03s versus configured15m;runtime11m36s. Semua langkah
+  verification/cleanup success,775runtime/31Redis/37browser/12680app terlihat di log;
+  tidak definitive provider/root-cause claim. Database122154543606 PASS dengan
+  4611pgTAP65files/179native25groups/reset/lint/advisors. Security40493951321
+  SAST122154542998/Dependency122154543240/Secret122154543417 dan Guard40493951634/
+  job122154544343 PASS. Satu rerun Application requested;superseded bukan final evidence.
+- JIT12.235 dikunci/dibaca sebelum workflow edit. Pindahkan sembilan runtime
+  commands verbatim ke Application runtime pada runner/toolchain/frozen install
+  yang sama. Application tetap required name,needs runtime,always()+same monitoring
+  PR exclusion,first quoted-environment shell gate requires exact success.
+  Failed/cancelled/skipped/empty/unknown runtime tidak dapat menjadi green/skip
+  Application. Retain15m setiap job,Database30m,all assertions/deadlines/TLS/sandbox/
+  commands/order/pinned actions/permissions/concurrency;no continue-on-error/retry.
+- PyYAML/verification-step multiset/pinned bootstrap/unchanged Database+permissions+
+  concurrency/timeouts checks PASS. Actual bash gate9states:success accepted;
+  failure/cancelled/skipped/timed_out/empty/unknown/newline/true denied. Ini local
+  shell+structural evidence,bukan deliberate hosted failure/cancel simulation.
+- Frozen install dan5tooling langsung PASS;pnpm typecheck/lint/test/build PASS
+  valid unchanged-source Turbo cache (3/3,3/3,4/4,3/3 tasks). Retain12680app/3build/
+  old Link268 warning;no new unit/runtime/browser execution claimed. Diff/source
+  review PASS. Exact new-push Application runtime+Application/Database/Security/
+  Guard masih PENDING sebelum push;required commands tidak dikurangi.
+- No app/domain/SQL/RLS/grants/UI/design/ui/provider/credential/Published changes.
+  Next backend sesudah all exact gates PASS:closed Media add/save/initialize
+  command envelope+dispatcher under own JIT. Full D02/S5/S6/first Publish/gate137/
+  public/RPC/live/production tetap open,no Owner action untuk slice CI ini.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
