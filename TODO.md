@@ -9107,6 +9107,41 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   Contact208+runtime seams under own JIT. Full D02/S5/S6/first Publish/gate137/public/
   RPC/live/production open/withheld;no Owner action untuk dormant integration ini.
 
+### Isolated Next Media cookie-session integration — 2026-10-28
+
+- Baseline5ec29be7c1950adec1988ab0f49074b2fa92e789 exact push CI40548630053
+  Application122352766621/runtime122345990407/Database122345991002, Security40548630194
+  SAST122345991083/Dependency122345991738/Secret122345991755, Guard40548629882/
+  job122345990699 semua PASS. Goal unfinished,S4 last CLOSED/VERIFIED.
+- JIT12.239 dikunci sebelum fixture; current checkpoint/AGENTS parallel lane/208/
+  237/238/actual SSR+Media chain/initial208@9b39bd7 dan current runtime dibaca.
+  Current Supabase verified getClaims docs refreshed,changelogCONNECT403/no bypass.
+- Tambah actual mkdtemp Next HTTPS runtime: original Request ->238budget/body ->
+  unmocked Next cookies()/SSR factory/getClaims/pinned SDK/236reviews ->237private
+  Response. Controlled loopback Auth HS256 signature/issuer/audience/expiry/subject,
+  exact EVAL Media keys/cost13 dan independent per-Owner in-memory RPC model.
+  Tidak actual Supabase/Upstash/PostgreSQL/physical media/deployed IP evidence.
+- 40new runtime tests PASS:3actions/eight Auth checks13RPC/one mutation,private
+  no-store/TLS CA+hostname verification,metadata/JSON/selector/budget before Auth,
+  missing/forged/header-only/signature/expired rejected sessions,restricted Owner,
+  foreign member+asset,stale/already_initialized,unknown ack/final claim loss,
+  sequential+concurrent Owner isolation,raw nullable key/alt/controls/Unicode max.
+  Fixture expected key order corrected; no production code/gate weakened.
+- Retained76actual SSR/Proxy/runtime tests PASS. Frozen/typecheck/lint/5tooling/
+  13772app/3build/diff/final review PASS;web13491Vitest+17native actual,264unchanged
+  package tests cached,2services typecheck/lint/build cached. Existing Link268
+  warning retained,0errors. Tambah required Media runtime package+CI command;
+  semua old commands/bounds retained. Exact new-push CI runtime+Application/DB/
+  three Security scans/Guard PENDING sebelum push,not CLOSED/VERIFIED.
+- 0 fitur produk baru; outcome adalah bukti integrasi session Media yang sebelumnya
+  hanya controlled factory/claims. No production source/route/proxy/SQL/RLS/grants/
+  UI/design/ui/dependency/provider/Published changes. Handoff typed238 boundary/
+  236command/result unchanged plus actual cookie runtime fixture.
+- Next backend outcome: Media request-session response/refresh-cookie composition
+  dan actual browser command transport under own JIT. Media SameSite/CSRF/Proxy/
+  raw-target/production/live gates belum dibuktikan; full D02/S5/S6/first Publish/
+  public/RPC/production open/withheld. No Owner action untuk isolated work ini.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
