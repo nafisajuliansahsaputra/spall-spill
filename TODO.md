@@ -9244,6 +9244,44 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   Owner/system label controls remain open UX,no guessing. Also refresh gate137
   before public grants. Full D02/S5/S6/first Publish/public/RPC/live/production open.
 
+### Private Spill CTA Working transactions and typed readback — 2026-10-28
+
+- Baseline5b42b96082b47717c725c8dc407495f93b97549b exact clean origin; CI40696851147
+  attempt2 Media122853335531/Application122855668162 PASS; retained775runtime,
+  4611pgTAP/179native PASS. Security40696851073 and Guard40696851065 PASS. Previous
+  Chromium startup failure was retried once without changing tests/timeouts.
+- JIT12.243 locked before code: pinned D02/FR-IDN024–026/J5/J9 and existing CAS/
+  membership/Media transports audited. One backend outcome: explicit first/add CTA
+  transaction plus selected readback and typed SDK, independent of public Spill.
+  Target exactly owner_spill, derived from authenticated active/completed Owner;
+  no caller URL/handle/Owner ID/label, no permission from primary use case.
+- New private typed marker FK binds membership Owner/kind; RLS/no policies/all
+  client-role grants withheld. Owner/binding/collection locks, server UUID, append,
+  exact revision CAS/one bump; explicit init absent-only, replay/stale deny without
+  duplicate members. Atomic failures preserve Working; no Published/provider/UI edit.
+  Existing visibility/reorder/removal primitives retained. General readers still
+  mark CTA not_implemented; selected readback is not complete D02 or public readiness.
+- 55 targeted SDK/schema/denial/deadline tests PASS. PostgreSQL17.11 isolated component
+  fixture:100pgTAP+5native race tests PASS, no skips. Full Supabase image registration
+  failed no-space; lightweight postgres:17-alpine ran72app migrations including
+  the new migration, controlled Auth schema/functions and pgTAP1.3.4. Two unrelated cron
+  scheduler migrations were outside this component fixture; NOT full Supabase reset,
+  Auth/provider proof, advisor or scheduler evidence. CI retains every full DB gate
+  and adds the5CTA races; full Supabase reset/lint/advisor/66files/26race groups required.
+- Frozen/typecheck/lint/5tooling/13827app/3build/diff/security review PASS; web13546
+  Vitest+17native actual,264other package tests cached. One existing Link268 lint
+  warning/0errors; exact new-push8jobs PENDING before push, no VERIFIED/flow closure.
+- Owner handoff: strict initialize/add intent with explicit null/positive base,
+  is_visible and spill_cta_working:{kind:spill_cta,target:owner_spill}; SDK methods
+  createOwnerFirstSpillCtaInitialization.initialize/createOwnerSpillCtaBlockAllocation.add;
+  selected createOwnerSpillCtaBlockWorkingReader.read({block_id}); statuses include
+  already_initialized/stale_write/restricted/unavailable/outcome_unknown. Never auto
+  retry unknown or equate Saved with Live. Label UX and public validation remain open.
+- Next backend outcome: coherent typed private paged Working projection across all
+  six block kinds using existing revision/proof/paging primitives, then full Identity
+  Publish validation including explicit CTA public-Spill eligibility. D02/S5/S6/first
+  Publish/public/RPC/live/production still open/withheld; same Goal continues.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
