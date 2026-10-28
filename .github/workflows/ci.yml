@@ -181,6 +181,7 @@ jobs:
           "$SPALL_TEST_BROWSER" --version
           pnpm --filter @spall-spill/web test:media-editor-runtime
           pnpm --filter @spall-spill/web test:media-editor-production-runtime
+          pnpm --filter @spall-spill/web test:media-editor-gateway-browser-runtime
 
   database:
     name: Database

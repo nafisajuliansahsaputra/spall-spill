@@ -26,6 +26,7 @@
     "test:contact-editor-runtime": "node --test tests/next-contact-editor-runtime.test.mjs",
     "test:media-editor-runtime": "node --test tests/next-media-editor-runtime.test.mjs",
     "test:media-editor-production-runtime": "node tests/run-media-editor-production-runtime.mjs",
+    "test:media-editor-gateway-browser-runtime": "node tests/run-media-editor-production-runtime.mjs --gateway",
     "test:text-editor-runtime": "node --test tests/next-text-editor-runtime.test.mjs",
     "test:ssr-runtime": "node --test --test-concurrency=1 tests/next-ssr-cookie-runtime.test.mjs tests/next-editor-runtime.test.mjs tests/next-proxy-refresh-runtime.test.mjs",
     "test:auth-navigation": "node --test tests/intended-destination.test.mjs",

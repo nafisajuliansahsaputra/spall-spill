@@ -8478,6 +8478,41 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   command evidence under own JIT. D02/S5/S6/first Publish/public/RPC/live/production
   open/withheld;no Owner action for isolated independent work. Same Goal continues.
 
+### Compiled Media browser-through-gateway isolation — 2026-10-28
+
+- Baselinecb06f2356f6ce50d83fea1f54bf667c6676285b0; exact CI40695609027 Media
+  runtime122842233721 PASS,Application runtime122842233122/DB122842233599 pending
+  at readback. Security40695608941 Dependency122841435880/Secret122841436169/
+  SAST122841436395 and Guard40695608798/job122841434484 PASS. No closure inferred.
+- JIT12.242 locked before changes;AGENTS/checkpoint/J5/J9/241/Contact215–220 and
+  actual concurrent/failure browser pipeline audited. Independent ingress proof
+  over stable237/238 and observed241local runtime;no activation from pending CI.
+- Compiled candidate frontend is actual native HTTPS gateway;Next backend uses
+  separate port. Native direct probes choose backend;Chromium navigation/native
+  fetch use frontend. No Host/proto/Request repair,TLS bypass,interception or manual
+  browser identity headers. Existing CA/ephemeral SPKI/deadlines/cleanup retained.
+- 114compiled-gateway tests PASS,no skips;retain92 and22new browser cases:query
+  pre-I/O;3concurrent actions with2Owners;6restricted/unknown;3clearing-cookie/
+  rejected refresh;3budget deny;3Owner selector deny;3query then explicit correction.
+  Natural response-cookie reuse,one refresh/own13RPC+mutation,explicit409/no new
+  commit,logout one browser preserves other Owner;private no-store/no session JSON.
+  Rejected admission retains expired cookie until separate explicit allowed action.
+- Final92dev+92compiled regressions PASS,no skips. Frozen/typecheck/lint/5tooling/
+  13772app/3build/diff/final review PASS;web13491Vitest+17native actual,264packages
+  cached;2services typecheck/lint/build cached. Existing Link268 warning,0errors.
+  Add one required package+Media runtime CI gateway command;all old commands and
+  dual-runtime fail-closed Application gate retained. Exact new-push8jobs PENDING
+  before push,not CLOSED/VERIFIED. No production source/SQL/grants/UI/dependency/
+  provider config/Published changes;0new product features,transport evidence only.
+- Typed238boundary/236command/result handoff unchanged plus compiled gateway
+  fixtures. Controlled Auth/RPC/EVAL/model evidence is not live provider/DB/RLS/
+  deployed IP/CDN/Proxy/revocation/atomicity/public readiness. Next backend outcome:
+  audit/kunci Spill CTA Working persistence and Publish eligibility using pinned
+  D02:recoverable Working allowed without public Spill,visible active Publish must
+  reject without valid public Spill;never Generic Link/primary-use-case authority.
+  Owner/system label controls remain open UX,no guessing. Also refresh gate137
+  before public grants. Full D02/S5/S6/first Publish/public/RPC/live/production open.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

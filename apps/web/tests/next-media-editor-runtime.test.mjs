@@ -14,6 +14,8 @@ import { chromiumFixture, until } from "./chromium-fixture.ts";
 
 const require = createRequire(import.meta.url), web = fileURLToPath(new URL("..", import.meta.url)), source = resolve(web, "src");
 const productionRuntime = process.env.SPALL_TEST_MEDIA_EDITOR_PRODUCTION === "1";
+const browserGateway = productionRuntime && process.env.SPALL_TEST_MEDIA_EDITOR_BROWSER_GATEWAY === "1";
+let backendPort;
 const publicKey = "isolated-public-placeholder", signingKey = randomBytes(32), refreshSubjects = new Map();
 const subjects = ["91000000-0000-4000-8000-000000000001", "91000000-0000-4000-8000-000000000002"];
 const owners = ["92000000-0000-4000-8000-000000000001", "92000000-0000-4000-8000-000000000002"];
@@ -32,7 +34,7 @@ const S = "resolve_current_owner_state", C = "resolve_current_owner_home_context
 const I = "initialize_current_owner_blocks_from_media", A = "add_current_owner_media_block_working", W = "save_current_owner_block_media_working";
 const actions = ["initialize_media_block", "add_media_block", "save_media_block"];
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-const listen = server => new Promise((resolve, reject) => { server.once("error", reject); server.listen(0, "127.0.0.1", () => resolve(server.address().port)); });
+const listen = (server, port = 0) => new Promise((resolve, reject) => { server.once("error", reject); server.listen(port, "127.0.0.1", () => resolve(server.address().port)); });
 function token(subject, lifetime = 3600) {
   const now = Math.floor(Date.now() / 1000);
   const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url");
@@ -110,7 +112,7 @@ async function rpc(req, subject) {
 function request(cookie, value = command(), headers = {}, suffix = "", method = "POST", trust = true, transport = {}) {
   const raw = typeof value === "string" ? value : JSON.stringify(value);
   return new Promise((resolve, reject) => {
-    const req = httpsRequest(nextOrigin, { ...(transport.gateway ? { port: gatewayPort } : {}), path: transport.path ?? `/api/editor${suffix}`, method, ...(trust ? { ca: certificate } : {}), family: 4, servername: "localhost",
+    const req = httpsRequest(nextOrigin, { ...(transport.gateway ? { port: gatewayPort } : browserGateway ? { port: backendPort } : {}), path: transport.path ?? `/api/editor${suffix}`, method, ...(trust ? { ca: certificate } : {}), family: 4, servername: "localhost",
       headers: { origin: nextOrigin, host: new URL(nextOrigin).host, "content-type": "application/json", "content-length": Buffer.byteLength(raw),
         ...(cookie ? { cookie } : {}), ...headers }, signal: AbortSignal.timeout(15000) }, res => {
       let output = ""; res.setEncoding("utf8"); res.on("data", part => { output += part; if (Buffer.byteLength(output) > 131072) req.destroy(new Error("bounded fixture response")); });
@@ -181,6 +183,11 @@ before(async () => {
   }, providerHandler) : createServer(providerHandler);
   providerOrigin = `${productionRuntime ? "https://localhost" : "http://127.0.0.1"}:${await listen(provider)}`;
   const reservation = createServer(), port = await listen(reservation); await new Promise(resolve => reservation.close(resolve)); nextOrigin = `https://localhost:${port}`;
+  backendPort = port;
+  if (browserGateway) {
+    const backendReservation = createServer(); backendPort = await listen(backendReservation);
+    await new Promise(resolve => backendReservation.close(resolve));
+  }
   directory = await mkdtemp(join(tmpdir(), "spall-next-media-editor-")); const keyPath = join(directory, "fixture-key.pem"), certPath = join(directory, "fixture-cert.pem");
   execFileSync("openssl", ["req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "1", "-subj", "/CN=localhost",
     "-addext", "subjectAltName=DNS:localhost,IP:127.0.0.1", "-keyout", keyPath, "-out", certPath], { stdio: "ignore", timeout: 10000 });
@@ -222,7 +229,7 @@ export async function GET() { return new Response('<!doctype html><html><head><l
 `);
   const runtimeEnv = { ...process.env, NODE_ENV: productionRuntime ? "production" : "development", NEXT_TELEMETRY_DISABLED: "1",
     NEXT_PUBLIC_SUPABASE_URL: providerOrigin, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: publicKey };
-  let runtimeArgs = [require.resolve("next/dist/bin/next"), "dev", "--webpack", "--hostname", "127.0.0.1", "--port", String(port),
+  let runtimeArgs = [require.resolve("next/dist/bin/next"), "dev", "--webpack", "--hostname", "127.0.0.1", "--port", String(backendPort),
     "--experimental-https", "--experimental-https-key", keyPath, "--experimental-https-cert", certPath];
   if (productionRuntime) {
     child = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "build", "--webpack"], {
@@ -243,7 +250,7 @@ const app = next({ dev: false, dir: __dirname, hostname: "localhost", port: ${po
 app.prepare().then(() => {
   const handle = app.getRequestHandler();
   https.createServer({ key: fs.readFileSync(${JSON.stringify(keyPath)}), cert: fs.readFileSync(${JSON.stringify(certPath)}) },
-    (req, res) => handle(req, res)).listen(${port}, "127.0.0.1");
+    (req, res) => handle(req, res)).listen(${backendPort}, "127.0.0.1");
 }).catch(() => process.exit(1));
 `);
     runtimeArgs = [serverPath];
@@ -266,7 +273,7 @@ app.prepare().then(() => {
       outgoing.end('{"status":"unavailable"}'); return;
     }
     gatewayForwards++;
-    const upstream = httpsRequest(nextOrigin, { port: new URL(nextOrigin).port, path: incoming.url, method: incoming.method, headers: incoming.headers,
+    const upstream = httpsRequest(nextOrigin, { port: backendPort, path: incoming.url, method: incoming.method, headers: incoming.headers,
       ca: certificate, family: 4, servername: "localhost", signal: AbortSignal.timeout(15000) }, response => {
       outgoing.writeHead(response.statusCode ?? 503, response.headers);
       response.on("error", () => outgoing.destroy()); response.pipe(outgoing);
@@ -279,7 +286,7 @@ app.prepare().then(() => {
     outgoing.on("close", () => upstream.destroy());
     incoming.pipe(upstream);
   });
-  gatewayPort = await listen(gatewayServer);
+  gatewayPort = await listen(gatewayServer, browserGateway ? port : 0);
   cookieA = await encodeSession(subjects[0]); cookieB = await encodeSession(subjects[1]);
 }, { timeout: productionRuntime ? 180000 : 60000 });
 beforeEach(() => { gatewayForwards = 0; gatewayRejections = 0; observations.length = 0; acceptRefresh = false; deniedSubjects.clear(); inFlightSubjects.clear(); maximumSubjectsInFlight = 0; authRequests = 0; refreshCalls = 0; denyAfterMutation = false; models.clear(); calls = []; authCalls = 0; budgetCalls = 0; mutations = 0; events.length = 0;
@@ -749,4 +756,222 @@ test("Media gateway rejects raw targets before refresh and admits a separate can
   selectedRefreshResult(check(response, 200), actions[0], 0, value.media_working);
   successfulRefreshCalls(actions[0], subjects[0]); responseSession(response);
   assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 2);
+});
+
+if (browserGateway) test("actual Chromium Media query target is denied before gateway command I/O", { timeout: 60000 }, async () => {
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, cookieA); await navigate(browser, nextOrigin);
+    assert.deepEqual(checkBrowser(await browserPost(browser, { path: "/api/editor?untrusted=1" }), 403), { status: "unavailable" });
+    noCommandIo(); assert.deepEqual(observations, []); assert.equal(models.size, 0);
+    assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 1);
+  } finally { await browser.close(); }
+});
+
+if (browserGateway) for (const action of actions) test(`concurrent Chromium Media ${action} preserves Owner refresh cookies and Working`, { timeout: 60000 }, async () => {
+  const expired = await expiredSessions(subjects), browsers = [];
+  const values = subjects.map((_, i) => ({ ...command(action, working(assets[i], ` Raw ${i} ${action} `)),
+    ...(action === actions[2] ? { block_id: ids[i] } : {}) }));
+  const revision = action === actions[0] ? 1 : 4, mutation = action === actions[0] ? I : action === actions[1] ? A : W;
+  const negative = { status: action === actions[0] ? "already_initialized" : "stale_write" };
+  if (action !== actions[0]) for (let i = 0; i < 2; i++) seed(subjects[i], undefined, action === actions[1] ? priorIds[i] : ids[i]);
+  try {
+    for (let i = 0; i < 2; i++) browsers.push(await chromiumFixture({ certificateSpki: fixturePin() }));
+    await Promise.all(browsers.map(async (browser, i) => {
+      await browser.command("Page.enable"); await browser.command("Network.enable");
+      await browserSession(browser, expired[i]); await navigate(browser, nextOrigin);
+    }));
+    const responses = await Promise.all(browsers.map((browser, i) => browserPost(browser, { value: values[i] })));
+    for (let i = 0; i < 2; i++) {
+      selectedRefreshResult(checkBrowser(responses[i], 200), action, i, values[i].media_working);
+      const own = calls.filter(value => value.subject === subjects[i]);
+      assert.equal(own.length, 13); assert.equal(own.filter(value => value.name === mutation).length, 1);
+    }
+    assert.equal(events[0], "budget"); assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 2);
+    assert.equal(authRequests, 18); assert.equal(authCalls, 16); assert.equal(calls.length, 26); assert.equal(mutations, 2);
+    assert.ok(maximumSubjectsInFlight >= 2, "verified distinct Owners must overlap after issuance reset");
+    assert.equal(gatewayForwards, 4); assert.equal(gatewayRejections, 0);
+    // Chromium reuses its own relayed Set-Cookie; no CDP cookie replacement between commands.
+    const followups = await Promise.all(browsers.map((browser, i) => browserPost(browser, { value: values[i] })));
+    for (const result of followups) assert.deepEqual(checkBrowser(result, 409), negative);
+    assert.equal(budgetCalls, 4); assert.equal(refreshCalls, 2); assert.equal(mutations, 2);
+    for (let i = 0; i < 2; i++) {
+      assert.equal(models.get(subjects[i]).revision, revision);
+      assert.equal(models.get(subjects[i]).block.is_visible, false);
+      assert.deepEqual(models.get(subjects[i]).block.media_working, { asset_key: values[i].media_working.asset_key, alt_text: values[i].media_working.alt_text });
+      assert.equal(calls.filter(value => value.subject === subjects[i] && value.name === mutation).length, 2);
+    }
+    await browserSession(browsers[0], undefined); const prior = calls.length;
+    assert.deepEqual(checkBrowser(await browserPost(browsers[0], { value: values[0] }), 401), { status: "unauthenticated" });
+    assert.equal(calls.length, prior);
+    assert.deepEqual(checkBrowser(await browserPost(browsers[1], { value: values[1] }), 409), negative);
+    assert.equal(calls.length, prior + 3); assert.ok(calls.slice(-3).every(value => value.subject === subjects[1]));
+    assert.equal(budgetCalls, 6); assert.equal(refreshCalls, 2); assert.equal(mutations, 2);
+    assert.equal(gatewayForwards, 8); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+    for (let i = 0; i < 2; i++) {
+      assert.equal(models.get(subjects[i]).revision, revision); assert.equal(models.get(subjects[i]).block.is_visible, false);
+      assert.deepEqual(models.get(subjects[i]).block.media_working, { asset_key: values[i].media_working.asset_key, alt_text: values[i].media_working.alt_text });
+    }
+  } finally { await Promise.all(browsers.map(browser => browser.close())); }
+});
+
+if (browserGateway) for (const action of actions) for (const failure of ["restricted", "unknown"]) {
+  test(`actual Chromium Media ${action} ${failure} preserves private failure truth and refreshed session`, { timeout: 60000 }, async () => {
+    const [expired] = await expiredSessions([subjects[0]]);
+    if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]);
+    const initial = models.get(subjects[0]), value = command(action), mutation = action === actions[0] ? I : action === actions[1] ? A : W;
+    restricted = failure === "restricted"; malformedAck = failure === "unknown";
+    const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+    const unchangedModel = () => {
+      if (restricted) { assert.equal(mutations, 0); assert.deepEqual(models.get(subjects[0]), initial); }
+      else {
+        assert.equal(mutations, 1); const model = models.get(subjects[0]);
+        assert.equal(model.revision, action === actions[0] ? 1 : 4);
+        assert.equal(model.block.block_id, ids[0]); assert.equal(model.block.is_visible, false);
+        assert.deepEqual(model.block.media_working, { asset_key: value.media_working.asset_key, alt_text: value.media_working.alt_text });
+      }
+    };
+    try {
+      await browser.command("Page.enable"); await browser.command("Network.enable");
+      await browserSession(browser, expired); await navigate(browser, nextOrigin);
+      assert.deepEqual(checkBrowser(await browserPost(browser, { value }), restricted ? 403 : 503),
+        { status: restricted ? "restricted" : "outcome_unknown" });
+      assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1);
+      assert.equal(authCalls, restricted ? 1 : 2); assert.equal(authRequests, restricted ? 2 : 3);
+      assert.deepEqual(calls.map(call => call.name), restricted ? [S] : [S, S, mutation]);
+      assert.deepEqual(events.slice(0, 2), ["budget", "refresh"]); unchangedModel();
+      // A separate explicit command must reuse the actual refreshed cookie naturally.
+      assert.deepEqual(checkBrowser(await browserPost(browser, { value }), restricted ? 403 : 409),
+        { status: restricted ? "restricted" : action === actions[0] ? "already_initialized" : "stale_write" });
+      assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); unchangedModel();
+      assert.deepEqual(calls.map(call => call.name), restricted ? [S, S] : [S, S, mutation, S, S, mutation]);
+      assert.ok(calls.every(call => call.subject === subjects[0]));
+      await browserSession(browser, undefined); const prior = calls.length;
+      assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 401), { status: "unauthenticated" });
+      assert.equal(calls.length, prior); assert.equal(budgetCalls, 3); assert.equal(refreshCalls, 1); unchangedModel();
+      assert.deepEqual(observations.map(observation => observation.hasCookie), [true, true, false]);
+      assert.deepEqual(observations.map(observation => observation.status), restricted ? [403, 403, 401] : [503, 409, 401]);
+      assert.equal(gatewayForwards, 4); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+    } finally { await browser.close(); }
+  });
+}
+
+if (browserGateway) for (const action of actions) test(`actual Chromium Media ${action} applies rejected refresh clearing before explicit follow-up`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]); acceptRefresh = false;
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]);
+  const initial = models.get(subjects[0]), value = command(action);
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, expired); await navigate(browser, nextOrigin);
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 401), { status: "unauthenticated" });
+    assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 1); assert.equal(authCalls, 0);
+    assert.deepEqual(events, ["budget", "refresh"]); assert.deepEqual(calls, []); assert.equal(mutations, 0);
+    assert.deepEqual(models.get(subjects[0]), initial);
+    assert.deepEqual(observations, [{ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 401 }]);
+    // No cookie mutation/readback: Chromium must apply the real clearing Set-Cookie itself.
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 401), { status: "unauthenticated" });
+    assert.deepEqual(observations, [
+      { origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 401 },
+      { origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: false, status: 401 },
+    ]);
+    assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); assert.equal(authRequests, 1); assert.equal(authCalls, 0);
+    assert.deepEqual(events, ["budget", "refresh", "budget"]); assert.deepEqual(calls, []); assert.equal(mutations, 0);
+    assert.deepEqual(models.get(subjects[0]), initial);
+    assert.equal(gatewayForwards, 3); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+  } finally { await browser.close(); }
+});
+
+if (browserGateway) for (const action of actions) test(`actual Chromium Media ${action} budget denial preserves expired cookie for explicit admission`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]); budgetResult = 0;
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]);
+  const initial = structuredClone(models.get(subjects[0])), value = command(action), mutation = action === actions[0] ? I : action === actions[1] ? A : W;
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, expired); await navigate(browser, nextOrigin);
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 403), { status: "unavailable" });
+    assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 0); assert.equal(authRequests, 0); assert.equal(authCalls, 0);
+    assert.deepEqual(events, ["budget"]); assert.deepEqual(calls, []); assert.equal(mutations, 0);
+    assert.deepEqual(models.get(subjects[0]), initial);
+    assert.deepEqual(observations, [{ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 403 }]);
+    // Only admission changes; Chromium retains its cookie and applies the later refresh response itself.
+    budgetResult = 1;
+    selectedRefreshResult(checkBrowser(await browserPost(browser, { value }), 200), action, 0, value.media_working);
+    assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); assert.equal(authRequests, 9); assert.equal(authCalls, 8);
+    assert.deepEqual(events.slice(0, 3), ["budget", "budget", "refresh"]); assert.equal(calls.length, 13); assert.equal(mutations, 1);
+    const committed = structuredClone(models.get(subjects[0]));
+    assert.equal(committed.revision, action === actions[0] ? 1 : 4);
+    assert.equal(committed.block.block_id, ids[0]); assert.equal(committed.block.is_visible, false);
+    assert.deepEqual(committed.block.media_working, { asset_key: value.media_working.asset_key, alt_text: value.media_working.alt_text });
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 409),
+      { status: action === actions[0] ? "already_initialized" : "stale_write" });
+    assert.equal(budgetCalls, 3); assert.equal(refreshCalls, 1); assert.equal(mutations, 1);
+    assert.equal(calls.length, 16); assert.equal(calls.filter(call => call.name === mutation).length, 2);
+    assert.ok(calls.every(call => call.subject === subjects[0])); assert.deepEqual(models.get(subjects[0]), committed);
+    assert.deepEqual(observations, [403, 200, 409].map(status => ({ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status })));
+    assert.equal(gatewayForwards, 4); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+  } finally { await browser.close(); }
+});
+
+if (browserGateway) for (const action of actions) test(`actual Chromium Media ${action} rejects caller Owner selector before explicit corrected refresh`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]);
+  const initial = structuredClone(models.get(subjects[0])), value = command(action), mutation = action === actions[0] ? I : action === actions[1] ? A : W;
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, expired); await navigate(browser, nextOrigin);
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value: { ...value, owner_id: owners[1] } }), 403), { status: "unavailable" });
+    assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 0); assert.equal(authRequests, 0); assert.equal(authCalls, 0);
+    assert.deepEqual(events, ["budget"]); assert.deepEqual(calls, []); assert.equal(mutations, 0);
+    assert.deepEqual(models.get(subjects[0]), initial); assert.equal(models.has(subjects[1]), false);
+    assert.deepEqual(observations, [{ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 403 }]);
+    // A separate explicit corrected command removes only the caller selector; no cookie or server schema repair.
+    selectedRefreshResult(checkBrowser(await browserPost(browser, { value }), 200), action, 0, value.media_working);
+    assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); assert.equal(authRequests, 9); assert.equal(authCalls, 8);
+    assert.deepEqual(events.slice(0, 3), ["budget", "budget", "refresh"]); assert.equal(calls.length, 13); assert.equal(mutations, 1);
+    assert.equal(models.has(subjects[1]), false); const committed = structuredClone(models.get(subjects[0]));
+    assert.equal(committed.revision, action === actions[0] ? 1 : 4);
+    assert.equal(committed.block.block_id, ids[0]); assert.equal(committed.block.is_visible, false);
+    assert.deepEqual(committed.block.media_working, { asset_key: value.media_working.asset_key, alt_text: value.media_working.alt_text });
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 409),
+      { status: action === actions[0] ? "already_initialized" : "stale_write" });
+    assert.equal(budgetCalls, 3); assert.equal(refreshCalls, 1); assert.equal(mutations, 1);
+    assert.equal(calls.length, 16); assert.equal(calls.filter(call => call.name === mutation).length, 2);
+    assert.ok(calls.every(call => call.subject === subjects[0])); assert.deepEqual(models.get(subjects[0]), committed);
+    assert.equal(models.has(subjects[1]), false);
+    assert.deepEqual(observations, [403, 200, 409].map(status => ({ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status })));
+    assert.equal(gatewayForwards, 4); assert.equal(gatewayRejections, 0); assert.equal(fixtureError, undefined);
+  } finally { await browser.close(); }
+});
+
+if (browserGateway) for (const action of actions) test(`actual Chromium Media ${action} query denial preserves expired cookie before explicit canonical refresh`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]);
+  const initial = structuredClone(models.get(subjects[0])), value = command(action), mutation = action === actions[0] ? I : action === actions[1] ? A : W;
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, expired); await navigate(browser, nextOrigin);
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value, path: "/api/editor?untrusted=1" }), 403), { status: "unavailable" });
+    noCommandIo(); assert.equal(authCalls, 0); assert.deepEqual(observations, []);
+    assert.deepEqual(models.get(subjects[0]), initial);
+    assert.equal(gatewayForwards, 1); assert.equal(gatewayRejections, 1);
+    // Explicit canonical command only; no cookie mutation or readback after the gateway denial.
+    selectedRefreshResult(checkBrowser(await browserPost(browser, { value }), 200), action, 0, value.media_working);
+    successfulRefreshCalls(action, subjects[0]);
+    const committed = structuredClone(models.get(subjects[0]));
+    assert.equal(committed.revision, action === actions[0] ? 1 : 4);
+    assert.equal(committed.block.block_id, ids[0]); assert.equal(committed.block.is_visible, false);
+    assert.deepEqual(committed.block.media_working, { asset_key: value.media_working.asset_key, alt_text: value.media_working.alt_text });
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 409),
+      { status: action === actions[0] ? "already_initialized" : "stale_write" });
+    assert.equal(budgetCalls, 2); assert.equal(refreshCalls, 1); assert.equal(mutations, 1);
+    assert.equal(calls.length, 16); assert.equal(calls.filter(call => call.name === mutation).length, 2);
+    assert.ok(calls.every(call => call.subject === subjects[0])); assert.deepEqual(models.get(subjects[0]), committed);
+    assert.deepEqual(observations, [200, 409].map(status => ({ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status })));
+    assert.equal(gatewayForwards, 3); assert.equal(gatewayRejections, 1); assert.equal(fixtureError, undefined);
+  } finally { await browser.close(); }
 });
