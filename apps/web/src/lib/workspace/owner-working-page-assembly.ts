@@ -17,25 +17,25 @@ type State = z.infer<typeof statePayload>;
 type Proof = { subject: string | null; state: State };
 type Denial = { status: Exclude<State["status"], "active"> | "unavailable" };
 type RowBase = { block_id: string; position: number };
-type Page<R> = OwnerHomeContext & { collection: null | { revision: number; blocks: R[]; has_more: boolean; next_after_position: number | null } };
-type PageResult<R> = Page<R> | { status: "unavailable" | "invalid_page_request" | "stale_read" };
-type Snapshot<R> = OwnerHomeContext & { collection: null | { revision: number; blocks: R[] } };
-export type OwnerWorkingPageAssemblyResult<R> = Denial | Snapshot<R>;
+type Page<R, C extends OwnerHomeContext> = C & { collection: null | { revision: number; blocks: R[]; has_more: boolean; next_after_position: number | null } };
+type PageResult<R, C extends OwnerHomeContext> = Page<R, C> | { status: "unavailable" | "invalid_page_request" | "stale_read" };
+type Snapshot<R, C extends OwnerHomeContext> = C & { collection: null | { revision: number; blocks: R[] } };
+export type OwnerWorkingPageAssemblyResult<R, C extends OwnerHomeContext = OwnerHomeContext> = Denial | Snapshot<R, C>;
 const unavailable: Denial = { status: "unavailable" };
 const matches = (a: OwnerHomeContext, b: OwnerHomeContext) =>
   a.current_handle === b.current_handle && a.primary_use_case === b.primary_use_case;
 
 /** Two bounded complete observations; no atomic/global freshness, write, route or publication authority. */
-export function createOwnerWorkingPageAssembly<R extends RowBase>(client: Pick<SupabaseClient, "auth" | "schema">,
-  pageReader: { read(value: unknown): Promise<PageResult<R>> }, maximumRowBytes?: number) {
+export function createOwnerWorkingPageAssembly<R extends RowBase, C extends OwnerHomeContext = OwnerHomeContext>(client: Pick<SupabaseClient, "auth" | "schema">,
+  pageReader: { read(value: unknown): Promise<PageResult<R, C>> }, maximumRowBytes?: number) {
   const contextReader = createOwnerHomeContextReader(client);
   return {
-    async read(): Promise<OwnerWorkingPageAssemblyResult<R>> {
+    async read(): Promise<OwnerWorkingPageAssemblyResult<R, C>> {
       const controller = new AbortController();
       let timer: ReturnType<typeof setTimeout> | undefined;
-      const traverse = async (): Promise<Snapshot<R> | null> => {
+      const traverse = async (): Promise<Snapshot<R, C> | null> => {
         let request: IdentityBlockPageRequest = { expected_collection_revision: null, after_position: null };
-        let first: Page<R> | null = null;
+        let first: Page<R, C> | null = null;
         const rows: R[] = [];
         const ids = new Set<string>();
         let rowBytes = 2;
@@ -44,10 +44,9 @@ export function createOwnerWorkingPageAssembly<R extends RowBase>(client: Pick<S
           const page = await pageReader.read(request);
           if (controller.signal.aborted || page.status !== "success") return null;
           if (first === null) first = page;
-          if (!matches(first, page)) return null;
+          if (JSON.stringify({ ...first, collection: null }) !== JSON.stringify({ ...page, collection: null })) return null;
           if (page.collection === null) {
-            return index === 0 ? { status: "success", current_handle: page.current_handle,
-              primary_use_case: page.primary_use_case, collection: null } : null;
+            return index === 0 ? { ...page, collection: null } : null;
           }
           if (first.collection === null || page.collection.revision !== first.collection.revision) return null;
           for (const row of page.collection.blocks) {
@@ -58,8 +57,7 @@ export function createOwnerWorkingPageAssembly<R extends RowBase>(client: Pick<S
             }
             ids.add(row.block_id); rows.push(row);
           }
-          if (!page.collection.has_more) return { status: "success", current_handle: first.current_handle,
-            primary_use_case: first.primary_use_case, collection: { revision: first.collection.revision, blocks: rows } };
+          if (!page.collection.has_more) return { ...first, collection: { revision: first.collection.revision, blocks: rows } };
           request = { expected_collection_revision: first.collection.revision, after_position: page.collection.next_after_position };
         }
         return null;
@@ -79,7 +77,7 @@ export function createOwnerWorkingPageAssembly<R extends RowBase>(client: Pick<S
       };
       try {
         return await Promise.race([
-          (async (): Promise<OwnerWorkingPageAssemblyResult<R>> => {
+          (async (): Promise<OwnerWorkingPageAssemblyResult<R, C>> => {
             const before = await prove();
             if (!before || controller.signal.aborted) return unavailable;
             if (before.state.status !== "active") return { status: before.state.status };
@@ -97,7 +95,7 @@ export function createOwnerWorkingPageAssembly<R extends RowBase>(client: Pick<S
             const [current, currentBlocks] = await Promise.all([contextReader.read(), traverse()]);
             if (controller.signal.aborted || !current || !currentBlocks
               || !matches(context, current) || !matches(context, currentBlocks)
-              || JSON.stringify(blocks.collection) !== JSON.stringify(currentBlocks.collection)) return unavailable;
+              || JSON.stringify(blocks) !== JSON.stringify(currentBlocks)) return unavailable;
             const finalDenial = check(await prove());
             return finalDenial ?? blocks;
           })(),

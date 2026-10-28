@@ -8,5 +8,5 @@ type Row = NonNullable<Page["collection"]>["blocks"][number];
 export type OwnerBlocksWorkingPagedAssemblyResult = OwnerWorkingPageAssemblyResult<Row>;
 /** Established fixed reader and shared proof engine; no caller-selected strategy. */
 export function createOwnerBlocksWorkingPagedAssembly(client: Pick<SupabaseClient, "auth" | "schema">) {
-  return createOwnerWorkingPageAssembly(client, createOwnerBlocksWorkingPageReader(client));
+  return createOwnerWorkingPageAssembly<Row>(client, createOwnerBlocksWorkingPageReader(client));
 }

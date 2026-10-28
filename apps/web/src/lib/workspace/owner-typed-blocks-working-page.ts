@@ -1,7 +1,7 @@
 import "server-only";
 import { z } from "zod";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { identityBlockPageRequestSchema } from "./identity-block-page-request";
+import { createOwnerPrivateWorkingPageReader } from "./owner-private-working-page-reader";
 import { identityLinkWorkingInputSchema, inspectIdentityLinkWorkingInput } from "./identity-link-working-input";
 import { identityTextWorkingInputSchema, inspectIdentityTextWorkingInput } from "./identity-text-working-input";
 import { identityContactWorkingInputSchema, inspectIdentityContactWorkingInput } from "./identity-contact-working-input";
@@ -9,10 +9,6 @@ import { identityMediaWorkingInputSchema, inspectIdentityMediaWorkingInput } fro
 import { identitySpillCtaWorkingInputSchema } from "./identity-spill-cta-working-command";
 
 const position = z.number().int().min(1).max(2147483647);
-const working = z.union([identityLinkWorkingInputSchema, identityTextWorkingInputSchema,
-  identityContactWorkingInputSchema, identityMediaWorkingInputSchema.extend({
-    asset_key: z.string().uuid().regex(/^[0-9a-f-]+$/).nullable(),
-  }), identitySpillCtaWorkingInputSchema]);
 const metadata = {
   block_id: z.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/),
   position, is_visible: z.boolean(), payload_state: z.enum(["missing", "present"]),
@@ -36,13 +32,13 @@ export const typedIdentityWorkingRowSchema = z.discriminatedUnion("kind", [
   && (row.kind !== "media" ? row.media_asset_state === null
     : row.media_asset_state !== null && ((row.working?.kind === "media" ? row.working.asset_key : null) === null)
       === (row.media_asset_state === "not_selected")));
-const collection = z.object({ revision: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
+export const typedIdentityWorkingCollectionSchema = z.object({ revision: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
   blocks: z.array(typedIdentityWorkingRowSchema).max(100), has_more: z.boolean(), next_after_position: position.nullable(),
 }).strict().refine(value => new Set(value.blocks.map(row => row.block_id)).size === value.blocks.length
   && value.blocks.every((row, index) => index === 0 || value.blocks[index - 1]!.position < row.position)
   && (value.has_more ? value.blocks.length === 100 && value.next_after_position === value.blocks.at(-1)!.position
     : value.next_after_position === null));
-function issues(value: z.infer<typeof working> | null) {
+export function inspectTypedIdentityWorkingPayloadIssues(value: z.infer<typeof typedIdentityWorkingRowSchema>["working"]) {
   if (value === null) return [];
   const result = value.kind === "social" || value.kind === "generic_link" ? inspectIdentityLinkWorkingInput(value)
     : value.kind === "text" ? inspectIdentityTextWorkingInput(value)
@@ -52,49 +48,19 @@ function issues(value: z.infer<typeof working> | null) {
 }
 const response = z.discriminatedUnion("status", [
   z.object({ status: z.literal("success"), current_handle: z.string().min(3).max(30).regex(/^[a-z0-9][a-z0-9._-]*[a-z0-9]$/),
-    primary_use_case: z.enum(["creator", "affiliate", "business", "personal", "other"]), collection: collection.nullable(),
+    primary_use_case: z.enum(["creator", "affiliate", "business", "personal", "other"]), collection: typedIdentityWorkingCollectionSchema.nullable(),
   }).strict(),
   z.object({ status: z.enum(["unavailable", "invalid_page_request", "stale_read"]) }).strict(),
 ]).transform(value => {
   if (value.status !== "success") return value;
   if (value.collection === null) return { ...value, collection: null };
   return { ...value, collection: { ...value.collection,
-    blocks: value.collection.blocks.map(row => ({ ...row, issues: issues(row.working) })),
+    blocks: value.collection.blocks.map(row => ({ ...row, issues: inspectTypedIdentityWorkingPayloadIssues(row.working) })),
   } };
 });
 export type OwnerTypedBlocksWorkingPageResult = z.infer<typeof response>;
 
 /** Private page only; local diagnostics and registry observations are not Publish authority. */
 export function createOwnerTypedBlocksWorkingPageReader(client: Pick<SupabaseClient, "schema">) {
-  return {
-    async read(value: unknown): Promise<OwnerTypedBlocksWorkingPageResult> {
-      const request = identityBlockPageRequestSchema.safeParse(value);
-      if (!request.success) return { status: "invalid_page_request" };
-      const controller = new AbortController(); let timer: ReturnType<typeof setTimeout> | undefined;
-      const unavailable = (): OwnerTypedBlocksWorkingPageResult => ({ status: "unavailable" });
-      try {
-        return await Promise.race([
-          (async (): Promise<OwnerTypedBlocksWorkingPageResult> => {
-            const reply = await client.schema("api").rpc("resolve_current_owner_typed_blocks_working_page", {
-              input_request: request.data,
-            }).abortSignal(controller.signal);
-            if (controller.signal.aborted || reply.error !== null
-              || Buffer.byteLength(JSON.stringify(reply.data), "utf8") > 8388608) return unavailable();
-            const parsed = response.safeParse(reply.data);
-            if (!parsed.success) return unavailable();
-            if (parsed.data.status === "success" && request.data.after_position !== null) {
-              const page = parsed.data.collection;
-              if (page === null || page.revision !== request.data.expected_collection_revision
-                || page.blocks.some(row => row.position <= request.data.after_position!)) return unavailable();
-            }
-            return parsed.data;
-          })(),
-          new Promise<OwnerTypedBlocksWorkingPageResult>(resolve => { timer = setTimeout(() => {
-            controller.abort(); resolve(unavailable());
-          }, 5000); }),
-        ]);
-      } catch { return unavailable(); }
-      finally { clearTimeout(timer); }
-    },
-  };
+  return createOwnerPrivateWorkingPageReader(client, "resolve_current_owner_typed_blocks_working_page", value => response.safeParse(value));
 }

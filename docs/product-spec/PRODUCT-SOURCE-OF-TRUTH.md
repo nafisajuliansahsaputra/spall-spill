@@ -8592,6 +8592,52 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   legacy persisted composition only;do not infer whole-document up-to-date from it.
   D02/S5/S6/first Publish/public/RPC/live/production open/withheld. Same Goal continues.
 
+### Coherent persisted Identity Working handoff — 2026-10-28
+
+- Baseline8c5c62a029136f5728ba92b6979d9347cd1257ab exact origin;known245 work
+  preserved across resume. Prior CI40746889684 Database123023808717 PASS:full
+  Supabase reset/lint/security advisors/4755pgTAP67files/188native27groups;
+  Media123023808855 PASS;Security40746890201/Guard40746889957 PASS. Application
+  runtime123023808809 failed isolated compiled fixture build before assertions;
+  Application123028930157 correctly denied runtime gate. Cause not established,
+  no security/test relaxation;new exact-push full runtime evidence required.
+- JIT12.245 locked before code. One private backend outcome:zero-target persisted
+  Identity Working handoff combines existing profile/layout/separate onboarding
+  connection source/six-kind block collection/revision vector. New stable empty-path
+  definer RPC resolve_current_owner_identity_working_page composes existing reads
+  in one statement snapshot,requires same current active/completed Owner/context
+  and profile revision pairing. No writes/defaults/import/routes/execution grants.
+- Explicit publication_comparison:not_assessed. legacy_identity_work describes
+  only81comparison,never whole-document Saved/Live/up-to-date. Source slot stays
+  distinct from modular blocks;raw URL/text remain private,never navigation/media
+  authority. Missing collection vs initialized-empty/null optional source preserved.
+- Reused strict80/81/244schemas and fixed-RPC page transport;whole8MiB page limit,
+  100rows/10pages/1000rows/25RPC/3proofs/5s/64MiB row envelope retained. Shared proof
+  engine preserves/compares all root fields across pages and complete observations;
+  restriction/conflict/unsafe vector/unknown fields/deadline => status-only denial,
+  no partial result/retry/cache/global atomic freshness or publication authorization.
+- Targeted326SDK tests PASS(211legacy+38typed+48legacy Identity+29new);fresh isolated
+  PostgreSQL17.11 component reset74migrations,controlled Auth/pgTAP1.3.4:
+  183pgTAP(100CTA+44typed+39handoff)/15native(5CTA+4typed+6handoff) PASS,no skips.
+  Native profile/layout/source/block/restriction snapshot races verified. Component
+  excludes two unrelated cron schedulers;NOT full Supabase/Auth/provider/advisors.
+  Hosted Database retains full gates and adds6native handoff cases.
+- Frozen install/typecheck/lint/5tooling/13894app/3build/diff/security review PASS;
+  web13613Vitest+17native actual,264other package tests reused valid cache. Removed
+  new type-only unused schema warning;existing runtime fixture268warning remains,
+  0lint errors. No Owner presentation/security gates changed. New exact8push jobs
+  PENDING until observed;D02/S5/S6/first Publish/public/RPC/live/production OPEN.
+- Owner headless handoff:createOwnerPersistedIdentityWorking(client).read() takes
+  no selectors;typed result includes profile_working/layout_working/
+  connection_source_working/collection/revision_vector/publication_comparison.
+  Fixed page reader accepts106revision/cursor only;fixtures in SDK/068pgTAP/native
+  tests. Private factories remain unmounted with execution withheld;not full D02
+  editor/Appearance or published Identity snapshot. No whole-document live claim.
+- Next backend outcome:audit returning-Owner Core Profile Working CAS save and
+  exact current-session acknowledgment without onboarding regression/Published
+  mutation;existing onboarding saves intentionally deny completed Owners. Preserve
+  profile/media validation and stable ownership;continue same Goal/backend lane.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

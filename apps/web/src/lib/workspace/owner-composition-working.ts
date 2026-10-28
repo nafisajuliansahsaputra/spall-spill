@@ -24,6 +24,8 @@ const context = z.object({ status: z.literal("success"),
   identity_work: z.enum(["never_published", "unchanged", "unpublished_changes"]),
 }).strict();
 export type OwnerCompositionWorking = z.infer<typeof context>;
+export const ownerLayoutWorkingSchema = context.shape.layout_working;
+export const ownerLegacyIdentityWorkSchema = context.shape.identity_work;
 
 /** Unmounted current-session reader. Claims/state proof and scoped grants are enabling gates. */
 export function createOwnerCompositionWorkingReader(client: Pick<SupabaseClient, "schema">) {

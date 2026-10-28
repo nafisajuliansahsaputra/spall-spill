@@ -25,6 +25,7 @@ const context = z.object({ status: z.literal("success"),
   }).strict(),
 }).strict();
 export type OwnerProfileWorking = z.infer<typeof context>;
+export const ownerProfileWorkingSchema = context.shape.profile_working;
 
 /** Unmounted current-session reader. Claims/state proof and scoped grants are enabling gates. */
 export function createOwnerProfileWorkingReader(client: Pick<SupabaseClient, "schema">) {
