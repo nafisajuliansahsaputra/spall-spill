@@ -8687,6 +8687,60 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   all intermediate edits,relax old public-safe schema,or infer whole-Published state.
   D02/S5/S6/first Publish/public/RPC/live/production remain OPEN;continue same Goal.
 
+### Returning-Owner layout Working CAS integrated — 2026-10-28
+
+- Baseline3d471ddf77cca496834ebfee48900c4d2f4a99fd exact clean origin.246Security
+  40787981535/Dependency123165865265/Secret123165865470/SAST123165865598 and
+  Guard40787981542/job123165865152 PASS. CI40787981510 runtime123166134350/
+  Media123166134556/Database123166134662 running at readback;no closure inferred.
+- JIT12.247 locked before production source;AGENTS/Protocol/checkpoint/J5/J9/
+  pinned9.6D02/12.10§12–18/81/245 and actual schema/onboarding save/guard SDK
+  audited. One backend outcome:existing own layout recipe CAS save plus245full
+  persisted Identity readback,without repeating onboarding or changing content.
+- New private volatile empty-path api.save_current_owner_layout_working(jsonb)
+  requires current active/completed Owner/Home context;locks Owner,binding,own
+  layout. Strict exact action/base revision/one of4existingkeys;no Owner/Handle/
+  progress/content selector,coercion/extra key/default creation/PrimaryUseCase ACL.
+  CAS precedes no-op comparison;changed key increments once,exact same-key no-op
+  retains revision/timestamp. Stale replay cannot overwrite even matching key.
+  Safe maximum changed save returns revision_exhausted;max no-op remains valid.
+- Transaction preserves profile/source/all6block kinds/membership/revisions/
+  onboarding/account/Handle/Published. No UI/route/outbound/media/grant activation;
+  PUBLIC/anon/authenticated/service_role execution withheld. Missing existing
+  layout/context => unavailable,never initialization;all denials status-only.
+- SDK createOwnerLayoutWorkingSave(client).save(intent) validates before I/O,
+  reuses81layout schema and existing guarded mutation proof pattern:claims/state
+  before+after,same subject/active Owner,one RPC,5s abort,strict key/revision/changed
+  acknowledgment. Predispatch failure unavailable;lost/malformed/postdispatch
+  rebind/restriction => outcome_unknown,no retry/rollback/Saved-as-Live claim.
+- 52SDK tests PASS(allkeys,no-op,maxsafe,strict/caller authority,denials,proofs,
+  wrong ack,deadline/abort);initial explicit-undefined fixture default bug corrected
+  in test harness,not production decoder.49pgTAP/5native targeted PASS:competing
+  keys only one commit,stale replay,no-op timestamp,parallelOwners,layout+block
+  independent revisions,restriction committed while save waits. Full245handoff
+  reads exact saved key and layout revision vector with profile/blocks preserved.
+- Fresh owned PostgreSQL17.11 component reset75migrations/controlled Auth/pgTAP1.3.4:
+  232pgTAP(100+44+39+49)/20native(5+4+6+5) PASS,no skips. Two unrelated cron
+  schedulers excluded from component fixture;NOT hosted Supabase/Auth/advisor proof.
+  CI retains full reset/lint/advisor/alltests and adds5native layout races.
+- Frozen install/typecheck/lint/5tooling/13946app/3build/diff/security review PASS;
+  web13665Vitest+17native actual,264other package tests valid cache. Existing Link269
+  lint warning,0errors.246555compiled Chromium proof retained for unchanged runtime
+  paths;new exact8push gates/full DB evidence PENDING. No journey/public closure.
+- Owner headless handoff:save({action:save_layout_working,base_layout_revision:N,
+  starter_key:clean|social_focus|featured|business});success carries changed and
+  layout_working:{starter_key,revision};stale_write/invalid_layout_working/
+  revision_exhausted/unavailable/outcome_unknown retain recovery truth. Follow with
+  createOwnerPersistedIdentityWorking(client).read() for guarded full readback;
+  no auto retry unknown. Fixtures in SDK/069pgTAP/native tests. Factory unmounted,
+  RPC execution withheld pending scoped activation/runtime authority;not shipped UI.
+- Next backend outcome:recoverable Core Profile Working CAS save/read with typed
+  field-local issues and guarded acknowledgment,while keeping valid-only legacy
+  profile/onboarding readers and Published projection contracts intact. D02 permits
+  invalid intermediate recovery;lock bounded persistence design before code rather
+  than silently reusing valid-only onboarding write or relaxing old schema.
+  Same Goal continues;D02/S5/S6/first Publish/public/RPC/live/production remain OPEN.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
