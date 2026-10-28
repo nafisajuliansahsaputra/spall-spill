@@ -22,7 +22,7 @@ env:
 jobs:
   application:
     name: Application
-    needs: application_runtime
+    needs: [application_runtime, media_runtime]
     if: ${{ always() && (github.event_name != 'pull_request' || github.head_ref != 'codex/autopilot') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -31,7 +31,8 @@ jobs:
       - name: Require runtime verification
         env:
           RUNTIME_RESULT: ${{ needs.application_runtime.result }}
-        run: test "$RUNTIME_RESULT" = success
+          MEDIA_RESULT: ${{ needs.media_runtime.result }}
+        run: test "$RUNTIME_RESULT" = success && test "$MEDIA_RESULT" = success
 
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -135,13 +136,51 @@ jobs:
           pnpm --filter @spall-spill/web test:ssr-runtime
           pnpm --filter @spall-spill/web test:text-editor-runtime
           pnpm --filter @spall-spill/web test:contact-editor-runtime
-          pnpm --filter @spall-spill/web test:media-editor-runtime
           pnpm --filter @spall-spill/web test:contact-editor-production-runtime
           pnpm --filter @spall-spill/web test:contact-editor-gateway-browser-runtime
           pnpm --filter @spall-spill/web test:text-editor-production-runtime
           pnpm --filter @spall-spill/web test:text-editor-gateway-browser-runtime
           pnpm --filter @spall-spill/web test:editor-production-runtime
           pnpm --filter @spall-spill/web test:editor-gateway-browser-runtime
+
+  media_runtime:
+    name: Media runtime
+    if: github.event_name != 'pull_request' || github.head_ref != 'codex/autopilot'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Setup pnpm
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        with:
+          version: 11.24.0
+          install: false
+
+      - name: Verify toolchain
+        run: |
+          node --version
+          pnpm --version
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Isolated Media dev and compiled browser session transport
+        run: |
+          export SPALL_TEST_BROWSER="$(command -v google-chrome || command -v chromium)"
+          test -n "$SPALL_TEST_BROWSER"
+          "$SPALL_TEST_BROWSER" --version
+          pnpm --filter @spall-spill/web test:media-editor-runtime
+          pnpm --filter @spall-spill/web test:media-editor-production-runtime
 
   database:
     name: Database

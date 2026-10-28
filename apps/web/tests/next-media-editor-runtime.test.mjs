@@ -1,8 +1,8 @@
 import { before, beforeEach, after, test } from "node:test";
 import assert from "node:assert/strict";
-import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { createHash, X509Certificate, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { createServer } from "node:http";
-import { request as httpsRequest } from "node:https";
+import { createServer as createHttpsServer, request as httpsRequest } from "node:https";
 import { spawn, execFileSync } from "node:child_process";
 import { mkdtemp, mkdir, writeFile, readFile, symlink, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -10,15 +10,19 @@ import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { createServerClient } from "@supabase/ssr";
+import { chromiumFixture, until } from "./chromium-fixture.ts";
 
 const require = createRequire(import.meta.url), web = fileURLToPath(new URL("..", import.meta.url)), source = resolve(web, "src");
+const productionRuntime = process.env.SPALL_TEST_MEDIA_EDITOR_PRODUCTION === "1";
 const publicKey = "isolated-public-placeholder", signingKey = randomBytes(32), refreshSubjects = new Map();
 const subjects = ["91000000-0000-4000-8000-000000000001", "91000000-0000-4000-8000-000000000002"];
 const owners = ["92000000-0000-4000-8000-000000000001", "92000000-0000-4000-8000-000000000002"];
 const ids = ["93000000-0000-4000-8000-000000000001", "93000000-0000-4000-8000-000000000002"];
 const assets = ["95000000-0000-4000-8000-000000000001", "95000000-0000-4000-8000-000000000002"];
 const priorIds = ["94000000-0000-4000-8000-000000000001", "94000000-0000-4000-8000-000000000002"];
-let provider, child, directory, providerOrigin, nextOrigin, certificate, cookieA, cookieB;
+let provider, child, directory, providerOrigin, nextOrigin, certificate, cookieA, cookieB, siblingServer, siblingOrigin;
+let acceptRefresh = false;
+const observations = [];
 const deniedSubjects = new Set(), inFlightSubjects = new Map();
 let maximumSubjectsInFlight = 0, authRequests = 0, refreshCalls = 0, denyAfterMutation = false;
 let calls = [], authCalls = 0, budgetCalls = 0, mutations = 0, budgetResult = 1, restricted = false, malformedAck = false, fixtureError;
@@ -122,9 +126,17 @@ function check(response, status, expected) {
   const result = JSON.parse(response.raw); if (expected) assert.deepEqual(result, expected); return result;
 }
 before(async () => {
-  provider = createServer(async (req, res) => {
+  const providerHandler = async (req, res) => {
     res.setHeader("content-type", "application/json");
     try {
+      if (req.url === "/fixture-observation") {
+        assert.equal(req.method, "POST");
+        let raw = ""; for await (const part of req) { raw += part; assert.ok(raw.length < 2048); }
+        const value = JSON.parse(raw);
+        assert.deepEqual(Object.keys(value).sort(), ["hasCookie", "origin", "site", "status", "type"]);
+        assert.equal(typeof value.hasCookie, "boolean"); observations.push(value);
+        res.end('{}'); return;
+      }
       if (req.url === "/fixture-budget") {
         assert.equal(req.method, "POST"); assert.equal(req.headers.authorization, "Bearer isolated-budget-placeholder");
         const wire = await body(req); assert.equal(wire.length, 9); assert.equal(wire[0], "eval"); assert.equal(wire[2], 2);
@@ -134,7 +146,19 @@ before(async () => {
       }
       if (req.url.startsWith("/auth/v1/")) authRequests++;
       if (req.method === "POST" && req.url === "/auth/v1/token?grant_type=refresh_token") {
-        refreshCalls++; res.writeHead(400); res.end('{"code":"refresh_token_not_found","message":"Fixture refresh denied"}'); return;
+        refreshCalls++; events.push("refresh"); assert.equal(req.headers.apikey, publicKey);
+        let raw = ""; for await (const part of req) { raw += part; assert.ok(Buffer.byteLength(raw) <= 4096); }
+        const value = JSON.parse(raw); assert.deepEqual(Object.keys(value), ["refresh_token"]);
+        assert.ok(refreshSubjects.has(value.refresh_token), "refresh must belong to an issued fixture session");
+        if (!acceptRefresh) {
+          res.writeHead(400); res.end('{"code":"refresh_token_not_found","message":"Fixture refresh denied"}'); return;
+        }
+        const subject = refreshSubjects.get(value.refresh_token);
+        assert.ok(subjects.includes(subject), "refresh must retain an independently known subject");
+        const rotated = `isolated-rotated-${randomBytes(16).toString("hex")}`; refreshSubjects.set(rotated, subject);
+        res.end(JSON.stringify({ access_token: token(subject), refresh_token: rotated, token_type: "bearer", expires_in: 3600,
+          expires_at: Math.floor(Date.now() / 1000) + 3600, user: { id: subject, aud: "authenticated", role: "authenticated",
+            app_metadata: {}, user_metadata: {}, identities: [], created_at: "2026-01-01T00:00:00Z" } })); return;
       }
       assert.equal(req.headers.apikey, publicKey);
       assert.notEqual(req.headers.authorization, "Bearer isolated-budget-placeholder");
@@ -149,13 +173,22 @@ before(async () => {
       if (remaining) inFlightSubjects.set(subject, remaining); else inFlightSubjects.delete(subject);
       res.end(JSON.stringify({ id: subject, aud: "authenticated", role: "authenticated", app_metadata: {}, user_metadata: {}, identities: [], created_at: "2026-01-01T00:00:00Z" }));
     } catch { fixtureError = true; res.writeHead(500); res.end('{"status":"fixture_error"}'); }
-  });
-  providerOrigin = `http://127.0.0.1:${await listen(provider)}`;
+  };
+  provider = productionRuntime ? createHttpsServer({
+    key: await readFile(join(process.env.SPALL_TEST_MEDIA_EDITOR_CERT_DIRECTORY, "fixture-key.pem")),
+    cert: await readFile(join(process.env.SPALL_TEST_MEDIA_EDITOR_CERT_DIRECTORY, "fixture-cert.pem")),
+  }, providerHandler) : createServer(providerHandler);
+  providerOrigin = `${productionRuntime ? "https://localhost" : "http://127.0.0.1"}:${await listen(provider)}`;
   const reservation = createServer(), port = await listen(reservation); await new Promise(resolve => reservation.close(resolve)); nextOrigin = `https://localhost:${port}`;
   directory = await mkdtemp(join(tmpdir(), "spall-next-media-editor-")); const keyPath = join(directory, "fixture-key.pem"), certPath = join(directory, "fixture-cert.pem");
   execFileSync("openssl", ["req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "1", "-subj", "/CN=localhost",
     "-addext", "subjectAltName=DNS:localhost,IP:127.0.0.1", "-keyout", keyPath, "-out", certPath], { stdio: "ignore", timeout: 10000 });
-  certificate = await readFile(certPath); await symlink(join(web, "node_modules"), join(directory, "node_modules"), "dir");
+  certificate = await readFile(certPath);
+  siblingServer = createHttpsServer({ key: await readFile(keyPath), cert: certificate }, (_req, res) => {
+    res.setHeader("content-type", "text/html"); res.end('<!doctype html><html><head><link rel="icon" href="data:,"></head><body>Sibling fixture</body></html>');
+  });
+  siblingOrigin = `https://localhost:${await listen(siblingServer)}`;
+  await symlink(join(web, "node_modules"), join(directory, "node_modules"), "dir");
   await mkdir(join(directory, "app/api/editor"), { recursive: true }); await writeFile(join(directory, "package.json"), '{"name":"isolated-media-editor-fixture","private":true}');
   await writeFile(join(directory, "tsconfig.json"), JSON.stringify({ compilerOptions: { target: "ES2017", module: "esnext", moduleResolution: "bundler", jsx: "react-jsx",
     esModuleInterop: true, skipLibCheck: true, paths: { "@/*": [`${source}/*`] } } }));
@@ -174,13 +207,47 @@ const handle = createBudgetedIdentityMediaEditorHttpBoundary({ trustedOrigin: ${
     return new Response(reply.body, { status: reply.status, headers: reply.headers });
   },
 });
-export async function POST(request: Request) { return handle(request); }
-export async function GET() { return new Response("ready"); }
+export async function POST(request: Request) {
+  const result = await handle(request);
+  const observed = await fetch(${JSON.stringify(providerOrigin + "/fixture-observation")}, {
+    method: "POST", headers: { "content-type": "application/json" }, signal: AbortSignal.timeout(1000),
+    body: JSON.stringify({ origin: request.headers.get("origin"), site: request.headers.get("sec-fetch-site"),
+      type: request.headers.get("content-type"), hasCookie: request.headers.has("cookie"), status: result.status }),
+  });
+  if (!observed.ok) throw new Error("Fixture observation failed");
+  return result;
+}
+export async function GET() { return new Response('<!doctype html><html><head><link rel="icon" href="data:,"></head><body>Editor fixture</body></html>', { headers: { "content-type": "text/html" } }); }
 `);
-  child = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "dev", "--webpack", "--hostname", "127.0.0.1", "--port", String(port),
-    "--experimental-https", "--experimental-https-key", keyPath, "--experimental-https-cert", certPath], { cwd: directory, detached: true,
-    stdio: ["ignore", "ignore", "ignore"], env: { ...process.env, NODE_ENV: "development", NEXT_TELEMETRY_DISABLED: "1",
-      NEXT_PUBLIC_SUPABASE_URL: providerOrigin, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: publicKey } });
+  const runtimeEnv = { ...process.env, NODE_ENV: productionRuntime ? "production" : "development", NEXT_TELEMETRY_DISABLED: "1",
+    NEXT_PUBLIC_SUPABASE_URL: providerOrigin, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: publicKey };
+  let runtimeArgs = [require.resolve("next/dist/bin/next"), "dev", "--webpack", "--hostname", "127.0.0.1", "--port", String(port),
+    "--experimental-https", "--experimental-https-key", keyPath, "--experimental-https-cert", certPath];
+  if (productionRuntime) {
+    child = spawn(process.execPath, [require.resolve("next/dist/bin/next"), "build", "--webpack"], {
+      cwd: directory, detached: true, stdio: ["ignore", "ignore", "ignore"], env: runtimeEnv,
+    });
+    await new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(new Error("isolated Media production build exceeded deadline")), 120000);
+      child.once("error", error => { clearTimeout(timer); reject(error); });
+      child.once("exit", code => { clearTimeout(timer); if (code === 0) resolve(); else reject(new Error("isolated Media production build failed")); });
+    });
+    assert.ok((await readFile(join(directory, ".next/BUILD_ID"), "utf8")).trim(), "compiled Media output must have an actual build ID");
+    const serverPath = join(directory, "fixture-production.cjs");
+    await writeFile(serverPath, `
+const fs = require("node:fs");
+const https = require("node:https");
+const next = require("next");
+const app = next({ dev: false, dir: __dirname, hostname: "localhost", port: ${port}, webpack: true });
+app.prepare().then(() => {
+  const handle = app.getRequestHandler();
+  https.createServer({ key: fs.readFileSync(${JSON.stringify(keyPath)}), cert: fs.readFileSync(${JSON.stringify(certPath)}) },
+    (req, res) => handle(req, res)).listen(${port}, "127.0.0.1");
+}).catch(() => process.exit(1));
+`);
+    runtimeArgs = [serverPath];
+  }
+  child = spawn(process.execPath, runtimeArgs, { cwd: directory, detached: true, stdio: ["ignore", "ignore", "ignore"], env: runtimeEnv });
   let spawnError; child.once("error", () => { spawnError = true; }); const deadline = performance.now() + 45000; let ready = false;
   while (performance.now() < deadline) {
     if (spawnError || child.exitCode !== null) throw new Error("isolated Media Next runtime failed to start");
@@ -190,8 +257,8 @@ export async function GET() { return new Response("ready"); }
     await delay(250);
   }
   assert.ok(ready, "isolated Media HTTPS runtime must become ready"); cookieA = await encodeSession(subjects[0]); cookieB = await encodeSession(subjects[1]);
-}, { timeout: 60000 });
-beforeEach(() => { deniedSubjects.clear(); inFlightSubjects.clear(); maximumSubjectsInFlight = 0; authRequests = 0; refreshCalls = 0; denyAfterMutation = false; models.clear(); calls = []; authCalls = 0; budgetCalls = 0; mutations = 0; events.length = 0;
+}, { timeout: productionRuntime ? 180000 : 60000 });
+beforeEach(() => { observations.length = 0; acceptRefresh = false; deniedSubjects.clear(); inFlightSubjects.clear(); maximumSubjectsInFlight = 0; authRequests = 0; refreshCalls = 0; denyAfterMutation = false; models.clear(); calls = []; authCalls = 0; budgetCalls = 0; mutations = 0; events.length = 0;
   budgetResult = 1; restricted = false; malformedAck = false; fixtureError = undefined; });
 after(async () => {
   if (child?.pid) { const exited = child.exitCode === null ? new Promise(resolve => child.once("exit", resolve)) : Promise.resolve();
@@ -199,6 +266,7 @@ after(async () => {
     await Promise.race([exited, delay(2000)]); try { process.kill(-child.pid, "SIGKILL"); } catch { /* already stopped */ }
     await exited;
   }
+  if (siblingServer) { siblingServer.closeAllConnections(); await new Promise(resolve => siblingServer.close(resolve)); }
   if (provider) { provider.closeAllConnections(); await new Promise(resolve => provider.close(resolve)); }
   if (directory) await rm(directory, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
 });
@@ -313,4 +381,201 @@ test("recognized cookie with provider signature mismatch cannot reach RPC", { ti
   signingKey[0] ^= 255;
   try { check(await request(cookieA), 401, { status: "unauthenticated" }); assert.equal(calls.length, 0); assert.equal(mutations, 0); }
   finally { signingKey[0] ^= 255; }
+});
+
+async function browserSession(browser, cookie) {
+  await browser.command("Network.clearBrowserCookies");
+  if (cookie) await browser.command("Network.setCookies", { cookies: cookie.split("; ").map(pair => {
+    const index = pair.indexOf("=");
+    return { name: pair.slice(0, index), value: decodeURIComponent(pair.slice(index + 1)), url: nextOrigin,
+      path: "/", secure: true, sameSite: "Lax" };
+  }) });
+}
+async function navigate(browser, origin) {
+  await browser.command("Page.navigate", { url: `${origin}/api/editor` });
+  await until(() => browser.evaluate(`document.readyState === 'complete' && location.origin === ${JSON.stringify(origin)}`));
+}
+async function browserPost(browser, options = {}) {
+  const reply = await browser.command("Runtime.evaluate", { awaitPromise: true, returnByValue: true,
+    expression: `(async () => {
+      const response = await fetch(${JSON.stringify(nextOrigin + (options.path ?? "/api/editor"))}, {
+        method: "POST", credentials: "include", ${options.cross ? 'mode: "no-cors",' : ''}
+        headers: { "content-type": ${JSON.stringify(options.cross ? "text/plain" : "application/json")} },
+        body: ${JSON.stringify(JSON.stringify(options.value ?? command()))},
+      });
+      return ${options.cross ? '{ type: response.type, status: response.status }' : `{ status: response.status, cache: response.headers.get("cache-control"), body: await response.json(),
+        privacy: { type: response.headers.get("content-type"), expires: response.headers.get("expires"), pragma: response.headers.get("pragma"),
+          referrer: response.headers.get("referrer-policy"), nosniff: response.headers.get("x-content-type-options"),
+          location: response.headers.has("location"), cors: response.headers.has("access-control-allow-origin"), authorization: response.headers.has("authorization") } }`};
+    })()`,
+  });
+  assert.equal(reply.exceptionDetails, undefined, "actual browser fetch must settle without script error");
+  assert.equal(fixtureError, undefined); return reply.result.value;
+}
+function fixturePin() {
+  return createHash("sha256").update(new X509Certificate(certificate).publicKey.export({ type: "spki", format: "der" })).digest("base64");
+}
+function checkBrowser(result, status) {
+  assert.equal(result.status, status); assert.equal(result.cache, "private, no-store, max-age=0");
+  assert.deepEqual(result.privacy, { type: "application/json; charset=utf-8", expires: "0", pragma: "no-cache",
+    referrer: "no-referrer", nosniff: "nosniff", location: false, cors: false, authorization: false });
+  assert.ok(Buffer.byteLength(JSON.stringify(result.body)) <= 32768);
+  return result.body;
+}
+test("actual Chromium rejects Media fixture certificate with unrelated SPKI", { timeout: 60000 }, async () => {
+  const browser = await chromiumFixture({ certificateSpki: randomBytes(32).toString("base64") });
+  try {
+    await browser.command("Page.enable");
+    const result = await browser.command("Page.navigate", { url: `${nextOrigin}/api/editor` });
+    assert.equal(result.errorText, "net::ERR_CERT_AUTHORITY_INVALID");
+    assert.equal(budgetCalls, 0); assert.equal(authCalls, 0); assert.equal(authRequests, 0); assert.equal(refreshCalls, 0); assert.deepEqual(calls, []); assert.deepEqual(observations, []);
+  } finally { await browser.close(); }
+});
+for (const action of actions) test(`actual Chromium ${action} carries SSR cookie and selected raw hidden Media`, { timeout: 60000 }, async () => {
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]);
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable"); await navigate(browser, nextOrigin);
+    await browserSession(browser, cookieA); const value = command(action);
+    const result = checkBrowser(await browserPost(browser, { value }), 200);
+    assert.equal(result.status, action === actions[0] ? "initialized" : action === actions[1] ? "allocated" : "saved");
+    assert.equal(result.block_id, ids[0]); assert.equal(result.collection_revision, action === actions[0] ? 1 : 4);
+    assert.equal(result.readback.status, "current"); assert.equal(result.readback.relation, "same_revision");
+    assert.equal(result.readback.snapshot.current_handle, "fixture-owner-0"); assert.equal(result.readback.snapshot.block.is_visible, false);
+    assert.deepEqual(result.readback.snapshot.block.media_working, { asset_key: value.media_working.asset_key, alt_text: value.media_working.alt_text });
+    assert.deepEqual(observations, [{ origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 200 }]);
+    assert.equal(authCalls, 8); assert.equal(authRequests, 8); assert.equal(refreshCalls, 0); assert.equal(budgetCalls, 1); assert.equal(mutations, 1); assert.equal(events[0], "budget");
+    const names = calls.map(c => c.name); for (const start of [6, 9]) {
+      assert.deepEqual(names.slice(start, start + 2).sort(), [C, T].sort()); names.splice(start, 2, C, T);
+    }
+    assert.deepEqual(names, [S, S, action === actions[0] ? I : action === actions[1] ? A : W, S, S, S, C, T, S, C, T, S, S]);
+    assert.ok(calls.every(c => c.subject === subjects[0]));
+  } finally { await browser.close(); }
+});
+test("actual Chromium Media cookie replacement separates Owner and cookie loss denies further RPC", { timeout: 60000 }, async () => {
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable"); await navigate(browser, nextOrigin);
+    for (let i = 0; i < 2; i++) {
+      await browserSession(browser, i ? cookieB : cookieA);
+      const result = checkBrowser(await browserPost(browser, { value: command(actions[0], working(assets[i], ` Raw ${i} `)) }), 200);
+      assert.equal(result.status, "initialized"); assert.equal(result.block_id, ids[i]);
+      assert.equal(result.readback.snapshot.current_handle, `fixture-owner-${i}`);
+      assert.deepEqual(result.readback.snapshot.block.media_working, { asset_key: assets[i], alt_text: ` Raw ${i} ` });
+      assert.deepEqual(observations.at(-1), { origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: true, status: 200 });
+      assert.equal(calls.filter(c => c.subject === subjects[i]).length, 13);
+    }
+    assert.equal(models.size, 2); assert.equal(authCalls, 16); assert.equal(budgetCalls, 2); assert.equal(mutations, 2);
+    await browserSession(browser, undefined); const count = calls.length;
+    assert.deepEqual(checkBrowser(await browserPost(browser), 401), { status: "unauthenticated" });
+    assert.equal(calls.length, count); assert.equal(mutations, 2); assert.equal(authCalls, 16); assert.equal(budgetCalls, 3);
+    assert.deepEqual(observations.at(-1), { origin: nextOrigin, site: "same-origin", type: "application/json", hasCookie: false, status: 401 });
+  } finally { await browser.close(); }
+});
+for (const sameSite of [false, true]) test(`actual Chromium Media ${sameSite ? "same-site cross-origin" : "cross-site"} simple POST denies before budget/Auth/RPC`, { timeout: 60000 }, async () => {
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  const origin = sameSite ? siblingOrigin : nextOrigin.replace("localhost", "127.0.0.1");
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable"); await browserSession(browser, cookieA);
+    await navigate(browser, origin);
+    assert.deepEqual(await browserPost(browser, { cross: true }), { type: "opaque", status: 0 });
+    assert.deepEqual(observations, [{ origin, site: sameSite ? "same-site" : "cross-site", type: "text/plain", hasCookie: sameSite, status: 403 }]);
+    assert.equal(budgetCalls, 0); assert.equal(authCalls, 0); assert.equal(authRequests, 0); assert.equal(refreshCalls, 0); assert.equal(mutations, 0);
+    assert.deepEqual(calls, []); assert.deepEqual(events, []); assert.equal(models.size, 0);
+  } finally { await browser.close(); }
+});
+
+async function expiredSessions(selectedSubjects) {
+  const cookies = await Promise.all(selectedSubjects.map(subject => encodeSession(subject, 2)));
+  await delay(2100);
+  // Exclude issuance overlap and Auth from subsequent HTTP lifecycle evidence.
+  authRequests = 0; authCalls = 0; refreshCalls = 0; events.length = 0;
+  maximumSubjectsInFlight = 0; inFlightSubjects.clear(); acceptRefresh = true;
+  return cookies;
+}
+function responseSession(response) {
+  const values = (response.headers["set-cookie"] ?? []).filter(value => value.startsWith("sb-") && !/max-age=0/i.test(value));
+  assert.ok(values.length > 0, "actual Next route must return refreshed SSR cookie");
+  return values.map(value => value.split(";")[0]).join("; ");
+}
+function selectedRefreshResult(result, action, i, media) {
+  assert.equal(result.status, action === actions[0] ? "initialized" : action === actions[1] ? "allocated" : "saved");
+  assert.equal(result.block_id, ids[i]); assert.equal(result.collection_revision, action === actions[0] ? 1 : 4);
+  assert.equal(result.readback.status, "current"); assert.equal(result.readback.relation, "same_revision");
+  assert.equal(result.readback.snapshot.current_handle, `fixture-owner-${i}`);
+  assert.equal(result.readback.snapshot.block.is_visible, false);
+  assert.deepEqual(result.readback.snapshot.block.media_working, { asset_key: media.asset_key, alt_text: media.alt_text });
+  assert.ok(!/access_token|refresh_token/.test(JSON.stringify(result)), "session fields must remain outside response JSON");
+}
+function successfulRefreshCalls(action, subject) {
+  assert.deepEqual(events.slice(0, 2), ["budget", "refresh"]);
+  assert.equal(budgetCalls, 1); assert.equal(refreshCalls, 1); assert.equal(authRequests, 9); assert.equal(authCalls, 8);
+  assert.equal(mutations, 1); assert.ok(calls.every(value => value.subject === subject));
+  const names = calls.map(c => c.name); for (const start of [6, 9]) {
+    assert.deepEqual(names.slice(start, start + 2).sort(), [C, T].sort()); names.splice(start, 2, C, T);
+  }
+  assert.deepEqual(names, [S, S, action === actions[0] ? I : action === actions[1] ? A : W, S, S, S, C, T, S, C, T, S, S]);
+}
+for (const action of actions) test(`successful Media ${action} refresh preserves private response session and explicit conflict truth`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]); const value = command(action);
+  const response = await request(expired, value), result = check(response, 200);
+  selectedRefreshResult(result, action, 0, value.media_working); successfulRefreshCalls(action, subjects[0]);
+  const rotated = responseSession(response); assert.ok(rotated !== expired, "response must contain a new session cookie");
+  // Separate explicit command; terminal RPC rejection is not an automatic retry or another commit.
+  check(await request(rotated, value), 409, { status: action === actions[0] ? "already_initialized" : "stale_write" });
+  assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 2); assert.equal(mutations, 1);
+  assert.ok(calls.every(value => value.subject === subjects[0]));
+  assert.equal(models.get(subjects[0]).revision, action === actions[0] ? 1 : 4);
+  assert.deepEqual(models.get(subjects[0]).block.media_working, { asset_key: value.media_working.asset_key, alt_text: value.media_working.alt_text });
+});
+test("successful Media refresh cannot override restricted Owner denial", { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]); restricted = true;
+  const response = await request(expired); check(response, 403, { status: "restricted" }); responseSession(response);
+  assert.deepEqual(events, ["budget", "refresh", "auth", "rpc"]);
+  assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 1); assert.equal(authRequests, 2); assert.equal(authCalls, 1);
+  assert.equal(mutations, 0); assert.equal(models.size, 0); assert.deepEqual(calls, [{ name: S, subject: subjects[0] }]);
+});
+test("concurrent expired Media sessions retain separate Owner data and replay response cookies", { timeout: 60000 }, async () => {
+  const expired = await expiredSessions(subjects);
+  const responses = await Promise.all(expired.map((cookie, i) => request(cookie, command(actions[0], working(assets[i], ` Raw ${i} `)))));
+  const rotated = responses.map(responseSession); assert.ok(rotated[0] !== rotated[1], "separate subjects need separate response cookies");
+  for (let i = 0; i < 2; i++) {
+    selectedRefreshResult(check(responses[i], 200), actions[0], i, working(assets[i], ` Raw ${i} `));
+    const own = calls.filter(value => value.subject === subjects[i]); assert.equal(own.length, 13);
+    assert.equal(own.filter(value => value.name === I).length, 1);
+  }
+  assert.equal(events[0], "budget"); assert.equal(refreshCalls, 2); assert.equal(budgetCalls, 2);
+  assert.equal(authRequests, 18); assert.equal(authCalls, 16); assert.equal(mutations, 2);
+  assert.ok(maximumSubjectsInFlight >= 2, "actual verified Auth for distinct subjects must overlap after issuance reset");
+  await Promise.all(rotated.map(cookie => request(cookie).then(response => check(response, 409, { status: "already_initialized" }))));
+  assert.equal(refreshCalls, 2); assert.equal(budgetCalls, 4); assert.equal(mutations, 2);
+  for (let i = 0; i < 2; i++) {
+    assert.equal(calls.filter(value => value.subject === subjects[i] && value.name === I).length, 2);
+    assert.equal(models.get(subjects[i]).revision, 1);
+    assert.deepEqual(models.get(subjects[i]).block.media_working, { asset_key: assets[i], alt_text: ` Raw ${i} ` });
+  }
+  const prior = calls.length; check(await request(undefined), 401, { status: "unauthenticated" });
+  assert.equal(calls.length, prior); assert.equal(refreshCalls, 2); assert.equal(mutations, 2);
+});
+for (const action of actions) test(`actual Chromium Media ${action} stores refreshed session naturally for explicit follow-up`, { timeout: 60000 }, async () => {
+  const [expired] = await expiredSessions([subjects[0]]);
+  if (action !== actions[0]) seed(subjects[0], undefined, action === actions[1] ? priorIds[0] : ids[0]); const value = command(action);
+  const browser = await chromiumFixture({ certificateSpki: fixturePin() });
+  try {
+    await browser.command("Page.enable"); await browser.command("Network.enable");
+    await browserSession(browser, expired); await navigate(browser, nextOrigin);
+    const first = checkBrowser(await browserPost(browser, { value }), 200);
+    selectedRefreshResult(first, action, 0, value.media_working); successfulRefreshCalls(action, subjects[0]);
+    // Chromium applies real Next Set-Cookie; no cookie replacement between these explicit commands.
+    const second = checkBrowser(await browserPost(browser, { value }), 409);
+    assert.deepEqual(second, { status: action === actions[0] ? "already_initialized" : "stale_write" });
+    assert.equal(refreshCalls, 1); assert.equal(budgetCalls, 2); assert.equal(mutations, 1);
+    assert.ok(calls.every(value => value.subject === subjects[0]));
+    assert.equal(models.get(subjects[0]).revision, action === actions[0] ? 1 : 4);
+    assert.deepEqual(models.get(subjects[0]).block.media_working, { asset_key: value.media_working.asset_key, alt_text: value.media_working.alt_text });
+    await browserSession(browser, undefined); const prior = calls.length;
+    assert.deepEqual(checkBrowser(await browserPost(browser, { value }), 401), { status: "unauthenticated" });
+    assert.equal(calls.length, prior); assert.equal(refreshCalls, 1); assert.equal(mutations, 1);
+  } finally { await browser.close(); }
 });

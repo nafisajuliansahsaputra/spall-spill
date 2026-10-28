@@ -8411,6 +8411,41 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   raw-target/production/live gates belum dibuktikan; full D02/S5/S6/first Publish/
   public/RPC/production open/withheld. No Owner action untuk isolated work ini.
 
+### Media browser refresh and compiled transport verification — 2026-10-28
+
+- Baselineb9f55587a6404ff59bd9c36312431a0a07f4f58b;239 CI40655314356 runtime
+  122704815433/Database122704815842 PASS,Security40655314315/Guard40655314529 PASS.
+  Application122709536875 failed first Chromium DevToolsActivePort readiness
+  before Product assertion (7othercases PASS); local Product8/8 PASS,one job rerun
+  requested. No timeout/assertion/UI weakened;older superseded run not final proof.
+- JIT12.240 locked before changes;239/209/211/current Contact fixture+runner/shared
+  Chromium/235CI graph audited. Independent test-only work from stable237/238 and
+  observed239 runtime;no public advance from pending Application. Goal unfinished.
+- 55Media dev+55actual compiled tests PASS,no skips:retain40cases plus native
+  Chromium3actions/cookie replacement+loss/cross-site/same-site denial/wrongSPKI,
+  HTTP+browser refresh3actions/restricted/concurrent Owners/natural Set-Cookie reuse
+  for separate409follow-up/no new commit;cookie loss401/no RPC. Exact1EVAL/1refresh/
+  8verifiedAuth/13RPC/one mutation;private JSON/no-store/raw hidden Media unchanged.
+- API-only mkdtemp fixture actual next build --webpack/nonempty BUILD_ID and
+  next({dev:false,webpack:true}) HTTPS handler;controlled provider HTTPS,child-only
+  ephemeral CA bundle preserves inherited trust. No page/layout/visual files,
+  TLS bypass/typecheck suppression or actual deployment. No live provider/DB/RLS/
+  ingress/IP/Proxy/raw-target/JWKS/revocation/freshness/session-freeze proof.
+- CI moves Media dev to dedicated15m Media runtime plus compiled command;required
+  Application needs BOTH runtime jobs with always()+quoted exact-success gate.
+  PyYAML/multiset/pinned bootstrap/unchanged DB+permissions+concurrency and49actual
+  shell state combinations PASS. Allold775runtime commands retained,not skipped.
+- Final frozen/typecheck/lint/5tooling/13772app/3build/diff/review PASS;web13491Vitest+
+  17native actual,264packages cached;2services typecheck/lint/build cached. Existing
+  Link268 warning,0errors. Gate rerun justified by added compiled fixture/CI graph.
+  New exact push runtime+Media runtime+Application/DB/3Security/Guard PENDING before
+  push;not CLOSED/VERIFIED. No production source/SQL/grants/UI/dependency/Published.
+- 0new product features;outcome actual browser+compiled session transport evidence.
+  Typed238boundary/236command/result handoff unchanged. Next backend outcome:
+  Media request-target/Proxy admission and gateway relay under own JIT,then remaining
+  backend MVP. D02/S5/S6/first Publish/public/RPC/live/production open/withheld;
+  no Owner action for this isolated work. Continue same Goal/run while budget allows.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
