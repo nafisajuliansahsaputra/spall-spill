@@ -8446,6 +8446,38 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   backend MVP. D02/S5/S6/first Publish/public/RPC/live/production open/withheld;
   no Owner action for this isolated work. Continue same Goal/run while budget allows.
 
+### Media raw-target admission and gateway cookie relay — 2026-10-28
+
+- Baselinecfef09255fb55af64988b52bcc93720a4c71a250; CI40694835610 Media runtime
+  122838711567 PASS(55dev+55compiled);runtime122838711163/DB122838711414 pending
+  at audit. Security40694835278 Secret122838708814/SAST122838709269/Dependency
+  122838709367 and Guard40694835287/job122838712189 PASS. No final closure inferred.
+- JIT12.241 locked/read before edits;AGENTS/checkpoint/J5/J9/212/213/current Contact
+  gateway/session tests and Media fixture audited. Independent ingress prerequisite
+  around unchanged237/238;no public advance from pending240 CI. Goal unfinished.
+- Temporary native HTTPS gateway checks exact raw incoming.url=/api/editor before
+  upstream/body/Next normalization;aliases403/private no-store,canonical relay
+  preserves method/headers/body/Next Host+Origin,explicit CA+localhost on bothlegs,
+  15s bounded upstream/cleanup. No production ingress/proxy/header trust assumption.
+- 92dev+92actual compiled tests PASS,no skips:retain55 plus37 native gateway cases.
+  Raw aliases/empty query/dot/encoded paths denied before I/O,Next internal redirect,
+  3canonical Media commands/Host-Origin-proto mismatch/unsupported methods/bearer
+  withoutcookie/TLS negatives;refresh3actions/concurrent Owners/restricted/rejected
+  clearing cookie/raw denial before refresh. Relay Set-Cookie yields explicit409
+  without refresh/new commit;missing cookie401/no RPC;>=2verified subjects overlap.
+- Final frozen/typecheck/lint/5tooling/13772app/3build/diff/final review PASS;
+  web13491Vitest+17native actual,264packages cached;2services typecheck/lint/build
+  cached. Existing Link268 warning retained,0errors. Allold CI commands/bounds remain.
+  Exact new-push App runtime/Media runtime/Application/DB/3Security/Guard PENDING
+  before push;not CLOSED/VERIFIED. No source/route/SQL/RLS/grants/UI/dependency/
+  provider/Published change. 0new product features;integration verification only.
+- Handoff typed238boundary/236command/result unchanged;source fixture adds raw
+  transport/relay/error examples. Native gateway plus direct Chromium is NOT
+  browser-through-gateway/deployed IP/CDN/Proxy/live-provider/DB atomicity proof.
+  Next backend outcome: actual browser-through-gateway and concurrent Owner/session
+  command evidence under own JIT. D02/S5/S6/first Publish/public/RPC/live/production
+  open/withheld;no Owner action for isolated independent work. Same Goal continues.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
