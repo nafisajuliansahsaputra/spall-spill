@@ -205,7 +205,7 @@ before(async () => {
   await symlink(join(web, "node_modules"), join(directory, "node_modules"), "dir");
   await mkdir(join(directory, "app/api/editor"), { recursive: true });
   await writeFile(join(directory, "package.json"), JSON.stringify({ name: "isolated-spall-editor-fixture", private: true }));
-  await writeFile(join(directory, "tsconfig.json"), JSON.stringify({ compilerOptions: { target: "ES2017", module: "esnext", moduleResolution: "bundler",
+  await writeFile(join(directory, "tsconfig.json"), JSON.stringify({ extends: join(web, "../../tsconfig.base.json"), compilerOptions: { target: "ES2017", lib: ["dom", "dom.iterable", "esnext"], module: "esnext", moduleResolution: "bundler",
     jsx: "react-jsx", esModuleInterop: true, skipLibCheck: true, paths: { "@/*": [`${source}/*`] } } }));
   await writeFile(join(directory, "next.config.mjs"), `export default { devIndicators: false, webpack(config) { config.resolve.alias["@"] = ${JSON.stringify(source)}; return config; } };`);
   await writeFile(join(directory, "proxy.ts"), `
@@ -234,6 +234,7 @@ const handle = createBudgetedIdentityLinkEditorHttpBoundary({ trustedOrigin: ${J
   upstash: { origin: "https://editor-runtime.upstash.io", token: "isolated-budget-placeholder" } }, {
   key: new Uint8Array(32).fill(7), readTrustedMetadata: async () => ({ address: "192.0.2.1" }),
   fetcher: async (input, options) => {
+    assert.ok(options, "budget fetch requires explicit request options");
     assert.equal(String(input), "https://editor-runtime.upstash.io/");
     assert.equal(JSON.parse(String(options.body))[1], productClickBudgetScript);
     const reply = await fetch(${JSON.stringify(providerOrigin + "/fixture-budget")}, options);

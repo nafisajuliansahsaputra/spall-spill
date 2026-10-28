@@ -8638,6 +8638,55 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   mutation;existing onboarding saves intentionally deny completed Owners. Preserve
   profile/media validation and stable ownership;continue same Goal/backend lane.
 
+### Compiled editor verification restored to application compiler parity — 2026-10-28
+
+- Baseline1df2f9b61d14b3a20e4321140fa0c47c371eccd3 exact origin.245Security
+  40786904205/SAST123162264776/Dependency123162265004/Secret123162265261 and
+  Guard40786904223/job123162264900 PASS. CI40786904222 Database123162264933 PASS:
+  full Supabase reset/lint/security advisors/4794pgTAP68files/194native28groups.
+  Application runtime still running at audit;Media123162264950 failed after92dev PASS/91of92compiled
+  PASS:actual SDK fixture issuance raced one-second JWT expiration. Not an Owner
+  credential/billing gate. Latest full DB/new exact8push evidence still required.
+- JIT12.246 locked before edits.0new product features;integrated runtime regression
+  repair. Reproduced244compiled Link build failure on245;temporary diagnostic copy
+  exposed TS2345:non-strict fixture made Zod properties optional while application
+  compiler is strict. Root cause is fixture/compiler mismatch,not evidence of
+  runtime authorization success. Preserve actual source strict schemas/guard types.
+- Link/Contact/Media harnesses now extend SAME root tsconfig base and explicit
+  dom/dom.iterable/esnext libs as application. Assert actual budget-fetch options
+  exist before exact Lua body check. No casts/type weakening/ignoreBuildErrors,
+  no changed app/UI/route/migration/grants/matcher/deadline/TLS/Auth/security gates.
+  Temporary fixture layout markup remains unchanged;no Owner presentation edits.
+- Strict diagnosis first exposed generated optional options;fixed actual assertion.
+  Root config then exposed missing ESNext libs(auto-default no longer applies to
+  inherited config);matched actual app libs. Contact local and Media exact245CI
+  also exposed short-lived cookie issuance setup race. Five-second issuance plus
+  5.1second REAL expiry wait retains same rejected-refresh/cookie/zeroRPC assertions
+  and30second deadline. No fake clock/SDK bypass/retry/auth validation relaxation.
+- All six actual compiled Chromium suites PASS/no skips:Link59direct+74gateway,
+  Contact97direct+119gateway,Media92direct+114gateway=555cases. Preserve concurrent
+  cookie/Owner isolation,forged/missing cookies,restriction,expired/rejected refresh,
+  budget/raw-target/origin/internal-redirect/TLS and terminal/unknown response truth.
+  Initial Contact1of97 setup failure retained as diagnostic evidence,not counted
+  PASS;final full Contact/Media direct+gateway rechecks passed after fixture fix.
+- Frozen install/typecheck/lint/5tooling/13894app/3build/diff/security review PASS.
+  After fixture changes affected lint/test/build/typecheck repeated;web13613Vitest+
+  17native actual,264other package tests valid cache. Existing Link269lint warning,
+  0errors. No DB changes;245183component pgTAP/15native proof retained with its
+  controlled Auth/plainPG/cron exclusions;do not relabel as full hosted DB proof.
+- Prior243–245 private backend outcomes and typed handoff unchanged. New exact-push
+  8jobs PENDING until observed;no CLOSED/VERIFIED or public/production readiness.
+  Automation6ac3b0660c0881918e6967f96313190d readback enabled:true,not modified.
+- Next outcome:audit returning-Owner Core Profile Working CAS autosave with raw
+  recoverable invalid/incomplete field state,scoped media refs and guarded typed
+  acknowledgment/readback. J5/J9/pinned9.6D02/FR-IDN003–006 re-read at immutable
+  bb79dce4e5ee384d3e9932504386602f60d074ce via temporary historical readback mirror;
+  current valid-only core.identity_working/onboarding contract cannot simply be
+  reused as complete D02 autosave. Preserve old reader/onboarding guarantees;
+  lock bounded recovery persistence contract before source. Do not silently reject
+  all intermediate edits,relax old public-safe schema,or infer whole-Published state.
+  D02/S5/S6/first Publish/public/RPC/live/production remain OPEN;continue same Goal.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

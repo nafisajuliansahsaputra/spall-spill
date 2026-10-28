@@ -196,7 +196,7 @@ before(async () => {
   siblingOrigin = `https://localhost:${await listen(siblingServer)}`;
   await symlink(join(web, "node_modules"), join(directory, "node_modules"), "dir");
   await mkdir(join(directory, "app/api/editor"), { recursive: true }); await writeFile(join(directory, "package.json"), '{"name":"isolated-contact-editor-fixture","private":true}');
-  await writeFile(join(directory, "tsconfig.json"), JSON.stringify({ compilerOptions: { target: "ES2017", module: "esnext", moduleResolution: "bundler", jsx: "react-jsx",
+  await writeFile(join(directory, "tsconfig.json"), JSON.stringify({ extends: join(web, "../../tsconfig.base.json"), compilerOptions: { target: "ES2017", lib: ["dom", "dom.iterable", "esnext"], module: "esnext", moduleResolution: "bundler", jsx: "react-jsx",
     esModuleInterop: true, skipLibCheck: true, paths: { "@/*": [`${source}/*`] } } }));
   await writeFile(join(directory, "next.config.mjs"), `export default { devIndicators: false, webpack(config) { config.resolve.alias["@"] = ${JSON.stringify(source)}; return config; } };`);
   await writeFile(join(directory, "proxy.ts"), `
@@ -224,6 +224,7 @@ const handle = createBudgetedIdentityContactEditorHttpBoundary({ trustedOrigin: 
   policy: { namespace: "contact-runtime", window_ms: 60000, command_limit: 100, work_limit: 1300 },
   upstash: { origin: "https://contact-runtime.upstash.io", token: "isolated-budget-placeholder" } }, {
   key: new Uint8Array(32).fill(7), readTrustedMetadata: async () => ({ address: "192.0.2.1" }), fetcher: async (input, options) => {
+    assert.ok(options, "budget fetch requires explicit request options");
     assert.equal(String(input), "https://contact-runtime.upstash.io/"); assert.equal(JSON.parse(String(options.body))[1], productClickBudgetScript);
     const reply = await fetch(${JSON.stringify(providerOrigin + "/fixture-budget")}, options);
     return new Response(reply.body, { status: reply.status, headers: reply.headers });
@@ -419,7 +420,8 @@ test("provider rejection of one cookie subject does not authorize or damage the 
   assert.ok(calls.every(c => c.subject === subjects[1]));
 });
 test("expired actual SSR cookie cannot authenticate through rejected refresh", { timeout: 30000 }, async () => {
-  const expired = await encodeSession(subjects[0], 1); await delay(1100);
+  // Allow actual SDK issuance across epoch-second boundaries, then really expire it.
+  const expired = await encodeSession(subjects[0], 5); await delay(5100);
   authCalls = 0; authRequests = 0;
   check(await request(expired), 401, { status: "unauthenticated" });
   assert.ok(refreshCalls > 0); assert.equal(calls.length, 0); assert.equal(mutations, 0); assert.equal(budgetCalls, 1);
