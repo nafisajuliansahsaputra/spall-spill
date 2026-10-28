@@ -287,6 +287,9 @@ jobs:
       - name: Verify isolated Identity block page statement snapshots
         run: node --test tests/identity-block-page-snapshot-concurrency.test.mjs
 
+      - name: Verify isolated typed Working page statement snapshots
+        run: node --test tests/identity-typed-block-page-snapshot-concurrency.test.mjs
+
       - name: Verify concurrent Spill identity allocation
         run: node --test tests/spill-reference-concurrency.test.mjs
 

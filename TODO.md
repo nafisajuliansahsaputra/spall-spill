@@ -9282,6 +9282,47 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   Publish validation including explicit CTA public-Spill eligibility. D02/S5/S6/first
   Publish/public/RPC/live/production still open/withheld; same Goal continues.
 
+### Six-kind private typed Working reconstruction — 2026-10-28
+
+- Baselinee4b34261090c33ad917872df9d7c4cbeafa7cec1 clean/exact origin. CI40744831629
+  Database123015728201 PASS:full Supabase reset/lint/security advisor/4711pgTAP66files/
+  184native26groups;Media123015728607 PASS. Application runtime123015727785 still
+  running at readback. Security40744831553/SAST123015728219/Secret123015728799/
+  Dependency123015728819 and Guard40744831597/job123015728308 PASS. No closure inferred.
+- JIT12.244 locked before code;108–110/selected Text/Contact/Media/CTA contracts and
+  actual SQL/SDK/proof engine audited. One backend outcome:new private typed page
+  RPC/SDK and guarded full block reconstruction across all6kinds. Old link-only
+  RPCs/DTOs/entry points retained. Private payload joins share membership/revision
+  statement snapshot and actual Owner/kind binding;missing marker never synthesized.
+- Raw recoverable/hidden/nullable values and existing local issue codes retained;
+  Media registry observation separate from delivery,CTA target owner_spill without
+  label/URL/public availability. RLS/grants unchanged;new function execution withheld.
+  100+1 rows/8MiB whole SQL+SDK page;10pages/1000rows/25RPC/3proofs/5s and64MiB
+  incremental row envelope;exceed/conflict/change => status-only,no partial/retry.
+- Extracted110engine once,existing public factory fixed to old reader,new factory
+  fixed to typed reader. Mechanical comparison confirms old algorithm unchanged
+  apart from generic types/optional internal byte guard. All211old tests PASS;
+  38new SDK/schema/pairing/raw/proof/cursor/count/byte tests PASS,249targeted total.
+  Resource-bound test freezes timers only;separate deadline denial tests retained.
+- Fresh isolated PostgreSQL17.11 component reset73migrations,controlled Auth and
+  pgTAP1.3.4:144assertions(100CTA+44typed)/9native(5CTA+4typed) PASS,no skips.
+  Includes concurrent addition/Text-save/restriction statement snapshots. Two cron
+  schedulers outside component fixture;NOT full Supabase/provider/advisor evidence.
+  CI retains all full gates/adds4typed races;new exact-push DB evidence still required.
+- Frozen/typecheck/lint/5tooling/13865app/3build/diff/security review PASS;web13584
+  Vitest+17native actual,264package tests cached. Existing Link268 warning,0errors.
+  Initial TypeScript diagnostic exposed non-narrowed transform union;fixed explicit
+  null branch without casts/test relaxation. Exact new-push8jobs PENDING before push.
+- Owner handoff:createOwnerTypedBlocksWorkingAssembly(client).read() zero arguments;
+  six-kind discriminated Working DTO,per-block issues,missing/empty distinction;
+  page reader accepts only106revision/cursor. Fixtures in typed SDK/native/pgTAP
+  tests. Literal private text/unsafe intermediate URLs are not public/click authority.
+  This is BLOCK collection,not complete Core Profile/layout/Identity publication.
+- Next backend outcome:audit coherent full Identity Working handoff/profile-layout-
+  block revision vector and publication comparison. Existing identity_work covers
+  legacy persisted composition only;do not infer whole-document up-to-date from it.
+  D02/S5/S6/first Publish/public/RPC/live/production open/withheld. Same Goal continues.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
