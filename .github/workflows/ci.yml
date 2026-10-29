@@ -299,6 +299,9 @@ jobs:
       - name: Verify isolated recoverable profile text Working races
         run: node --test tests/identity-profile-text-working-concurrency.test.mjs
 
+      - name: Verify isolated profile photo and recoverable text CAS races
+        run: node --test tests/identity-profile-photo-working-concurrency.test.mjs
+
       - name: Verify concurrent Spill identity allocation
         run: node --test tests/spill-reference-concurrency.test.mjs
 

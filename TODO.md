@@ -9522,6 +9522,63 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   publication validation across the full revision vector. Same Goal continues;
   D02/S5/S6/first Publish/public/RPC/live/production remain OPEN,not VERIFIED.
 
+### Returning-Owner profile photo and raw-text binding transaction — 2026-10-29
+
+- Baselineb285f4c32266123e76f7081270db9e9769bf3324 exact clean origin.248Security
+  40822592780 Secret123278213115/Dependency123278213300/SAST123278213324 and
+  Guard40822592760/job123278213105 PASS. CI40822592773 Media123278215048 PASS;
+  Database123278213478 still running. Runtime123278214403 failed2of76dev checks
+  at Chromium/browser-page readiness deadlines;Application123279634776 correctly
+  denied prerequisite. Runtime evidence PENDING/recheck latest push,not verified
+  or a permanent provider/Owner gate. No timeout/assertion/security weakening.
+- JIT12.249 locked after AGENTS/Protocol/checkpoint/J5/J9/pinnedD02/12.10/11/80/
+  245/248 and actual registry/onboarding attachment/Media CAS/proof SDK audit.
+  One private backend outcome:canonical own Profile Photo selection/removal CAS
+  with atomic source+recoverable-text revision binding and248editable readback.
+- Dormant empty-path volatile save_current_owner_profile_photo_working requires
+  active completed current Owner/context,locks Owner/binding/source/text,checks
+  both exact bases and existing recovery source match. Earlier source drift must
+  be explicitly reviewed/rebased through full248text save;photo never silently
+  rebases unrelated content. Missing profile/text never initialized implicitly.
+- Nonnull selector is canonical lowercase UUID;same-Owner asset+same-Owner consumed
+  intent+canonical profile object/WebP/12..3145728bytes/2048dimensions predicate.
+  FOR SHARE asset+intent holds metadata through commit. Foreign/missing/unconsumed
+  return uniform invalid_asset,no object/credential/URL/content disclosure. No
+  provider/bytes/storage-access/sanitizer/public-delivery claim from registry alone.
+- Same-key exact-CAS no-op keeps both revisions/timestamps. Real select/remove
+  increments source once and existing recovery revision once with matching new
+  source binding;raw name/Bio unchanged. Both safe ceilings checked before writes.
+  Missing recovery remains absent. All old assets retained;no upload/deletion/
+  source-name/Bio/layout/blocks/connection/onboarding/Handle/Published/grant/UI
+  mutation. All execution withheld for PUBLIC/anon/authenticated/service_role.
+- SDK createOwnerProfilePhotoWorkingSave(client).save reuses canonical asset schema
+  and guarded mutation pattern:strict intent before I/O,one fixed RPC,5s,current
+  subject/active Owner proofs before+after,exact key/changed/source/text ack.
+  Postdispatch uncertainty => outcome_unknown,no retry/rollback/live inference.
+- 67SDK+1editable photo/raw projection test PASS;68pgTAP/8native targeted PASS.
+  Native competing photos/text/Owner restriction/intent loses consumed while waiting/
+  full held snapshot pairs/no-op timestamps/parallelOwners/removal retained assets
+  verified. Fresh owned PostgreSQL17.11 reset77migrations/controlled Auth/pgTAP1.3.4:
+  390pgTAP(100+44+39+49+90+68)/36native(5+4+6+5+8+8) PASS,no skips. Two unrelated
+  cron schedulers excluded;NOT full Supabase/provider/advisor evidence. CI retains
+  all full DB gates and adds8native photo/source/text cases.
+- Frozen install/typecheck/lint/5tooling/14137app/3build/diff/security review PASS;
+  web13856Vitest+17native actual,264other package tests valid cache. Existing Link269
+  warning,0errors. New exact8push jobs/full isolated Supabase evidence PENDING.
+- Owner headless handoff:save({action:save_profile_photo_working,
+  base_profile_revision:N,base_text_revision:null|M,profile_asset_key:null|UUID}),
+  then createOwnerEditableIdentityWorking(client).read(). Ack changed/profile_revision/
+  text_revision/profile_asset_key binds exact intent;handle stale_source/stale_write/
+  invalid_asset/exhaustion/unknown explicitly. Raw text remains recoverable and
+  photo comes from source. SDK/071pgTAP/native fixtures provided. RPC unmounted/
+  grants withheld;not complete editor/upload/media or shipped UI.
+- Next backend outcome:coherent whole-Identity publication validation/review binding
+  across profile source/recovery/layout/connection/block vector,including visible
+  CTA public-Spill eligibility and destination/media evidence. Audit existing
+  S6/publication/safety primitives first;reuse them and do not infer ready from
+  local hints or registry presence. Same Goal continues;D02/S5/S6/first Publish/
+  public/RPC/live/production remain OPEN,not CLOSED/VERIFIED.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

@@ -125,3 +125,10 @@ it.each(["raw", "revision", "state"])("recovery %s changes between observations 
       : { ...recovered(), profile_text_state: "source_changed", profile_text_working: { ...recovery, source_profile_revision: 1 } };
   expect(await f.assemble()).toEqual({ status: "unavailable" });
 });
+
+it("selected source photo survives raw-text editable projection after atomic vector advance", async () => {
+  const f = fixture(); const value = { ...recovered(), profile_working: { ...page.profile_working, revision: 3, profile_asset_key: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa" },
+    profile_text_working: { ...recovery, revision: 2, source_profile_revision: 3 }, revision_vector: { ...page.revision_vector, profile: 3, profile_text: 2 } };
+  f.pages.fill(value);const result = await f.assemble();expect(result.status).toBe("success");
+  if (result.status === "success") { expect(result.editable_profile.profile_asset_key).toBe(value.profile_working.profile_asset_key);expect(result.editable_profile.display_name).toBeNull();expect(result.profile_text_state).toBe("saved"); }
+});
