@@ -8890,6 +8890,56 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   content;does not resolve these dependencies. D02/S5/S6/first Publish/public/RPC/
   live/production remain OPEN. Same hourly Goal remains enabled.
 
+### Coherent private Identity exact-destination safety review — 2026-10-29
+
+- Baseline397056d10d40209650ee1ac9fc8331c6e3592bfb exact clean refreshed origin;
+  all8 exact250 push jobs PASS:CI40828136088 Application123299696587/runtime123295812581/
+  Media123295812784/Database123295812155,Security40828135943 SAST123295811722/
+  Dependency123295811902/Secret123295811972,Guard40828135983/job123295811855.
+ 250private review binding implemented;no user-journey closure/public enablement.
+- JIT12.251 locked before code after actual248page/244types/15safety SQL and SDK/
+  proof/source tests audit. One private backend outcome:new dormant stable empty-path
+  UTC resolve_current_owner_identity_destination_review_page composes248graph and
+  existing exactURL+SHA256 stored safety in SAME DB statement snapshot. Source
+  safety root and per-visible Social/Link nonnull URL safety;all6 kinds/raw/hidden/
+  missing payloads retained. No trim/normalize/fetch/scan/write/default/import.
+- Missing/expired/hash-mismatched/different-case/query/whitespace URLs do not inherit
+  safe verdict. Source/row safety retain minimal status/revision/expiry only;no scan
+  diagnostics/recordIDs. Hidden/non-link/missing/null selections require null safety.
+  Safe/review/blocked is stored preview advice at transaction time,not publication/
+  redirect permission. Future Publish must revalidate URL policy and wall-clock
+  safety after deterministic locks;CTA/public-Spill/Contact/media gates unchanged.
+- New createOwnerIdentityDestinationReview(client).read() plus private page reader
+  reuse original strict248+244 base schemas/refinements and15preview safety shape;
+  stripped-base revalidation preserves vector/payload/paging checks. Existing
+ 3Owner proofs/2complete observations/1000rows/25RPC/5s/64MiB engine reused.
+  Safety drift without content revision change discards entire result. No duplicate
+  proof engine/retry/cache/receipt/readiness flag. Old readers unchanged except
+  named248schema export/fixed internal RPC allowlist extension. All execution still
+  withheld PUBLIC/anon/authenticated/service_role;no UI/route/public changes.
+- 29targeted SDK/52pgTAP/4native snapshot cases PASS. Native held statements prove
+  source+row verdict/content pairs during concurrent verdict/source URL/expiry/
+  restriction changes;fresh restricted read denied. Fresh owned PostgreSQL17.11
+  component reset78non-cron migrations/controlled Auth/pgTAP1.3.4:442pgTAP/40native
+  regressions PASS,no skips. Two unrelated schedulers excluded;NOT full Supabase/
+  scheduler/advisor/provider proof. CI keeps all gates and adds4native snapshot tests.
+- Frozen install/typecheck/lint/5tooling/14234app/3build/diff/final security review
+  PASS;web13953Vitest+17native actual,264other package tests valid cache. Existing
+  Link269 warning,0errors. Full isolated Supabase and new exact8push jobs PENDING
+  until observed. Supabase/Postgres/Cloud skills/docs used;no credential/network/
+  package/grant/provider configuration changed.
+- Owner handoff:request-local createOwnerIdentityDestinationReview(client).read()
+  returns existing editable profile/typed full collection/vector/local issues plus
+  source_destination_safety and each block.destination_safety. Use status/revision/
+  expiry for private review only;not href/ready/receipt. SDK/072/native fixtures
+  supplied. Factories/RPC dormant,not full D02/live/journey shipped.
+- Next backend outcome:whole-Identity authoritative publication candidate validation
+  and review/commit binding over profile/raw/layout/connection/blocks AND safety
+  revisions/expiry,with explicit visible CTA public-Spill and media/Contact policy
+  dependencies.250content digest excludes external safety and must not substitute
+  for this transaction. Same Goal continues;D02/S5/S6/first Publish/public/RPC/live/
+  production remain OPEN. No new Goal/task or automation frequency change.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

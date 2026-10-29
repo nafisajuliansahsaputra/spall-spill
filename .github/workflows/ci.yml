@@ -302,6 +302,9 @@ jobs:
       - name: Verify isolated profile photo and recoverable text CAS races
         run: node --test tests/identity-profile-photo-working-concurrency.test.mjs
 
+      - name: Verify isolated Identity destination review snapshots
+        run: node --test tests/identity-destination-review-concurrency.test.mjs
+
       - name: Verify concurrent Spill identity allocation
         run: node --test tests/spill-reference-concurrency.test.mjs
 

@@ -14,6 +14,7 @@ const success = persistedIdentityWorkingPageSchema.safeExtend({
 }).refine(value => value.revision_vector.profile_text === (value.profile_text_working?.revision ?? null)
   && value.profile_text_state === (value.profile_text_working === null ? "source"
     : value.profile_text_working.source_profile_revision === value.profile_working.revision ? "saved" : "source_changed"));
+export const editableIdentityWorkingPageSchema = success;
 const response = z.discriminatedUnion("status", [success,
   z.object({ status: z.enum(["unavailable", "invalid_page_request", "stale_read"]) }).strict(),
 ]).transform(value => {
