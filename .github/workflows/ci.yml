@@ -305,6 +305,9 @@ jobs:
       - name: Verify isolated Identity destination review snapshots
         run: node --test tests/identity-destination-review-concurrency.test.mjs
 
+      - name: Verify isolated whole Identity review confirmation races
+        run: node --test tests/identity-review-receipt-concurrency.test.mjs
+
       - name: Verify concurrent Spill identity allocation
         run: node --test tests/spill-reference-concurrency.test.mjs
 

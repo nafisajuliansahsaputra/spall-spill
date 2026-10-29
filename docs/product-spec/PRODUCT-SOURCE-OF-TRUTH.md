@@ -8940,6 +8940,62 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   for this transaction. Same Goal continues;D02/S5/S6/first Publish/public/RPC/live/
   production remain OPEN. No new Goal/task or automation frequency change.
 
+### Durable whole-Identity private review confirmation — 2026-10-29
+
+- Baseline4d70d9de4e8598a3095bd607b85da911d1f0506c exact clean refreshed origin.
+  All8 exact251 push jobs PASS:CI40856595216 Application123394012766/runtime123388999258/
+  Media123388999509/Database123388999552,Security40856595126 Secret123388998438/
+  Dependency123388998963/SAST123388999081,Guard40856595130/job123388998373.
+  This replaces prior PENDING evidence;no journey/public/grant closure.
+- JIT12.252 locked before code after AGENTS/Protocol/checkpoint/J5/J9/pinnedD02/
+  12.16/18/245/248/250/251 and actual graph/safety/receipt/guarded SDK audit. One
+  private backend outcome:coherent complete server snapshot/hash -> explicit
+  durable current-Owner review confirmation,using fixed10minute12.16 pattern.
+- Dormant stable UTC resolve_current_owner_identity_review_snapshot accepts only
+  explicit null/null start;traverses at most10existing251pages in SAME statement,
+  <=1000rows/8MiB whole envelope,no partial/truncation. Server domain/version+Owner
+  UUID+canonical JSONB hash covers full raw/hidden/missing/profile/source/layout/
+  blocks/vector AND destination safety revisions/expiry. Owner UUID not returned.
+  review_format:identity_working_review_v1;250JS content digest is not interchangeable.
+- Private RLS/no-policy identity_working_review_receipts stores one latest Owner
+  receipt/hash/issued/expiry,not content/history. Volatile confirmation locks Owner
+  then binding,rechecks active completed/Home,strict explicit action/hash,recomputes
+  snapshot AFTER wait. Invalid/stale leaves existing receipt;same unexpired hash
+  reuses UUID/expiry without sliding renewal;changed/expired rotates UUID. Lifetime
+  fixed10minutes from clock_timestamp. Exceptions roll back,no fabricated success.
+  All table/RPC execution withheld PUBLIC/anon/authenticated/service_role. Receipt
+  can acknowledge invalid recoverable review;it never validates/allows Publish.
+- Snapshot SDK reuses251strict decoder in chunks,complete global ID/order/capacity/
+  terminal checks and same existing3proof/2observation/5s engine. Confirmation SDK
+  strict before I/O,one fixed RPC,same actor+active Owner before/after,exact hash/
+  UUID/future expiry even after final proof;postdispatch uncertainty outcome_unknown,
+  no retry/merge/rebase. Old readers unchanged except named decoder/fixed RPC union.
+- 83new SDK cases/75targeted pgTAP/8native PASS. Native same-hash confirmations and
+  expired renewal serialize to one UUID;content/safety/restriction/binding changes
+  while waiting deny;parallelOwners and held full graph+safety+digest snapshot
+  verified. RLS remains deny even fixture SELECT grant;forced receipt error rolls
+  back. Byte/1000row/overbound,raw invalid review retention and expiry/hash/source
+  changes covered. Fresh owned PostgreSQL17.11 reset79non-cron migrations/controlled
+  Auth/pgTAP1.3.4:517pgTAP/48native regression PASS,no skips. Two unrelated schedulers
+  excluded;NOT full Supabase/scheduler/advisor/provider evidence. CI retains full
+  gates and adds8native receipt races. New exact8push/full Supabase evidence PENDING.
+- Frozen install/typecheck/lint/5tooling/14317app/3build/diff/final security review
+  PASS;web14036Vitest+17native actual,264other package tests valid cache;typecheck
+  reused valid same-input cache after actual earlier PASS. Existing Link269 warning,
+  0errors. No dependency/UI/route/provider/credential/public projection changes.
+- Owner headless handoff:createOwnerIdentityReviewSnapshot(client).read() returns
+  complete editable graph+server snapshot_hash/review_format;explicit
+  createOwnerIdentityReviewConfirmation(client).confirm({action:
+  confirm_identity_working_review,snapshot_hash}) returns receipt_id/hash/expires_at
+  or typed denial/unknown. SDK/073/native fixtures supplied. Never infer Saved/Live/
+  ready or use receipt alone to Publish. Factories/RPC unmounted/dormant.
+- Next backend outcome:authoritative whole-Identity candidate validation/public-safe
+  projection and explicit Publish transaction binding current receipt+graph+safety
+  under deterministic locks with wall-clock expiry revalidation. Review/receipt
+  alone does not settle visible CTA public-Spill/Contact/media policies or provider
+  evidence. Same Goal continues;D02/S5/S6/first Publish/public/RPC/live/production
+  remain OPEN. No duplicate automation or Goal;budget stop is not completion.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

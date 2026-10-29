@@ -44,6 +44,7 @@ const response = z.discriminatedUnion("status", [success,
   return { ...value, editable_profile, profile_text_issues: inspectProfileTextWorkingInput(editable_profile) };
 });
 export type OwnerIdentityDestinationReviewPageResult = z.infer<typeof response>;
+export const identityDestinationReviewPagePayloadSchema = response;
 type Page = Extract<OwnerIdentityDestinationReviewPageResult, { status: "success" }>;
 type Root = Omit<Page, "collection">;
 type Row = NonNullable<Page["collection"]>["blocks"][number];
