@@ -8996,6 +8996,54 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   evidence. Same Goal continues;D02/S5/S6/first Publish/public/RPC/live/production
   remain OPEN. No duplicate automation or Goal;budget stop is not completion.
 
+### Private Profile/Text preview candidate preparation — 2026-10-29
+
+- Baseline17c1c7923eb9b5ce5bec6d44cbb28f59fcd9d8bf exact clean refreshed origin.
+  All8 exact252 push jobs PASS:CI40864934218 Application123422388305/runtime123417188939/
+  Media123417189465/Database123417189561,Security40864934233 SAST123417188423/
+  Dependency123417188992/Secret123417189047,Guard40864934132/job123417188455.
+  Receipt foundation implemented;no D02/S5/S6/public/first Publish closure.
+- JIT12.253 locked before code after current authority/J5/J9/pinnedD02/12.10/19/
+  138/248/251/252 and actual profile/Text/snapshot validators. One private backend
+  outcome:guarded current full snapshot -> validated/normalized Profile+plain Text
+  preview data projection or explicit typed blockers. This is PREPARATION ONLY,
+  not authoritative DB Publish validation/transaction or full six-kind publishing.
+- createOwnerIdentityPublicationCandidate(client).prepare({expected_snapshot_hash:
+  null|64lowerhex}) strict before I/O;reuse252full reader/proofs/hash/limits. Stale
+  expected hash => status-only stale_review,never silently accept fresh content.
+  Same3Owner proofs/2complete statements/5s existing reader,no second proof engine.
+- Profile candidate reuses canonical onboarding codepoint/control/trim/Bio CRLF
+  validators;output well-formed Unicode and single-line Name incl U+2028/U+2029.
+  Raw saved profile never changed. Source_changed requires explicit review/rebase.
+  Text retains exact accepted whitespace/markup/URL-looking data under138checks;
+  no render/linkify/fetch/HTML interpretation. Renderer still must escape context.
+- Photo/source connection and every visible non-Text kind report explicit pending
+  publication dependency;active missing payload/invalid Text/invalid Profile block
+  ENTIRE candidate. Safe verdict/registered asset/CTA marker does not bypass those
+  gates. Hidden content excluded only by explicit saved visibility,still bound in
+  server snapshot hash. No silent omission of active unsupported/invalid content.
+- Success assessment blocked/candidate:null/typed issues,or preview_prepared with
+  strict candidate exactly current_handle/display_name/bio/starter_key/plain Text
+  blocks in saved order. Private Owner/block IDs/revisions/raw overlay/source/media/
+  safety/receipt/PUC fields absent INSIDE candidate;outer private issue may locate
+  own block. publication_validation always not_assessed;no live/ready/Published claim.
+- 51new SDK/security integration cases and prior83snapshot/receipt regressions PASS
+  in full suite;covers Unicode/C1/LS/PS/raw recovery/mismatch/all kinds/visibility/
+  no partial/private projection/1000rows/strict/Owner restriction/rebind/failure/
+  timeout. Frozen install/typecheck/lint/5tooling/14368app/3build/diff/security review
+  PASS;web14087Vitest+17native actual,264other package tests valid cache. Affected
+  app gates rerun after bounded Unicode single-line fix;no test/gate weakening.
+  Existing Link269 warning,0errors. No SQL/grant/RLS/receipt/Working/Published/UI/
+  route/provider/dependency changes. Exact8new push jobs PENDING until observed.
+- Owner handoff:prepare(null precondition) for current private preview candidate;
+  retain snapshot_hash,prepare(same expected hash) rejects changed reviewed graph.
+  Handle blocked issues through owning editor and preserve raw work. Use nested
+  candidate as plain-data preview ONLY,not whole response as public DTO or Publish
+  permission. Fixtures supplied;factory unmounted. Next backend:authoritative DB
+  candidate validation under receipt/graph/content/safety binding,then explicit
+  idempotent Publish transaction/public-safe persisted projection. Same Goal;
+  D02/S5/S6/first Publish/public/RPC/live/production remain OPEN.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
