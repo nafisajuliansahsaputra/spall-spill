@@ -9044,6 +9044,50 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   idempotent Publish transaction/public-safe persisted projection. Same Goal;
   D02/S5/S6/first Publish/public/RPC/live/production remain OPEN.
 
+### Receipt-bound private Profile/Text DB validation — 2026-10-29
+
+- Baseline5ff0f54ec1d08d9bf71e195d5319097cae4bebf4 refreshed exact clean origin.
+  All8 exact253push jobs PASS:CI40872870955 Database123444143909/Media123444144104/
+  runtime123444144287/Application123449619968;Security40872870974 Dependency123444143019/
+  SAST123444143590/Secret123444143663;Guard40872871041/job123444143259.
+- JIT12.254 locked before implementation. One integrated private DB outcome:
+  prepare_current_owner_identity_profile_text_candidate(input_candidate) validates
+  current eligible Owner + own latest receipt + wallclock expiry + whole252graph
+  hash, then derives supported Profile/Text candidate or explicit typed blockers.
+  Owner->binding->receipt lock order; recompute after lock waits; expiry rechecked
+  before response. No Working/receipt/Published writes, consumption or extension.
+- Strict action/receipt_id/snapshot_hash only. Foreign/missing/replaced receipt or
+  changed graph=>status-only stale_review;own expired=>review_expired;malformed=>
+  invalid_candidate_request. No caller content/Owner/URL authority or interpolation.
+  DB errors propagate;all execution grants withheld incl PUBLIC/anon/auth/service.
+- Same253copy-only Unicode trim/codepoint/single-line Name/Bio normalization;
+  Text preserved literal under138,linear control checks. Raw invalid recovery never
+  rewritten. Source drift/photo/separate connection/every visible unsupported kind
+  explicitly block entire candidate;no partial active omission or fake policy close.
+  Hidden work excluded only by saved visibility,still bound by full review hash.
+- Typed intent/result decoder +fixtures provided in owner-profile-text-db-candidate.
+  Success publication_validation:profile_text_subset,assessment:candidate_validated
+  or blocked; nested candidate excludes private metadata. Decoder is wire contract,
+  not session/expiry proof or permission to Publish. No SDK/route/UI mount/grants.
+- Fresh isolated PG17component reset:80noncron migrations/569pgTAP across066..074
+  PASS;new52pgTAP tests cover strict/roles/anonymous/crossOwner/replay/expiry/stale/
+  allkinds/raw/Unicode/no partial/photo/source and graph purity. 54native concurrency
+  regressions PASS,including6new content/expiry/restriction/binding/rotation/replay
+  races. FullSupabase reset/lint/advisors/scheduler evidence deferred exactpush CI;
+  isolated component is not provider/liveAuth/fullSupabase proof.
+- Frozen install/typecheck/lint/5tooling/14385app/3build/diff/security review PASS.
+  web14104Vitest+17native actual;264other package tests valid cache. Existing Link269
+  warning,0errors. No UI/dependencies/public routes/transports/provider mutation.
+  Exact8new push gates PENDING until observed;no journey CLOSED/VERIFIED claim.
+- Handoff:after252read+explicit confirmation,send exact receipt/hash intent to dormant
+  RPC;handle stale/expired with fresh explicit review,keep raw input on blockers.
+  Use nested candidate only as plain data with contextual escaping,never outer
+  private receipt response as public DTO. Fixtures include valid/blocked/denied.
+  Next backend:guarded request-local SDK over this actual DB boundary,reusing
+  existing session proof engine;then explicit idempotent publication transaction
+  and persisted public-safe projection once all supported dependencies are ready.
+  Same Goal;D02/S5/S6/first Publish/public/RPC/live/production remain OPEN.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
