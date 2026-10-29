@@ -9579,6 +9579,48 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   local hints or registry presence. Same Goal continues;D02/S5/S6/first Publish/
   public/RPC/live/production remain OPEN,not CLOSED/VERIFIED.
 
+### Private whole-Identity Working review binding — 2026-10-29
+
+- Baseline79ebf2e37c8a270489fdbfb802cf34469a634e07 exact clean refreshed origin.
+  All8 exact-push jobs PASS:CI40823296702 Application123284344061/runtime123280582674/
+  Media123280582683/Database123280582422,Security40823296707 Dependency123280476428/
+  SAST123280476697/Secret123280476753,Guard40823296711/job123280476406. This supersedes
+  pending249 runtime/DB evidence;not D02/S5/S6/first Publish closure.
+- JIT12.250 locked before code after actual248reader/proof/typed payload/source/
+  raw diagnostics and J5/J9/pinnedD02/12.10/15/18/243/245/249 audit. One private backend
+  outcome:createOwnerIdentityWorkingReview(client).review({expected_content_digest:
+  null|lowercase64hex}) integrates full guarded Working read,domain-separated SHA256
+  content binding and explicit stale_review comparison. Strict input before I/O;
+  same3Owner proofs/two full observations/1000rows/25RPC/5s existing reader reused.
+- Hash covers context,profile source/raw recovery/source state,layout,separate source,
+  all5 revision-vector components and ALL ordered blocks/hidden/invalid/missing/raw/
+  media observation. No normalize/trim/omission/import/second proof engine. Same
+  revision with changed content or last-page edit still invalidates review. Digest
+  is content comparison only,not Owner identity/signed receipt/validation/commit
+  precondition/publication readiness/atomic global freshness or Published status.
+- Success retains private snapshot/local issues and publication_assessment:pending.
+  Explicit scope lists whole-publication validation,source rebase,selected photo,
+  source/active-link safety,Contact policy,Media delivery,CTA valid public Spill and
+  missing visible payload. No registry/local-hint/Working-marker inference;hidden
+  work stays hashed/recoverable. Mismatch stale_review/status-only,no newer graph/
+  auto retry/rebase/merge. Existing denials/errors/session changes retain no graph.
+- 68new SDK integration cases/180targeted regression PASS;includes all6 kinds,
+  1000rows/tail/root drift/reorder/equal-vector changes/strict/Owner rebind/session
+  loss/ignored late response and timeout. Frozen install/typecheck/lint/5tooling/
+  14205app/3build/diff/security review PASS;web13924Vitest+17native actual,264other
+  package tests valid cache. Existing Link269 warning,0errors. No SQL/grant/RLS/UI/
+  route/provider/dependency changes;full DB CI still required on new exact SHA.
+  Current Supabase getClaims docs consulted;changelog CONNECT403,no bypass.
+- Owner handoff:review(null precondition) -> use snapshot for private review and
+  retain content_digest;review(same digest precondition) -> fresh matched review or
+  stale_review requiring explicit fresh review. Both calls typed/request-local,
+  unmounted;never use digest alone as Publish permission. Tests provide fixtures.
+- Next backend outcome:authoritative whole-Identity publication candidate validation
+  under coherent DB snapshot/locks,exact destination verdict+expiry binding and
+  visible CTA public-Spill/media dependencies.250 only binds existing private
+  content;does not resolve these dependencies. D02/S5/S6/first Publish/public/RPC/
+  live/production remain OPEN. Same hourly Goal remains enabled.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main
