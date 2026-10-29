@@ -22,6 +22,7 @@ const success = z.object({ status: z.literal("success"),
   && value.revision_vector.layout === value.layout_working.revision
   && value.revision_vector.connection === (value.connection_source_working?.revision ?? null)
   && value.revision_vector.blocks === (value.collection?.revision ?? null));
+export const persistedIdentityWorkingPageSchema = success;
 const response = z.discriminatedUnion("status", [success,
   z.object({ status: z.enum(["unavailable", "invalid_page_request", "stale_read"]) }).strict(),
 ]).transform(value => {

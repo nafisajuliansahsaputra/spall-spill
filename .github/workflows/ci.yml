@@ -296,6 +296,9 @@ jobs:
       - name: Verify isolated returning-Owner layout Working CAS races
         run: node --test tests/identity-layout-working-cas-concurrency.test.mjs
 
+      - name: Verify isolated recoverable profile text Working races
+        run: node --test tests/identity-profile-text-working-concurrency.test.mjs
+
       - name: Verify concurrent Spill identity allocation
         run: node --test tests/spill-reference-concurrency.test.mjs
 

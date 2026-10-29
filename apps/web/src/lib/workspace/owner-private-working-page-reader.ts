@@ -4,7 +4,8 @@ import { identityBlockPageRequestSchema } from "./identity-block-page-request";
 
 type Denial = { status: "unavailable" | "invalid_page_request" | "stale_read" };
 type Reply = Denial | { status: "success"; collection: null | { revision: number; blocks: { position: number }[] } };
-type Rpc = "resolve_current_owner_typed_blocks_working_page" | "resolve_current_owner_identity_working_page";
+type Rpc = "resolve_current_owner_typed_blocks_working_page" | "resolve_current_owner_identity_working_page"
+  | "resolve_current_owner_editable_identity_working_page";
 
 /** Internal fixed adapters supply RPC and decoder; request callers cannot choose either. */
 export function createOwnerPrivateWorkingPageReader<T extends Reply>(client: Pick<SupabaseClient, "schema">,

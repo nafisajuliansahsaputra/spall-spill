@@ -8741,6 +8741,56 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   than silently reusing valid-only onboarding write or relaxing old schema.
   Same Goal continues;D02/S5/S6/first Publish/public/RPC/live/production remain OPEN.
 
+### Recoverable Core Profile text save and coherent readback — 2026-10-29
+
+- Baseline165373877438fbd5def7e5a6feea179f7fbe7054 exact clean origin;all8push
+  jobs PASS:CI40788582126 Application123172713276/runtime123168212112/
+  Media123168211685/Database123168211998;Security40788582170 Secret123167839519/
+  Dependency123167839868/SAST123167839929;Guard40788582056/job123167838258.
+  Full hosted DB reset/lint/advisors/4843pgTAP69files/199native29groups observed.
+- JIT12.248 locked before code after source/J5/J9/pinnedD02/12.10/80–82/245/247
+  audit. One private backend outcome:raw nullable Display Name/Bio save with
+  source+text CAS and coherent full known-persisted Identity readback/local issues.
+  New Owner-PK recovery table references existing profile,each raw field<=16384
+  Unicode points,no trim/backfill;RLS/no policies/all role/table/RPC grants withheld.
+- Save locks Owner/binding/source/recovery;requires active completed Owner/context,
+  exact source revision and null-only explicit first creation or exact text base.
+  Every save bumps text revision once;stale_source/stale_write/exhaustion deny
+  without mutation. Full supplied text can explicitly rebase after source review;
+  changed source never discards recovery. No canonical profile/photo/layout/block/
+  connection/Handle/onboarding/account/Published/provider/UI/route mutation.
+- New stable editable page composes245+own recovery in same statement snapshot;
+  profile_text_state:source|saved|source_changed,nullable recovery,revision vector
+  adds profile_text. SDK derives editable_profile(raw text or persisted source,
+  photo always source) and local field issues. Old80/245DTOs unchanged. Whole
+  publication_comparison remains not_assessed;legacy comparison stays source-only.
+- Existing fixed-RPC/strict decode/8MiB page/shared proof engine reused unchanged:
+  100rows/10pages/1000rows/25RPC/3proofs/5s/64MiB row bound;all root state compared.
+  Save strict request/one RPC/current-subject Owner proofs before+after/exact ack;
+  postdispatch errors => outcome_unknown,no auto retry/rollback/Saved-as-Live claim.
+- 401targeted SDK/regression tests PASS,123new cases;90pgTAP/8native targeted PASS.
+  Fresh owned PostgreSQL17.11 component reset76migrations/controlled Auth/pgTAP1.3.4:
+  322pgTAP(100+44+39+49+90)/28native(5+4+6+5+8) PASS,no skips. Explicit default-deny
+  RLS even temporary fixture SELECT grant;role denial/IDOR/raw/null/overbound/source
+  drift/rebase/replay/exhaustion/parallelOwners/restriction/source+text snapshot
+  tested. Two cron schedulers excluded;NOT full Supabase/provider/advisor proof.
+- Frozen install/typecheck/lint/5tooling/14069app/3build/diff/security review PASS;
+  web13788Vitest+17native actual,264other package tests valid cache. Existing Link269
+  warning,0errors. Supabase RLS/definer docs searched;changelog CONNECT403 unavailable,
+  no network bypass. New exact8push/full isolated Supabase evidence PENDING.
+- Owner headless handoff:createOwnerProfileTextWorkingSave(client).save({action:
+  save_profile_text_working,base_profile_revision:N,base_text_revision:null|M,
+  profile_text_working:{display_name:null|string,bio:null|string}}),then
+  createOwnerEditableIdentityWorking(client).read(). Use editable_profile and
+  profile_text_issues for recovery;source_changed requires explicit review/rebase.
+  SDK/070pgTAP/native fixtures provided. Raw text is private plain data,not safe
+  HTML/Publish/media evidence. Factories unmounted/RPC execution withheld.
+- Next backend outcome:audit returning-Owner canonical Profile Photo selection/
+  removal CAS with same-Owner immutable asset authority and atomic raw-text/source
+  revision preservation,without live upload/public media activation. Then coherent
+  publication validation across the full revision vector. Same Goal continues;
+  D02/S5/S6/first Publish/public/RPC/live/production remain OPEN,not VERIFIED.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
