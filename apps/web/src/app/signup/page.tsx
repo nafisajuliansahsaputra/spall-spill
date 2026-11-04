@@ -9,7 +9,7 @@ import { createClient } from "@/lib/supabase/server";
 import { SignUpForm } from "./signup-form";
 
 export const metadata: Metadata = {
-  title: "Create Account | Spall Spill",
+  title: "Create account",
 };
 
 type SignUpPageProps = {

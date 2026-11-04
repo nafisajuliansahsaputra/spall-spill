@@ -9904,9 +9904,9 @@ where private foundations exist. No screen is production verified this run.
 | D06 Add Resource | Onboarding draft UI only | OPEN: returning owner create/publish |
 | D07 Edit Resource | No integrated screen | OPEN: stable reference/update lifecycle |
 | A01 Sign Up | Connected form + browser confirmation fixture | PROVIDER PENDING: live verification/resolver |
-| A02 Login | Connected form; failure fixture + existing resolver tests | PROVIDER PENDING: live success/session |
+| A02 Login | Success/failure + SSR→O01 browser fixture | PROVIDER PENDING: live success/session |
 | A03 Recovery | New actual SDK/action/dev+compiled browser flow | PROVIDER PENDING: inbox/expiry/replay/abuse |
-| O01 Onboarding | S1–S4 checkpoint verified;S5/S6 partial | OPEN: first Publish + public handoff |
+| O01 Onboarding | S1–S6 private-review browser fixture; prior S4 verified | OPEN: first Publish + public handoff |
 | D08 Analytics | No integrated screen | OPEN: locked MVP metrics/data/UI |
 | D09 Settings | No integrated screen | OPEN: profile/account/security settings |
 | D10 Account Notice | Existing resolver/account-status page | OPEN: full notice/appeal acceptance |
@@ -9923,6 +9923,43 @@ J3: OPEN Resource publication; J5: OPEN returning workspace CRUD/publish lifecyc
 J6: OPEN exact lookup/public route; J7: OPEN browse/search; J8: OPEN public Resource;
 J9: OPEN additive capability integration. Auth entry/recovery fixtures do not close
 any complete J1–J9 journey. Prior O01-S4 remains last CLOSED / VERIFIED checkpoint.
+
+### Connected onboarding UI and same-origin recovery — 2026-11-04
+
+- Baseline cd2843f refreshed clean; all8 exact push gates PASS after retry without
+  source/test weakening. CI41836971972 Application126629554841/runtime126627376787/
+  Media126627300478/DB126627304005;Security41836972007 three scans;Guard41836972101.
+  Initial Media browser readiness failure is replaced by actual passing evidence.
+- JIT12.258 precedes source. Real O01 Working forms/actions now share entry design
+  tokens/brand, responsive step navigation, aria-current and semantic progress.
+  Only reached steps are links; server frontier still clamps future/deep requests.
+  Private photo preview uses the same signed/blob source in unoptimized no-referrer
+  img. Existing style-src permits inline style: no claim of a prior style CSP bug.
+- Added route loading status and generic error with fixed same-origin GET retry;
+  retry fetches saved state without replaying mutations or echoing provider detail.
+  Compiled browser exposed auth/resolve prefetch redirect built from internal proxy
+  URL. Return validated relative Location instead; reuse intended-path sanitizer,
+  preserve resolver precedence/cookie semantics and no-store.14new redirect tests
+  cover allowed destinations and external/ambiguous/query/fragment/control denial.
+- Actual Next+Chromium dev and production-build flows PASS with controlled TLS Auth
+  +RPC fixture: login success/SSR cookie ->Handle/intent/Identity/starter Working
+  saves ->back/reload ->stale save denial ->skip optional job ->S6 private preview
+  ->explicit receipt confirmation. Delayed read/loading, failed read/retry recovery,
+  mobile/tablet/desktop overflow/focus and zero CSP violations verified. No Publish
+  RPC invoked. This is connected application evidence,not live provider/DB evidence.
+- Local typecheck/lint/7tooling/full tests/build/diff PASS:14167web Vitest+17native
+  auth+264other package tests. Existing Link269lint warning only,0errors. No SQL,
+  grants, CSP weakening, dependency/provider/production changes. New push exact
+  CI/Security/Guard PENDING until observed.0 new complete J1-J9/production journeys.
+- O01 entry-to-private-review is code ready; first Publish/public/D01-D09/remaining
+  operator/discovery integration is OPEN.12.18/12.19 activation still requires
+  usable public transport + universal workspace/recoverable-work handoff, not only
+  a Publish button. Do not reject/omit valid unselected Drafts to fake a minimal
+  handoff.5Nov first Publish target AT RISK;15Nov release readiness unverified.
+- Next:mount real owner Working editor/dashboard recovery and Published-only public
+  transport with scoped auth/budget boundaries,then connect explicit idempotent
+  first Publish. Existing provider/staging/manual gates unchanged;no new Owner
+  action inferred from transient runner/browser readiness. Same hourly Goal.
 
 ## Current local integration — 2026-10-04
 

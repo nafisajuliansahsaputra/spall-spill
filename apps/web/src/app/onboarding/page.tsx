@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Wordmark } from "@/components/auth-shell";
 import { redirect } from "next/navigation";
 
 import {
@@ -389,30 +390,26 @@ export default async function OnboardingPage({
     ? await createTrustedProfileMediaPreviewUrl(preparedProductImageKey) : null;
 
   return (
-    <main id="main-content" className="min-h-screen bg-neutral-50 px-5 py-8 text-neutral-950 sm:py-10">
-      <div className="mx-auto w-full max-w-xl">
-        <header className="mb-8 flex items-center justify-between">
-          <span className="text-sm font-semibold tracking-tight">
-            Spall Spill
-          </span>
-
-          <span className="text-xs font-medium text-neutral-500">
-            Step {stepNumber} of{" "}
-            {ONBOARDING_STEPS.length}
-          </span>
+    <main id="main-content" className="entry-page onboarding-page">
+      <div className="onboarding-container">
+        <header className="entry-header">
+          <Wordmark />
+          <span className="eyebrow">Your space, taking shape</span>
         </header>
-
-        <div
-          aria-hidden="true"
-          className="mb-5 h-1.5 overflow-hidden rounded-full bg-neutral-200"
-        >
-          <div
-            className="h-full rounded-full bg-neutral-950 transition-[width]"
-            style={{
-              width: `${(stepNumber / ONBOARDING_STEPS.length) * 100}%`,
-            }}
-          />
+        <div className="onboarding-orientation">
+          <div><span className="eyebrow">Step {stepNumber} of {ONBOARDING_STEPS.length}</span>
+            <p>Start with you.<br /><em>Make it yours.</em></p></div>
+          <nav aria-label="Setup steps"><ol className="setup-steps">
+            {ONBOARDING_STEPS.map((step, index) => <li key={step}>
+              {index < frontierStepNumber ? <Link href={`/onboarding?step=${step}`} aria-current={step === displayedStep ? "step" : undefined}>
+                <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{STEP_LABELS[step]}
+              </Link> : <span className="setup-future"><span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>{STEP_LABELS[step]}</span>}
+            </li>)}
+          </ol></nav>
         </div>
+        <div className="onboarding-content">
+        <label className="sr-only" htmlFor="setup-progress">Current setup step</label>
+        <progress id="setup-progress" max={ONBOARDING_STEPS.length} value={stepNumber} className="setup-progress">Step {stepNumber} of {ONBOARDING_STEPS.length}</progress>
 
         {reviewingEarlierStep ? (
           <div className="mb-5 flex items-center justify-between gap-4 rounded-2xl border border-neutral-200 bg-white px-4 py-3 text-sm">
@@ -434,7 +431,7 @@ export default async function OnboardingPage({
 
         <section
           aria-labelledby="onboarding-title"
-          className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8"
+          className="onboarding-panel"
         >
           {displayedStep ===
           "claim_handle" ? (
@@ -795,11 +792,8 @@ export default async function OnboardingPage({
           ) : null}
         </section>
 
-        <p className="mt-5 text-center text-xs leading-5 text-neutral-500">
-          Saved means acknowledged Working
-          state on the backend. It does not
-          mean Published.
-        </p>
+        <p className="auth-smallprint">Saved work stays private. You decide when to publish.</p>
+        </div>
       </div>
     </main>
   );

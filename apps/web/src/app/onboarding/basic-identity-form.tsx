@@ -737,15 +737,12 @@ export function BasicIdentityForm({
             role="img"
             aria-label={previewLabel}
             className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-neutral-200 bg-white bg-cover bg-center text-center text-xs leading-4 text-neutral-400"
-            style={
-              previewUrl
-                ? {
-                    backgroundImage:
-                      `url("${previewUrl}")`,
-                  }
-                : undefined
-            }
           >
+            {previewUrl ? <>
+              {/* Private signed/blob preview; no image optimizer or referrer disclosure. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={previewUrl} alt="" referrerPolicy="no-referrer" className="h-full w-full object-cover" />
+            </> : null}
             {!previewUrl
               ? selectedProfileAssetKey
                 ? "Preview unavailable"

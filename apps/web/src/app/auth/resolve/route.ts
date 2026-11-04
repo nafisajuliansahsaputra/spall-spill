@@ -1,15 +1,17 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { resolveCurrentOwnerDestination } from "@/lib/auth/resolved-destination";
+import { sanitizeIntendedDestination } from "@/lib/auth/intended-destination";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const destination = await resolveCurrentOwnerDestination();
-  if (destination === null) {
+  const safe = destination === "/login" || destination === "/onboarding"
+    || (destination !== null && sanitizeIntendedDestination(destination) === destination);
+  if (!safe || destination === null) {
     return new NextResponse("We couldn't safely resolve your account state. Please try again later.", {
       status: 503,
       headers: { "Cache-Control": "no-store", "Content-Type": "text/plain; charset=utf-8" },
     });
   }
-  const response = NextResponse.redirect(new URL(destination, request.url), 303);
-  response.headers.set("Cache-Control", "no-store");
-  return response;
+  // The browser resolves this against its origin; internal proxy URLs are not redirect authority.
+  return new NextResponse(null, { status: 303, headers: { Location: destination, "Cache-Control": "no-store" } });
 }

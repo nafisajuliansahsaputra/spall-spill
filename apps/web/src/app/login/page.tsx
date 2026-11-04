@@ -9,7 +9,7 @@ import { createClient } from "@/lib/supabase/server";
 import { LoginForm } from "./login-form";
 
 export const metadata: Metadata = {
-  title: "Log In | Spall Spill",
+  title: "Log in",
 };
 
 type LoginPageProps = {
