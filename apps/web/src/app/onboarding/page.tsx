@@ -389,7 +389,7 @@ export default async function OnboardingPage({
     ? await createTrustedProfileMediaPreviewUrl(preparedProductImageKey) : null;
 
   return (
-    <main className="min-h-screen bg-neutral-50 px-5 py-8 text-neutral-950 sm:py-10">
+    <main id="main-content" className="min-h-screen bg-neutral-50 px-5 py-8 text-neutral-950 sm:py-10">
       <div className="mx-auto w-full max-w-xl">
         <header className="mb-8 flex items-center justify-between">
           <span className="text-sm font-semibold tracking-tight">

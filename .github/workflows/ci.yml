@@ -97,6 +97,12 @@ jobs:
           "$SPALL_TEST_BROWSER" --version
           pnpm --filter @spall-spill/web test:resource-browser
 
+      - name: Connected entry and recovery browser flow
+        run: |
+          export SPALL_TEST_BROWSER="$(command -v google-chrome || command -v chromium)"
+          test -n "$SPALL_TEST_BROWSER"
+          SPALL_ENTRY_COMPILED=1 pnpm --filter @spall-spill/web test:entry-browser
+
   application_runtime:
     name: Application runtime
     if: github.event_name != 'pull_request' || github.head_ref != 'codex/autopilot'

@@ -19,6 +19,14 @@ Authorized autonomous lane:
 - review surface: draft PR from `codex/autopilot` to `main`;
 - production merge/deployment: human-controlled.
 
+### Current delivery scope — 2026-11-02 Owner authorization
+
+Codex owns full-stack delivery, including real UI/UX and all frontend code, on
+`codex/autopilot`, targeting 15 November 2026 WIB. Follow the dated AGENTS section;
+older task-allocation notes are historical. Read-only design/ui comparison is
+allowed; no writes or automatic branch integration. Existing Goal/schedule only.
+Product semantics, exact-head gates and human-controlled release remain unchanged.
+
 ## 2. Environment bootstrap
 
 The reusable Codex Cloud environment must be attached to this repository. A new Cloud task may begin on a synthetic local task branch. Before orientation or implementation, that clean isolated workspace must be synchronized to `origin/codex/autopilot` and local `HEAD` must exactly match the fetched autonomous remote HEAD. Do not assume environment instructions have already performed this synchronization.

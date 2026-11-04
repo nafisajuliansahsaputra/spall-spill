@@ -9843,6 +9843,87 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   exact254 CI above. New push gates PENDING until observed,not release verification.
   Next:connected entry/auth/recovery UI under12.256, then Publish/public critical path.
 
+### Connected entry/auth/recovery and security repair — 2026-11-04
+
+- Continues Owner29dfa13 full-stack direction after255 SDK push b199667. Original
+  M01/A01/A02/A03 editorial mobile-first UI replaces Hello world/scaffold entry;
+  real existing signup/login actions retained. design/ui ccaeaef read-only audit
+  found same scaffold entry/CSS. No design/ui writes/integration/external assets.
+- New A03 /recovery: generic email request,60s UI cooldown, explicit token proof
+  + password/confirmation POST through ephemeral Supabase session, fixed login
+  handoff; ambient browser session cannot authorize reset. No GET token consumption,
+  account creation, raw secret echo, Owner/Working/Published/intended-cookie writes.
+  Private no-store/no-referrer; local template/config versioned. Provider rate
+  limits remain authoritative; no hosted settings or credentials changed.
+- Production browser found HTTP fixture rejected by CSP; corrected fixture to
+  trusted local TLS (verification intact). Root uses request-time rendering for
+  nonce CSP; tested actual Next production build, not static-markup-only rendering.
+  Chromium covered homepage/signup confirmation/login failure/recovery request/
+  mismatch/reset handoff/token replay,360/768/1440 overflow and keyboard skip link.
+  Dev and compiled browser PASS; fixture provider,not live inbox/Auth/DB proof.
+- Local typecheck/lint/full app tests/build/diff PASS:14153web Vitest +17native
+  auth +264other package tests;7tooling tests.16new recovery SDK/action tests.
+  Existing Link269lint warning only,0errors. TOML/template readback PASS.
+- Exact b199667 Security41798398021 Dependency126467895560 FAIL discovered
+  GHSA-g3hv-75wg-m249 affecting minimatch3.1.5/10.2.6. JIT12.257 replaces with
+  exact11.0.4 plus registered two-line CJS callable compatibility adapter; no
+  advisory suppression, unsafe makeRe recreation or trust/quarantine weakening.
+  Actual installed legacy/modern APIs and lint detection pass. Other b199667
+  gates are not a final-head PASS claim; final push CI/Security/Guard PENDING.
+- User-visible outcome: entry/auth navigation and Recovery implementation work
+  end-to-end with controlled provider; CODE READY / PROVIDER PENDING. Zero new
+  PRODUCTION VERIFIED journeys. All first Publish/J1-J9/MVP release closure OPEN.
+- 🚨 BUTUH BANTUAN MANUAL OWNER for live evidence only: provision approved staging
+  Auth/SMTP, configure Site URL and committed recovery email template, verify inbox/
+  expired+used token/cross-device behavior and rate-limit/CAPTCHA settings there.
+  Do not paste secrets in chat. Other provider gates remain in canonical backlog.
+- P0:explicit first Publish transaction + persisted safe Identity + public transport
+  + connected owner UI remain unintegrated;5Nov target AT RISK,15Nov unverified.
+  P1:owner CRUD/discovery/media/operator/analytics plus staging/release gates below.
+  Next independent work:integrate onboarding first Publish/public-safe read with
+  existing12.18/12.19 under fresh dependency/gate audit,then returning editor; do not
+  spend another run adding isolated preview variants. Same enabled hourly Goal.
+
+### Full-stack screen and journey acceptance ledger — 2026-11-04
+
+Inventory follows pinned bb79dce wireframe9.1–9.25; this tracks delivery, not new
+product behavior. OPEN means logical-screen acceptance remains unverified even
+where private foundations exist. No screen is production verified this run.
+
+| Screen | Current usable/integration evidence | Remaining acceptance |
+|---|---|---|
+| P01 Public Identity | Private reader foundations only | OPEN: mount safe published route + J1/J4 |
+| P02 Public Spill | No integrated route | OPEN: browse/search/exact reference |
+| P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
+| P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
+| D01 Owner Home | No integrated dashboard root | OPEN: resolver handoff and owner context UI |
+| D02 Identity Editor | Private Working/CAS/review foundations | OPEN: all blocks + preview/save/publish UI |
+| D03 Spill Manager | No integrated screen | OPEN: search/filter/hide/restore/archive |
+| D04 Add Product | Onboarding draft UI only | OPEN: returning owner create/publish |
+| D05 Edit Product | No integrated screen | OPEN: stable reference/update lifecycle |
+| D06 Add Resource | Onboarding draft UI only | OPEN: returning owner create/publish |
+| D07 Edit Resource | No integrated screen | OPEN: stable reference/update lifecycle |
+| A01 Sign Up | Connected form + browser confirmation fixture | PROVIDER PENDING: live verification/resolver |
+| A02 Login | Connected form; failure fixture + existing resolver tests | PROVIDER PENDING: live success/session |
+| A03 Recovery | New actual SDK/action/dev+compiled browser flow | PROVIDER PENDING: inbox/expiry/replay/abuse |
+| O01 Onboarding | S1–S4 checkpoint verified;S5/S6 partial | OPEN: first Publish + public handoff |
+| D08 Analytics | No integrated screen | OPEN: locked MVP metrics/data/UI |
+| D09 Settings | No integrated screen | OPEN: profile/account/security settings |
+| D10 Account Notice | Existing resolver/account-status page | OPEN: full notice/appeal acceptance |
+| M01 Marketing | Connected responsive root/browser navigation | CODE READY: full accessibility/performance gate pending |
+| OP01 Operations Overview | No integrated screen | OPEN: operator authorization/data/UI |
+| OP02 Moderation Queue | No integrated screen | OPEN: reports/moderation workflow |
+| OP03 Case Detail | No integrated screen | OPEN: enforcement/appeal/audit workflow |
+| OP04 Account/Content Lookup | No integrated screen | OPEN: privileged lookup isolation |
+| OP05 Audit Log | No integrated screen | OPEN: accountable audit access/filter |
+| OP06 Platform Health | No integrated screen | OPEN: operational health evidence |
+
+J1/J4: OPEN first Identity publication; J2: OPEN Product publication + destination;
+J3: OPEN Resource publication; J5: OPEN returning workspace CRUD/publish lifecycle;
+J6: OPEN exact lookup/public route; J7: OPEN browse/search; J8: OPEN public Resource;
+J9: OPEN additive capability integration. Auth entry/recovery fixtures do not close
+any complete J1–J9 journey. Prior O01-S4 remains last CLOSED / VERIFIED checkpoint.
+
 ## Current local integration — 2026-10-04
 
 This branch combines the implementation preserved at `24a8905`, current main

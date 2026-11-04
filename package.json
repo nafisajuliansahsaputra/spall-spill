@@ -8,7 +8,7 @@
     "pnpm": ">=11.24.0 <12"
   },
   "scripts": {
-    "test:tooling": "node --test tests/next-eslint-glob.test.mjs",
+    "test:tooling": "node --test tests/next-eslint-glob.test.mjs tests/minimatch-security-compat.test.mjs",
     "dev": "turbo run dev",
     "build": "turbo run build",
     "lint": "turbo run lint",

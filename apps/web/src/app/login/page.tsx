@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { AuthShell, ArrowIcon } from "@/components/auth-shell";
+
 import { createClient } from "@/lib/supabase/server";
 
 import { LoginForm } from "./login-form";
@@ -62,95 +64,13 @@ export default async function LoginPage({
   const oauthFailed =
     notice === "oauth_failed";
 
-  return (
-    <main className="min-h-screen bg-neutral-50 px-5 py-10 text-neutral-950">
-      <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-md flex-col justify-center">
-        <div className="mb-8">
-          <Link
-            href="/"
-            className="text-sm font-semibold text-neutral-950"
-          >
-            Spall Spill
-          </Link>
-        </div>
-
-        <section
-          aria-labelledby="login-title"
-          className="rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8"
-        >
-          <div className="mb-7 space-y-2">
-            <h1
-              id="login-title"
-              className="text-3xl font-semibold tracking-tight"
-            >
-              Welcome back
-            </h1>
-
-            <p className="text-sm leading-6 text-neutral-600">
-              Log in to your existing Spall
-              Spill owner account and continue
-              from the correct workspace state.
-            </p>
-          </div>
-
-          {oauthFailed ? (
-            <div
-              role="alert"
-              className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-900"
-            >
-              We couldn&apos;t complete Google
-              sign-in. Try again or use your
-              email and password.
-            </div>
-          ) : null}
-
-          <a
-            href="/auth/google"
-            className="block w-full rounded-xl border border-neutral-300 bg-white px-4 py-3 text-center text-sm font-semibold text-neutral-950 transition hover:bg-neutral-50"
-          >
-            Continue with Google
-          </a>
-
-          <div className="my-6 flex items-center gap-3">
-            <div className="h-px flex-1 bg-neutral-200" />
-
-            <span className="text-xs font-medium uppercase tracking-[0.12em] text-neutral-500">
-              or
-            </span>
-
-            <div className="h-px flex-1 bg-neutral-200" />
-          </div>
-
-          <LoginForm />
-
-          <div className="mt-5 text-center">
-            <Link
-              href="/recovery"
-              className="text-sm font-medium text-neutral-700 underline underline-offset-4"
-            >
-              Forgot your password?
-            </Link>
-          </div>
-
-          <div className="mt-7 border-t border-neutral-200 pt-6">
-            <p className="text-center text-sm text-neutral-600">
-              Don&apos;t have an account?{" "}
-              <Link
-                href="/signup"
-                className="font-semibold text-neutral-950 underline underline-offset-4"
-              >
-                Create account
-              </Link>
-            </p>
-          </div>
-        </section>
-
-        <p className="mt-5 text-center text-xs leading-5 text-neutral-500">
-          Login only confirms your identity.
-          Your current account and onboarding
-          state determine where you continue.
-        </p>
-      </div>
-    </main>
-  );
+  return <AuthShell title="Good to have you back." description="Log in to pick up where you left off."
+    footer={<p>New here? <Link href="/signup">Create an account</Link></p>}>
+    {oauthFailed ? <p role="alert" className="auth-notice error">We couldn’t complete Google sign-in. Try again or use email and password.</p> : null}
+    {notice === "password_reset" ? <p role="status" className="auth-notice success">Your password has been updated. Log in to continue.</p> : null}
+    <a href="/auth/google" className="provider-button">Continue with Google <ArrowIcon /></a>
+    <div className="auth-divider"><span>or with email</span></div>
+    <LoginForm />
+    <p className="auth-recovery"><Link href="/recovery">Can’t access your account?</Link></p>
+  </AuthShell>;
 }

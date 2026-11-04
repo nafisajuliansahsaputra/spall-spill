@@ -16,6 +16,8 @@ trustPolicyExclude:
 
 # Do not adopt fastq 1.20.2 while its publish trust is weaker than earlier releases.
 overrides:
+  # GHSA-g3hv-75wg-m249: fixed matcher, CJS compatibility patch below.
+  "minimatch@<11.0.1": "11.0.4"
   # Patched get-root-dirs uses Node 24 fs.globSync; remove its unused vulnerable tree.
   "@next/eslint-plugin-next@16.4.3>fast-glob": "-"
   "fastq@": "1.20.1"
@@ -36,3 +38,4 @@ allowBuilds:
 
 patchedDependencies:
   '@next/eslint-plugin-next@16.4.3': patches/@next__eslint-plugin-next@16.4.3.patch
+  minimatch@11.0.4: patches/minimatch@11.0.4.patch
