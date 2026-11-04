@@ -14,8 +14,10 @@ async function listen(server: Server) {
   const address = server.address(); if (!address || typeof address === "string") throw new Error("Missing fixture address");
   return address.port;
 }
-it("connects signup/login/recovery to saved onboarding and private review in real Next and Chromium", async () => {
+it("connects auth, saved onboarding, account-state routing and session exit in real Next and Chromium", async () => {
   const calls: string[] = []; let used = false; let unavailable = false;
+  let accountState: "onboarding_incomplete" | "restricted" | "suspended" = "onboarding_incomplete";
+  let failLogout = false;
   let pauseStateRead = false; const releaseStateReads: (() => void)[] = [];
   const user = { id: "25600000-0000-4000-8000-000000000001", aud: "authenticated", role: "authenticated",
     email: "owner@example.test", app_metadata: {}, user_metadata: {}, created_at: "2026-01-01T00:00:00Z" };
@@ -54,7 +56,7 @@ it("connects signup/login/recovery to saved onboarding and private review in rea
         if (unavailable) { response.statusCode = 503; response.end('{"message":"fixture provider detail"}'); return; }
       }
       let result: unknown;
-      if (name === "resolve_current_owner_state") result = { status: "onboarding_incomplete", owner_id: "25800000-0000-4000-8000-000000000001", account_state: "active", onboarding_completed: false };
+      if (name === "resolve_current_owner_state") result = { status: accountState, owner_id: "25800000-0000-4000-8000-000000000001", account_state: accountState === "onboarding_incomplete" ? "active" : accountState, onboarding_completed: false };
       else if (name === "resolve_current_onboarding_state") result = { status: "success", current_step: steps[setup.step], current_handle: setup.handle, primary_use_case: setup.useCase, revision: setup.revision };
       else if (name === "resolve_current_basic_identity_state") result = { status: "success", identity_working: setup.identity };
       else if (name === "resolve_current_starter_composition_state") result = { status: "success", layout_working: setup.layout };
@@ -89,7 +91,10 @@ it("connects signup/login/recovery to saved onboarding and private review in rea
       expect(request.method).toBe("PUT"); expect(request.headers.authorization).toBe("Bearer fixture-access");
       expect(JSON.parse(body).password).toBe("new-password"); response.end(JSON.stringify(user)); return;
     }
-    if (path.endsWith("/logout")) { response.statusCode = 204; response.end(); return; }
+    if (path.endsWith("/logout")) {
+      expect(new URL(request.url!, "https://fixture").searchParams.get("scope")).toBe("local");
+      if (failLogout) { response.statusCode = 503; response.end('{"msg":"fixture private logout failure"}'); return; }
+      response.statusCode = 204; response.end(); return; }
     response.statusCode = 400; response.end('{"msg":"Invalid credentials"}');
   });
   const providerPort = await listen(provider);
@@ -116,7 +121,7 @@ it("connects signup/login/recovery to saved onboarding and private review in rea
       await until(() => b.evaluate<boolean>(`document.readyState === 'complete' && document.body.innerText.includes(${JSON.stringify(text)})`), 20000);
     };
     const input = async (name: string, value: string) => b.evaluate(`(() => { const el=document.querySelector('[name="${name}"]'); el.value=${JSON.stringify(value)}; el.dispatchEvent(new Event('input',{bubbles:true})); })()`);
-    const submit = async () => { await b.evaluate("document.querySelector('form').requestSubmit()"); };
+    const submit = async () => { await b.evaluate(`document.querySelector('form:not([aria-label="Sign out"])').requestSubmit()`); };
     const text = async (value: string) => until(() => b.evaluate<boolean>(`document.body?.innerText.includes(${JSON.stringify(value)}) === true`), 20000);
     for (const width of [360, 768, 1440]) {
       await b.command("Emulation.setDeviceMetricsOverride", { width, height: 950, deviceScaleFactor: 1, mobile: width < 600 });
@@ -192,6 +197,49 @@ it("connects signup/login/recovery to saved onboarding and private review in rea
     expect(await b.evaluate("document.body.innerText.includes('fixture provider detail')")).toBe(false);
     unavailable = false; await b.evaluate("document.querySelector('a[href=\"/onboarding\"]').click()");
     await text("Private preview."); expect(setup.identity?.display_name).toBe("Saved Creator"); expect(setup.step).toBe(5);
+    // Native Account disclosure works with the keyboard and never submits Working.
+    const savedRevision = setup.revision;
+    await b.evaluate("document.querySelector('.private-session-menu summary').focus()");
+    expect(await b.evaluate("document.activeElement?.tagName")).toBe("SUMMARY");
+    await b.command("Input.dispatchKeyEvent", { type: "keyDown", key: "Enter", code: "Enter", text: "\r", unmodifiedText: "\r", windowsVirtualKeyCode: 13 });
+    await b.command("Input.dispatchKeyEvent", { type: "keyUp", key: "Enter", code: "Enter", windowsVirtualKeyCode: 13 });
+    await until(() => b.evaluate<boolean>("document.querySelector('.private-session-menu')?.open === true"));
+    expect(setup.revision).toBe(savedRevision);
+    expect(await b.evaluate("document.querySelectorAll('form form').length")).toBe(0);
+    for (const width of [360, 768, 1440]) {
+      await b.command("Emulation.setDeviceMetricsOverride", { width, height: 950, deviceScaleFactor: 1, mobile: width < 600 });
+      expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);
+    }
+    const logout = async () => { await b.evaluate(`document.querySelector('form[aria-label="Sign out"]').requestSubmit()`); };
+    failLogout = true;
+    await logout(); await text("We couldn't confirm Sign Out. Please try again.");
+    expect(await b.evaluate("location.pathname")).toBe("/onboarding");
+    const failedLogoutCookies = await b.command<{ cookies: { name: string }[] }>("Network.getCookies", { urls: [origin] });
+    expect(failedLogoutCookies.cookies.some(cookie => cookie.name.includes("auth-token"))).toBe(true);
+    expect(await b.evaluate("document.body.innerText.includes('fixture private logout failure')")).toBe(false);
+    await visit("/auth/resolve", "Private preview."); // Failed logout retains usable authentication.
+    for (const status of ["restricted", "suspended"] as const) {
+      accountState = status;
+      await visit("/onboarding", status === "restricted" ? "Your account access is restricted" : "Your account is suspended");
+      expect(await b.evaluate("location.pathname")).toBe("/dashboard/account-status");
+      expect(await b.evaluate("document.title")).toBe("Account status | Spall Spill");
+      expect(await b.evaluate("document.body.innerText.includes('25800000-0000')")).toBe(false);
+      expect(await b.evaluate("document.querySelectorAll('form').length")).toBe(1);
+    }
+    failLogout = false;
+    await logout(); await text("Good to have you back.");
+    expect(await b.evaluate("location.pathname")).toBe("/login");
+    const cookies = await b.command<{ cookies: { name: string }[] }>("Network.getCookies", { urls: [origin] });
+    expect(cookies.cookies.some(cookie => cookie.name.includes("auth-token"))).toBe(false);
+    const readsAfterLogout = calls.filter(call => call.startsWith("/rest/v1/rpc/")).length;
+    await visit("/onboarding", "Good to have you back.");
+    expect(await b.evaluate("location.pathname")).toBe("/login");
+    expect(calls.filter(call => call.startsWith("/rest/v1/rpc/")).length).toBe(readsAfterLogout);
+    accountState = "onboarding_incomplete";
+    await input("email", "owner@example.test"); await input("password", "new-password"); await submit(); await text("Private preview.");
+    expect(setup.identity?.display_name).toBe("Saved Creator"); expect(setup.step).toBe(5);
+    expect(setup.revision).toBe(savedRevision);
+    expect(calls.some(call => call.includes("publish_current"))).toBe(false);
     expect(cspErrors).toEqual([]);
   } finally {
     await browser?.close();

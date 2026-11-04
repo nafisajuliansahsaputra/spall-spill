@@ -151,3 +151,12 @@ a, button { touch-action: manipulation; }
 .onboarding-message h1 { font: 400 clamp(2.5rem, 4vw, 4rem)/1.05 Georgia, serif; letter-spacing: -.04em; margin: 1rem 0; }
 .onboarding-message p { font-size: .9rem; line-height: 1.8; margin: 1rem 0; color: #50584b; }
 .onboarding-message .button { margin-top: .5rem; }
+
+.setup-session-navigation { display: flex; align-items: center; justify-content: flex-end; gap: 1.5rem; }
+.private-session-menu { position: relative; font-size: .875rem; }
+.private-session-menu summary { cursor: pointer; padding: .75rem .25rem; font-weight: 600; }
+.private-session-panel { position: absolute; z-index: 20; right: 0; top: 100%; width: min(19rem, calc(100vw - 3rem)); padding: 1.25rem; border: 1px solid #252b2433; border-radius: 1rem; background: var(--color-paper); box-shadow: 0 12px 32px #252b241a; }
+.private-session-panel form { margin-top: 1rem; }
+@media (max-width: 640px) {
+  .setup-session-navigation > .eyebrow { display: none; }
+}

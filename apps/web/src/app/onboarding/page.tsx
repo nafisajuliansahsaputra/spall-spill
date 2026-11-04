@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Wordmark } from "@/components/auth-shell";
+import { PrivateSessionMenu } from "@/components/private-session-menu";
 import { redirect } from "next/navigation";
 
 import {
@@ -394,7 +395,7 @@ export default async function OnboardingPage({
       <div className="onboarding-container">
         <header className="entry-header">
           <Wordmark />
-          <span className="eyebrow">Your space, taking shape</span>
+          <div className="setup-session-navigation"><span className="eyebrow">Your space, taking shape</span><PrivateSessionMenu /></div>
         </header>
         <div className="onboarding-orientation">
           <div><span className="eyebrow">Step {stepNumber} of {ONBOARDING_STEPS.length}</span>

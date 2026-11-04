@@ -9904,12 +9904,12 @@ where private foundations exist. No screen is production verified this run.
 | D06 Add Resource | Onboarding draft UI only | OPEN: returning owner create/publish |
 | D07 Edit Resource | No integrated screen | OPEN: stable reference/update lifecycle |
 | A01 Sign Up | Connected form + browser confirmation fixture | PROVIDER PENDING: live verification/resolver |
-| A02 Login | Success/failure + SSR→O01 browser fixture | PROVIDER PENDING: live success/session |
+| A02 Login | Success/failure + SSR→O01 + logout/resume browser fixture | PROVIDER PENDING: live success/session |
 | A03 Recovery | New actual SDK/action/dev+compiled browser flow | PROVIDER PENDING: inbox/expiry/replay/abuse |
 | O01 Onboarding | S1–S6 private-review browser fixture; prior S4 verified | OPEN: first Publish + public handoff |
 | D08 Analytics | No integrated screen | OPEN: locked MVP metrics/data/UI |
 | D09 Settings | No integrated screen | OPEN: profile/account/security settings |
-| D10 Account Notice | Existing resolver/account-status page | OPEN: full notice/appeal acceptance |
+| D10 Account Notice | Restricted/suspended + logout/retry browser fixture | OPEN: full notice/appeal acceptance |
 | M01 Marketing | Connected responsive root/browser navigation | CODE READY: full accessibility/performance gate pending |
 | OP01 Operations Overview | No integrated screen | OPEN: operator authorization/data/UI |
 | OP02 Moderation Queue | No integrated screen | OPEN: reports/moderation workflow |
@@ -9960,6 +9960,40 @@ any complete J1–J9 journey. Prior O01-S4 remains last CLOSED / VERIFIED checkp
   transport with scoped auth/budget boundaries,then connect explicit idempotent
   first Publish. Existing provider/staging/manual gates unchanged;no new Owner
   action inferred from transient runner/browser readiness. Same hourly Goal.
+
+### Connected session exit and saved setup return — 2026-11-04
+
+- Baseline e045d19 all eight exact-head gates PASS: CI41895666597 Application
+  126810837703/runtime126804364441/Media126804364359/Database126804364360;
+  Security41895666738 SAST126804365203/Dependency126804365542/Secret126804365724;
+  Guard41895666557 job126804364591. Previous PENDING is replaced by observed PASS.
+- JIT12.259 locked before source. Native keyboard Account disclosure on O01 mounts
+  existing current-session SignOutForm outside Working forms. Saved setup remains
+  private; unacknowledged inputs are not promised saved. Responsive notice D10
+  reuses editorial shell; no fabricated case reasons/review/appeal eligibility.
+- Real SDK/browser negative test exposed auth-js2.112.4 clearing local storage on
+  provider logout error. Dedicated request-local SSR session-exit context buffers
+  SDK cookie writes and commits only after successful local-scope acknowledgment;
+  then clears intended navigation and redirects Login. Failure discards pending
+  writes. Ordinary SSR client unchanged. This never claims a network failure
+  guarantees server revocation rollback or global access-token invalidation.
+- Actual Next+Chromium dev and production build PASS with controlled TLS provider:
+  keyboard Account disclosure; 360/768/1440 no overflow; provider503 -> generic
+  retry truth with retained auth cookie; restricted/suspended -> account notice;
+  local logout scope -> cookie removal/Login; protected O01 -> Login without DB
+  RPC; fresh login -> same acknowledged S6/profile/progress. No Publish invoked.
+- Local typecheck/lint/full tests/build/7tooling/diff PASS;14167 web Vitest +17
+  native auth +264 other package tests. Existing Link269 lint warning only,0errors.
+  No DB/grant/dependency/CSP/provider/production changes. Exact new push checks
+  PENDING until observed. Code-ready session-navigation behavior,not live provider
+  verification;0 complete new J1-J9 journeys. D10 full notice/appeal remains OPEN.
+- First Publish5Nov AT RISK;15Nov release readiness unverified. P0 remains real
+  returning Working/Draft recovery plus safe Published-only routes and explicit
+  first publication. Private editor RPCs remain withheld; resolve narrow verified
+  server admission/budget before mounting,not blanket browser execution grants.
+  Provider credentials/config and production promotion remain existing Owner
+  gates;no new Owner approval requested or technical blocker mislabelled manual.
+
 
 ## Current local integration — 2026-10-04
 
