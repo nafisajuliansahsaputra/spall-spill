@@ -59,7 +59,7 @@ function getSupabaseElevatedCredential(): SupabaseElevatedCredential {
   );
 }
 
-export function createSupabaseServiceClient() {
+export function createSupabaseServiceClient(fetcher?: typeof fetch) {
   const { supabaseUrl } =
     getSupabasePublicEnv();
 
@@ -70,6 +70,7 @@ export function createSupabaseServiceClient() {
     supabaseUrl,
     key,
     {
+      ...(fetcher ? { global: { fetch: fetcher } } : {}),
       auth: {
         persistSession: false,
         autoRefreshToken: false,

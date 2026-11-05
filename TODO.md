@@ -9897,7 +9897,7 @@ where private foundations exist. No screen is production verified this run.
 | P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | No integrated dashboard root | OPEN: resolver handoff and owner context UI |
-| D02 Identity Editor | Private Working/CAS/review foundations | OPEN: all blocks + preview/save/publish UI |
+| D02 Identity Editor | Connected Profile Working/save/reload + browser fixture | OPEN: remaining blocks/preview/publish + provider |
 | D03 Spill Manager | No integrated screen | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Onboarding draft UI only | OPEN: returning owner create/publish |
 | D05 Edit Product | No integrated screen | OPEN: stable reference/update lifecycle |
@@ -9993,6 +9993,55 @@ any complete J1–J9 journey. Prior O01-S4 remains last CLOSED / VERIFIED checkp
   server admission/budget before mounting,not blanket browser execution grants.
   Provider credentials/config and production promotion remain existing Owner
   gates;no new Owner approval requested or technical blocker mislabelled manual.
+
+### Connected returning-Owner Profile Working editor — 2026-11-05
+
+- Baseline8c671ba exact eight gates now PASS: CI41904831285 Application126864246299,
+  runtime126836579555/Media126836578327/Database126836579592;Security41904831295
+  Dependency126836575586/Secret126836576013/SAST126836576545;Guard41904831290
+  job126836575455. No Goal reset/duplicate/branch-design/production mutation.
+- JIT12.260 before source after J5/J9/pinned9.6D02/12.4/248 and actual SDK/SQL audit.
+  /dashboard/identity now integrates current Owner gating, guarded full persisted
+  snapshot, Profile raw Working CAS save, unsaved/saving/saved/conflict states and
+  full GET reload. Raw unfinished text is recoverable; source_changed explicit;
+  other saved layout/connection/hidden/raw blocks/photo are retained read-only.
+  This is the Profile region only,not full D02/Preview/Publish/universal D01.
+- One service-only fixed gateway dispatches Home/editable-page/Profile-text save.
+  Browser roles and original private RPC ACLs stay denied. Server derives verified
+  Auth subject,binds later proofs,uses original guarded engines and request-local
+  service client. Gateway binds/restores both Auth GUCs,including exception path;
+  DB owns account/binding/CAS. No caller Owner target,arbitrary SQL or public data.
+- Distributed Upstash admission for each private RPC uses hashed verified subject,
+  deployment namespace,separate600read/30save-per-minute quotas and existing atomic
+  Lua/strict1500ms transport. Missing config/denial/error fails closed,no private
+  gateway dispatch/retry/in-memory fallback. Private fetch no-store/redirect:error.
+  Versioned service-only EXECUTE migration is reviewable;no live grants applied.
+- Actual Next+Chromium dev and production-build flow PASS with controlled TLS
+  Auth/RPC + test-only Redis relay: protected editor,raw empty-name/Bio save/reload,
+  source unchanged,lost acknowledgment after actual fixture write -> no automatic
+  retry + explicit reload reconciliation;stale conflicting input preserved + retry
+  disabled,reload latest,
+  quota denial/recovery without gateway call,logout/login intended editor return,
+  360/768/1440 overflow and no new editor Runtime/CSP errors. Screenshot inspected.
+  Fixture browser is not real DB/provider/production evidence.
+- Local typecheck/lint/build/full tests/7tooling/diff PASS:14205web Vitest(38new),
+  17native auth +264other package tests. Existing Link269 warning only,0errors.
+  SQL070-075 PASS358checks on fresh schema-only cloned local PostgreSQL component;
+  new07521checks cover ACL/actor isolation/raw CAS/Published preservation/exception
+  claim restoration. New real concurrent gateway test PASS:one winner/one stale,
+  replay rejected,source unchanged;added to CI without weakening existing checks.
+- Full Supabase local image extraction exhausted disk; owned pull stopped and
+  space recovered automatically. Reused existing local PostgreSQL with fresh
+  isolated test database instead of polluted prior fixtures. This is component
+  evidence,not full Supabase reset/lint/advisor evidence;canonical CI Database
+  must run migrations/RLS/advisors/races on exact new SHA. New push gates PENDING.
+- 5Nov first Publish target remains OPEN;15Nov release readiness unverified.
+  0 complete new J1-J9 journeys. Next P0:remaining blocks and Product/Resource Draft
+  recovery/universal Home,Published-safe public routes/clicks,explicit publication.
+  Owner-gated staging needs reviewed migration/service credential plus Upstash
+  URL/token/deployment namespace from.env.example through secure configuration;
+  no secret in chat,no automatic credential/permission/deployment changes.
+
 
 
 ## Current local integration — 2026-10-04

@@ -14,10 +14,13 @@ async function listen(server: Server) {
   const address = server.address(); if (!address || typeof address === "string") throw new Error("Missing fixture address");
   return address.port;
 }
-it("connects auth, saved onboarding, account-state routing and session exit in real Next and Chromium", async () => {
+it("connects auth, onboarding and returning Profile Working in real Next and Chromium", async () => {
   const calls: string[] = []; let used = false; let unavailable = false;
-  let accountState: "onboarding_incomplete" | "restricted" | "suspended" = "onboarding_incomplete";
-  let failLogout = false;
+  let accountState: "onboarding_incomplete" | "restricted" | "suspended" | "active" = "onboarding_incomplete";
+  let failLogout = false; let budgetDenied = false; let loseAcknowledgment = false;
+  const gatewayOperations: string[] = [];
+  let overlay: null | { display_name: string | null; bio: string | null; revision: number; source_profile_revision: number } = null;
+  function currentOverlay(): typeof overlay { return overlay; }
   let pauseStateRead = false; const releaseStateReads: (() => void)[] = [];
   const user = { id: "25600000-0000-4000-8000-000000000001", aud: "authenticated", role: "authenticated",
     email: "owner@example.test", app_metadata: {}, user_metadata: {}, created_at: "2026-01-01T00:00:00Z" };
@@ -37,6 +40,12 @@ it("connects auth, saved onboarding, account-state routing and session exit in r
     let body = ""; for await (const part of request) body += String(part);
     const path = new URL(request.url!, "http://fixture").pathname; calls.push(path);
     response.setHeader("content-type", "application/json");
+    if (path === "/redis") {
+      const command = JSON.parse(body); expect(command[0]).toBe("eval");
+      expect(command[2]).toBe(2); expect(command[3]).toContain("spall-identity-text-editor:profile-");
+      expect(command[3]).not.toContain(user.id);
+      response.end(JSON.stringify({ result: budgetDenied ? 0 : 1 })); return;
+    }
     if (path.endsWith("/recover") || path.endsWith("/signup")) { response.end("{}"); return; }
     if (path.endsWith("/verify")) {
       const data = JSON.parse(body);
@@ -50,13 +59,33 @@ it("connects auth, saved onboarding, account-state routing and session exit in r
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe(`Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe(name === "execute_owner_profile_editor_server" ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      if (name === "execute_owner_profile_editor_server") {
+        expect(data.input_subject).toBe(user.id); gatewayOperations.push(data.input_operation);
+        let result: unknown;
+        const context = { status: "success", current_handle: setup.handle, primary_use_case: setup.useCase };
+        if (data.input_operation === "resolve_current_owner_home_context") result = context;
+        else if (data.input_operation === "resolve_current_owner_editable_identity_working_page") {
+          expect(data.input_payload).toEqual({ input_request: { expected_collection_revision: null, after_position: null } });
+          result = { ...context, profile_working: setup.identity, layout_working: setup.layout,
+            connection_source_working: null, legacy_identity_work: "unchanged", publication_comparison: "not_assessed",
+            profile_text_working: overlay, profile_text_state: overlay ? "saved" : "source",
+            revision_vector: { profile: setup.identity!.revision, layout: setup.layout!.revision, connection: null, blocks: null, profile_text: overlay?.revision ?? null }, collection: null };
+        } else if (data.input_operation === "save_current_owner_profile_text_working") {
+          const value = data.input_payload.input_working;
+          if (value.base_profile_revision !== setup.identity!.revision || value.base_text_revision !== (overlay?.revision ?? null)) result = { status: "stale_write" };
+          else { overlay = { ...value.profile_text_working, revision: (overlay?.revision ?? 0) + 1, source_profile_revision: setup.identity!.revision };
+            result = { status: "success", text_revision: overlay!.revision, source_profile_revision: setup.identity!.revision };
+            if (loseAcknowledgment) { response.statusCode = 503; response.end('{"message":"fixture acknowledgment lost"}'); return; } }
+        } else throw new Error("Unexpected gateway operation");
+        response.end(JSON.stringify(result)); return;
+      }
       if (name === "resolve_current_onboarding_state") {
         if (pauseStateRead) await new Promise<void>(resolve => { releaseStateReads.push(resolve); });
         if (unavailable) { response.statusCode = 503; response.end('{"message":"fixture provider detail"}'); return; }
       }
       let result: unknown;
-      if (name === "resolve_current_owner_state") result = { status: accountState, owner_id: "25800000-0000-4000-8000-000000000001", account_state: accountState === "onboarding_incomplete" ? "active" : accountState, onboarding_completed: false };
+      if (name === "resolve_current_owner_state") result = { status: accountState, owner_id: "25800000-0000-4000-8000-000000000001", account_state: accountState === "onboarding_incomplete" ? "active" : accountState, onboarding_completed: accountState === "active" };
       else if (name === "resolve_current_onboarding_state") result = { status: "success", current_step: steps[setup.step], current_handle: setup.handle, primary_use_case: setup.useCase, revision: setup.revision };
       else if (name === "resolve_current_basic_identity_state") result = { status: "success", identity_working: setup.identity };
       else if (name === "resolve_current_starter_composition_state") result = { status: "success", layout_working: setup.layout };
@@ -99,8 +128,16 @@ it("connects auth, saved onboarding, account-state routing and session exit in r
   });
   const providerPort = await listen(provider);
   const allocation = createServer(); const port = await listen(allocation); await new Promise<void>(r => allocation.close(() => r()));
+  // Controlled provider relay for the actual strict Upstash transport. No production
+  // bypass/configuration is added; only this child process loads the test relay.
+  const relay = join(tlsDirectory, "redis-relay.cjs");
+  await writeFile(relay, `const original = globalThis.fetch; globalThis.fetch = async (url, init) => {
+    if (String(url) !== "https://fixture.upstash.io/") return original(url, init);
+    const response = await original("https://127.0.0.1:${providerPort}/redis", init);
+    return new Response(response.body, { status: response.status, headers: response.headers });
+  };`);
   const app = spawn(process.execPath, [resolve("node_modules/next/dist/bin/next"), process.env.SPALL_ENTRY_COMPILED === "1" ? "start" : "dev", "--hostname", "127.0.0.1", "--port", String(port)], {
-    env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1", NODE_EXTRA_CA_CERTS: cert, NEXT_PUBLIC_SUPABASE_URL: `https://127.0.0.1:${providerPort}`, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "publishable-local-fixture" },
+    env: { ...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --require=${relay}`, SUPABASE_SERVICE_ROLE_KEY: "isolated-service-role", UPSTASH_REDIS_REST_URL: "https://fixture.upstash.io", UPSTASH_REDIS_REST_TOKEN: "fixture-budget-token", SPALL_OWNER_PROFILE_BUDGET_NAMESPACE: "browser", NEXT_TELEMETRY_DISABLED: "1", NODE_EXTRA_CA_CERTS: cert, NEXT_PUBLIC_SUPABASE_URL: `https://127.0.0.1:${providerPort}`, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "publishable-local-fixture" },
     stdio: ["ignore", "pipe", "pipe"], detached: true,
   });
   let logs = ""; app.stdout.on("data", x => { logs += String(x); }); app.stderr.on("data", x => { logs += String(x); });
@@ -120,7 +157,14 @@ it("connects auth, saved onboarding, account-state routing and session exit in r
       await b.command("Page.navigate", { url: origin + path });
       await until(() => b.evaluate<boolean>(`document.readyState === 'complete' && document.body.innerText.includes(${JSON.stringify(text)})`), 20000);
     };
-    const input = async (name: string, value: string) => b.evaluate(`(() => { const el=document.querySelector('[name="${name}"]'); el.value=${JSON.stringify(value)}; el.dispatchEvent(new Event('input',{bubbles:true})); })()`);
+    const input = async (name: string, value: string) => {
+      await b.evaluate(`(() => { const el=document.querySelector('[name="${name}"]'); el.focus(); el.select(); })()`);
+      if (value) await b.command("Input.insertText", { text: value });
+      else {
+        await b.command("Input.dispatchKeyEvent", { type: "keyDown", key: "Backspace", code: "Backspace", windowsVirtualKeyCode: 8 });
+        await b.command("Input.dispatchKeyEvent", { type: "keyUp", key: "Backspace", code: "Backspace", windowsVirtualKeyCode: 8 });
+      }
+    };
     const submit = async () => { await b.evaluate(`document.querySelector('form:not([aria-label="Sign out"])').requestSubmit()`); };
     const text = async (value: string) => until(() => b.evaluate<boolean>(`document.body?.innerText.includes(${JSON.stringify(value)}) === true`), 20000);
     for (const width of [360, 768, 1440]) {
@@ -239,6 +283,52 @@ it("connects auth, saved onboarding, account-state routing and session exit in r
     await input("email", "owner@example.test"); await input("password", "new-password"); await submit(); await text("Private preview.");
     expect(setup.identity?.display_name).toBe("Saved Creator"); expect(setup.step).toBe(5);
     expect(setup.revision).toBe(savedRevision);
+    const errorsBeforeEditor = errors.length;
+    accountState = "active";
+    await visit("/dashboard/identity", "Your Identity, in progress.");
+    expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("Saved Creator");
+    for (const width of [360, 768, 1440]) {
+      await b.command("Emulation.setDeviceMetricsOverride", { width, height: 950, deviceScaleFactor: 1, mobile: width < 600 });
+      expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);
+    }
+    const editorScreenshot = await b.command<{ data: string }>("Page.captureScreenshot", { format: "png", captureBeyondViewport: true });
+    await writeFile("/tmp/spall-260-editor.png", Buffer.from(editorScreenshot.data, "base64"));
+    await input("displayName", ""); await input("bio", " Raw\n Bio "); await submit();
+    await text("Working saved. Your published Identity has not changed.");
+    expect(currentOverlay()?.display_name).toBe(""); expect(currentOverlay()?.bio).toBe(" Raw\r\n Bio ");
+    expect(setup.identity?.display_name).toBe("Saved Creator");
+    await b.evaluate(`document.querySelector('a[href="/dashboard/identity"]').click()`); await text("Your Identity, in progress.");
+    expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("");
+    expect(await b.evaluate("document.querySelector('[name=bio]').value")).toBe(" Raw\n Bio ");
+    const savesBeforeUnknown = gatewayOperations.filter(operation => operation === "save_current_owner_profile_text_working").length;
+    loseAcknowledgment = true;
+    await input("displayName", "Saved despite lost acknowledgment"); await submit(); await text("We couldn’t confirm this save.");
+    expect(currentOverlay()?.display_name).toBe("Saved despite lost acknowledgment");
+    expect(gatewayOperations.filter(operation => operation === "save_current_owner_profile_text_working")).toHaveLength(savesBeforeUnknown + 1);
+    expect(await b.evaluate("document.querySelector('form[aria-label=\"Profile Working\"] button').disabled")).toBe(true);
+    loseAcknowledgment = false;
+    await visit("/dashboard/identity", "Your Identity, in progress.");
+    expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("Saved despite lost acknowledgment");
+    overlay = { display_name: "Another tab", bio: "Saved elsewhere", revision: 3, source_profile_revision: setup.identity!.revision };
+    await input("displayName", "Keep my conflicting input"); await submit(); await text("We couldn’t confirm this save.");
+    expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("Keep my conflicting input");
+    expect(await b.evaluate("document.querySelector('form[aria-label=\"Profile Working\"] button').disabled")).toBe(true);
+    await visit("/dashboard/identity", "Your Identity, in progress.");
+    expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("Another tab");
+    expect(errors.length).toBe(errorsBeforeEditor);
+    const gatewayCalls = calls.filter(call => call.endsWith("execute_owner_profile_editor_server")).length;
+    budgetDenied = true; await visit("/dashboard/identity", "We couldn’t load your Identity Working.");
+    expect(calls.filter(call => call.endsWith("execute_owner_profile_editor_server"))).toHaveLength(gatewayCalls);
+    budgetDenied = false;
+    await b.evaluate(`document.querySelector('a[href="/dashboard/identity"]').click()`); await text("Your Identity, in progress.");
+    expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("Another tab");
+    await b.evaluate("document.querySelector('.private-session-menu summary').click()");
+    await logout(); await text("Good to have you back.");
+    await visit("/dashboard/identity", "Good to have you back.");
+    await input("email", "owner@example.test"); await input("password", "new-password"); await submit();
+    await text("Your Identity, in progress.");
+    expect(await b.evaluate("location.pathname")).toBe("/dashboard/identity");
+    expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("Another tab");
     expect(calls.some(call => call.includes("publish_current"))).toBe(false);
     expect(cspErrors).toEqual([]);
   } finally {

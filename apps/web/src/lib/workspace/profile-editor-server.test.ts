@@ -1,0 +1,68 @@
+import { createClient } from "@supabase/supabase-js";
+import { afterEach, beforeEach, expect, it, vi } from "vitest";
+const mocks = vi.hoisted(() => ({ session: vi.fn(), service: vi.fn() }));
+vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.session }));
+vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
+import { createProfileEditorClient, admitProfileEditor } from "./profile-editor-server";
+const subject = "26000000-0000-4000-8000-000000000001";
+let denied = false;
+let calls: { url: string; body: Record<string, unknown>; headers: Headers }[];
+beforeEach(() => {
+  calls = []; denied = false;
+  vi.stubEnv("SPALL_OWNER_PROFILE_BUDGET_NAMESPACE", "test");
+  vi.stubEnv("UPSTASH_REDIS_REST_URL", "https://fixture.upstash.io");
+  vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "fixture-budget-token");
+  vi.stubGlobal("fetch", vi.fn(async (url: unknown, init?: RequestInit) => {
+    const target = String(url); const body = JSON.parse(String(init?.body));
+    calls.push({ url: target, body, headers: new Headers(init?.headers) });
+    if (target === "https://fixture.upstash.io/") return Response.json({ result: denied ? 0 : 1 });
+    return Response.json({ status: "success" });
+  }));
+  const session = createClient("https://fixture.supabase.co", "session-key", { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch } });
+  vi.spyOn(session.auth, "getClaims").mockResolvedValue({ data: { claims: { sub: subject } }, error: null } as never);
+  mocks.session.mockResolvedValue(session);
+  mocks.service.mockImplementation((fetcher: typeof fetch) => createClient("https://fixture.supabase.co", "service-key", { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: fetcher } }));
+});
+afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
+it.each(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working"])("uses real abortable SDK admission for %s", async operation => {
+  const client = await createProfileEditorClient();
+  const controller = new AbortController();
+  expect((await client.schema("api").rpc(operation, { input_working: { raw: "private" } }).abortSignal(controller.signal)).error).toBeNull();
+  expect(calls).toHaveLength(2);
+  expect(calls[0]!.url).toBe("https://fixture.upstash.io/");
+  expect(JSON.stringify(calls[0]!.body)).not.toContain(subject);
+  expect(calls[1]!.url).toContain("/rpc/execute_owner_profile_editor_server");
+  expect(calls[1]!.body).toEqual({ input_subject: subject, input_operation: operation, input_payload: { input_working: { raw: "private" } } });
+  expect(calls[1]!.headers.get("authorization")).toBe("Bearer service-key");
+});
+it("keeps Owner state on the ordinary client without elevated dispatch", async () => {
+  const client = await createProfileEditorClient(); await client.schema("api").rpc("resolve_current_owner_state");
+  expect(calls).toHaveLength(1); expect(calls[0]!.url).toContain("resolve_current_owner_state");
+  expect(calls[0]!.headers.get("authorization")).toBe("Bearer session-key");
+});
+it.each(["resolve_current_owner_identity_working_page", "publish_current_onboarding", "execute_owner_profile_editor_server", "arbitrary"])("denies unselected %s before I/O", async operation => {
+  const client = await createProfileEditorClient(); expect(() => client.schema("api").rpc(operation)).toThrow(); expect(calls).toEqual([]);
+});
+it("denies table and other-schema operations", async () => {
+  const client = await createProfileEditorClient(); expect(() => client.schema("api").from("owners")).toThrow();
+  expect(() => client.schema("core").rpc("resolve_current_owner_home_context")).toThrow(); expect(calls).toEqual([]);
+});
+it("denies quota without service dispatch", async () => {
+  denied = true; const client = await createProfileEditorClient(); const reply = await client.schema("api").rpc("resolve_current_owner_home_context");
+  expect(reply.error).not.toBeNull(); expect(calls).toHaveLength(1);
+});
+it.each(["", "UPPER", "../other"])("denies invalid deployment namespace %j", async namespace => {
+  vi.stubEnv("SPALL_OWNER_PROFILE_BUDGET_NAMESPACE", namespace); expect(await admitProfileEditor(subject, true)).toBe(false); expect(calls).toEqual([]);
+});
+it("does not elevate unverified/malformed identity", async () => {
+  mocks.session.mockResolvedValue({ auth: { getClaims: async () => ({ data: { claims: { sub: subject } }, error: { message: "invalid" } }) } });
+  await expect(createProfileEditorClient()).rejects.toThrow(); expect(calls).toEqual([]);
+});
+it("binds later proofs to the initial actor", async () => {
+  const session = await mocks.session(); const client = await createProfileEditorClient();
+  session.auth.getClaims.mockResolvedValue({ data: { claims: { sub: "26000000-0000-4000-8000-000000000002" } }, error: null });
+  expect((await client.auth.getClaims()).data).toBeNull(); expect(calls).toEqual([]);
+});
+it.each(["http://fixture.upstash.io", "https://evil.test", "https://fixture.upstash.io/path"])("denies unsafe Redis origin %s", async origin => {
+  vi.stubEnv("UPSTASH_REDIS_REST_URL", origin); expect(await admitProfileEditor(subject, true)).toBe(false); expect(calls).toEqual([]);
+});
