@@ -1,11 +1,18 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { signOutAction, type SignOutState } from "./actions";
 const initial: SignOutState = { status: "idle", message: null };
 export function SignOutForm() {
   const [state, action, pending] = useActionState(signOutAction, initial);
-  return <form action={action} aria-label="Sign out" className="space-y-3">
+  const form = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    if (state.status === "error") {
+      const disclosure = form.current?.closest("details");
+      if (disclosure) disclosure.open = true;
+    }
+  }, [state]);
+  return <form ref={form} action={action} aria-label="Sign out" className="space-y-3">
     {state.message ? <p role="alert" className="text-sm leading-6">{state.message}</p> : null}
     <button type="submit" disabled={pending} className="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white disabled:opacity-50">
       {pending ? "Signing out…" : "Sign Out"}

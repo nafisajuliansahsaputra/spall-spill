@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({ session: vi.fn(), service: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.session }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
-import { createProfileEditorClient, admitProfileEditor } from "./profile-editor-server";
+import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor } from "./profile-editor-server";
 const subject = "26000000-0000-4000-8000-000000000001";
 let denied = false;
 let calls: { url: string; body: Record<string, unknown>; headers: Headers }[];
@@ -65,4 +65,15 @@ it("binds later proofs to the initial actor", async () => {
 });
 it.each(["http://fixture.upstash.io", "https://evil.test", "https://fixture.upstash.io/path"])("denies unsafe Redis origin %s", async origin => {
   vi.stubEnv("UPSTASH_REDIS_REST_URL", origin); expect(await admitProfileEditor(subject, true)).toBe(false); expect(calls).toEqual([]);
+});
+
+it.each(["resolve_current_owner_starter_recovery", "save_current_owner_starter_item_working"])("admits selected starter operation %s through its distinct gateway/quota", async operation => {
+ const client=await createStarterRecoveryClient();await client.schema("api").rpc(operation,{});
+ expect(calls).toHaveLength(2);expect(JSON.stringify(calls[0]!.body)).toContain("starter-");
+ expect(calls[1]!.url).toContain("/rpc/execute_owner_starter_recovery_server");expect(calls[1]!.body.input_subject).toBe(subject);
+});
+it("keeps Profile operations out of Starter admission and Starter operations out of Profile",async()=>{
+ const starter=await createStarterRecoveryClient(),profile=await createProfileEditorClient();
+ expect(()=>starter.schema("api").rpc("save_current_owner_profile_text_working")).toThrow();
+ expect(()=>profile.schema("api").rpc("save_current_owner_starter_item_working")).toThrow();expect(calls).toEqual([]);
 });

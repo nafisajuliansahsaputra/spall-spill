@@ -308,6 +308,9 @@ jobs:
       - name: Verify server Profile Working gateway CAS races
         run: node --test tests/owner-profile-editor-server-concurrency.test.mjs
 
+      - name: Verify starter Item Working recovery CAS races
+        run: node --test tests/owner-starter-recovery-concurrency.test.mjs
+
       - name: Verify isolated profile photo and recoverable text CAS races
         run: node --test tests/identity-profile-photo-working-concurrency.test.mjs
 

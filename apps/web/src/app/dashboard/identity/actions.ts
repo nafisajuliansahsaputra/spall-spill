@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 import { ownerProfileTextWorkingSaveIntentSchema, createOwnerProfileTextWorkingSave } from "@/lib/workspace/owner-profile-text-working-save";
 import { createProfileEditorClient } from "@/lib/workspace/profile-editor-server";
 export type ProfileSaveState = { status: "idle" | "saved" | "error" | "reload"; message: string | null; textRevision: number | null };
@@ -11,7 +12,7 @@ export async function saveProfileWorkingAction(_previous: ProfileSaveState, form
     return { status: "error", message: "These changes could not be saved. Check the field sizes and reload if needed.", textRevision: revision("textRevision") };
   try {
     const result = await createOwnerProfileTextWorkingSave(await createProfileEditorClient()).save(parsed.data);
-    if (result.status === "success") return { status: "saved", message: "Working saved. Your published Identity has not changed.", textRevision: result.text_revision };
+    if (result.status === "success") { revalidatePath("/dashboard/identity"); return { status: "saved", message: "Working saved. Your published Identity has not changed.", textRevision: result.text_revision }; }
     return { status: "reload", message: "We couldn’t confirm this save. Keep your text and reload the latest saved work before saving again.", textRevision: null };
   } catch { return { status: "reload", message: "Your saved work is temporarily unavailable. Keep your text and reload before saving again.", textRevision: null }; }
 }

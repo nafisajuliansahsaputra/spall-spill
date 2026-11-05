@@ -1,5 +1,6 @@
 import { beforeEach, expect, it, vi } from "vitest";
-const mocks = vi.hoisted(() => ({ client: vi.fn(), save: vi.fn() }));
+const mocks = vi.hoisted(() => ({ client: vi.fn(), save: vi.fn(), revalidate: vi.fn() }));
+vi.mock("next/cache", () => ({ revalidatePath: mocks.revalidate }));
 vi.mock("@/lib/workspace/profile-editor-server", () => ({ createProfileEditorClient: mocks.client }));
 vi.mock("@/lib/workspace/owner-profile-text-working-save", async importActual => ({
   ...await importActual<typeof import("@/lib/workspace/owner-profile-text-working-save")>(),
@@ -14,6 +15,7 @@ function form() {
 beforeEach(() => { vi.clearAllMocks(); mocks.client.mockResolvedValue({}); mocks.save.mockResolvedValue({ status: "success", text_revision: 1, source_profile_revision: 2 }); });
 it("saves exact unfinished raw text without a Published action or caller Owner target", async () => {
   expect(await saveProfileWorkingAction(previous, form())).toEqual({ status: "saved", message: "Working saved. Your published Identity has not changed.", textRevision: 1 });
+  expect(mocks.revalidate).toHaveBeenCalledExactlyOnceWith("/dashboard/identity");
   expect(mocks.save).toHaveBeenCalledExactlyOnceWith({ action: "save_profile_text_working", base_profile_revision: 2, base_text_revision: null, profile_text_working: { display_name: "", bio: " Raw\r\n Bio " } });
 });
 it.each(["owner_id", "subject", "action", "published"])("rejects extra authority %s before any session or DB I/O", async key => {

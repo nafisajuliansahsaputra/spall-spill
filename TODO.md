@@ -9896,13 +9896,13 @@ where private foundations exist. No screen is production verified this run.
 | P02 Public Spill | No integrated route | OPEN: browse/search/exact reference |
 | P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
-| D01 Owner Home | No integrated dashboard root | OPEN: resolver handoff and owner context UI |
+| D01 Owner Home | Connected guarded Home + setup Item recovery/browser fixture | OPEN: full overview/universal publication handoff |
 | D02 Identity Editor | Connected Profile Working/save/reload + browser fixture | OPEN: remaining blocks/preview/publish + provider |
 | D03 Spill Manager | No integrated screen | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Onboarding draft UI only | OPEN: returning owner create/publish |
-| D05 Edit Product | No integrated screen | OPEN: stable reference/update lifecycle |
+| D05 Edit Product | Existing setup Product raw Working save/reload/browser fixture | OPEN: general editor/media/destination/publish lifecycle |
 | D06 Add Resource | Onboarding draft UI only | OPEN: returning owner create/publish |
-| D07 Edit Resource | No integrated screen | OPEN: stable reference/update lifecycle |
+| D07 Edit Resource | Existing setup Resource raw Working/meaning save/reload/browser fixture | OPEN: general editor/publish lifecycle |
 | A01 Sign Up | Connected form + browser confirmation fixture | PROVIDER PENDING: live verification/resolver |
 | A02 Login | Success/failure + SSR→O01 + logout/resume browser fixture | PROVIDER PENDING: live success/session |
 | A03 Recovery | New actual SDK/action/dev+compiled browser flow | PROVIDER PENDING: inbox/expiry/replay/abuse |
@@ -10041,6 +10041,50 @@ any complete J1–J9 journey. Prior O01-S4 remains last CLOSED / VERIFIED checkp
   Owner-gated staging needs reviewed migration/service credential plus Upstash
   URL/token/deployment namespace from.env.example through secure configuration;
   no secret in chat,no automatic credential/permission/deployment changes.
+
+
+### Owner Home and saved setup Item Working recovery — 2026-11-05
+
+- Baseline884e1899c2372d9e81e919d89304230e6b28cb7c exact8push gates PASS:
+  CI41948682546 Application126991297364/runtime126987140055/Database126987140374/
+  Media126987140377;Security41948682555 Secret126987140420/Dependency126987140643/
+  SAST126987140784;Guard41948682570/job126987140406. Same Goal/lane preserved.
+- JIT12.261 locked before source. /dashboard now connects current-Owner Home,
+  Identity navigation and existing onboarding Product/Resource recovery at stable
+  /dashboard/spill/{reference}/edit. Raw Title/source and explicit Resource meaning
+  save to independent private Working; unfinished URLs are text,never links/fetched.
+  Published/source/preparation/reference remain unchanged. Hidden stays hidden;
+  archived Item is read-only with saved raw work visible. This covers existing
+  one-per-Owner setup Items only,not general CRUD/full D01/D05/D07/J5 acceptance.
+- Versioned RLS/no-table-grant overlay uses immutable composite identity binding,
+  cascading raw Owner data,source+Working CAS,Owner/binding locks and replay denial.
+  Fixed service-only read/save gateway restores Auth GUCs even on exception;original
+  browser RPCs remain denied. Verified-subject request-local SDK admission reuses
+  strict Upstash transport with separate starter read/save quota namespaces.
+- Real Next/Chromium dev+fresh production build PASS with controlled TLS Auth/RPC
+  and test Redis relay:Home -> both editors,raw save/reload,real Next navigation
+  after save,conflict/input preservation,source drift/rebase,lost ack/reconcile,
+  hidden/archive,unknown reference,quota denial/recovery,Login default/intended
+  return and360/768/1440 overflow. These are controlled-provider browser proofs,
+  not full DB/live-provider or first-Publish journey evidence. Home image inspected.
+- Profile and Item saves revalidate their affected private paths after acknowledgment.
+  Native Account disclosure now preserves pre-hydration open state across RSC;
+  failed logout keeps retry visible. Only expected native open-attribute hydration
+  mismatch is suppressed;Runtime/CSP checks remain. Browser full-GET helper tracks
+  document replacement across redirects,not a transient redirect loader identifier.
+- Local typecheck/lint/build/full tests/7tooling PASS:14248web Vitest,17native auth,
+  264other package tests;existing Link269 warning only,0errors. Exact new261 SQL
+  migration on fresh schema-only cloned local PostgreSQL component:37pgTAP PASS;
+  simultaneous first-save service gateway race PASS(one winner/one stale/replay
+  denied,source/reference unchanged). Full Supabase reset/lint/advisor/all-race
+  evidence is reserved for unchanged canonical CI plus added261race step.
+- Exact new-push CI/Security/Guard PENDING before push;no VERIFIED/production claim.
+  0complete new J1-J9 journeys. First Publish5Nov target still OPEN;15Nov release
+  readiness unverified. Next P0:Published-safe public Identity/click transport,
+  explicit publication/handoff;remaining blocks/general Item CRUD/media edits.
+  Secure staging Supabase/Auth/SMTP/Upstash/R2 configuration and reviewed migrations
+  remain Owner gates;no secret in chat,no live privilege/deploy/credential mutation.
+
 
 
 

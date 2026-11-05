@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { Wordmark } from "@/components/auth-shell";
-import { PrivateSessionMenu } from "@/components/private-session-menu";
+import { OwnerWorkspaceHeader } from "@/components/owner-workspace-header";
 import { createProfileEditorClient } from "@/lib/workspace/profile-editor-server";
 import { createOwnerEditableIdentityWorking } from "@/lib/workspace/owner-editable-identity-working";
 import { resolveCurrentOwnerState } from "@/lib/auth/owner-state";
@@ -21,7 +20,7 @@ export default async function IdentityEditorPage() {
   if (page.status === "restricted" || page.status === "suspended") redirect("/dashboard/account-status");
   if (page.status !== "success") throw new Error("Identity Working could not be loaded.");
   return <main id="main-content" className="entry-page">
-    <header className="entry-header"><Wordmark /><PrivateSessionMenu /></header>
+    <OwnerWorkspaceHeader active="identity" />
     <div className="mx-auto max-w-3xl space-y-8 py-10">
       <div><span className="eyebrow">@{page.current_handle} · Private workspace</span><h1 className="my-4 font-serif text-5xl">Your Identity, in progress.</h1>
         <p className="text-sm leading-6">Edit your Profile Working here. Saved changes stay separate from your published Identity.</p></div>

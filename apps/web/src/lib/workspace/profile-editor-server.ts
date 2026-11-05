@@ -7,12 +7,18 @@ import { createIdentityTextEditorUpstashBudgetTransport } from "./identity-text-
 import { productClickBudgetScript } from "../public/product-click-budget";
 
 const subjectSchema = z.string().uuid();
-const operations = new Set(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working"]);
+const profileOperations = new Map(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working"].map(name => [name, "execute_owner_profile_editor_server"]));
+const starterOperations = new Map([
+  ["resolve_current_owner_home_context", "execute_owner_profile_editor_server"],
+  ["resolve_current_owner_starter_recovery", "execute_owner_starter_recovery_server"],
+  ["save_current_owner_starter_item_working", "execute_owner_starter_recovery_server"],
+]);
 /** Atomic action-specific distributed quota; no process-local fallback. */
-export async function admitProfileEditor(subject: string, save: boolean) {
+export async function admitProfileEditor(subject: string, save: boolean) { return admitOwnerWorking(subject, save, "profile"); }
+async function admitOwnerWorking(subject: string, save: boolean, scope: "profile" | "starter") {
   const deployment = process.env.SPALL_OWNER_PROFILE_BUDGET_NAMESPACE;
   if (!subjectSchema.safeParse(subject).success || !deployment || !/^[a-z][a-z0-9-]{0,23}$/.test(deployment)) return false;
-  const namespace = `profile-${save ? "save" : "read"}-${deployment}`;
+  const namespace = `${scope}-${save ? "save" : "read"}-${deployment}`;
   const redis = createIdentityTextEditorUpstashBudgetTransport({ namespace,
     origin: process.env.UPSTASH_REDIS_REST_URL ?? "", token: process.env.UPSTASH_REDIS_REST_TOKEN ?? "" });
   const digest = createHash("sha256").update(subject).digest("hex");
@@ -23,7 +29,9 @@ export async function admitProfileEditor(subject: string, save: boolean) {
 
 /** Request-local actual SDK client. Only fixed private RPCs use elevated admission;
  * auth/state still use the normal session, and every proof stays actor-bound. */
-export async function createProfileEditorClient() {
+export async function createProfileEditorClient() { return createBoundWorkingClient(profileOperations, "profile"); }
+export async function createStarterRecoveryClient() { return createBoundWorkingClient(starterOperations, "starter"); }
+async function createBoundWorkingClient(operations: ReadonlyMap<string, string>, scope: "profile" | "starter") {
   const session = await createClient();
   const proof = await session.auth.getClaims();
   const parsed = subjectSchema.safeParse(proof.data?.claims?.sub);
@@ -33,7 +41,7 @@ export async function createProfileEditorClient() {
     const body = typeof init?.body === "string" ? JSON.parse(init.body) as { input_operation?: unknown } : null;
     if (init?.signal?.aborted || !body || typeof body.input_operation !== "string"
       || !operations.has(body.input_operation)
-      || !await admitProfileEditor(subject, body.input_operation === "save_current_owner_profile_text_working")
+      || !await admitOwnerWorking(subject, body.input_operation.startsWith("save_current_owner_"), scope)
       || init?.signal?.aborted) return new Response('{"message":"Profile editor unavailable"}', { status: 503, headers: { "Content-Type": "application/json" } });
     return fetch(input, { ...init, cache: "no-store", redirect: "error" });
   });
@@ -52,7 +60,7 @@ export async function createProfileEditorClient() {
         if (name === "resolve_current_owner_state") return db.rpc(name);
         if (!operations.has(name)) throw new Error("Profile editor operation unavailable");
         // A real PostgREST builder preserves abortSignal/deadline semantics.
-        return service.schema("api").rpc("execute_owner_profile_editor_server", {
+        return service.schema("api").rpc(operations.get(name)!, {
           input_subject: subject, input_operation: name, input_payload: args,
         });
       };

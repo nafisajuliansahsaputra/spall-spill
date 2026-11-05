@@ -28,6 +28,10 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
   const setup = { step: 0, revision: 1, handle: null as string | null, useCase: null as string | null,
     identity: null as null | { display_name: string; bio: string | null; profile_asset_key: null; revision: number },
     layout: null as null | { starter_key: string; revision: number } };
+  const starterItems = [
+    {reference:1,kind:"product",source_revision:2,working_revision:null as number|null,source_changed:false,title:"Setup Product",source_url:"https://shop.example.test/product",resource_type:null as string|null,published_lifecycle:null as string|null,has_primary_image:true,destinations:[{provider_key:"external:shop.example.test",destination_url:"https://shop.example.test/product"}]},
+    {reference:2,kind:"resource",source_revision:2,working_revision:null as number|null,source_changed:false,title:"Setup Resource",source_url:"https://resource.example.test/source",resource_type:"document" as string|null,published_lifecycle:"hidden" as string|null,has_primary_image:false,destinations:[]},
+  ];
   const jwtPart = (value: unknown) => Buffer.from(JSON.stringify(value)).toString("base64url");
   const jwtHeader = jwtPart({ alg: "HS256", typ: "JWT" });
   const jwtPayload = jwtPart({ sub: user.id, aud: "authenticated", role: "authenticated", exp: Math.floor(Date.now() / 1000) + 3600, iat: Math.floor(Date.now() / 1000), iss: "isolated-provider" });
@@ -42,7 +46,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     response.setHeader("content-type", "application/json");
     if (path === "/redis") {
       const command = JSON.parse(body); expect(command[0]).toBe("eval");
-      expect(command[2]).toBe(2); expect(command[3]).toContain("spall-identity-text-editor:profile-");
+      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter)-/);
       expect(command[3]).not.toContain(user.id);
       response.end(JSON.stringify({ result: budgetDenied ? 0 : 1 })); return;
     }
@@ -59,7 +63,23 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe(name === "execute_owner_profile_editor_server" ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      if (name === "execute_owner_starter_recovery_server") {
+        expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);
+        let result: unknown;
+        if(data.input_operation === "resolve_current_owner_starter_recovery") result={status:"success",current_handle:setup.handle,primary_use_case:setup.useCase,items:starterItems};
+        else if(data.input_operation === "save_current_owner_starter_item_working") {
+          const value=data.input_payload.input_working;const item=starterItems.find(item=>item.reference===value.reference);
+          if(!item)result={status:"unavailable"};
+          else if(item.source_revision!==value.base_source_revision || item.working_revision!==value.base_working_revision)result={status:"stale_write"};
+          else if(item.published_lifecycle==="archived")result={status:"owner_not_eligible"};
+          else {item.title=value.working.title;item.source_url=value.working.source_url;item.resource_type=value.working.resource_type;item.working_revision=(item.working_revision??0)+1;item.source_changed=false;
+            result={status:"success",reference:item.reference,source_revision:item.source_revision,working_revision:item.working_revision};
+            if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
+          }
+        }else throw new Error("Unexpected starter gateway operation");
+        response.end(JSON.stringify(result));return;
+      }
       if (name === "execute_owner_profile_editor_server") {
         expect(data.input_subject).toBe(user.id); gatewayOperations.push(data.input_operation);
         let result: unknown;
@@ -153,9 +173,22 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     b.on("Log.entryAdded", value => { const entry = (value as { entry: { text: string } }).entry;
       if (/Content Security Policy|Refused to.*(style|script)/i.test(entry.text)) cspErrors.push(entry.text);
     });
-    const visit = async (path: string, text: string) => {
+    const documentReady = async (expected: string, loader: string | undefined, previous = false) => {
+      await until(async () => {
+        const tree = await b.command<{frameTree:{frame:{loaderId:string}}}>("Page.getFrameTree");
+        if (loader && (previous ? tree.frameTree.frame.loaderId === loader : tree.frameTree.frame.loaderId !== loader)) return false;
+        return b.evaluate<boolean>(`document.readyState === 'complete' && document.body?.innerText.includes(${JSON.stringify(expected)}) === true`);
+      },20000);
+    };
+    const visit = async (path: string, expected: string) => {
+      const tree=await b.command<{frameTree:{frame:{loaderId:string}}}>("Page.getFrameTree");
       await b.command("Page.navigate", { url: origin + path });
-      await until(() => b.evaluate<boolean>(`document.readyState === 'complete' && document.body.innerText.includes(${JSON.stringify(text)})`), 20000);
+      await documentReady(expected,tree.frameTree.frame.loaderId,true);
+    };
+    const reloadFromLink = async (selector: string, expected: string) => {
+      const tree=await b.command<{frameTree:{frame:{loaderId:string}}}>("Page.getFrameTree");
+      await b.evaluate(`document.querySelector(${JSON.stringify(selector)}).click()`);
+      await documentReady(expected,tree.frameTree.frame.loaderId,true);
     };
     const input = async (name: string, value: string) => {
       await b.evaluate(`(() => { const el=document.querySelector('[name="${name}"]'); el.focus(); el.select(); })()`);
@@ -297,7 +330,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     await text("Working saved. Your published Identity has not changed.");
     expect(currentOverlay()?.display_name).toBe(""); expect(currentOverlay()?.bio).toBe(" Raw\r\n Bio ");
     expect(setup.identity?.display_name).toBe("Saved Creator");
-    await b.evaluate(`document.querySelector('a[href="/dashboard/identity"]').click()`); await text("Your Identity, in progress.");
+    await reloadFromLink('form[aria-label="Profile Working"] a[href="/dashboard/identity"]', "Your Identity, in progress.");
     expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("");
     expect(await b.evaluate("document.querySelector('[name=bio]').value")).toBe(" Raw\n Bio ");
     const savesBeforeUnknown = gatewayOperations.filter(operation => operation === "save_current_owner_profile_text_working").length;
@@ -320,7 +353,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     budgetDenied = true; await visit("/dashboard/identity", "We couldn’t load your Identity Working.");
     expect(calls.filter(call => call.endsWith("execute_owner_profile_editor_server"))).toHaveLength(gatewayCalls);
     budgetDenied = false;
-    await b.evaluate(`document.querySelector('a[href="/dashboard/identity"]').click()`); await text("Your Identity, in progress.");
+    await reloadFromLink('.onboarding-message a[href="/dashboard/identity"]', "Your Identity, in progress.");
     expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("Another tab");
     await b.evaluate("document.querySelector('.private-session-menu summary').click()");
     await logout(); await text("Good to have you back.");
@@ -329,6 +362,49 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     await text("Your Identity, in progress.");
     expect(await b.evaluate("location.pathname")).toBe("/dashboard/identity");
     expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("Another tab");
+    const beforeRecoveryErrors=errors.length;
+    await b.evaluate(`document.querySelector('nav[aria-label="Owner workspace"] a[href="/dashboard"]').click()`);await text("Pick up where you left off.");
+    expect(await b.evaluate("location.pathname")).toBe("/dashboard");
+    for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width<600});expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);}
+    const homeScreenshot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-261-home.png",Buffer.from(homeScreenshot.data,"base64"));
+    await b.evaluate(`document.querySelector('a[href="/dashboard/spill/1/edit"]').click()`);await text("Keep shaping this product.");
+    expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe("Setup Product");await text("Selected and retained");
+    expect(await b.evaluate("document.querySelectorAll('a[href=\"https://shop.example.test/product\"]').length")).toBe(0);
+    await input("title","");await input("sourceUrl","javascript:working-only()");await submit();await text("Working saved privately. Reference and published version stay unchanged.");
+    expect(starterItems[0]!.source_revision).toBe(2);expect(starterItems[0]!.reference).toBe(1);expect(starterItems[0]!.destinations[0]!.destination_url).toBe("https://shop.example.test/product");
+    await b.evaluate(`document.querySelector('nav[aria-label="Owner workspace"] a[href="/dashboard"]').click()`);await text("Pick up where you left off.");
+    expect(await b.evaluate("document.querySelector('article h3').textContent")).toBe("Untitled product");
+    await b.evaluate(`document.querySelector('a[href="/dashboard/spill/1/edit"]').click()`);await text("Keep shaping this product.");
+    expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe("");expect(await b.evaluate("document.querySelector('[name=sourceUrl]').value")).toBe("javascript:working-only()");
+    expect(await b.evaluate("document.querySelectorAll('a[href^=\"javascript:\"]').length")).toBe(0);
+    starterItems[0]!.working_revision=2;starterItems[0]!.title="Other tab saved Product";
+    await input("title","Keep my Product conflict");await submit();await text("We couldn’t confirm this save.");
+    expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe("Keep my Product conflict");expect(await b.evaluate("document.querySelector('form[aria-label=\"Item Working\"] button').disabled")).toBe(true);
+    await visit("/dashboard","Pick up where you left off.");await b.evaluate(`document.querySelector('a[href="/dashboard/spill/2/edit"]').click()`);await text("Keep shaping this resource.");
+    await input("title","Resource Working");await input("sourceUrl"," unfinished Resource source ");await b.evaluate(`(() => { const el=document.querySelector('[name="resourceType"]');el.value="media_kit";el.dispatchEvent(new Event('change',{bubbles:true})); })()`);
+    await submit();await text("Working saved privately. Reference and published version stay unchanged.");expect(starterItems[1]!.resource_type).toBe("media_kit");expect(starterItems[1]!.published_lifecycle).toBe("hidden");
+    await visit("/dashboard/spill/2/edit","Keep shaping this resource.");expect(await b.evaluate("document.querySelector('[name=resourceType]').value")).toBe("media_kit");
+    starterItems[1]!.source_revision=3;starterItems[1]!.source_changed=true;await visit("/dashboard/spill/2/edit","Your saved source changed.");
+    await input("title","Resource reviewed against new source");await submit();await text("Working saved privately.");expect(starterItems[1]!.source_changed).toBe(false);
+    await visit("/dashboard/spill/2/edit","Keep shaping this resource.");
+    loseAcknowledgment=true;await input("title","Resource saved despite unknown response");await submit();await text("We couldn’t confirm this save.");loseAcknowledgment=false;
+    await visit("/dashboard/spill/2/edit","Keep shaping this resource.");expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe("Resource saved despite unknown response");
+    starterItems[1]!.published_lifecycle="archived";await visit("/dashboard/spill/2/edit","This Item is archived.");expect(await b.evaluate("document.querySelectorAll('form[aria-label=\"Item Working\"]').length")).toBe(0);await text("Resource saved despite unknown response");
+    expect(errors.length).toBe(beforeRecoveryErrors);
+    await visit("/dashboard/spill/999/edit","That saved Item isn’t available.");
+    await visit("/dashboard","Pick up where you left off.");await b.evaluate("document.querySelector('.private-session-menu summary').click()");await logout();await text("Good to have you back.");
+    await input("email","owner@example.test");await input("password","new-password");await submit();await text("Pick up where you left off.");expect(await b.evaluate("location.pathname")).toBe("/dashboard");
+    const beforeHomeDenial=calls.filter(call=>call.endsWith("execute_owner_starter_recovery_server")).length;
+    budgetDenied=true;await visit("/dashboard","We couldn’t load your saved work.");expect(calls.filter(call=>call.endsWith("execute_owner_starter_recovery_server"))).toHaveLength(beforeHomeDenial);budgetDenied=false;
+    await b.evaluate(`document.querySelector('a[href="/dashboard"]').click()`);await text("Pick up where you left off.");
+    await b.evaluate("document.querySelector('.private-session-menu summary').click()");await logout();await text("Good to have you back.");
+    await visit("/dashboard/spill/1/edit","Good to have you back.");await input("email","owner@example.test");await input("password","new-password");await submit();await text("Keep shaping this product.");
+    expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill/1/edit");expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe("Other tab saved Product");
+    const retainedItems=starterItems.splice(0);
+    await visit("/dashboard","Pick up where you left off.");
+    expect(await b.evaluate("document.querySelector('a[href=\"/dashboard/identity\"]') !== null")).toBe(true);
+    expect(await b.evaluate("document.querySelectorAll('a[href^=\"/dashboard/spill/\"]').length")).toBe(0);
+    starterItems.push(...retainedItems);
     expect(calls.some(call => call.includes("publish_current"))).toBe(false);
     expect(cspErrors).toEqual([]);
   } finally {
