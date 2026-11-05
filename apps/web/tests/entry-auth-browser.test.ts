@@ -23,6 +23,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
   function currentOverlay(): typeof overlay { return overlay; }
   type FixtureLink = {block_id:string;kind:"social"|"generic_link";position:number;is_visible:boolean;payload_state:"present";media_asset_state:null;working:{kind:"social"|"generic_link";title:string|null;social_platform:string|null;destination_url:string|null}};
   let linkCollection:null|{revision:number;blocks:FixtureLink[];has_more:false;next_after_position:null}=null;
+  const linksNow=()=>linkCollection;let nextLink=100;
 
   let pauseStateRead = false; const releaseStateReads: (() => void)[] = [];
   const user = { id: "25600000-0000-4000-8000-000000000001", aud: "authenticated", role: "authenticated",
@@ -117,6 +118,18 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
           else{
             block.working=value.link_working;linkCollection!.revision+=1;
             result={status:"success",block_id:block.block_id,collection_revision:linkCollection!.revision};
+            if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
+          }
+        } else if(data.input_operation==="initialize_current_owner_blocks_from_link"||data.input_operation==="add_current_owner_link_block_working"){
+          const value=data.input_payload.input_intent;const first=data.input_operation==="initialize_current_owner_blocks_from_link";
+          if(first&&linkCollection!==null)result={status:"already_initialized"};
+          else if(!first&&(!linkCollection||value.base_collection_revision!==linkCollection.revision))result={status:"stale_write"};
+          else{
+            const block_id="26400000-0000-4000-8000-"+String(++nextLink).padStart(12,"0");
+            const blocks=linkCollection?.blocks??[];
+            blocks.push({block_id,kind:value.link_working.kind,position:blocks.length+1,is_visible:value.is_visible,payload_state:"present",media_asset_state:null,working:value.link_working});
+            linkCollection={revision:first?1:linkCollection!.revision+1,blocks,has_more:false,next_after_position:null};
+            result={status:"success",block_id,collection_revision:linkCollection.revision};
             if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
           }
         } else throw new Error("Unexpected gateway operation");
@@ -410,6 +423,54 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
       expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);
     }
     expect(errors.length).toBe(errorsBeforeEditor);
+    const creationForm='form[aria-label="New link Working"]';
+    const scopedInput=async(selector:string,name:string,value:string)=>{
+      await b.evaluate(`document.querySelector(${JSON.stringify(selector+' [name="'+name+'"]')}).focus()`);
+      await b.command("Input.dispatchKeyEvent",{type:"keyDown",key:"a",code:"KeyA",modifiers:2,windowsVirtualKeyCode:65});
+      await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"a",code:"KeyA",windowsVirtualKeyCode:65});
+      await b.command("Input.insertText",{text:value});
+    };
+    const createLink=async()=>{await b.evaluate(`document.querySelector('${creationForm}').requestSubmit()`);};
+    const anotherLink=async()=>{await b.evaluate(`document.querySelector('${creationForm} button[type="button"]').click()`);};
+    const chooseSecond=async(name:string)=>{
+      await b.evaluate(`document.querySelector('${creationForm} [name="${name}"]').focus()`);
+      await b.command("Input.dispatchKeyEvent",{type:"keyDown",key:"ArrowDown",code:"ArrowDown",windowsVirtualKeyCode:40});
+      await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"ArrowDown",code:"ArrowDown",windowsVirtualKeyCode:40});
+    };
+    expect(linksNow()).toBeNull();await visit("/dashboard/identity","Add a link");expect(linksNow()).toBeNull();
+    const initialCreations=gatewayOperations.filter(x=>x==="initialize_current_owner_blocks_from_link").length;
+    await scopedInput(creationForm,"title","First own Generic Link");await scopedInput(creationForm,"destination","unfinished first destination");
+    await createLink();await text("Link block added to Working.");expect(linksNow()!.revision).toBe(1);expect(linksNow()!.blocks).toHaveLength(1);
+    const firstLinkId=linksNow()!.blocks[0]!.block_id;
+    await until(()=>b.evaluate<boolean>(`document.querySelector('form[data-block="${firstLinkId}"] [name=title]')?.value==='First own Generic Link'`));
+    expect(await b.evaluate(`document.querySelector('${creationForm} button[type="submit"]').disabled`)).toBe(true);
+    await b.evaluate(`document.querySelector('${creationForm} button[type="submit"]').click()`);
+    expect(gatewayOperations.filter(x=>x==="initialize_current_owner_blocks_from_link")).toHaveLength(initialCreations+1);
+    await scopedInput(`form[data-block="${firstLinkId}"]`,"title","Keep sibling draft during add");
+    await anotherLink();await chooseSecond("kind");await chooseSecond("visibility");
+    await scopedInput(creationForm,"title","Second Social");await scopedInput(creationForm,"platform","instagram");await scopedInput(creationForm,"destination","https://social.example.test/second");
+    await createLink();await text("Link block added to Working.");expect(linksNow()!.revision).toBe(2);expect(linksNow()!.blocks[1]!.kind).toBe("social");expect(linksNow()!.blocks[1]!.is_visible).toBe(false);
+    expect(await b.evaluate(`document.querySelector('form[data-block="${firstLinkId}"] [name=title]').value`)).toBe("Keep sibling draft during add");
+    await anotherLink();await scopedInput(creationForm,"title","Created despite lost reply");await scopedInput(creationForm,"destination","raw partial");
+    loseAcknowledgment=true;const beforeUnknownAdd=gatewayOperations.filter(x=>x==="add_current_owner_link_block_working").length;
+    await createLink();await text("We couldn’t confirm the new link.");loseAcknowledgment=false;
+    expect(linksNow()!.blocks).toHaveLength(3);expect(gatewayOperations.filter(x=>x==="add_current_owner_link_block_working")).toHaveLength(beforeUnknownAdd+1);
+    expect(await b.evaluate("Array.from(document.querySelectorAll('form[data-block] button,form[aria-label=\"New link Working\"] button[type=submit]')).every(button=>button.disabled)")).toBe(true);
+    await reloadFromLink('a[href="/dashboard/identity"][class="text-sm underline"]',"Add a link");
+    const recoveredId=linksNow()!.blocks[2]!.block_id;
+    expect(await b.evaluate(`document.querySelector('form[data-block="${recoveredId}"] [name=title]').value`)).toBe("Created despite lost reply");
+    linksNow()!.revision+=1;await scopedInput(creationForm,"title","Keep stale new link");await scopedInput(creationForm,"destination","stale text");await createLink();await text("We couldn’t confirm the new link.");
+    expect(linksNow()!.blocks).toHaveLength(3);expect(await b.evaluate(`document.querySelector('${creationForm} [name=title]').value`)).toBe("Keep stale new link");
+    linkCollection={revision:7,blocks:[],has_more:false,next_after_position:null};await visit("/dashboard/identity","Add a link");
+    await scopedInput(creationForm,"title","Append to saved empty collection");await scopedInput(creationForm,"destination","https://empty.example.test/link");await createLink();await text("Link block added to Working.");
+    expect(linksNow()!.revision).toBe(8);expect(linksNow()!.blocks).toHaveLength(1);expect(gatewayOperations.filter(x=>x==="initialize_current_owner_blocks_from_link")).toHaveLength(initialCreations+1);
+    const emptyCreatedId=linksNow()!.blocks[0]!.block_id;
+    await scopedInput(`form[data-block="${emptyCreatedId}"]`,"title","Keep draft across unrelated refresh");
+    linksNow()!.revision+=1;
+    await b.evaluate(`document.querySelector('form[aria-label="Starting style Working"]').requestSubmit()`);await text("This starting style is already saved in Working.");
+    await text("Reload saved work to reconcile all links before saving again.");
+    expect(await b.evaluate(`document.querySelector('form[data-block="${emptyCreatedId}"] [name=title]').value`)).toBe("Keep draft across unrelated refresh");
+    expect(await b.evaluate("Array.from(document.querySelectorAll('form[data-block] button')).every(button=>button.disabled)")).toBe(true);
     const genericId="26300000-0000-4000-8000-000000000011",socialId="26300000-0000-4000-8000-000000000012";
     linkCollection={revision:1,has_more:false,next_after_position:null,blocks:[
       {block_id:genericId,kind:"generic_link",position:1,is_visible:true,payload_state:"present",media_asset_state:null,working:{kind:"generic_link",title:"Saved Link",social_platform:null,destination_url:"https://saved.example.test"}},
@@ -495,7 +556,13 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     expect(errors.length).toBe(beforeRecoveryErrors);
     await visit("/dashboard/spill/999/edit","That saved Item isn’t available.");
     await visit("/dashboard","Pick up where you left off.");await b.evaluate("document.querySelector('.private-session-menu summary').click()");await logout();await text("Good to have you back.");
-    await input("email","owner@example.test");await input("password","new-password");await submit();await text("Pick up where you left off.");expect(await b.evaluate("location.pathname")).toBe("/dashboard");
+    await b.evaluate("fetch('/dashboard/identity',{headers:{purpose:'prefetch'},redirect:'manual'}).then(()=>true)");
+    const speculativeCookies=await b.command<{cookies:{name:string;value:string}[]}>("Network.getCookies",{urls:[origin]});
+    expect(speculativeCookies.cookies.some(cookie=>cookie.name==='spall_intended_destination'&&cookie.value!=='')).toBe(false);
+    await input("email","owner@example.test");await input("password","new-password");await submit();
+    try { await text("Pick up where you left off."); }
+    catch { throw new Error(`Default login return missing: ${await b.evaluate("JSON.stringify({path:location.pathname,heading:document.querySelector('h1')?.innerText,alert:document.querySelector('[role=alert]')?.innerText})")}`); }
+    expect(await b.evaluate("location.pathname")).toBe("/dashboard");
     const beforeHomeDenial=calls.filter(call=>call.endsWith("execute_owner_starter_recovery_server")).length;
     budgetDenied=true;await visit("/dashboard","We couldn’t load your saved work.");expect(calls.filter(call=>call.endsWith("execute_owner_starter_recovery_server"))).toHaveLength(beforeHomeDenial);budgetDenied=false;
     await b.evaluate(`document.querySelector('a[href="/dashboard"]').click()`);await text("Pick up where you left off.");

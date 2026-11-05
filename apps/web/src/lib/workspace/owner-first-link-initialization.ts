@@ -25,7 +25,7 @@ export type OwnerFirstLinkInitializationResult = z.infer<typeof response> | {
   status: "outcome_unknown" | "onboarding_incomplete" | "restricted" | "suspended";
 };
 
-/** Unmounted mutation transport. Lost responses cannot prove rollback; reconcile authoritative truth before any retry. */
+/** Guarded mutation transport. Lost responses cannot prove rollback; reconcile authoritative truth before any retry. */
 export function createOwnerFirstLinkInitialization(client: Pick<SupabaseClient, "auth" | "schema">) {
   return {
     async initialize(value: unknown): Promise<OwnerFirstLinkInitializationResult> {

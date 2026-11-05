@@ -9392,6 +9392,50 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   No new Owner approval needed for code;secure staging/provider/deployment gates
   remain human-controlled. No live grants/credentials/production mutation.
 
+### Explicit first/add link UI and logout navigation repair — 2026-11-06 WIB
+
+- Baseline3f9bf36643a80d075c097c530f1a1f1cab216db9:Security42034969006
+  Secret127270610081/SAST127270610402/Dependency127270610418,Guard42034969038/
+  job127270610420,CI42034969054 Database127270610653/Media127270611005 PASS.
+  Application runtime127270611042 failed4Chromium startup/page-readiness cases
+  before product assertions;Application127272812900 correctly failed its gate.
+  No old-head PASS inferred;new exact SHA must run every required gate afresh.
+- JIT12.264 before production source. D02 now explicitly creates first and
+  additional Social/Generic Links from UI,including an existing-empty collection.
+  No GET creation,source import,fallback or caller Owner/block/position. Existing
+ 104/101transactions/105/102SDKs own null-vs-positive base,server UUID,CAS/locks,
+  one attempt/deadline/proofs and unknown outcome. Original RPC/browser/table
+  ACLs stay closed;fixed gateway only. Init/add consume shared30save quota,not reads.
+- One client collection editor serializes create/save,shares exact acknowledged
+  bases and preserves sibling drafts. Success disables create until explicit Add
+  another link;lost/stale/denied response freezes writes until full GET. Incoming
+  newer collection via unrelated refresh also freezes without losing raw input;
+  late older RSC data never rebases the acknowledged base. New blocks are read back
+  through the full guarded persisted snapshot;Working never becomes Published.
+- Compiled browser exposed wrong default Login landing after logout. Pinned Next
+  adapter hides Flight headers from Proxy;no normalization flags changed. Private
+  workspace/resolver Links now prefetch:false;actual client click navigation stays.
+  Available purpose/sec-purpose prefetch cannot mutate intended cookie;session
+  checks/redirects/cookie relay/no-store remain. Two actual Proxy negatives added;
+  all9old checks retained (11PASS). Synthetic hidden-header assumptions corrected.
+- Actual Next/Chromium dev+fresh compiled PASS:first/add both kinds,absence/empty,
+  duplicate button disabled,readback,sibling unsaved preservation,lost reply one
+  write/reload,stale base/unrelated refresh,raw link regressions,mobile overflow,
+  default Home vs explicit intended editor return and no new Runtime/CSP failures.
+  Screenshot inspected. Controlled TLS Auth/RPC/Redis is not live provider proof.
+- Local typecheck/lint/build/full tests/7tooling PASS:14328web Vitest(31new),17native
+  auth+264other packages;existing Link269 warning only,0errors. PostgreSQL component
+  SQL048/049/075/077/078/079 PASS311checks(122+101+21+19+21+27). Canonical full
+  reset/lint/advisors/native races retained;new exact push8jobs PENDING before push.
+- At5Nov17:18UTC=6Nov00:18WIB,5Nov first-Publish target MISSED. Public routes/click
+  integration and explicit publication are still missing code,not merely credentials.
+  15Nov readiness remains unverified;0complete new J1-J9 journeys. Next P0:actual
+  Published-safe public routing/click and full first-publication bundle/handoff;
+  audit each public contract rather than assume editor ingress gates apply to all
+  reads. Remaining full blocks/catalog/lifecycle/discovery/analytics/operator/settings
+  and25screen acceptance remain OPEN. Existing secure staging/provider/ingress and
+  human deployment/migration/promotion gates remain;no new secret/access request.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

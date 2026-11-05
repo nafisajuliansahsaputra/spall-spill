@@ -10,7 +10,7 @@ export default function OnboardingError() {
       <p role="alert">Check your connection and try again. This loading failure does not change saved work.</p>
       {/* A full same-origin GET reloads authoritative state without replaying actions. */}
       <a href="/dashboard" className="button">Try again</a>
-      <p><Link href="/auth/resolve" className="quiet-link">Check your account access</Link></p>
+      <p><Link prefetch={false} href="/auth/resolve" className="quiet-link">Check your account access</Link></p>
     </section>
   </main>;
 }

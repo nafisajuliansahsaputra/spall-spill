@@ -7,7 +7,8 @@ import { createIdentityTextEditorUpstashBudgetTransport } from "./identity-text-
 import { productClickBudgetScript } from "../public/product-click-budget";
 
 const subjectSchema = z.string().uuid();
-const profileOperations = new Map(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working"].map(name => [name, "execute_owner_profile_editor_server"]));
+const profileOperations = new Map(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working", "initialize_current_owner_blocks_from_link", "add_current_owner_link_block_working"].map(name => [name, "execute_owner_profile_editor_server"]));
+const mutationOperations = new Set(["save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working", "initialize_current_owner_blocks_from_link", "add_current_owner_link_block_working", "save_current_owner_starter_item_working"]);
 const starterOperations = new Map([
   ["resolve_current_owner_home_context", "execute_owner_profile_editor_server"],
   ["resolve_current_owner_starter_recovery", "execute_owner_starter_recovery_server"],
@@ -41,7 +42,7 @@ async function createBoundWorkingClient(operations: ReadonlyMap<string, string>,
     const body = typeof init?.body === "string" ? JSON.parse(init.body) as { input_operation?: unknown } : null;
     if (init?.signal?.aborted || !body || typeof body.input_operation !== "string"
       || !operations.has(body.input_operation)
-      || !await admitOwnerWorking(subject, body.input_operation.startsWith("save_current_owner_"), scope)
+      || !await admitOwnerWorking(subject, mutationOperations.has(body.input_operation), scope)
       || init?.signal?.aborted) return new Response('{"message":"Profile editor unavailable"}', { status: 503, headers: { "Content-Type": "application/json" } });
     return fetch(input, { ...init, cache: "no-store", redirect: "error" });
   });

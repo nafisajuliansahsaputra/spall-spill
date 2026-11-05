@@ -25,7 +25,7 @@ export default async function IdentityEditorPage() {
     <OwnerWorkspaceHeader active="identity" />
     <div className="mx-auto max-w-3xl space-y-8 py-10">
       <div><span className="eyebrow">@{page.current_handle} · Private workspace</span><h1 className="my-4 font-serif text-5xl">Your Identity, in progress.</h1>
-        <p className="text-sm leading-6">Edit your Profile and starting style here. Saved changes stay separate from your published Identity.</p></div>
+        <p className="text-sm leading-6">Edit your Profile, starting style and links here. Saved changes stay separate from your published Identity.</p></div>
       <section aria-labelledby="profile-heading" className="rounded-3xl border border-neutral-300 bg-white/60 p-6">
         <h2 id="profile-heading" className="mb-5 text-2xl font-semibold">Profile</h2>
         {page.profile_text_state === "source_changed" ? <p role="status" className="mb-5 text-sm">Your source profile changed. Your saved text is retained; review it before saving against the latest profile.</p> : null}
@@ -35,13 +35,13 @@ export default async function IdentityEditorPage() {
         <h2 id="layout-heading" className="mb-5 text-2xl font-semibold">Starting style</h2>
         <LayoutWorkingForm starterKey={page.layout_working.starter_key} revision={page.layout_working.revision} />
       </section>
-      {page.collection && page.collection.blocks.some(block => block.kind === "social" || block.kind === "generic_link") ?
+      {
         <section aria-labelledby="links-heading" className="space-y-4">
           <h2 id="links-heading" className="text-2xl font-semibold">Saved links</h2>
-          <SavedLinksEditor revision={page.collection.revision} blocks={page.collection.blocks.flatMap(block =>
+          <SavedLinksEditor revision={page.collection?.revision ?? null} blocks={(page.collection?.blocks ?? []).flatMap(block =>
             block.kind === "social" || block.kind === "generic_link" ? [{ blockId: block.block_id, kind: block.kind, isVisible: block.is_visible,
               title: block.working?.title ?? null, platform: block.working?.social_platform ?? null, destination: block.working?.destination_url ?? null }] : [])} />
-        </section> : null}
+        </section>}
       <section aria-labelledby="other-heading" className="space-y-4">
         <h2 id="other-heading" className="text-2xl font-semibold">Other saved parts</h2>
         <p className="text-sm leading-6">These parts are preserved. Editing them and publishing updates are still being connected.</p>

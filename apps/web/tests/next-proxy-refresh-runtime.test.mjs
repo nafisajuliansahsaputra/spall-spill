@@ -175,6 +175,17 @@ after(async () => {
   if (directory) await rm(directory, { recursive: true, force: true });
 });
 beforeEach(() => { userCalls = 0; refreshCalls = 0; maximumInFlight = 0; rejectRefresh = false; });
+for (const hints of [{purpose:"prefetch"},{"sec-purpose":"prefetch;prerender"}]) {
+  test(`actual Proxy prefetch ${JSON.stringify(hints)} never records intended navigation`, async () => {
+    const beforeCalls=userCalls,beforeRefresh=refreshCalls;
+    const response=await fetch(`${nextOrigin}/dashboard/identity`,{headers:{...hints,cookie:"spall_intended_destination=%2Fdashboard"},redirect:"manual"});
+    assert.equal(response.status,307);assert.equal(new URL(response.headers.get("location"),response.url).pathname,"/login");
+    assert.equal(response.headers.get("cache-control"),"private, no-store");
+    assert.equal(response.headers.getSetCookie().some(value=>value.startsWith("spall_intended_destination=")),false);
+    assert.equal(userCalls,beforeCalls);assert.equal(refreshCalls,beforeRefresh);
+  });
+}
+
 test("actual Proxy redirects anonymous protected navigation and retains safe intended destination", { timeout: 60000 }, async () => {
   redirected(await request(undefined, "/dashboard/identity")); assert.equal(userCalls, 0); assert.equal(refreshCalls, 0);
 });

@@ -189,7 +189,12 @@ export async function updateSession(
       authResponseHeaders,
     );
 
-    applyIntendedDestination(
+    // Speculative fetches are not user navigation. In particular, an old
+    // workspace Link prefetch must not overwrite the intent cleared by logout.
+    // These untrusted hints never grant access or suppress the redirect itself.
+    const prefetch = ["purpose", "sec-purpose"].some(name => request.headers.get(name)?.toLowerCase()
+        .split(/[;,]/).some(token => token.trim() === "prefetch"));
+    if (!prefetch) applyIntendedDestination(
       redirectResponse,
       request.nextUrl.pathname,
     );

@@ -9,7 +9,7 @@ export default async function StarterItemPage({params}:{params:Promise<{referenc
  const {reference}=await params;if(!/^[1-9][0-9]{0,15}$/.test(reference)||!Number.isSafeInteger(Number(reference)))notFound();
  const page=await readStarterRecoveryPage();const item=page.items.find(value=>value.reference===Number(reference));if(!item)notFound();
  return <main id="main-content" className="entry-page"><OwnerWorkspaceHeader active="item"/>
-  <div className="mx-auto max-w-3xl space-y-7 py-10"><Link href="/dashboard" className="text-sm underline">Back to your saved work</Link>
+  <div className="mx-auto max-w-3xl space-y-7 py-10"><Link prefetch={false} href="/dashboard" className="text-sm underline">Back to your saved work</Link>
    <div><span className="eyebrow">{item.kind} · #{item.reference}</span><h1 className="my-4 font-serif text-5xl">Keep shaping this {item.kind}.</h1><p className="text-sm leading-6">{item.published_lifecycle?`${item.published_lifecycle.charAt(0).toUpperCase()+item.published_lifecycle.slice(1)} · Working edits stay separate.`:"Draft · not published."}</p></div>
    {item.source_changed?<p role="status" className="rounded-xl border border-amber-300 p-4 text-sm">Your saved source changed. Your Working text is retained. Review it before saving against the latest source.</p>:null}
    <section aria-labelledby="item-edit-heading" className="rounded-3xl border border-neutral-300 bg-white/60 p-6"><h2 id="item-edit-heading" className="mb-5 text-2xl font-semibold">Saved Item Working</h2>
