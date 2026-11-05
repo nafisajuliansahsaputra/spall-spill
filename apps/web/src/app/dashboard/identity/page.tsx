@@ -4,6 +4,7 @@ import { OwnerWorkspaceHeader } from "@/components/owner-workspace-header";
 import { createProfileEditorClient } from "@/lib/workspace/profile-editor-server";
 import { createOwnerEditableIdentityWorking } from "@/lib/workspace/owner-editable-identity-working";
 import { resolveCurrentOwnerState } from "@/lib/auth/owner-state";
+import { LayoutWorkingForm } from "./layout-form";
 import { ProfileWorkingForm } from "./profile-form";
 export const metadata: Metadata = { title: "Identity Working", robots: { index: false, follow: false } };
 export default async function IdentityEditorPage() {
@@ -23,16 +24,20 @@ export default async function IdentityEditorPage() {
     <OwnerWorkspaceHeader active="identity" />
     <div className="mx-auto max-w-3xl space-y-8 py-10">
       <div><span className="eyebrow">@{page.current_handle} · Private workspace</span><h1 className="my-4 font-serif text-5xl">Your Identity, in progress.</h1>
-        <p className="text-sm leading-6">Edit your Profile Working here. Saved changes stay separate from your published Identity.</p></div>
+        <p className="text-sm leading-6">Edit your Profile and starting style here. Saved changes stay separate from your published Identity.</p></div>
       <section aria-labelledby="profile-heading" className="rounded-3xl border border-neutral-300 bg-white/60 p-6">
         <h2 id="profile-heading" className="mb-5 text-2xl font-semibold">Profile</h2>
         {page.profile_text_state === "source_changed" ? <p role="status" className="mb-5 text-sm">Your source profile changed. Your saved text is retained; review it before saving against the latest profile.</p> : null}
         <ProfileWorkingForm name={page.editable_profile.display_name} bio={page.editable_profile.bio} profileRevision={page.profile_working.revision} textRevision={page.profile_text_working?.revision ?? null} />
       </section>
+      <section aria-labelledby="layout-heading" className="rounded-3xl border border-neutral-300 bg-white/60 p-6">
+        <h2 id="layout-heading" className="mb-5 text-2xl font-semibold">Starting style</h2>
+        <LayoutWorkingForm starterKey={page.layout_working.starter_key} revision={page.layout_working.revision} />
+      </section>
       <section aria-labelledby="other-heading" className="space-y-4">
         <h2 id="other-heading" className="text-2xl font-semibold">Other saved parts</h2>
         <p className="text-sm leading-6">These parts are preserved. Editing them and publishing updates are still being connected.</p>
-        <p className="text-sm">Starting style: {page.layout_working.starter_key.replaceAll("_", " ")} · Photo: {page.profile_working.profile_asset_key ? "Selected" : "Not selected"}</p>
+        <p className="text-sm">Photo: {page.profile_working.profile_asset_key ? "Selected" : "Not selected"}</p>
         {page.connection_source_working ? <p className="break-all text-sm">Saved connection: {page.connection_source_working.destination_url}</p> : null}
         {page.collection?.blocks.length ? <ul className="space-y-3">{page.collection.blocks.map(block => <li key={block.block_id} className="rounded-xl border border-neutral-300 p-4 text-sm">
           <p className="font-semibold">{block.kind.replaceAll("_", " ")} · {block.is_visible ? "Visible in Working" : "Hidden in Working"}</p>

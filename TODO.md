@@ -9897,7 +9897,7 @@ where private foundations exist. No screen is production verified this run.
 | P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | Connected guarded Home + setup Item recovery/browser fixture | OPEN: full overview/universal publication handoff |
-| D02 Identity Editor | Connected Profile Working/save/reload + browser fixture | OPEN: remaining blocks/preview/publish + provider |
+| D02 Identity Editor | Connected Profile + starting-style Working/save/reload + browser fixture | OPEN: remaining blocks/preview/publish + provider |
 | D03 Spill Manager | No integrated screen | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Onboarding draft UI only | OPEN: returning owner create/publish |
 | D05 Edit Product | Existing setup Product raw Working save/reload/browser fixture | OPEN: general editor/media/destination/publish lifecycle |
@@ -10087,6 +10087,41 @@ any complete J1–J9 journey. Prior O01-S4 remains last CLOSED / VERIFIED checkp
 
 
 
+
+### Connected returning-Owner starting-style Working editor — 2026-11-05
+
+- Baseline989c8ca4bf8d4c8cba4f1bb8c7c22441ce0cf961 exact8push gates PASS:
+  CI41982685421 Application127100427900/runtime127096172477/Database127096172678/
+  Media127096172288;Security41982685590 Secret127096173297/Dependency127096173660/
+  SAST127096173728;Guard41982685424/job127096172425. Clean matching origin at resume.
+- JIT12.262 locked before source. Existing D02 now edits/saves/reloads all four
+  persisted starting-style keys,independent of intent. Native radio/keyboard,
+  pending/saved/no-op/unsaved/conflict/uncertain state;explicit reconciliation
+  preserves chosen style. Direct Server Action uses247strict CAS and proofs,
+  exact acknowledgment and private-path revalidation;no fake Published/preview.
+- Additive migration extends only260fixed server dispatch with layout save.
+  Original layout RPC and all browser roles stay denied. Request-local verified
+  subject and shared profile save quota remain required;no retry/fallback or
+  caller Owner target. Source/Profile/blocks/Published/progress stay unchanged.
+- Actual Chromium/Next dev+fresh compiled build PASS:allkeys save/reload,no-op
+  revision preserved,keyboard selection,stale choice retained/retry disabled,
+  lost acknowledgment one write/reload reconciliation,Profile/progress retained,
+  responsive360/768/1440 and no new Runtime/CSP errors. Browser found React action
+  resetting radio defaultChecked;native choice now retained across action reset,
+  captured at hydration for UI hints. No timeout widening/skips/gate suppression.
+  Full-page image inspected;controlled provider evidence is not live proof.
+- Local typecheck/lint/build/7tooling/full tests PASS:14272web Vitest(24new),17native
+  auth+264other packages;existing Link269 warning only,0errors. Local PostgreSQL
+  component SQL069/075/077 PASS89checks(49+21+19):layout CAS/no-op/crossOwner,
+  gateway source/Published preservation,claim restore/exception/restriction.
+  Canonical CI retains247native races/full reset/lint/advisors;new exact-push8jobs
+  PENDING before push. No production/provider/grant changes applied remotely.
+- First Publish5Nov remains OPEN;15Nov readiness unverified. 0complete new J1-J9
+  journeys;D02 now Profile+starting-style only. P0 public-safe routing/click
+  integration and explicit publication/universal handoff remain ahead of full
+  blocks/catalog CRUD/lifecycle and remaining analytics/operator/settings screens.
+  No new Owner approval needed for independent code. Existing secure staging
+  credentials/config and human migration/promotion gates remain;no secrets in chat.
 
 ## Current local integration — 2026-10-04
 

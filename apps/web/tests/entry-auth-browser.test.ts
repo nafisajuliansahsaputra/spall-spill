@@ -97,6 +97,15 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
           else { overlay = { ...value.profile_text_working, revision: (overlay?.revision ?? 0) + 1, source_profile_revision: setup.identity!.revision };
             result = { status: "success", text_revision: overlay!.revision, source_profile_revision: setup.identity!.revision };
             if (loseAcknowledgment) { response.statusCode = 503; response.end('{"message":"fixture acknowledgment lost"}'); return; } }
+        } else if (data.input_operation === "save_current_owner_layout_working") {
+          const value=data.input_payload.input_working;
+          if(value.base_layout_revision!==setup.layout!.revision) result={status:"stale_write"};
+          else {
+            const changed=value.starter_key!==setup.layout!.starter_key;
+            setup.layout={starter_key:value.starter_key,revision:setup.layout!.revision+(changed?1:0)};
+            result={status:"success",layout_working:setup.layout,changed};
+            if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
+          }
         } else throw new Error("Unexpected gateway operation");
         response.end(JSON.stringify(result)); return;
       }
@@ -348,6 +357,43 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     expect(await b.evaluate("document.querySelector('form[aria-label=\"Profile Working\"] button').disabled")).toBe(true);
     await visit("/dashboard/identity", "Your Identity, in progress.");
     expect(await b.evaluate("document.querySelector('[name=displayName]').value")).toBe("Another tab");
+    expect(errors.length).toBe(errorsBeforeEditor);
+    const originalProfile=JSON.stringify(setup.identity),originalOverlay=JSON.stringify(currentOverlay()),originalProgress=setup.revision;
+    const styleForm='form[aria-label="Starting style Working"]';
+    const saveStyle=async()=>{await b.evaluate(`document.querySelector('${styleForm}').requestSubmit()`);};
+    for(const key of ["clean","social_focus","featured","business"]){
+      await b.evaluate(`document.querySelector('${styleForm} input[value="${key}"]').click()`);
+      const changed=setup.layout!.starter_key!==key,revision=setup.layout!.revision;
+      await saveStyle();
+      try { await text(changed?"Starting style saved in Working.":"This starting style is already saved in Working."); }
+      catch { throw new Error(`Style ${key} acknowledgment missing: ${JSON.stringify(setup.layout)}; ${await b.evaluate(`document.querySelector('${styleForm}').innerText`)}`); }
+      expect(setup.layout!.revision).toBe(revision+(changed?1:0));
+      await reloadFromLink(`${styleForm} a[href="/dashboard/identity"]`,"Your Identity, in progress.");
+      expect(await b.evaluate(`document.querySelector('${styleForm} input[value="${key}"]').checked`)).toBe(true);
+    }
+    // Native radio keyboard interaction, preserving the pre-existing Profile save.
+    await b.evaluate(`document.querySelector('${styleForm} input[value="business"]').focus()`);
+    await b.command("Input.dispatchKeyEvent",{type:"keyDown",key:"ArrowLeft",code:"ArrowLeft",windowsVirtualKeyCode:37});
+    await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"ArrowLeft",code:"ArrowLeft",windowsVirtualKeyCode:37});
+    expect(await b.evaluate(`document.querySelector('${styleForm} input[value="featured"]').checked`)).toBe(true);
+    setup.layout!.revision+=1;
+    await saveStyle();await text("We couldn’t confirm the style save.");
+    expect(await b.evaluate(`document.querySelector('${styleForm} input[value="featured"]').checked`)).toBe(true);
+    expect(await b.evaluate(`document.querySelector('${styleForm} button').disabled`)).toBe(true);
+    await visit("/dashboard/identity","Your Identity, in progress.");
+    loseAcknowledgment=true;
+    await b.evaluate(`document.querySelector('${styleForm} input[value="clean"]').click()`);
+    const styleSaves=gatewayOperations.filter(x=>x==="save_current_owner_layout_working").length;
+    await saveStyle();await text("We couldn’t confirm the style save.");loseAcknowledgment=false;
+    expect(gatewayOperations.filter(x=>x==="save_current_owner_layout_working")).toHaveLength(styleSaves+1);
+    expect(await b.evaluate(`document.querySelector('${styleForm} button').disabled`)).toBe(true);
+    await reloadFromLink(`${styleForm} a[href="/dashboard/identity"]`,"Your Identity, in progress.");
+    expect(await b.evaluate(`document.querySelector('${styleForm} input[value="clean"]').checked`)).toBe(true);
+    expect(JSON.stringify(setup.identity)).toBe(originalProfile);expect(JSON.stringify(currentOverlay())).toBe(originalOverlay);expect(setup.revision).toBe(originalProgress);
+    for(const width of [360,768,1440]){
+      await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width<600});
+      expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);
+    }
     expect(errors.length).toBe(errorsBeforeEditor);
     const gatewayCalls = calls.filter(call => call.endsWith("execute_owner_profile_editor_server")).length;
     budgetDenied = true; await visit("/dashboard/identity", "We couldn’t load your Identity Working.");

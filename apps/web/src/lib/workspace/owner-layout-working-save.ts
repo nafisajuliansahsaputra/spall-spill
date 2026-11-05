@@ -30,7 +30,7 @@ export type OwnerLayoutWorkingSaveResult = z.infer<typeof response> | {
   status: "outcome_unknown" | "onboarding_incomplete" | "restricted" | "suspended";
 };
 
-/** Unmounted mutation transport. Lost responses cannot prove rollback; reconcile authoritative truth before any retry. */
+/** Guarded mutation transport. Lost responses cannot prove rollback; reconcile authoritative truth before any retry. */
 export function createOwnerLayoutWorkingSave(client: Pick<SupabaseClient, "auth" | "schema">) {
   return {
     async save(value: unknown): Promise<OwnerLayoutWorkingSaveResult> {
