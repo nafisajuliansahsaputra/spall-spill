@@ -9897,7 +9897,7 @@ where private foundations exist. No screen is production verified this run.
 | P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | Connected guarded Home + setup Item recovery/browser fixture | OPEN: full overview/universal publication handoff |
-| D02 Identity Editor | Connected Profile + starting-style Working/save/reload + browser fixture | OPEN: remaining blocks/preview/publish + provider |
+| D02 Identity Editor | Connected Profile/style/saved-link Working save/reload + browser fixture | OPEN: remaining blocks/preview/publish + provider |
 | D03 Spill Manager | No integrated screen | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Onboarding draft UI only | OPEN: returning owner create/publish |
 | D05 Edit Product | Existing setup Product raw Working save/reload/browser fixture | OPEN: general editor/media/destination/publish lifecycle |
@@ -10122,6 +10122,44 @@ any complete J1–J9 journey. Prior O01-S4 remains last CLOSED / VERIFIED checkp
   blocks/catalog CRUD/lifecycle and remaining analytics/operator/settings screens.
   No new Owner approval needed for independent code. Existing secure staging
   credentials/config and human migration/promotion gates remain;no secrets in chat.
+
+### Connected saved Social and Generic Link Working editor — 2026-11-05
+
+- Baseline266978c7b44bde9e54c278172ed6ea87c0dbb695 exact8push gates PASS:
+  CI42025048634 Application127242267309/runtime127237034453/Database127237034719/
+  Media127237034858;Security42025048646 Dependency127237034562/Secret127237034926/
+  SAST127237034936;Guard42025048670/job127237034302. Clean matching lane at resume.
+- JIT12.263 before source under J5/J9/D02/84/91/92/260. Existing Social/Generic Link
+  members now have actual raw Working Title/platform/destination save/reload UI.
+  Private invalid/markup/newline text retained,never HTML/destination navigation or
+  fetch. No automatic legacy Connection import or collection/member allocation.
+  Other kinds and visibility remain read-only;this is not full block CRUD/D02.
+- Additive fixed gateway operation only;original RPC/table/browser ACLs remain
+  denied. Reuse strict92schema and actor/Owner proofs,CAS before exact base+1 ack,
+  shared distributed profile save quota,no retry/fallback/caller Owner authority.
+  Client collection editor serializes own writes,shares acknowledged base across
+  siblings without resetting unsaved text,and freezes all link saves after stale/
+  denied/unknown outcome until explicit full GET. Incoming RSC props never rebase
+  raw edits. HTTP/action exceptions also preserve input and require reconciliation.
+- Actual Next/Chromium dev+fresh compiled build PASS:both link kinds,sibling base
+  advance/unsaved text preservation,raw invalid URL/markup/newline platform,
+  save/reload,hidden membership retained,conflict and lost-ack one-write/reload,
+  Profile/progress retained,360/768/1440 overflow and no new Runtime/CSP errors.
+  Native Ctrl+A replaces text after hydration;DOM select() alone proved racy and
+  appended old text in fixture. No old assertions removed or deadlines widened.
+  Screenshot inspected;controlled providers are not live/production evidence.
+- Local typecheck/lint/build/7tooling/full tests PASS:14297web Vitest(25new),17native
+  auth+264other packages;existing Link269 warning only,0errors. PostgreSQL component
+  SQL044/075/077/078 PASS116checks(55+21+19+21),including real gateway raw save,
+  BOLA/member-kind/CAS/claim restore/exception/restriction/Published preservation.
+  Existing full CI/races retained;new exact push8jobs PENDING before push.
+- First Publish5Nov still OPEN/AT RISK;15Nov readiness unverified. 0complete new
+  J1-J9 journeys. Public destination/network provenance gates remain unresolved;
+  do not claim that credentials alone finish missing public transport code.
+  Next independent UI:explicit first/add link allocation with saved readback;
+  P0 public-safe routes/clicks and explicit publication/handoff remain open.
+  No new Owner approval needed for code;secure staging/provider/deployment gates
+  remain human-controlled. No live grants/credentials/production mutation.
 
 ## Current local integration — 2026-10-04
 

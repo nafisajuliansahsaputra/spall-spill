@@ -19,6 +19,7 @@ const intent = z.object({ block_id: blockId,
   base_collection_revision: z.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
   link_working: identityLinkWorkingInputSchema,
 }).strict();
+export const ownerBlockLinkWorkingSaveIntentSchema = intent;
 const response = z.discriminatedUnion("status", [
   z.object({ status: z.literal("success"), collection_revision: z.number().int().min(2).max(Number.MAX_SAFE_INTEGER),
     block_id: blockId }).strict(),
@@ -29,7 +30,7 @@ export type OwnerBlockLinkWorkingSaveResult = z.infer<typeof response> | {
   status: "outcome_unknown" | "onboarding_incomplete" | "restricted" | "suspended";
 };
 
-/** Unmounted mutation transport. Lost responses cannot prove rollback; reconcile authoritative truth before any retry. */
+/** Guarded mutation transport. Lost responses cannot prove rollback; reconcile authoritative truth before any retry. */
 export function createOwnerBlockLinkWorkingSave(client: Pick<SupabaseClient, "auth" | "schema">) {
   return {
     async save(value: unknown): Promise<OwnerBlockLinkWorkingSaveResult> {

@@ -21,6 +21,9 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
   const gatewayOperations: string[] = [];
   let overlay: null | { display_name: string | null; bio: string | null; revision: number; source_profile_revision: number } = null;
   function currentOverlay(): typeof overlay { return overlay; }
+  type FixtureLink = {block_id:string;kind:"social"|"generic_link";position:number;is_visible:boolean;payload_state:"present";media_asset_state:null;working:{kind:"social"|"generic_link";title:string|null;social_platform:string|null;destination_url:string|null}};
+  let linkCollection:null|{revision:number;blocks:FixtureLink[];has_more:false;next_after_position:null}=null;
+
   let pauseStateRead = false; const releaseStateReads: (() => void)[] = [];
   const user = { id: "25600000-0000-4000-8000-000000000001", aud: "authenticated", role: "authenticated",
     email: "owner@example.test", app_metadata: {}, user_metadata: {}, created_at: "2026-01-01T00:00:00Z" };
@@ -90,7 +93,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
           result = { ...context, profile_working: setup.identity, layout_working: setup.layout,
             connection_source_working: null, legacy_identity_work: "unchanged", publication_comparison: "not_assessed",
             profile_text_working: overlay, profile_text_state: overlay ? "saved" : "source",
-            revision_vector: { profile: setup.identity!.revision, layout: setup.layout!.revision, connection: null, blocks: null, profile_text: overlay?.revision ?? null }, collection: null };
+            revision_vector: { profile: setup.identity!.revision, layout: setup.layout!.revision, connection: null, blocks: linkCollection?.revision ?? null, profile_text: overlay?.revision ?? null }, collection: linkCollection };
         } else if (data.input_operation === "save_current_owner_profile_text_working") {
           const value = data.input_payload.input_working;
           if (value.base_profile_revision !== setup.identity!.revision || value.base_text_revision !== (overlay?.revision ?? null)) result = { status: "stale_write" };
@@ -104,6 +107,16 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
             const changed=value.starter_key!==setup.layout!.starter_key;
             setup.layout={starter_key:value.starter_key,revision:setup.layout!.revision+(changed?1:0)};
             result={status:"success",layout_working:setup.layout,changed};
+            if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
+          }
+        } else if(data.input_operation==="save_current_owner_block_link_working"){
+          const value=data.input_payload.input_working;
+          const block=linkCollection?.blocks.find(row=>row.block_id===value.block_id);
+          if(!block||block.kind!==value.link_working.kind)result={status:"block_not_found"};
+          else if(value.base_collection_revision!==linkCollection!.revision)result={status:"stale_write"};
+          else{
+            block.working=value.link_working;linkCollection!.revision+=1;
+            result={status:"success",block_id:block.block_id,collection_revision:linkCollection!.revision};
             if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
           }
         } else throw new Error("Unexpected gateway operation");
@@ -200,7 +213,9 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
       await documentReady(expected,tree.frameTree.frame.loaderId,true);
     };
     const input = async (name: string, value: string) => {
-      await b.evaluate(`(() => { const el=document.querySelector('[name="${name}"]'); el.focus(); el.select(); })()`);
+      await b.evaluate(`(() => { const el=document.querySelector('[name="${name}"]'); el.focus(); })()`);
+      await b.command("Input.dispatchKeyEvent", { type: "keyDown", key: "a", code: "KeyA", modifiers: 2, windowsVirtualKeyCode: 65 });
+      await b.command("Input.dispatchKeyEvent", { type: "keyUp", key: "a", code: "KeyA", windowsVirtualKeyCode: 65 });
       if (value) await b.command("Input.insertText", { text: value });
       else {
         await b.command("Input.dispatchKeyEvent", { type: "keyDown", key: "Backspace", code: "Backspace", windowsVirtualKeyCode: 8 });
@@ -395,6 +410,47 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
       expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);
     }
     expect(errors.length).toBe(errorsBeforeEditor);
+    const genericId="26300000-0000-4000-8000-000000000011",socialId="26300000-0000-4000-8000-000000000012";
+    linkCollection={revision:1,has_more:false,next_after_position:null,blocks:[
+      {block_id:genericId,kind:"generic_link",position:1,is_visible:true,payload_state:"present",media_asset_state:null,working:{kind:"generic_link",title:"Saved Link",social_platform:null,destination_url:"https://saved.example.test"}},
+      {block_id:socialId,kind:"social",position:2,is_visible:false,payload_state:"present",media_asset_state:null,working:{kind:"social",title:"Saved Social",social_platform:"instagram",destination_url:"https://social.example.test"}},
+    ]};
+    await visit("/dashboard/identity","Saved links");
+    const linkInput=async(id:string,name:string,value:string)=>{
+      await b.evaluate(`(()=>{const el=document.querySelector('form[data-block="${id}"] [name="${name}"]');el.focus();})()`);
+      // A native select-all key event hydrates the focused control before typing;
+      // DOM select() alone can lose its range during the first hydration event.
+      await b.command("Input.dispatchKeyEvent",{type:"keyDown",key:"a",code:"KeyA",modifiers:2,windowsVirtualKeyCode:65});
+      await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"a",code:"KeyA",windowsVirtualKeyCode:65});
+      await b.command("Input.insertText",{text:value});
+    };
+    const saveLink=async(id:string)=>{await b.evaluate(`document.querySelector('form[data-block="${id}"]').requestSubmit()`);};
+    await linkInput(socialId,"title","Unsaved sibling social");await linkInput(socialId,"platform"," Insta\n raw ");
+    await linkInput(genericId,"title"," Raw <em>private</em> ");await linkInput(genericId,"destination","javascript:unfinished");
+    await saveLink(genericId);await text("Link saved in Working.");expect(linkCollection.revision).toBe(2);
+    expect(await b.evaluate(`document.querySelector('form[data-block="${socialId}"] [name=title]').value`)).toBe("Unsaved sibling social");
+    await saveLink(socialId);await until(()=>linkCollection!.revision===3);
+    await until(()=>b.evaluate<boolean>(`document.querySelector('form[data-block="${socialId}"]').innerText.includes('Link saved in Working.')`));
+    expect(linkCollection.blocks[1]!.working.title).toBe("Unsaved sibling social");expect(linkCollection.blocks[1]!.working.social_platform).toBe(" Insta\r\n raw ");expect(linkCollection.blocks[1]!.is_visible).toBe(false);
+    await reloadFromLink('a[href="/dashboard/identity"][class="text-sm underline"]',"Saved links");
+    expect(await b.evaluate(`document.querySelector('form[data-block="${genericId}"] [name=destination]').value`)).toBe("javascript:unfinished");
+    expect(await b.evaluate("document.querySelectorAll('a[href^=javascript]').length")).toBe(0);
+    expect(await b.evaluate("document.querySelectorAll('form[data-block] em').length")).toBe(0);
+    linkCollection.revision+=1;await linkInput(genericId,"title","Retain conflicting link");await saveLink(genericId);await text("We couldn’t confirm the link save.");
+    expect(await b.evaluate(`document.querySelector('form[data-block="${genericId}"] [name=title]').value`)).toBe("Retain conflicting link");
+    expect(await b.evaluate("Array.from(document.querySelectorAll('form[data-block] button')).every(button=>button.disabled)")).toBe(true);
+    await visit("/dashboard/identity","Saved links");loseAcknowledgment=true;
+    await linkInput(socialId,"title","Social saved despite unknown response");const linkSaves=gatewayOperations.filter(x=>x==="save_current_owner_block_link_working").length;
+    await saveLink(socialId);await text("We couldn’t confirm the link save.");loseAcknowledgment=false;
+    expect(gatewayOperations.filter(x=>x==="save_current_owner_block_link_working")).toHaveLength(linkSaves+1);
+    expect(await b.evaluate("Array.from(document.querySelectorAll('form[data-block] button')).every(button=>button.disabled)")).toBe(true);
+    await visit("/dashboard/identity","Saved links");
+    expect(await b.evaluate(`document.querySelector('form[data-block="${socialId}"] [name=title]').value`)).toBe("Social saved despite unknown response");
+    expect(JSON.stringify(setup.identity)).toBe(originalProfile);expect(JSON.stringify(currentOverlay())).toBe(originalOverlay);expect(setup.revision).toBe(originalProgress);
+    for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width<600});expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);}
+    expect(errors.length).toBe(errorsBeforeEditor);
+    const linksScreenshot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});
+    await writeFile("/tmp/spall-263-links.png",Buffer.from(linksScreenshot.data,"base64"));
     const gatewayCalls = calls.filter(call => call.endsWith("execute_owner_profile_editor_server")).length;
     budgetDenied = true; await visit("/dashboard/identity", "We couldn’t load your Identity Working.");
     expect(calls.filter(call => call.endsWith("execute_owner_profile_editor_server"))).toHaveLength(gatewayCalls);

@@ -4,6 +4,7 @@ import { OwnerWorkspaceHeader } from "@/components/owner-workspace-header";
 import { createProfileEditorClient } from "@/lib/workspace/profile-editor-server";
 import { createOwnerEditableIdentityWorking } from "@/lib/workspace/owner-editable-identity-working";
 import { resolveCurrentOwnerState } from "@/lib/auth/owner-state";
+import { SavedLinksEditor } from "./links-editor";
 import { LayoutWorkingForm } from "./layout-form";
 import { ProfileWorkingForm } from "./profile-form";
 export const metadata: Metadata = { title: "Identity Working", robots: { index: false, follow: false } };
@@ -34,12 +35,19 @@ export default async function IdentityEditorPage() {
         <h2 id="layout-heading" className="mb-5 text-2xl font-semibold">Starting style</h2>
         <LayoutWorkingForm starterKey={page.layout_working.starter_key} revision={page.layout_working.revision} />
       </section>
+      {page.collection && page.collection.blocks.some(block => block.kind === "social" || block.kind === "generic_link") ?
+        <section aria-labelledby="links-heading" className="space-y-4">
+          <h2 id="links-heading" className="text-2xl font-semibold">Saved links</h2>
+          <SavedLinksEditor revision={page.collection.revision} blocks={page.collection.blocks.flatMap(block =>
+            block.kind === "social" || block.kind === "generic_link" ? [{ blockId: block.block_id, kind: block.kind, isVisible: block.is_visible,
+              title: block.working?.title ?? null, platform: block.working?.social_platform ?? null, destination: block.working?.destination_url ?? null }] : [])} />
+        </section> : null}
       <section aria-labelledby="other-heading" className="space-y-4">
         <h2 id="other-heading" className="text-2xl font-semibold">Other saved parts</h2>
         <p className="text-sm leading-6">These parts are preserved. Editing them and publishing updates are still being connected.</p>
         <p className="text-sm">Photo: {page.profile_working.profile_asset_key ? "Selected" : "Not selected"}</p>
         {page.connection_source_working ? <p className="break-all text-sm">Saved connection: {page.connection_source_working.destination_url}</p> : null}
-        {page.collection?.blocks.length ? <ul className="space-y-3">{page.collection.blocks.map(block => <li key={block.block_id} className="rounded-xl border border-neutral-300 p-4 text-sm">
+        {page.collection?.blocks.length ? <ul className="space-y-3">{page.collection.blocks.filter(block => block.kind !== "social" && block.kind !== "generic_link").map(block => <li key={block.block_id} className="rounded-xl border border-neutral-300 p-4 text-sm">
           <p className="font-semibold">{block.kind.replaceAll("_", " ")} · {block.is_visible ? "Visible in Working" : "Hidden in Working"}</p>
           {block.working ? <dl className="mt-2 space-y-2">{Object.entries(block.working).filter(([key]) => !["kind", "asset_key"].includes(key)).map(([key,value]) => <div key={key}><dt>{key.replaceAll("_", " ")}</dt><dd className="whitespace-pre-wrap break-all">{typeof value === "string" ? value : "Not set"}</dd></div>)}</dl> : <p>Content has not been saved yet.</p>}
         </li>)}</ul> : <p className="text-sm">No modular blocks saved yet.</p>}

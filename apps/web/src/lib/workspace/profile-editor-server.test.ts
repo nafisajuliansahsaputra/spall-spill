@@ -24,7 +24,7 @@ beforeEach(() => {
   mocks.service.mockImplementation((fetcher: typeof fetch) => createClient("https://fixture.supabase.co", "service-key", { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: fetcher } }));
 });
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); vi.unstubAllEnvs(); });
-it.each(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working", "save_current_owner_layout_working"])("uses real abortable SDK admission for %s", async operation => {
+it.each(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working"])("uses real abortable SDK admission for %s", async operation => {
   const client = await createProfileEditorClient();
   const controller = new AbortController();
   expect((await client.schema("api").rpc(operation, { input_working: { raw: "private" } }).abortSignal(controller.signal)).error).toBeNull();
@@ -82,4 +82,10 @@ it("layout save consumes the profile save quota and stays out of Starter admissi
  const client=await createProfileEditorClient(); await client.schema("api").rpc("save_current_owner_layout_working", {input_working:{}});
  expect(JSON.stringify(calls[0]!.body)).toContain("profile-save-");
  const starter=await createStarterRecoveryClient();expect(()=>starter.schema("api").rpc("save_current_owner_layout_working")).toThrow();
+});
+
+it("saved link save uses the shared bounded profile save quota and no Starter authority", async()=>{
+ const client=await createProfileEditorClient();await client.schema("api").rpc("save_current_owner_block_link_working",{input_working:{}});
+ expect(JSON.stringify(calls[0]!.body)).toContain("profile-save-");
+ const starter=await createStarterRecoveryClient();expect(()=>starter.schema("api").rpc("save_current_owner_block_link_working")).toThrow();
 });

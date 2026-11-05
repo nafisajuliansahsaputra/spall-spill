@@ -7,7 +7,7 @@ import { createIdentityTextEditorUpstashBudgetTransport } from "./identity-text-
 import { productClickBudgetScript } from "../public/product-click-budget";
 
 const subjectSchema = z.string().uuid();
-const profileOperations = new Map(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working", "save_current_owner_layout_working"].map(name => [name, "execute_owner_profile_editor_server"]));
+const profileOperations = new Map(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working"].map(name => [name, "execute_owner_profile_editor_server"]));
 const starterOperations = new Map([
   ["resolve_current_owner_home_context", "execute_owner_profile_editor_server"],
   ["resolve_current_owner_starter_recovery", "execute_owner_starter_recovery_server"],
