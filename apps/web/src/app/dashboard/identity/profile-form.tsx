@@ -1,4 +1,5 @@
 "use client";
+import { DocumentLink } from "@/components/document-link";
 import { useActionState, useState } from "react";
 import { saveProfileWorkingAction, type ProfileSaveState } from "./actions";
 const initial: ProfileSaveState = { status: "idle", message: null, textRevision: null };
@@ -27,6 +28,6 @@ export function ProfileWorkingForm({ name, bio, profileRevision, textRevision }:
     {dirty ? <p className="text-sm" role="status">You have unsaved edits.</p> : null}
     {state.message && !(state.status === "saved" && dirty) ? <p role={state.status === "saved" ? "status" : "alert"} className="text-sm leading-6">{state.message}</p> : null}
     <button className="button" disabled={pending || state.status === "reload"} type="submit">{pending ? "Saving Working…" : "Save Working"}</button>
-    <a className="ml-4 text-sm underline" href="/dashboard/identity">Reload saved work</a>
+    <DocumentLink className="ml-4 text-sm underline" href="/dashboard/identity">Reload saved work</DocumentLink>
   </form>;
 }

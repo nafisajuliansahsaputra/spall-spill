@@ -160,3 +160,27 @@ a, button { touch-action: manipulation; }
 @media (max-width: 640px) {
   .setup-session-navigation > .eyebrow { display: none; }
 }
+
+/* Public creator canvas: deliberately separate from workspace and marketing. */
+.public-identity { min-height: 100svh; padding: clamp(1.5rem, 5vw, 5rem); display: flex; flex-direction: column; }
+.public-identity-canvas { width: 100%; max-width: 900px; margin: auto; padding: 3rem 0; }
+.public-identity-profile { max-width: 650px; }
+.public-identity-profile h1, .public-identity-notice h1 { font: 400 clamp(3rem, 8vw, 6rem)/1.05 Georgia, serif; letter-spacing: -.055em; margin: 1rem 0 1.5rem; overflow-wrap: anywhere; }
+.public-identity-bio { font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.8; max-width: 520px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.public-identity-connections { margin-top: 3rem; max-width: 650px; }
+.public-identity-link { display: flex; width: 100%; min-height: 72px; justify-content: space-between; align-items: center; gap: 1.5rem; border: 1px solid #252b2470; border-radius: 12px; background: #fffdf6; padding: 1.25rem 1.5rem; text-align: left; font-size: 1rem; overflow-wrap: anywhere; }
+button.public-identity-link { cursor: pointer; transition: background .15s ease; }
+button.public-identity-link:hover { background: var(--color-citrus); }
+.public-identity-disabled { color: #50584b; background: #252b2408; }
+.public-identity-disabled > span:last-child { font-size: .8rem; }
+.public-identity-footer { padding-top: 2rem; font-size: .75rem; }
+.public-identity-footer a { display: inline-flex; align-items: center; gap: 1rem; }
+.public-identity-footer span { color: #bb432c; font-size: 1.5rem; }
+.public-identity-social_focus { background: #e9edce; text-align: center; }
+.public-identity-social_focus .public-identity-profile, .public-identity-social_focus .public-identity-connections { margin-left: auto; margin-right: auto; }
+.public-identity-social_focus .public-identity-bio { margin-left: auto; margin-right: auto; }
+.public-identity-featured .public-identity-profile { border-left: 8px solid var(--color-coral); padding-left: clamp(1rem, 4vw, 3rem); }
+.public-identity-business .public-identity-profile { border-top: 2px solid var(--color-ink); padding-top: 2rem; }
+.public-identity-notice { justify-content: center; max-width: 900px; margin: auto; }
+.public-identity-notice > .button { align-self: flex-start; margin-top: 1rem; }
+@media (max-width: 600px) { .public-identity-canvas { padding-top: 2rem; } .public-identity-link { min-height: 64px; padding: 1rem; } }

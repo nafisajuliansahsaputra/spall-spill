@@ -1,4 +1,5 @@
 "use client";
+import { DocumentLink } from "@/components/document-link";
 import { useActionState, useRef, useState } from "react";
 import { createLinkWorkingAction } from "./link-create-actions";
 import { NewLinkForm } from "./link-create-form";
@@ -33,7 +34,7 @@ export function SavedLinksEditor({ revision, blocks }: { revision: number | null
     {needsReload ? <p role="alert" className="text-sm">Reload saved work to reconcile all links before saving again. Your current inputs are retained.</p> : null}
     {blocks.map(block => <SavedLinkForm key={block.blockId} block={block} base={base} disabled={busy || needsReload} save={(previous, form) => run(saveLinkWorkingAction, previous, form)} />)}
     <NewLinkForm key={creationKey} base={base} disabled={busy || needsReload} create={(previous, form) => run(createLinkWorkingAction, previous, form)} another={() => setCreationKey(value => value + 1)} />
-    <a className="text-sm underline" href="/dashboard/identity">Reload saved links</a>
+    <DocumentLink className="text-sm underline" href="/dashboard/identity">Reload saved links</DocumentLink>
   </div>;
 }
 function SavedLinkForm({ block, base, disabled, save }: { block: LinkBlock; base: number | null; disabled: boolean; save: (previous: LinkSaveState, form: FormData) => Promise<LinkSaveState> }) {

@@ -9436,6 +9436,51 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   and25screen acceptance remain OPEN. Existing secure staging/provider/ingress and
   human deployment/migration/promotion gates remain;no new secret/access request.
 
+### Connected Published Identity and safe legacy Connection — 2026-11-07 WIB
+
+- JIT [12.265](./technical-architecture/12.265-public-identity-route-contract.md)
+  precedes source. Actual /{handle} now reads fixed service-only Published DTO;
+  current/alias handles, minimal Profile,4styles and unavailable Connection context
+  render without viewer session refresh, login or intended-cookie mutation. D01
+  View public Identity explicitly opens Published content, never Working preview.
+- Fixed read/open gateway leaves original reader/table/browser grants closed.
+  Initial HTML/RSC contains no destination URL/private owner/Working/receipt/media
+  key. Connection POST rechecks exact snapshot binding, account/lifecycle and fresh
+  exact-source safety; caller URL/Owner/operation cannot enter the route. Shared
+  deployment Redis ceilings600reads/60opens/minute precede DB work; no IP/header
+  trust, per-viewer fairness claim, retry or local fallback. Shared capacity can be
+  exhausted; temporary error remains honest. Product/Resource IP contracts unchanged.
+- Actual native-browser failures were repaired: same-origin document referrer policy
+  retains POST Origin while withholding cross-origin referrers; form-action self
+  stays strict. A fresh successful POST commits a minimal navigation document using
+  Proxy-overwritten request nonce, strict CSP and JSON-escaped server URL. Automatic
+  script navigation works; no-JS fallback has a safely escaped destination anchor.
+  Forged nonce is overwritten. No GET external redirect or broad CSP exception.
+- Dynamic page makes existing native auth/reload anchors subject to Next lint.
+  DocumentLink preserves full GET/readback, native prehydration/modifier behavior
+  and no speculative fetch; existing auth/editor regression assertions retained.
+- Local typecheck/lint(0errors,existing269fixture warning)/build/7tooling PASS;
+  14391web unit tests200files,17native auth+264other packages PASS. Actual Proxy
+ 11checks PASS; actual Next+Chromium dev and fresh compiled entry/editor/recovery
+  plus public Identity PASS. Public cases cover anonymous/cookie isolation,alias,
+  markup escaping,mobile360/768/1440,keyboard native exit,disabled JS exit,changed
+  safety,hidden/unknown404,quota error,no nonce spoof/no CSP/runtime errors.
+  PostgreSQL17 component SQL020+080 PASS87checks(48+39),including role denial,
+  Working isolation,safety expiry,changed snapshot and selected-media fail-closed.
+  Controlled TLS Auth/RPC/Redis/browser is not live-provider/deployed ingress proof.
+- Baseline3b77895 exact push CI42074030129 retry,Security42074030040 and
+  Guard42074029976 allPASS. New exact-head gates PENDING until pushed/observed.
+  Default-off SPALL_PUBLIC_IDENTITY_ENABLED plus origin/namespace/Redis/service
+  configuration stages this code. No live config,grants,migration or deployment
+  changed. Full modular P01/Spill CTA/media/report and public catalog remain OPEN.
+- First Publish5Nov target MISSED;0new complete J1-J9 journeys.15Nov readiness is
+  unverified. Next P0:Published Spill/discovery/detail and Product/Resource safe
+  transport,explicit first Publish with complete bundle review and universal
+  returning workspace handoff.12.18 still requires that handoff before activation;
+  optional valid drafts must remain recoverable,not rejected/dropped to fake it.
+  Remaining CRUD/lifecycle/media/analytics/operator/settings/25screen acceptance
+  and release gates remain OPEN;provider/billing/credentials/promotion stay Owner-gated.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

@@ -1,4 +1,5 @@
 "use client";
+import { DocumentLink } from "@/components/document-link";
 import { useActionState, useCallback, useState } from "react";
 import { saveLayoutWorkingAction, type LayoutSaveState } from "./layout-actions";
 const styles = [
@@ -37,6 +38,6 @@ export function LayoutWorkingForm({ starterKey, revision }: { starterKey: string
     {dirty ? <p role="status" className="text-sm">You have an unsaved style choice.</p> : null}
     {state.message && !(state.status === "saved" && dirty) ? <p role={state.status === "saved" ? "status" : "alert"} className="text-sm leading-6">{state.message}</p> : null}
     <button className="button" type="submit" disabled={pending || state.status === "reload"}>{pending ? "Saving style…" : "Save starting style"}</button>
-    <a className="ml-4 text-sm underline" href="/dashboard/identity">Reload saved work</a>
+    <DocumentLink className="ml-4 text-sm underline" href="/dashboard/identity">Reload saved work</DocumentLink>
   </form>;
 }

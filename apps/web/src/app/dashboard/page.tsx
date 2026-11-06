@@ -17,7 +17,7 @@ export default async function OwnerHomePage() {
      <Link prefetch={false} href={`/dashboard/spill/${item.reference}/edit`} className="button mt-5">{item.published_lifecycle==="archived"?`View archived ${item.kind}`:`Continue ${item.kind}`}</Link>
     </article>)}</div>
    </section> : null}
-   <section className="rounded-3xl bg-ink p-7 text-paper" aria-labelledby="identity-action-heading"><span className="eyebrow">Start with you</span><h2 id="identity-action-heading" className="my-3 font-serif text-3xl">Make your Identity feel like you.</h2><p className="text-sm leading-6">Edit and save your Profile Working. Publishing is a separate step.</p><Link prefetch={false} href="/dashboard/identity" className="mt-5 inline-block font-semibold underline underline-offset-4">Edit Identity</Link></section>
+   <section className="rounded-3xl bg-ink p-7 text-paper" aria-labelledby="identity-action-heading"><span className="eyebrow">Start with you</span><h2 id="identity-action-heading" className="my-3 font-serif text-3xl">Make your Identity feel like you.</h2><p className="text-sm leading-6">Edit and save your Profile Working. Publishing is a separate step.</p><Link prefetch={false} href="/dashboard/identity" className="mt-5 inline-block font-semibold underline underline-offset-4">Edit Identity</Link><p className="mt-4 text-sm"><Link prefetch={false} href={`/${page.current_handle}`} className="underline underline-offset-4">View public Identity</Link> · Your public page shows Published content.</p></section>
    <p className="text-sm leading-6 text-neutral-600">This overview resumes Items saved during setup. New Item entry and publishing updates are not available here yet.</p>
   </div>
  </main>;

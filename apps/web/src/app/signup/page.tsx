@@ -1,3 +1,4 @@
+import { DocumentLink } from "@/components/document-link";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -67,7 +68,7 @@ export default async function SignUpPage({
   return <AuthShell title="Make a little space for you." description="Create your account. Your Identity comes next."
     footer={<p>Already part of it? <Link href="/login">Log in</Link></p>}>
     {confirmationFailed ? <p role="alert" className="auth-notice error">We couldn’t confirm that email link. It may be invalid or expired.</p> : null}
-    <a href="/auth/google" className="provider-button">Continue with Google <ArrowIcon /></a>
+    <DocumentLink href="/auth/google" className="provider-button">Continue with Google <ArrowIcon /></DocumentLink>
     <div className="auth-divider"><span>or with email</span></div>
     <SignUpForm />
     <p className="auth-smallprint">Nothing goes public until you explicitly publish.</p>

@@ -1,3 +1,4 @@
+import { DocumentLink } from "@/components/document-link";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -68,7 +69,7 @@ export default async function LoginPage({
     footer={<p>New here? <Link href="/signup">Create an account</Link></p>}>
     {oauthFailed ? <p role="alert" className="auth-notice error">We couldn’t complete Google sign-in. Try again or use email and password.</p> : null}
     {notice === "password_reset" ? <p role="status" className="auth-notice success">Your password has been updated. Log in to continue.</p> : null}
-    <a href="/auth/google" className="provider-button">Continue with Google <ArrowIcon /></a>
+    <DocumentLink href="/auth/google" className="provider-button">Continue with Google <ArrowIcon /></DocumentLink>
     <div className="auth-divider"><span>or with email</span></div>
     <LoginForm />
     <p className="auth-recovery"><Link href="/recovery">Can’t access your account?</Link></p>

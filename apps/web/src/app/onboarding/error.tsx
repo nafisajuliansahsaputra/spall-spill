@@ -1,4 +1,5 @@
 "use client";
+import { DocumentLink } from "@/components/document-link";
 import Link from "next/link";
 import { Wordmark } from "@/components/auth-shell";
 export default function OnboardingError() {
@@ -9,7 +10,7 @@ export default function OnboardingError() {
       <h1 id="setup-error-title">We couldn’t load your setup.</h1>
       <p role="alert">Check your connection and try again. This loading failure does not change saved work.</p>
       {/* A full same-origin GET reloads authoritative state without replaying actions. */}
-      <a href="/onboarding" className="button">Try again</a>
+      <DocumentLink href="/onboarding" className="button">Try again</DocumentLink>
       <p><Link href="/auth/resolve" className="quiet-link">Check your account access</Link></p>
     </section>
   </main>;
