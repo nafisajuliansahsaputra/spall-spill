@@ -7,7 +7,7 @@ import { createIdentityTextEditorUpstashBudgetTransport } from "../workspace/ide
 import { productClickBudgetScript } from "./product-click-budget";
 import { identityBindingSchema, publicIdentityPayloadSchema } from "./identity-contract";
 import { publicHandleSchema } from "./locators";
-import { publicIdentityOrigin } from "./identity-open-http";
+import { publicIdentityOrigin } from "./identity-origin";
 
 const openedSchema = z.object({ status: z.literal("success"), destination_url: z.string().max(2048) }).strict();
 export async function admitPublicIdentity(operation: "read" | "open") {

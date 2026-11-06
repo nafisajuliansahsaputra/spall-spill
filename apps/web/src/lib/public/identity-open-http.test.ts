@@ -10,8 +10,9 @@ it("native POST navigates only to fresh server-selected destination with no-stor
   const open = vi.fn(async () => "https://example.test/link");
   const response = await createIdentityConnectionPost(origin, open)(request(), "PUBLIC-ONE");
   expect(response.status).toBe(200); expect(response.headers.has("location")).toBe(false);
-  const document = await response.text(); expect(document).toContain('window.location.replace("https://example.test/link")');
-  const nonce = document.match(/script nonce="([A-Za-z0-9+/=]+)"/)![1];
+  const document = await response.text(); expect(document).toContain('window.location.replace(document.getElementById("destination").href)');
+  expect(document).toContain('href="https:&#x2F;&#x2F;example.test&#x2F;link"');
+  const nonce = document.match(/script nonce="([^"]+)"/)![1]!.replace(/&#x2F;/g, "/");
   expect(response.headers.get("content-security-policy")).toContain(`script-src 'nonce-${nonce}'`);
   expect(document).toContain('<noscript>');
   expect(response.headers.get("cache-control")).toContain("no-store"); expect(response.headers.get("referrer-policy")).toBe("no-referrer");

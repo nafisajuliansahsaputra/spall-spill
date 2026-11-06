@@ -1,5 +1,8 @@
 import "server-only";
+import { publicIdentityOrigin } from "./identity-origin";
+export { publicIdentityOrigin } from "./identity-origin";
 import { randomBytes } from "node:crypto";
+import { renderIdentityNavigationDocument } from "./identity-navigation-document";
 import { identityBindingSchema } from "./identity-contract";
 import { publicHandleSchema } from "./locators";
 import { normalizeExternalDestination } from "@spall-spill/external-destination-policy";
@@ -7,14 +10,6 @@ export const publicIdentityHeaders = {
   "Cache-Control": "private, no-store, max-age=0", "CDN-Cache-Control": "no-store",
   "Referrer-Policy": "no-referrer", "X-Content-Type-Options": "nosniff",
 };
-export function publicIdentityOrigin(input: string | undefined): string | null {
-  try {
-    if (!input) return null;
-    const u = new URL(input);
-    return u.origin === input && (u.protocol === "https:" || (u.protocol === "http:"
-      && ["localhost", "127.0.0.1", "[::1]"].includes(u.hostname))) ? input : null;
-  } catch { return null; }
-}
 export function createIdentityConnectionPost(origin: string | undefined,
   open: (handle: string, binding: string) => Promise<string | null>) {
   return async (request: Request, handle: unknown): Promise<Response> => {
@@ -64,9 +59,7 @@ export function createIdentityConnectionPost(origin: string | undefined,
       const incomingNonce = request.headers.get("x-nonce");
       const nonce = incomingNonce && /^[A-Za-z0-9+/]{24}$/.test(incomingNonce)
         ? incomingNonce : randomBytes(18).toString("base64");
-      const encoded = JSON.stringify(destination).replace(/</g, "\\u003c").replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
-      const href = destination.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-      const document = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Opening connection</title></head><body><main><h1>Opening connection…</h1><noscript><p>JavaScript is off. <a href="${href}" rel="noreferrer nofollow">Continue to destination</a>.</p></noscript></main><script nonce="${nonce}">window.location.replace(${encoded});</script></body></html>`;
+      const document = renderIdentityNavigationDocument(destination, nonce);
       return new Response(document, { status: 200, headers: { ...publicIdentityHeaders,
         "Content-Type": "text/html; charset=utf-8",
         "Content-Security-Policy": `default-src 'none'; script-src 'nonce-${nonce}'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'`,

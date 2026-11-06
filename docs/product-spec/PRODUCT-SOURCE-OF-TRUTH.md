@@ -9481,6 +9481,40 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   Remaining CRUD/lifecycle/media/analytics/operator/settings/25screen acceptance
   and release gates remain OPEN;provider/billing/credentials/promotion stay Owner-gated.
 
+### Navigation HTML escaping remediation — 2026-11-07 WIB
+
+- d094501 exact Security42262048675:Secret128044239561/Dependency128044239776
+  PASS;SAST128044239967 FAIL raw-html-format at identity-open-http.ts69. No scan
+  suppression/ignore or unsafe activation. JIT12.266 precedes remediation.
+- Replace manually interpolated HTML with fixed Mustache4.2.0 auto-escaped attribute
+  template,zero runtime dependencies;types4.2.6 development-only. Executable script
+  is fixed and reads its validated anchor;no destination interpolation in JS.
+  Nonce/Origin/URL/snapshot/Redis/CSP/referrer/SQL guards stay. Pure origin helper
+  avoids response renderer in the RSC data reader. Next16.4.3 rejects react-dom/server
+  even in App Route;no framework import aliases/bypass used.
+- Local typecheck/lint/build/7tooling and14392web unit tests201files PASS,with17native
+  auth+264other package tests unchanged. Actual full entry/editor/recovery/public
+  browser dev+fresh compiled PASS,including JS-off exit and URL query/ampersand/
+  encoded-markup roundtrip. Existing browser/security assertions retained.
+  Prior unchanged local SQL020/08087checks and actual Proxy11checks remain valid.
+- Semgrep1.175.0 same registry command could not fetch p/default:proxy CONNECT403
+  to semgrep.dev. Targeted upstream raw-html-format rule over both renderer/HTTP
+  files PASS0findings without ignores. This is NOT full SAST PASS;new exact-head
+  CI/Security/Guard (including dependency scan) must be observed after push.
+- Read-only Vercel audit found two legacy projects whose latest deployments use
+  Spall-Spill-Natsx and udah-gak-dipake/spall-spill-next repositories,not canonical
+  spall-spill/codex-autopilot. Repo-filtered project lookup returned no match. Do not
+  treat these production deployments as current staging or ingress-header proof.
+  🚨 BUTUH BANTUAN MANUAL OWNER:select/authorize the canonical repo preview project
+  and supply server configuration through provider controls after applicable
+  gates;no secrets in chat. No project/config/deploy/credential mutations made.
+- First Publish and15Nov release remain OPEN. Universal workspace creation is a
+  real dependency:current Product/Resource draft tables are onboarding one-per-Owner;
+  existing recovery UI is not general CRUD/capability expansion. Next independent
+  P0 is canonical general Resource/Product Draft creation+manager+editor and public
+  Spill/detail transport,then complete explicit publication/handoff. Do not enable
+  first Publish by discarding valid drafts or pretending credentials are the only gap.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

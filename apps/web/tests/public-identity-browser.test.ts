@@ -14,7 +14,7 @@ it("renders anonymous Published Identity and fresh Connection navigation in actu
  const directory=await mkdtemp(join(tmpdir(),"spall-public-identity-"));const cert=join(directory,"cert.pem"),key=join(directory,"key.pem");
  execFileSync("openssl",["req","-x509","-newkey","rsa:2048","-nodes","-days","1","-keyout",key,"-out",cert,"-subj","/CN=127.0.0.1","-addext","subjectAltName=IP:127.0.0.1"],{stdio:"ignore"});
  const calls:string[]=[];let available=true,hidden=false,quota=true;const binding="a".repeat(64);
- const destination="https://destination.example.test/published";
+ const destination="https://destination.example.test/published?from=identity&label=%3Cscript%3E";
  const provider=createSecureServer({cert:await readFile(cert),key:await readFile(key)},async(req,res)=>{
   let body="";for await(const part of req)body+=String(part);const path=new URL(req.url!,"http://fixture").pathname;calls.push(path);res.setHeader("content-type","application/json");
   if(path==="/redis"){const command=JSON.parse(body);expect(command[0]).toBe("eval");expect(command[3]).toMatch(/^spall-identity-text-editor:public-identity-(read|open)-/);res.end(JSON.stringify({result:quota?1:0}));return;}
@@ -34,7 +34,7 @@ it("renders anonymous Published Identity and fresh Connection navigation in actu
  try{
   await until(async()=>{if(app.exitCode!==null)throw Error(logs.slice(-1000));try{return(await fetch(origin,{signal:AbortSignal.timeout(2000)})).ok;}catch{return false;}},40000);
   const initialOpen=await fetch(origin+"/api/public/identity/public-one/open",{method:"POST",headers:{origin,"content-type":"application/x-www-form-urlencoded","x-nonce":"AAAAAAAAAAAAAAAAAAAAAAAA"},body:`binding=${binding}`,redirect:"manual"});expect(initialOpen.status).toBe(200);expect(initialOpen.headers.get("content-security-policy")).toContain("default-src 'none'");
-  const navigationDocument=await initialOpen.text();const nonce=navigationDocument.match(/script nonce="([A-Za-z0-9+/=]+)"/)![1];expect(nonce).not.toBe("AAAAAAAAAAAAAAAAAAAAAAAA");expect(initialOpen.headers.get("content-security-policy")).toContain(`script-src 'nonce-${nonce}'`);
+  const navigationDocument=await initialOpen.text();const nonce=navigationDocument.match(/script nonce="([^"]+)"/)![1]!.replace(/&#x2F;/g,"/");expect(nonce).not.toBe("AAAAAAAAAAAAAAAAAAAAAAAA");expect(initialOpen.headers.get("content-security-policy")).toContain(`script-src 'nonce-${nonce}'`);
   const response=await fetch(origin+"/public-alias",{headers:{cookie:"sb-fake-auth-token=untrusted; spall-intended-destination=/dashboard"}});const html=await response.text();
   expect(response.status).toBe(200);expect(response.headers.get("cache-control")).toContain("no-store");expect(response.headers.get("set-cookie")).toBeNull();expect(response.headers.get("content-security-policy")).toContain("form-action 'self'");
   expect(html).toContain("Published &lt;script&gt;");expect(html).not.toContain(destination);expect(html).not.toContain("isolated-service-role");expect(html).not.toContain("Private Working");
@@ -52,8 +52,8 @@ it("renders anonymous Published Identity and fresh Connection navigation in actu
   await b.command("Emulation.setScriptExecutionDisabled",{value:true});
   await visit("/public-one","Visit my link");await b.evaluate("document.querySelector('button').click()");
   await until(()=>b.evaluate<boolean>("document.body?.innerText.includes('Continue to destination')"),15000);
-  expect(await b.evaluate("document.querySelector('noscript a').getAttribute('href')")).toBe(destination);
-  await b.evaluate("document.querySelector('noscript a').click()");await until(()=>b.evaluate<boolean>("document.body?.innerText.includes('Fixture destination')"),15000);
+  expect(await b.evaluate("document.querySelector('#destination').getAttribute('href')")).toBe(destination);
+  await b.evaluate("document.querySelector('#destination').click()");await until(()=>b.evaluate<boolean>("document.body?.innerText.includes('Fixture destination')"),15000);
   await b.command("Emulation.setScriptExecutionDisabled",{value:false});
   available=false;await visit("/public-one","Unavailable");expect(await b.evaluate("document.querySelector('form')===null")).toBe(true);
   const stale=await fetch(origin+"/api/public/identity/public-one/open",{method:"POST",headers:{origin,"content-type":"application/x-www-form-urlencoded"},body:`binding=${binding}`,redirect:"manual"});expect(stale.status).toBe(403);expect(stale.headers.has("location")).toBe(false);
