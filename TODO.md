@@ -122,6 +122,23 @@ and relevant locked technical contracts.
   Remaining CRUD/lifecycle/media/analytics/operator/settings/25screen acceptance
   and release gates remain OPEN;provider/billing/credentials/promotion stay Owner-gated.
 
+### Exact code checkpoint and next dependency — 2026-11-07 WIB
+
+- Code b13762519fe6def300912687c0efb2be90bd84e2 pushed clean. Exact Security
+ 42302636587 PASS:Secret128183993614,Dependency128183993880,SAST128183994083;
+  Guard42302636840 PASS. CI42302636468 Application runtime/Media/Database running
+  at readback;not PASS. d094501 CI42262048677 all4jobs PASS but SAST failed;
+  b137625 fixes that finding without ignore/test/safety changes.
+- 25-screen ledger updated to mounted-but-incomplete P01. No full screen/journey
+  or production closure. Existing hourly Goal unchanged;PR6 remains draft.
+- Next concrete independent slice:J5/J9/D06 general returning-Owner Resource
+  creation -> D03 manager -> D07 saved editing. Preserve12.14 meaningful creation
+  threshold/explicit Resource meaning,12.13 immutable references and existing
+  onboarding one-per-Owner sources. A general catalog requires additive persistence
+  and bounded reads;do not remove legacy uniqueness or relabel setup recovery as
+  general CRUD. Lock its JIT before new schema/API/UI. Product expansion follows;
+ 12.18 universal handoff gate still prevents premature first Publish enablement.
+
 ### Navigation HTML escaping remediation — 2026-11-07 WIB
 
 - d094501 exact Security42262048675:Secret128044239561/Dependency128044239776
@@ -9969,7 +9986,7 @@ trusted deployment metadata/session/Owner/CSRF/provider/runtime safety evidence.
   existing12.18/12.19 under fresh dependency/gate audit,then returning editor; do not
   spend another run adding isolated preview variants. Same enabled hourly Goal.
 
-### Full-stack screen and journey acceptance ledger — 2026-11-04
+### Full-stack screen and journey acceptance ledger — 2026-11-07
 
 Inventory follows pinned bb79dce wireframe9.1–9.25; this tracks delivery, not new
 product behavior. OPEN means logical-screen acceptance remains unverified even
@@ -9977,11 +9994,11 @@ where private foundations exist. No screen is production verified this run.
 
 | Screen | Current usable/integration evidence | Remaining acceptance |
 |---|---|---|
-| P01 Public Identity | Private reader foundations only | OPEN: mount safe published route + J1/J4 |
+| P01 Public Identity | Mounted Published Profile/legacy Connection; SQL + dev/compiled browser PASS; default-off | OPEN: modular blocks/media/report, live activation + J1/J4 |
 | P02 Public Spill | No integrated route | OPEN: browse/search/exact reference |
 | P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
-| D01 Owner Home | Connected guarded Home + setup Item recovery/browser fixture | OPEN: full overview/universal publication handoff |
+| D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
 | D02 Identity Editor | Connected Profile/style + first/add/edit links Working/browser fixture | OPEN: remaining blocks/preview/publish + provider |
 | D03 Spill Manager | No integrated screen | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Onboarding draft UI only | OPEN: returning owner create/publish |
