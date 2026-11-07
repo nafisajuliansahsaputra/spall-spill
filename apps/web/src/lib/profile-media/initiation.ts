@@ -158,9 +158,11 @@ function resolveSigningTtlSeconds(
   );
 }
 
-export async function initiateProfileMediaUpload(
-  input: ProfileMediaUploadInitiationInput,
-): Promise<ProfileMediaUploadInitiationResult> {
+export async function initiateProfileMediaUpload(input:ProfileMediaUploadInitiationInput):Promise<ProfileMediaUploadInitiationResult>{
+ return initiateCanonicalMediaUpload(input,createProfileMediaUploadIntent);
+}
+/** Internal server pipeline; callers supply fixed authenticated database adapters. */
+export async function initiateCanonicalMediaUpload(input:ProfileMediaUploadInitiationInput,createIntent:typeof createProfileMediaUploadIntent):Promise<ProfileMediaUploadInitiationResult>{
   /*
    * Verify authentication through the normal
    * request-scoped Supabase client before any
@@ -191,7 +193,7 @@ export async function initiateProfileMediaUpload(
   }
 
   const intent =
-    await createProfileMediaUploadIntent(
+    await createIntent(
       {
         authUserId:
           principal.authUserId,

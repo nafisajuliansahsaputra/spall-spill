@@ -43,17 +43,21 @@ it("renders anonymous Published Identity and fresh Connection navigation in actu
   const errors:string[]=[];b.on("Runtime.exceptionThrown",v=>errors.push(JSON.stringify(v)));b.on("Log.entryAdded",v=>{const text=(v as {entry:{text:string}}).entry.text;if(/Content Security Policy|Refused to.*(style|script|form)/i.test(text))errors.push(text);});
   await b.command("Fetch.enable",{patterns:[{urlPattern:"https://destination.example.test/*",requestStage:"Request"}]});
   b.on("Fetch.requestPaused",v=>{const e=v as {requestId:string;request:{url:string;method:string;headers:Record<string,string>}};if(e.request.url==="https://destination.example.test/favicon.ico"){void b.command("Fetch.fulfillRequest",{requestId:e.requestId,responseCode:204});return;}expect(e.request.url).toBe(destination);expect(e.request.method).toBe("GET");expect(e.request.headers.Referer).toBeUndefined();void b.command("Fetch.fulfillRequest",{requestId:e.requestId,responseCode:200,responseHeaders:[{name:"Content-Type",value:"text/html"}],body:Buffer.from("<h1>Fixture destination</h1>").toString("base64")});});
+  const destinationReady=async()=>{
+    const reply=await b.command<{result:{value?:unknown};exceptionDetails?:unknown}>("Runtime.evaluate",{expression:"typeof document !== 'undefined' && document.readyState === 'complete' && document.body?.innerText.includes('Fixture destination') === true",returnByValue:true});
+    return reply.exceptionDetails===undefined&&reply.result.value===true;
+  };
   const visit=async(path:string,text:string)=>{await b.command("Page.navigate",{url:origin+path});await until(()=>b.evaluate<boolean>(`document.readyState==='complete'&&document.body?.innerText.includes(${JSON.stringify(text)})`),20000);};
   await visit("/public-alias","Published <script>not executed</script>");expect(await b.evaluate("document.querySelectorAll('header script').length")).toBe(0);
   for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:900,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
   await b.command("Page.captureScreenshot",{format:"png"}).then(async data=>writeFile("/tmp/spall-265-public-identity.png",Buffer.from((data as {data:string}).data,"base64")));
   await b.evaluate("document.querySelector('button').focus()");expect(await b.evaluate("document.activeElement?.tagName")).toBe("BUTTON");await b.command("Input.dispatchKeyEvent",{type:"keyDown",key:"Enter",code:"Enter",windowsVirtualKeyCode:13,text:"\r"});await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"Enter",code:"Enter",windowsVirtualKeyCode:13});
-  await until(()=>b.evaluate<boolean>("document.body?.innerText.includes('Fixture destination')"),15000).catch(async e=>{throw Error(String(e)+"; "+JSON.stringify({errors,calls,body:await b.evaluate("document.body.innerText")}));});
+  await until(destinationReady,15000).catch(async e=>{throw Error(String(e)+"; "+JSON.stringify({errors,calls,body:await b.evaluate("document.body.innerText")}));});
   await b.command("Emulation.setScriptExecutionDisabled",{value:true});
   await visit("/public-one","Visit my link");await b.evaluate("document.querySelector('button').click()");
   await until(()=>b.evaluate<boolean>("document.body?.innerText.includes('Continue to destination')"),15000);
   expect(await b.evaluate("document.querySelector('#destination').getAttribute('href')")).toBe(destination);
-  await b.evaluate("document.querySelector('#destination').click()");await until(()=>b.evaluate<boolean>("document.body?.innerText.includes('Fixture destination')"),15000);
+  await b.evaluate("document.querySelector('#destination').click()");await until(destinationReady,15000);
   await b.command("Emulation.setScriptExecutionDisabled",{value:false});
   available=false;await visit("/public-one","Unavailable");expect(await b.evaluate("document.querySelector('form')===null")).toBe(true);
   const stale=await fetch(origin+"/api/public/identity/public-one/open",{method:"POST",headers:{origin,"content-type":"application/x-www-form-urlencoded"},body:`binding=${binding}`,redirect:"manual"});expect(stale.status).toBe(403);expect(stale.headers.has("location")).toBe(false);

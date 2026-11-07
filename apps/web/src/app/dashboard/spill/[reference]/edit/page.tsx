@@ -6,6 +6,10 @@ import { readResourceCatalogPage } from "@/lib/workspace/resource-catalog-page";
 import { DocumentLink } from "@/components/document-link";
 import { createProductDestinationsReader } from "@/lib/workspace/product-destinations";
 import { createProductDestinationsClient } from "@/lib/workspace/profile-editor-server";
+import { ProductImageForm } from "./image-form";
+import { createProductImageClient } from "@/lib/workspace/profile-editor-server";
+import { createProductImageReader } from "@/lib/workspace/product-image";
+import { createTrustedProfileMediaPreviewUrl } from "@/lib/profile-media/preview";
 import { ProductDestinationsForm } from "./destination-form";
 import { StarterItemForm } from "./item-form";
 const marketplaceLabels:Record<string,string>={shopee:"Shopee",tokopedia:"Tokopedia",tiktok:"TikTok"};
@@ -15,6 +19,11 @@ export default async function StarterItemPage({params}:{params:Promise<{referenc
  const page=await readResourceCatalogPage(Number(reference),true);if(!("item" in page)||!page.item)notFound();const item=page.item;
  const destinations=item.kind==="product"&&item.published_lifecycle!=="archived"?await createProductDestinationsReader(await createProductDestinationsClient(),item.reference).read():null;
  if(destinations&&destinations.status!=="success")throw Error("Product destinations unavailable");
+ const media=item.kind==="product"&&item.published_lifecycle!=="archived"?await createProductImageReader(await createProductImageClient(),item.reference).read():null;
+ if(media&&media.status!=="success")throw Error("Product media unavailable");
+ if(media?.status==="success"&&destinations?.status==="success"&&(media.source_revision!==item.source_revision||media.source_revision!==destinations.source_revision||media.preparation_revision!==destinations.preparation_revision||Boolean(media.primary_asset_key)!==item.has_primary_image||JSON.stringify(item.destinations)!==JSON.stringify(destinations.destinations)))throw Error("Product changed while loading");
+ const previewUrl=media?.status==="success"&&media.primary_asset_key?await createTrustedProfileMediaPreviewUrl(media.primary_asset_key):null;
+
  return <main id="main-content" className="entry-page"><OwnerWorkspaceHeader active="item"/>
   <div className="mx-auto max-w-3xl space-y-7 py-10"><Link prefetch={false} href="/dashboard/spill" className="text-sm underline">Back to Spill</Link>
    <div><span className="eyebrow">{item.kind} · #{item.reference}</span><h1 className="my-4 font-serif text-5xl">Keep shaping this {item.kind}.</h1><p className="text-sm leading-6">{item.published_lifecycle?`${item.published_lifecycle.charAt(0).toUpperCase()+item.published_lifecycle.slice(1)} · Working edits stay separate.`:"Draft · not published."}</p></div>
@@ -25,10 +34,11 @@ export default async function StarterItemPage({params}:{params:Promise<{referenc
    {item.kind==="product"?<section className="space-y-3" aria-label="Saved Product preparation"><h2 className="text-xl font-semibold">Your saved preparation</h2><p className="text-sm">Primary image: {item.has_primary_image?"Selected and retained":"Not selected"}</p>
     {item.destinations.length?<ul className="space-y-3">{item.destinations.map(destination=><li key={destination.provider_key} className="rounded-xl border border-neutral-300 p-4 text-sm"><p className="font-semibold">{marketplaceLabels[destination.provider_key]??destination.provider_key.replace(/^external:/,"")}</p><p className="mt-2 break-all">{destination.destination_url}</p><p className="mt-2">Destination checks are required before publishing.</p></li>)}</ul>:<p className="text-sm">No marketplace destinations saved yet.</p>}
    </section>:null}
+   {media?.status==="success"?<ProductImageForm data={media} previewUrl={previewUrl}/>:null}
    {destinations?.status==="success"?<ProductDestinationsForm data={destinations}/>:null}
    {item.kind==="product"?<DocumentLink href="/dashboard/spill/new/product" className="button">Add another Product</DocumentLink>:null}
    {item.kind==="resource"?<DocumentLink href="/dashboard/spill/new/resource" className="text-sm underline">Create another Resource</DocumentLink>:null}
-   <p className="text-sm leading-6 text-neutral-600">Your saved Working stays private. Publishing and image changes are not available here yet.</p>
+   <p className="text-sm leading-6 text-neutral-600">Your saved Working stays private. Publishing is a separate step and is not available here yet.</p>
   </div>
  </main>;
 }

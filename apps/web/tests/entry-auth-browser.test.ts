@@ -1,4 +1,4 @@
-import { createHmac } from "node:crypto";
+import { createHmac,createHash,X509Certificate,randomUUID } from "node:crypto";
 import { createServer, type Server } from "node:http";
 import { createServer as createSecureServer } from "node:https";
 import { execFileSync, spawn } from "node:child_process";
@@ -7,6 +7,9 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { expect, it } from "vitest";
+import { sanitizeMedia } from "../../media-sanitizer/src/lib/processor";
+import { verifySanitizerSignature } from "../../media-sanitizer/src/lib/request-auth";
+import sharp from "../../media-sanitizer/node_modules/sharp";
 import { chromiumFixture, until } from "./chromium-fixture";
 
 async function listen(server: Server) {
@@ -38,6 +41,11 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
   ];
   const extraResources:typeof starterItems=[];
   const preparationRevisions=new Map<number,number>([[1,4]]);
+  const selectedImages=new Map<number,string>([[1,"27000000-0000-4000-8000-000000000001"]]);
+  const mediaIntents=new Map<string,{reference:number;key:string;type:string;size:number;status:string;asset?:{asset_key:string;object_key:string;stored_content_type:"image/webp";byte_size:number;width:number;height:number}}>();
+  const objects=new Map<string,{bytes:Buffer;type:string}>();let appOrigin="";let sanitizerCalls=0;
+  const mediaSecret="fixture-product-media-secret-270-only";
+
   const creationIntents=new Map<string,{input:Record<string,unknown>;ack:Record<string,unknown>}>();
   const jwtPart = (value: unknown) => Buffer.from(JSON.stringify(value)).toString("base64url");
   const jwtHeader = jwtPart({ alg: "HS256", typ: "JWT" });
@@ -48,9 +56,29 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
   execFileSync("openssl", ["req", "-x509", "-newkey", "rsa:2048", "-nodes", "-days", "1", "-keyout", key,
     "-out", cert, "-subj", "/CN=127.0.0.1", "-addext", "subjectAltName=IP:127.0.0.1"], { stdio: "ignore" });
   const provider = createSecureServer({ cert: await readFile(cert), key: await readFile(key) }, async (request, response) => {
-    let body = ""; for await (const part of request) body += String(part);
+    const chunks:Buffer[]=[];for await(const part of request)chunks.push(Buffer.from(part));const bytes=Buffer.concat(chunks);const body=bytes.toString("utf8");
     const path = new URL(request.url!, "http://fixture").pathname; calls.push(path);
     response.setHeader("content-type", "application/json");
+    if(path.startsWith("/fixture-media/")){
+      response.setHeader("Access-Control-Allow-Origin",appOrigin);response.setHeader("Access-Control-Allow-Methods","GET, PUT, DELETE, OPTIONS");response.setHeader("Access-Control-Allow-Headers","Content-Type");
+      if(request.method==="OPTIONS"){response.statusCode=204;response.end();return;}
+      const key=decodeURIComponent(path.slice("/fixture-media/".length));
+      if(request.method==="PUT"){
+        if(key.startsWith("staging/"))expect(new URL(request.url!,"https://fixture").searchParams.get("X-Amz-SignedHeaders")).toContain("content-type");
+        if(key.startsWith("working/")){expect(request.headers["if-none-match"]).toBe("*");expect(bytes.subarray(0,4).toString()).toBe("RIFF");}
+        if(request.headers["if-none-match"]==="*"&&objects.has(key)){response.statusCode=412;response.end();return;}
+        objects.set(key,{bytes,type:String(request.headers["content-type"])});response.setHeader("ETag",'"fixture-media"');response.end();return;
+      }
+      if(request.method==="DELETE"){objects.delete(key);response.statusCode=204;response.end();return;}
+      const object=objects.get(key);if(!object){response.statusCode=404;response.end();return;}
+      response.setHeader("Content-Type",object.type);response.setHeader("Content-Length",object.bytes.length);response.end(object.bytes);return;
+    }
+    if(path==="/api/sanitize"){
+      expect(verifySanitizerSignature({secret:mediaSecret,timestamp:String(request.headers["x-spall-timestamp"]),signature:String(request.headers["x-spall-signature"]),body})).toBe(true);
+      const input=JSON.parse(body);const key=new URL(input.sourceUrl).pathname.slice("/fixture-media/".length);const object=objects.get(key)!;expect(object.bytes.length).toBe(input.expectedByteSize);expect(object.type).toBe(input.expectedContentType);
+      const sanitized=await sanitizeMedia({bytes:object.bytes,expectedContentType:input.expectedContentType});sanitizerCalls++;
+      response.setHeader("Content-Type",sanitized.contentType);response.setHeader("Content-Length",sanitized.byteSize);response.setHeader("X-Spall-Media-Width",sanitized.width);response.setHeader("X-Spall-Media-Height",sanitized.height);response.end(sanitized.bytes);return;
+    }
     if (path === "/redis") {
       const command = JSON.parse(body); expect(command[0]).toBe("eval");
       expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product)-/);
@@ -70,7 +98,29 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      if(["create_product_media_upload_intent_server","resolve_product_media_upload_intent_server","complete_product_media_upload_server"].includes(name)){
+        expect(data.input_auth_user_id).toBe(user.id);const item=[...starterItems,...extraResources].find(row=>row.reference===data.input_reference&&row.kind==="product");expect(item).toBeDefined();let result:unknown;
+        if(name==="create_product_media_upload_intent_server"){
+          const id=randomUUID(),key=`staging/profile/${id}/${randomUUID()}`;mediaIntents.set(id,{reference:data.input_reference,key,type:data.input_expected_content_type,size:data.input_declared_byte_size,status:"pending"});
+          result={status:"success",upload_intent_id:id,staging_object_key:key,expected_content_type:data.input_expected_content_type,declared_byte_size:data.input_declared_byte_size,expires_at:new Date(Date.now()+300000).toISOString()};
+        }else{
+          const intent=mediaIntents.get(data.input_upload_intent_id)!;expect(intent.reference).toBe(data.input_reference);
+          if(name==="resolve_product_media_upload_intent_server"){
+            if(intent.status==="consumed")result={status:"consumed",...intent.asset};
+            else{expect(intent.status).toBe("pending");intent.status="processing";result={status:"success",intent_status:"processing",expected_content_type:intent.type,declared_byte_size:intent.size,staging_object_key:intent.key,expires_at:new Date(Date.now()+300000).toISOString()};}
+          }else{expect(intent.status).toBe("processing");expect(objects.has(data.input_object_key)).toBe(true);intent.status="consumed";intent.asset={asset_key:data.input_asset_key,object_key:data.input_object_key,stored_content_type:"image/webp",byte_size:data.input_byte_size,width:data.input_width,height:data.input_height};result={status:"success",idempotent:false,...intent.asset};}
+        }
+        response.end(JSON.stringify(result));return;
+      }
+      if(name==="execute_owner_product_image_server"){
+        expect(data.input_subject).toBe(user.id);const working=data.input_payload.input_working;const reference=data.input_operation==="resolve_current_owner_product_image"?data.input_payload.input_reference:working.reference;const item=[...starterItems,...extraResources].find(row=>row.reference===reference&&row.kind==="product")!;expect(item).toBeDefined();let result:unknown;
+        if(data.input_operation==="resolve_current_owner_product_image")result={status:"success",current_handle:setup.handle,primary_use_case:setup.useCase,reference,source_revision:item.source_revision,preparation_revision:preparationRevisions.get(reference)??null,primary_asset_key:selectedImages.get(reference)??null};
+        else{expect(data.input_operation).toBe("save_current_owner_product_image");expect(Object.keys(working).sort()).toEqual(["base_preparation_revision","base_source_revision","primary_asset_key","reference"]);
+          if(working.base_source_revision!==item.source_revision||working.base_preparation_revision!==(preparationRevisions.get(reference)??null))result={status:"stale_write"};
+          else{const next=(preparationRevisions.get(reference)??0)+1;preparationRevisions.set(reference,next);if(working.primary_asset_key)selectedImages.set(reference,working.primary_asset_key);else selectedImages.delete(reference);item.has_primary_image=working.primary_asset_key!==null;result={status:"success",reference,source_revision:item.source_revision,preparation_revision:next,primary_asset_key:working.primary_asset_key};if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture image save reply lost"}');return;}}
+        }response.end(JSON.stringify(result));return;
+      }
       if(name === "execute_owner_product_destinations_server"){
         expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);const value=data.input_payload.input_working;
         const reference=data.input_operation==="resolve_current_owner_product_destinations"?data.input_payload.input_reference:value.reference;
@@ -237,9 +287,13 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     response.statusCode = 400; response.end('{"msg":"Invalid credentials"}');
   });
   const providerPort = await listen(provider);
+  const pixels=await sharp({create:{width:16,height:12,channels:3,background:{r:220,g:160,b:120}}}).png().toBuffer();const pngFile=join(tlsDirectory,"product.png");await writeFile(pngFile,pixels);
+  const selected=await sanitizeMedia({bytes:pixels,expectedContentType:"image/png"});objects.set("working/profile/27000000-0000-4000-8000-000000000001.webp",{bytes:selected.bytes,type:selected.contentType});
+  const certificateSpki=createHash("sha256").update(new X509Certificate(await readFile(cert)).publicKey.export({type:"spki",format:"der"})).digest("base64");
   const allocation = createServer(); const port = await listen(allocation); await new Promise<void>(r => allocation.close(() => r()));
   // Controlled provider relay for the actual strict Upstash transport. No production
   // bypass/configuration is added; only this child process loads the test relay.
+  appOrigin=`http://127.0.0.1:${port}`;
   const relay = join(tlsDirectory, "redis-relay.cjs");
   await writeFile(relay, `const original = globalThis.fetch; globalThis.fetch = async (url, init) => {
     if (String(url) !== "https://fixture.upstash.io/") return original(url, init);
@@ -247,7 +301,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     return new Response(response.body, { status: response.status, headers: response.headers });
   };`);
   const app = spawn(process.execPath, [resolve("node_modules/next/dist/bin/next"), process.env.SPALL_ENTRY_COMPILED === "1" ? "start" : "dev", "--hostname", "127.0.0.1", "--port", String(port)], {
-    env: { ...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --require=${relay}`, SUPABASE_SERVICE_ROLE_KEY: "isolated-service-role", UPSTASH_REDIS_REST_URL: "https://fixture.upstash.io", UPSTASH_REDIS_REST_TOKEN: "fixture-budget-token", SPALL_OWNER_PROFILE_BUDGET_NAMESPACE: "browser", NEXT_TELEMETRY_DISABLED: "1", NODE_EXTRA_CA_CERTS: cert, NEXT_PUBLIC_SUPABASE_URL: `https://127.0.0.1:${providerPort}`, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "publishable-local-fixture" },
+    env: { ...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --require=${relay}`, SUPABASE_SERVICE_ROLE_KEY: "isolated-service-role", UPSTASH_REDIS_REST_URL: "https://fixture.upstash.io", UPSTASH_REDIS_REST_TOKEN: "fixture-budget-token", SPALL_OWNER_PROFILE_BUDGET_NAMESPACE: "browser",R2_S3_ENDPOINT:`https://127.0.0.1:${providerPort}`,R2_ACCESS_KEY_ID:"fixture-r2-access",R2_SECRET_ACCESS_KEY:"fixture-r2-secret",R2_PROFILE_BUCKET:"fixture-media",MEDIA_SANITIZER_URL:`https://127.0.0.1:${providerPort}`,MEDIA_SANITIZER_SHARED_SECRET:mediaSecret, NEXT_TELEMETRY_DISABLED: "1", NODE_EXTRA_CA_CERTS: cert, NEXT_PUBLIC_SUPABASE_URL: `https://127.0.0.1:${providerPort}`, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "publishable-local-fixture" },
     stdio: ["ignore", "pipe", "pipe"], detached: true,
   });
   let logs = ""; app.stdout.on("data", x => { logs += String(x); }); app.stderr.on("data", x => { logs += String(x); });
@@ -255,7 +309,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
   let browser: Awaited<ReturnType<typeof chromiumFixture>> | undefined;
   try {
     await until(async () => { if (app.exitCode !== null) throw new Error("Next exited: " + logs.slice(-1000)); try { return (await fetch(origin, { signal: AbortSignal.timeout(2000) })).ok; } catch { return false; } }, 40000);
-    browser = await chromiumFixture();
+    browser = await chromiumFixture({certificateSpki});
     const b = browser;
     const errors: string[] = []; b.on("Runtime.exceptionThrown", x => errors.push(JSON.stringify(x)));
     await b.command("Runtime.enable"); await b.command("Page.enable"); await b.command("Log.enable");
@@ -696,6 +750,17 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     await reloadFromLink('a[href="/dashboard/spill/6/edit"]',"Keep shaping this product.");await input("destinations","https://shop.example.test/saved-after-lost-reply");loseAcknowledgment=true;await saveDestinations();await text("We couldn’t confirm this save. Keep your links");loseAcknowledgment=false;
     await reloadFromLink('a[href="/dashboard/spill/6/edit"]',"Keep shaping this product.");expect(await b.evaluate("document.querySelector('[name=destinations]').value")).toBe("https://shop.example.test/saved-after-lost-reply");expect(await b.evaluate("document.querySelector('[name=sourceUrl]').value")).toBe("javascript:unfinished-product");
     expect(await b.evaluate("document.querySelector('a[href^=\"https://shop.example.test/\"]')===null")).toBe(true);expect(JSON.stringify(setup)).toBe(setupBeforeResources);
+    for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
+    await visit("/dashboard/spill/6/edit","Keep shaping this product.");const destinationsBeforeImage=JSON.stringify(extraResources[3]!.destinations);
+    const document=await b.command<{root:{nodeId:number}}>("DOM.getDocument");const fileInput=await b.command<{nodeId:number}>("DOM.querySelector",{nodeId:document.root.nodeId,selector:'input[name="productImageFile"]'});
+    await b.command("DOM.setFileInputFiles",{files:[pngFile],nodeId:fileInput.nodeId});await text("Image processed. Save selection to attach it to this Product.");
+    expect(sanitizerCalls).toBe(1);expect(extraResources[3]!.has_primary_image).toBe(false);expect(mediaIntents.size).toBe(1);
+    const saveImage=()=>b.evaluate("document.querySelector('form[aria-label=\"Product image selection\"] button[type=submit]').click()");await saveImage();await text("Image selection saved privately.");expect(extraResources[3]!.has_primary_image).toBe(true);expect(JSON.stringify(extraResources[3]!.destinations)).toBe(destinationsBeforeImage);
+    await reloadFromLink('a[href="/dashboard/spill/6/edit"]',"Keep shaping this product.");await until(()=>b.evaluate<boolean>("document.querySelector('img[alt=\"Saved Product primary image\"]')?.naturalWidth===16"));
+    const removeImage=()=>b.evaluate("Array.from(document.querySelectorAll('button')).find(button=>button.textContent==='Remove image selection').click()");await removeImage();expect(extraResources[3]!.has_primary_image).toBe(true);await saveImage();await text("Image selection saved privately.");expect(extraResources[3]!.has_primary_image).toBe(false);expect(JSON.stringify(extraResources[3]!.destinations)).toBe(destinationsBeforeImage);
+    await reloadFromLink('a[href="/dashboard/spill/6/edit"]',"Keep shaping this product.");const uploadAgain=await b.command<{root:{nodeId:number}}>("DOM.getDocument");const secondFile=await b.command<{nodeId:number}>("DOM.querySelector",{nodeId:uploadAgain.root.nodeId,selector:'input[name="productImageFile"]'});await b.command("DOM.setFileInputFiles",{files:[pngFile],nodeId:secondFile.nodeId});await text("Image processed. Save selection to attach it to this Product.");
+    loseAcknowledgment=true;await saveImage();await text("We couldn’t confirm this image save.");loseAcknowledgment=false;expect(await b.evaluate("document.querySelector('form[aria-label=\"Product image selection\"] button').disabled")).toBe(true);
+    await reloadFromLink('a[href="/dashboard/spill/6/edit"]',"Keep shaping this product.");await until(()=>b.evaluate<boolean>("document.querySelector('img[alt=\"Saved Product primary image\"]')?.naturalWidth===16"));expect(JSON.stringify(extraResources[3]!.destinations)).toBe(destinationsBeforeImage);expect(await b.evaluate("document.querySelector('[name=sourceUrl]').value")).toBe("javascript:unfinished-product");
     for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
     const destinationCapture=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-269-product-destinations.png",Buffer.from(destinationCapture.data,"base64"));
     expect(calls.some(call => call.includes("publish_current"))).toBe(false);

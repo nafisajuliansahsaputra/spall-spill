@@ -9615,6 +9615,39 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
+#### Returning Owner Product media — 2026-11-07 WIB
+
+- JIT [12.270](docs/product-spec/technical-architecture/12.270-owner-product-media-contract.md)
+  precedes source. Setup/general Product editors now upload JPEG/PNG/WebP through
+  signed MIME-bound staging, isolated sanitization and immutable canonical storage,
+  then explicitly save/remove image selection. Trusted selected-image previews,
+  independent shared preparation CAS and full GET lost-response recovery are mounted.
+  Image changes retain destination order, raw Item Working, reference and Published.
+- Product-bound intent/Owner/reference FKs and immutable bindings; active completed
+  Owner-first/binding locks; exclusive claim, consumed replay and canonical metadata
+  checks; fixed server adapters/quotas30 metadata ops and600read/30selection writes.
+  Old onboarding eligibility stays unchanged. Shared byte pipeline keeps old fixed
+  transports; browser never supplies storage keys or processed image dimensions.
+- Real race exposed Owner cascade ordering. A private invoker BEFORE DELETE hook
+  clears only that Owner's Product preparations before existing cascades; ordinary
+  asset deletion remains FK-blocked and rejected Owner deletion rolls cleanup back.
+  No deletion API/deploy/production operation enabled. Tests retain tombstones.
+- Local web14512unit tests211files + remaining workspace tests, typecheck/lint/
+  production build/7tooling PASS (one existing fixture warning,0errors). SQL084
+  PASS51 plus8regression files PASS408 assertions. Real Owner-lock claim and image
+  save races PASS; one processing claimant, one image save and one stale rejection.
+- Actual Next/Chromium dev PASS2/2(61.44s), fresh compiled PASS2/2(20.14s): TLS R2
+  fixture receives real signed PUT bytes, actual sanitizer processor converts PNG
+  to WebP, canonical PUT requires IfNoneMatch, save/reload/remove/lost reply and
+  selected-image display work; source/destinations/CSP/responsive360/768/1440 retained.
+  Existing public navigation DOM wait race was repaired without relaxing assertion
+  or timeout. Screenshot inspected. These are controlled-provider/component proofs,
+  not deployed R2/sanitizer/credential or full fresh Supabase release evidence.
+- Baseline2383e9e CI42354790124,Security42354790080,Guard42354790095 all PASS.
+  New exact push gates remain PENDING. Full D04/D05/J1–J9, first Publish, public
+  Spill/detail/search, Identity media/remaining blocks, analytics/operator/lifecycle
+  and live-provider acceptance remain OPEN. First Publish5Nov MISSED;15Nov at risk.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

@@ -1,0 +1,17 @@
+import { createClient } from "@supabase/supabase-js";
+import { afterEach,beforeEach,expect,it,vi } from "vitest";
+const mocks=vi.hoisted(()=>({admit:vi.fn(),service:vi.fn()}));
+vi.mock("@/lib/workspace/profile-editor-server",()=>({admitProductMedia:mocks.admit}));vi.mock("@/lib/supabase/service",()=>({createSupabaseServiceClient:mocks.service}));
+import { createProductMediaUploadIntent,resolveProductMediaUploadIntent } from "./database";
+const subject="27000000-0000-4000-8000-000000000001",intent="27000000-0000-4000-8000-000000000010";
+let payload:unknown,calls:{url:string;input:unknown;redirect:RequestRedirect|undefined;cache:RequestCache|undefined}[]=[];
+beforeEach(()=>{calls=[];payload={status:"success",upload_intent_id:intent,staging_object_key:`staging/profile/${intent}/27000000-0000-4000-8000-000000000020`,expected_content_type:"image/png",declared_byte_size:100,expires_at:new Date(Date.now()+300000).toISOString()};mocks.admit.mockResolvedValue(true);const transport=vi.fn(async(url:unknown,init?:RequestInit)=>{calls.push({url:String(url),input:JSON.parse(String(init?.body)),redirect:init?.redirect,cache:init?.cache});return Response.json(payload);});vi.stubGlobal("fetch",transport);mocks.service.mockImplementation((fetcher?:typeof fetch)=>createClient("https://fixture.supabase.co","isolated-service-key",{auth:{persistSession:false,autoRefreshToken:false},global:{fetch:fetcher??transport}}));});
+afterEach(()=>{vi.useRealTimers();vi.unstubAllGlobals();});
+const create=()=>createProductMediaUploadIntent({authUserId:subject,reference:3,expectedContentType:"image/png",declaredByteSize:100});
+it("uses only fixed Product RPC with authoritative scope after distributed admission",async()=>{expect((await create()).status).toBe("success");expect(mocks.admit).toHaveBeenCalledWith(subject);expect(calls[0]!.redirect).toBe("error");expect(calls[0]!.cache).toBe("no-store");expect(calls[0]!.url).toContain("/rpc/create_product_media_upload_intent_server");expect(calls[0]!.input).toEqual({input_auth_user_id:subject,input_reference:3,input_expected_content_type:"image/png",input_declared_byte_size:100});});
+it("quota denial occurs before elevated transport",async()=>{mocks.admit.mockResolvedValue(false);await expect(create()).rejects.toThrow();expect(calls).toEqual([]);});
+it("another intent staging key cannot be signed",async()=>{payload={...(payload as object),staging_object_key:`staging/profile/${subject}/${intent}`};await expect(create()).rejects.toThrow("mismatch");});
+it("unexpected reply fields fail closed",async()=>{payload={...(payload as object),owner_id:subject};await expect(create()).rejects.toThrow("shape");});
+it("changed MIME/size acknowledgment cannot be signed",async()=>{payload={...(payload as object),declared_byte_size:101};await expect(create()).rejects.toThrow("mismatch");});
+it("consumed reply must bind canonical key and size bounds",async()=>{payload={status:"consumed",asset_key:intent,object_key:"working/profile/foreign.webp",stored_content_type:"image/webp",byte_size:90,width:16,height:12};await expect(resolveProductMediaUploadIntent({authUserId:subject,reference:3,uploadIntentId:intent})).rejects.toThrow("metadata");});
+it("invalid scope dispatches neither quota nor provider work",async()=>{await expect(createProductMediaUploadIntent({authUserId:subject,reference:0,expectedContentType:"image/png",declaredByteSize:100})).rejects.toThrow();expect(mocks.admit).not.toHaveBeenCalled();expect(calls).toEqual([]);});

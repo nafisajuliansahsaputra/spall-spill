@@ -83,9 +83,11 @@ function createCanonicalObjectKey(
   );
 }
 
-export async function finalizeProfileMediaUpload(
-  input: ProfileMediaFinalizationInput,
-): Promise<ProfileMediaFinalizationResult> {
+export async function finalizeProfileMediaUpload(input:ProfileMediaFinalizationInput):Promise<ProfileMediaFinalizationResult>{
+ return finalizeCanonicalMediaUpload(input,{resolve:resolveProfileMediaUploadIntent,complete:completeProfileMediaUpload});
+}
+/** Internal server pipeline; transport names cannot come from browser input. */
+export async function finalizeCanonicalMediaUpload(input:ProfileMediaFinalizationInput,transport:{resolve:typeof resolveProfileMediaUploadIntent;complete:typeof completeProfileMediaUpload}):Promise<ProfileMediaFinalizationResult>{
   /*
    * Re-authenticate through the normal request-scoped
    * Supabase session. Elevated database authority is
@@ -125,7 +127,7 @@ export async function finalizeProfileMediaUpload(
    * canonicalization pipeline for the same intent.
    */
   const intent =
-    await resolveProfileMediaUploadIntent(
+    await transport.resolve(
       {
         authUserId:
           principal.authUserId,
@@ -267,7 +269,7 @@ export async function finalizeProfileMediaUpload(
    * later.
    */
   const completion =
-    await completeProfileMediaUpload(
+    await transport.complete(
       {
         authUserId:
           principal.authUserId,

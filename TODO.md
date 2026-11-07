@@ -4,12 +4,11 @@
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
 **Last synchronized:** 2026-11-07 WIB
 
-Latest delivery: returning Owner Product and Resource Draft creation, bounded Spill
-manager and saved Working editors are connected; local acceptance is recorded below.
-Product destination Working is integrated; new exact pushed gates remain PENDING.
-First Publish 5 Nov MISSED; full J1–J9
-and release readiness remain OPEN. Next: Product media/destination integration, public
-Spill/detail transport, and explicit Publish with universal workspace handoff.
+Latest delivery: returning Product/Resource Draft creation, Spill recovery,
+Product destination and media Working editing are integrated with local browser/DB
+proofs. New exact pushed gates PENDING. First Publish5Nov MISSED; full J1–J9 and
+release readiness OPEN. Next: public Spill/detail transport, remaining Identity
+preview/blocks/media and explicit Publish/universal workspace handoff.
 
 ## Autonomous Codex Cloud lane — 2026-10-05
 
@@ -77,6 +76,39 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Returning Owner Product media — 2026-11-07 WIB
+
+- JIT [12.270](docs/product-spec/technical-architecture/12.270-owner-product-media-contract.md)
+  precedes source. Setup/general Product editors now upload JPEG/PNG/WebP through
+  signed MIME-bound staging, isolated sanitization and immutable canonical storage,
+  then explicitly save/remove image selection. Trusted selected-image previews,
+  independent shared preparation CAS and full GET lost-response recovery are mounted.
+  Image changes retain destination order, raw Item Working, reference and Published.
+- Product-bound intent/Owner/reference FKs and immutable bindings; active completed
+  Owner-first/binding locks; exclusive claim, consumed replay and canonical metadata
+  checks; fixed server adapters/quotas30 metadata ops and600read/30selection writes.
+  Old onboarding eligibility stays unchanged. Shared byte pipeline keeps old fixed
+  transports; browser never supplies storage keys or processed image dimensions.
+- Real race exposed Owner cascade ordering. A private invoker BEFORE DELETE hook
+  clears only that Owner's Product preparations before existing cascades; ordinary
+  asset deletion remains FK-blocked and rejected Owner deletion rolls cleanup back.
+  No deletion API/deploy/production operation enabled. Tests retain tombstones.
+- Local web14512unit tests211files + remaining workspace tests, typecheck/lint/
+  production build/7tooling PASS (one existing fixture warning,0errors). SQL084
+  PASS51 plus8regression files PASS408 assertions. Real Owner-lock claim and image
+  save races PASS; one processing claimant, one image save and one stale rejection.
+- Actual Next/Chromium dev PASS2/2(61.44s), fresh compiled PASS2/2(20.14s): TLS R2
+  fixture receives real signed PUT bytes, actual sanitizer processor converts PNG
+  to WebP, canonical PUT requires IfNoneMatch, save/reload/remove/lost reply and
+  selected-image display work; source/destinations/CSP/responsive360/768/1440 retained.
+  Existing public navigation DOM wait race was repaired without relaxing assertion
+  or timeout. Screenshot inspected. These are controlled-provider/component proofs,
+  not deployed R2/sanitizer/credential or full fresh Supabase release evidence.
+- Baseline2383e9e CI42354790124,Security42354790080,Guard42354790095 all PASS.
+  New exact push gates remain PENDING. Full D04/D05/J1–J9, first Publish, public
+  Spill/detail/search, Identity media/remaining blocks, analytics/operator/lifecycle
+  and live-provider acceptance remain OPEN. First Publish5Nov MISSED;15Nov at risk.
 
 ### Returning Owner Product destinations — 2026-11-07 WIB
 
@@ -10103,7 +10135,7 @@ where private foundations exist. No screen is production verified this run.
 | D02 Identity Editor | Connected Profile/style + first/add/edit links Working/browser fixture | OPEN: remaining blocks/preview/publish + provider |
 | D03 Spill Manager | Mounted 20-row seek manager and exact saved Item editor; native browser fixture | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
-| D05 Edit Product | Setup/general raw Working and structured destination save/reload; SQL/browser fixture | OPEN: media/safety/preview/publish lifecycle |
+| D05 Edit Product | Setup/general raw Working, destination editing and upload/select/remove media; SQL/actual SDK/browser fixtures | OPEN: live media/safety/preview/publish lifecycle |
 | D06 Add Resource | Returning Owner multiple meaningful Draft creation and lost-ack readback; SQL/browser fixture | OPEN: preview/publish + live providers |
 | D07 Edit Resource | Setup and general Resource raw Working/meaning save/reload; SQL/browser fixture | OPEN: media/destination/preview/publish lifecycle |
 | A01 Sign Up | Connected form + browser confirmation fixture | PROVIDER PENDING: live verification/resolver |

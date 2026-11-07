@@ -50,10 +50,26 @@ test('Product creation serializes duplicate/distinct intents and preserves raw W
   finally{destinationLock.release();await destinationLock.done;}
   assert.deepEqual((await destinationRace).map(x=>x.status).sort(),['stale_write','success']);
   assert.equal(await query(`select revision from core.workspace_product_preparations where owner_id='${owner}';`),'1');
+
+  const mediaIntent=JSON.parse(await query(`select api.create_product_media_upload_intent_server('${subject}',1,'image/png',100);`)).upload_intent_id;assert.match(mediaIntent,/^[a-f0-9-]{36}$/);
+  const mediaLock=session(`begin;select id from core.owners where id='${owner}' for update;select 'owner_locked';\n`,true);await Promise.race([mediaLock.ready,mediaLock.done.then(()=>{throw Error('Media Owner barrier exited');})]);
+  const claim=async()=>JSON.parse(await query(`select api.resolve_product_media_upload_intent_server('${subject}',1,'${mediaIntent}');`));const mediaRace=Promise.all([claim(),claim()]);
+  try{const until=Date.now()+5000;let waiting=0;while(waiting<2){waiting=Number(await query(`select count(*) from pg_stat_activity where wait_event_type='Lock' and query like '%resolve_product_media_upload_intent_server%' and query like '%${subject}%';`));if(waiting<2){assert.ok(Date.now()<until,'Both claims wait behind Owner lock');await new Promise(resolve=>setTimeout(resolve,25));}}}finally{mediaLock.release();await mediaLock.done;}
+  assert.deepEqual((await mediaRace).map(x=>x.status).sort(),['processing','success']);
+  const asset=randomUUID();assert.equal(JSON.parse(await query(`select api.complete_product_media_upload_server('${subject}',1,'${mediaIntent}','${asset}','working/profile/${asset}.webp','image/webp',90,16,12);`)).status,'success');
+  const previousDestinations=await query(`select destinations from core.workspace_product_preparations where owner_id='${owner}';`);
+  const image=async key=>JSON.parse(await query(`select api.execute_owner_product_image_server('${subject}','save_current_owner_product_image','${JSON.stringify({input_working:{reference:1,base_source_revision:1,base_preparation_revision:1,primary_asset_key:key}})}');`));
+  const imageLock=session(`begin;select id from core.owners where id='${owner}' for update;select 'owner_locked';\n`,true);await Promise.race([imageLock.ready,imageLock.done.then(()=>{throw Error('Image Owner barrier exited');})]);
+  const imageRace=Promise.all([image(asset),image(null)]);
+  try{const until=Date.now()+5000;let waiting=0;while(waiting<2){waiting=Number(await query(`select count(*) from pg_stat_activity where wait_event_type='Lock' and query like '%execute_owner_product_image_server%' and query like '%${subject}%';`));if(waiting<2){assert.ok(Date.now()<until,'Both image mutations wait behind Owner lock');await new Promise(resolve=>setTimeout(resolve,25));}}}finally{imageLock.release();await imageLock.done;}
+  assert.deepEqual((await imageRace).map(x=>x.status).sort(),['stale_write','success']);
+  assert.equal(await query(`select destinations from core.workspace_product_preparations where owner_id='${owner}';`),previousDestinations);
  }finally{
   await query(`delete from auth.users where id='${subject}';`);
   if(owner){const reserved=await query(`select count(*) from core.spill_item_identity_registry where owner_id='${owner}';`);await query(`delete from core.owner_handle_namespaces where owner_id='${owner}';delete from core.owners where id='${owner}';`);
    assert.equal(await query(`select count(*) from core.workspace_product_drafts where owner_id='${owner}';`),'0');
+   assert.equal(await query(`select count(*) from core.product_media_upload_bindings where owner_id='${owner}';`),'0');
+   assert.equal(await query(`select count(*) from core.profile_media_assets where owner_id='${owner}';`),'0');
    assert.equal(await query(`select count(*) from core.spill_item_identity_registry where owner_id='${owner}';`),reserved);
   }
  }

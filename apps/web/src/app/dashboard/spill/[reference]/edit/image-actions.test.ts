@@ -1,0 +1,17 @@
+import { beforeEach,expect,it,vi } from "vitest";
+const mocks=vi.hoisted(()=>({initiate:vi.fn(),finalize:vi.fn(),client:vi.fn(),save:vi.fn(),revalidate:vi.fn()}));
+vi.mock("next/cache",()=>({revalidatePath:mocks.revalidate}));
+vi.mock("@/lib/profile-media/product-upload",()=>({initiateProductMediaUpload:mocks.initiate,finalizeProductMediaUpload:mocks.finalize}));
+vi.mock("@/lib/workspace/profile-editor-server",()=>({createProductImageClient:mocks.client}));
+vi.mock("@/lib/workspace/product-image",async original=>({...await original<object>(),saveProductImage:mocks.save}));
+import { initiateProductImageAction,finalizeProductImageAction,saveProductImageAction } from "./image-actions";
+const asset="27000000-0000-4000-8000-000000000011",idle={status:"idle" as const,message:null,revision:null};
+const form=()=>{const data=new FormData();data.set("reference","3");data.set("sourceRevision","1");data.set("preparationRevision","");data.set("assetKey",asset);return data;};
+beforeEach(()=>{mocks.client.mockResolvedValue({});mocks.initiate.mockResolvedValue({status:"success",uploadIntentId:asset});mocks.finalize.mockResolvedValue({status:"success",assetKey:asset});mocks.save.mockResolvedValue({status:"success",preparation_revision:1});});
+it("upload initiation admits only Product reference, MIME and byte size",async()=>{const input={reference:3,contentType:"image/png",declaredByteSize:100};expect((await initiateProductImageAction(input)).status).toBe("success");expect(mocks.initiate).toHaveBeenCalledWith(input);});
+it.each([{reference:3,contentType:"image/svg+xml",declaredByteSize:100},{reference:3,contentType:"image/png",declaredByteSize:5242881},{reference:3,contentType:"image/png",declaredByteSize:100,owner_id:asset}])("invalid initiation dispatches no provider %j",async input=>{expect((await initiateProductImageAction(input)).status).toBe("internal_error");expect(mocks.initiate).not.toHaveBeenCalled();});
+it("finalization never accepts browser object key or measured metadata",async()=>{expect((await finalizeProductImageAction({reference:3,uploadIntentId:asset,objectKey:"foreign",width:2048})).status).toBe("internal_error");expect(mocks.finalize).not.toHaveBeenCalled();});
+it("image save dispatches only selection and explicit independent CAS",async()=>{const result=await saveProductImageAction(idle,form());expect(result.status).toBe("saved");expect(mocks.save.mock.calls[0]![1]).toEqual({reference:3,base_source_revision:1,base_preparation_revision:null,primary_asset_key:asset});expect(mocks.revalidate).toHaveBeenCalledWith("/dashboard/spill/3/edit");});
+it.each(["owner_id","destinations","objectKey"])("selection rejects %s injection before client work",async key=>{const data=form();data.set(key,"foreign");expect((await saveProductImageAction(idle,data)).status).toBe("error");expect(mocks.client).not.toHaveBeenCalled();});
+it("explicit null selection removes only image",async()=>{const data=form();data.set("assetKey","");await saveProductImageAction(idle,data);expect(mocks.save.mock.calls[0]![1].primary_asset_key).toBeNull();});
+it("unknown image acknowledgment freezes without refresh or retry",async()=>{mocks.save.mockResolvedValue({status:"outcome_unknown"});expect((await saveProductImageAction(idle,form())).status).toBe("reload");expect(mocks.save).toHaveBeenCalledOnce();expect(mocks.revalidate).not.toHaveBeenCalled();});
