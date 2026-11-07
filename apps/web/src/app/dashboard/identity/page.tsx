@@ -4,6 +4,7 @@ import { OwnerWorkspaceHeader } from "@/components/owner-workspace-header";
 import { createProfileEditorClient } from "@/lib/workspace/profile-editor-server";
 import { createOwnerEditableIdentityWorking } from "@/lib/workspace/owner-editable-identity-working";
 import { resolveCurrentOwnerState } from "@/lib/auth/owner-state";
+import { BlockControls } from "./block-controls";
 import { SavedLinksEditor } from "./links-editor";
 import { ContactBlocksEditor } from "./contact-editor";
 import { TextBlocksEditor } from "./text-editor";
@@ -37,6 +38,10 @@ export default async function IdentityEditorPage() {
         <h2 id="layout-heading" className="mb-5 text-2xl font-semibold">Starting style</h2>
         <LayoutWorkingForm starterKey={page.layout_working.starter_key} revision={page.layout_working.revision} />
       </section>
+      <BlockControls revision={page.collection?.revision ?? null} blocks={(page.collection?.blocks ?? []).map(block => {
+        const content = block.working === null ? null : "text" in block.working ? block.working.text : "label" in block.working ? block.working.label : "title" in block.working ? block.working.title : null;
+        return { id: block.block_id, kind: block.kind, visible: block.is_visible, label: content ? Array.from(content).slice(0, 100).join("") : "Content not saved or label not set" };
+      })} />
       {
         <section aria-labelledby="links-heading" className="space-y-4">
           <h2 id="links-heading" className="text-2xl font-semibold">Saved links</h2>

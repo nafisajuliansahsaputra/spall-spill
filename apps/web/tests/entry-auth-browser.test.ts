@@ -81,7 +81,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path === "/redis") {
       const command = JSON.parse(body); expect(command[0]).toBe("eval");
-      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text|contact)-/);
+      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text|contact|blocks)-/);
       expect(command[3]).not.toContain(user.id);
       response.end(JSON.stringify({ result: budgetDenied ? 0 : 1 })); return;
     }
@@ -98,7 +98,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_block_controls_server" || name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
       if(["create_product_media_upload_intent_server","resolve_product_media_upload_intent_server","complete_product_media_upload_server"].includes(name)){
         expect(data.input_auth_user_id).toBe(user.id);const item=[...starterItems,...extraResources].find(row=>row.reference===data.input_reference&&row.kind==="product");expect(item).toBeDefined();let result:unknown;
         if(name==="create_product_media_upload_intent_server"){
@@ -189,6 +189,20 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
         }else throw new Error("Unexpected starter gateway operation");
         response.end(JSON.stringify(result));return;
       }
+      if(name==="execute_owner_block_controls_server"){
+        expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);const value=data.input_payload.input_working;
+        const block=linkCollection?.blocks.find(row=>row.block_id===value.block_id);let result:unknown;
+        if(!linkCollection||value.base_collection_revision!==linkCollection.revision)result={status:"stale_write"};
+        else if(!block)result={status:"block_not_found"};
+        else if(data.input_operation==="save_current_owner_block_visibility_working"){block.is_visible=value.is_visible;linkCollection.revision+=1;result={status:"success",block_id:block.block_id,is_visible:block.is_visible,collection_revision:linkCollection.revision};}
+        else if(data.input_operation==="move_current_owner_block_working"){
+          const ordered=[...linkCollection.blocks].sort((a,b)=>a.position-b.position);const index=ordered.findIndex(row=>row.block_id===block.block_id);const neighbor=ordered[index+(value.direction==="up"?-1:1)];
+          if(!neighbor)result={status:"move_not_available"};else{[block.position,neighbor.position]=[neighbor.position,block.position];linkCollection.blocks.sort((a,b)=>a.position-b.position);linkCollection.revision+=1;result={status:"success",block_id:block.block_id,direction:value.direction,collection_revision:linkCollection.revision};}
+        }else if(data.input_operation==="remove_current_owner_block_working"){
+          expect(value.confirm_removal).toBe(true);linkCollection.blocks=linkCollection.blocks.filter(row=>row.block_id!==block.block_id);linkCollection.revision+=1;result={status:"success",block_id:block.block_id,collection_revision:linkCollection.revision};
+        }else throw Error("Unexpected block operation");
+        if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}response.end(JSON.stringify(result));return;
+      }
       if (name === "execute_owner_contact_editor_server") {
         expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);
         const first=data.input_operation==="initialize_current_owner_blocks_from_contact";
@@ -200,7 +214,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
         else if(saving){const block=linkCollection!.blocks.find(row=>row.block_id===value.block_id&&row.kind==="contact");
           if(!block)result={status:"block_not_found"};else{block.working=value.contact_working;block.payload_state="present";linkCollection!.revision+=1;result={status:"success",block_id:block.block_id,collection_revision:linkCollection!.revision};}
         }else{const block_id=`27200000-0000-4000-8000-${String(nextLink++).padStart(12,"0")}`;const blocks=linkCollection?.blocks??[];
-          blocks.push({block_id,kind:"contact",position:blocks.length+1,is_visible:value.is_visible,payload_state:"present",media_asset_state:null,working:value.contact_working});
+          blocks.push({block_id,kind:"contact",position:blocks.reduce((maximum,row)=>Math.max(maximum,row.position),0)+1,is_visible:value.is_visible,payload_state:"present",media_asset_state:null,working:value.contact_working});
           linkCollection={revision:first?1:linkCollection!.revision+1,blocks,has_more:false,next_after_position:null};result={status:"success",block_id,collection_revision:linkCollection.revision};
         }
         if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
@@ -217,7 +231,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
         else if(saving){const block=linkCollection!.blocks.find(row=>row.block_id===value.block_id&&row.kind==="text");
           if(!block)result={status:"block_not_found"};else{block.working=value.text_working;block.payload_state="present";linkCollection!.revision+=1;result={status:"success",block_id:block.block_id,collection_revision:linkCollection!.revision};}
         }else{const block_id=`27100000-0000-4000-8000-${String(nextLink++).padStart(12,"0")}`;const blocks=linkCollection?.blocks??[];
-          blocks.push({block_id,kind:"text",position:blocks.length+1,is_visible:value.is_visible,payload_state:"present",media_asset_state:null,working:value.text_working});
+          blocks.push({block_id,kind:"text",position:blocks.reduce((maximum,row)=>Math.max(maximum,row.position),0)+1,is_visible:value.is_visible,payload_state:"present",media_asset_state:null,working:value.text_working});
           linkCollection={revision:first?1:linkCollection!.revision+1,blocks,has_more:false,next_after_position:null};result={status:"success",block_id,collection_revision:linkCollection.revision};
         }
         if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
@@ -266,7 +280,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
           else{
             const block_id="26400000-0000-4000-8000-"+String(++nextLink).padStart(12,"0");
             const blocks=linkCollection?.blocks??[];
-            blocks.push({block_id,kind:value.link_working.kind,position:blocks.length+1,is_visible:value.is_visible,payload_state:"present",media_asset_state:null,working:value.link_working});
+            blocks.push({block_id,kind:value.link_working.kind,position:blocks.reduce((maximum,row)=>Math.max(maximum,row.position),0)+1,is_visible:value.is_visible,payload_state:"present",media_asset_state:null,working:value.link_working});
             linkCollection={revision:first?1:linkCollection!.revision+1,blocks,has_more:false,next_after_position:null};
             result={status:"success",block_id,collection_revision:linkCollection.revision};
             if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
@@ -730,6 +744,39 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     await scopedInput(contactForm,"value","Missing contact recovered");await saveContact();await text("Contact saved in Working.");
     for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width<600});expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);}
     const contactScreenshot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-272-contact.png",Buffer.from(contactScreenshot.data,"base64"));
+    const kinds=["social","generic_link","text","contact","media","spill_cta"];
+    const compositionIds=kinds.map((_,i)=>`27300000-0000-4000-8000-${String(i+1).padStart(12,"0")}`);
+    linkCollection={revision:1,has_more:false,next_after_position:null,blocks:kinds.map((kind,i)=>({block_id:compositionIds[i],kind,position:i+1,is_visible:true,payload_state:"missing",media_asset_state:kind==="media"?"not_selected":null,working:null}))} as unknown as NonNullable<ReturnType<typeof linksNow>>;
+    await visit("/dashboard/identity","Block composition");expect(await b.evaluate("document.querySelectorAll('[data-composition-block]').length")).toBe(6);
+    const card=(id:string)=>`[data-composition-block="${id}"]`;
+    const control=async(id:string,op:string)=>{await b.evaluate(`document.querySelector('${card(id)} button[value="${op}"]').click()`);};
+    const compositionReload=async()=>{await reloadFromLink('[data-composition-reload] a',"Block composition");};
+    expect(await b.evaluate(`document.querySelector('${card(compositionIds[0]!)} button[value=up]').disabled`)).toBe(true);
+    expect(await b.evaluate(`document.querySelector('${card(compositionIds[5]!)} button[value=down]').disabled`)).toBe(true);
+    const controlledId=compositionIds[2]!;
+    await control(controlledId,"hide");await text("Block composition saved in Working.");expect(linksNow()!.revision).toBe(2);expect(linksNow()!.blocks.find(row=>row.block_id===controlledId)!.is_visible).toBe(false);
+    await compositionReload();await control(controlledId,"up");await text("Block composition saved in Working.");expect(linksNow()!.blocks[1]!.block_id).toBe(controlledId);expect(linksNow()!.blocks[1]!.is_visible).toBe(false);
+    await compositionReload();await control(controlledId,"down");await text("Block composition saved in Working.");expect(linksNow()!.blocks[2]!.block_id).toBe(controlledId);
+    await compositionReload();await control(controlledId,"show");await text("Block composition saved in Working.");expect(linksNow()!.blocks[2]!.is_visible).toBe(true);
+    await compositionReload();await b.evaluate(`document.querySelector('${card(controlledId)} details summary').click()`);
+    const removeForm=card(controlledId)+' form[aria-label="Remove block from Working"]';
+    const removesBefore=gatewayOperations.filter(x=>x==="remove_current_owner_block_working").length;
+    await b.evaluate(`document.querySelector('${removeForm} button').click()`);expect(gatewayOperations.filter(x=>x==="remove_current_owner_block_working")).toHaveLength(removesBefore);
+    await b.evaluate(`document.querySelector('${removeForm} input[type=checkbox]').click()`);await b.evaluate(`document.querySelector('${removeForm} button').click()`);await text("Block composition saved in Working.");
+    expect(linksNow()!.blocks).toHaveLength(5);expect(linksNow()!.blocks.some(row=>row.block_id===controlledId)).toBe(false);expect(await b.evaluate(`document.querySelector('${card(controlledId)}')===null`)).toBe(true);
+    await compositionReload();loseAcknowledgment=true;const visibilityBefore=gatewayOperations.filter(x=>x==="save_current_owner_block_visibility_working").length;
+    await control(compositionIds[0]!,"hide");await text("We couldn’t confirm this block change.");loseAcknowledgment=false;
+    expect(gatewayOperations.filter(x=>x==="save_current_owner_block_visibility_working")).toHaveLength(visibilityBefore+1);
+    expect(await b.evaluate("Array.from(document.querySelectorAll('[data-composition-block] button')).every(button=>button.disabled)")).toBe(true);
+    await compositionReload();expect(linksNow()!.blocks[0]!.is_visible).toBe(false);
+    linksNow()!.revision+=1;await control(compositionIds[0]!,"down");await text("We couldn’t confirm this block change.");await compositionReload();
+    await scopedInput(newText,"text","New Text freezes old composition base");await addText();await text("Text block added to Working.");await text("Reload saved work to reconcile the block composition");
+    expect(linksNow()!.blocks.at(-1)!.position).toBe(7);expect(new Set(linksNow()!.blocks.map(row=>row.position)).size).toBe(linksNow()!.blocks.length);
+    await compositionReload();for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width<600});expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);}
+    const compositionClip=await b.evaluate<{x:number;y:number;width:number;height:number;scale:number}>("(()=>{const r=document.querySelector('[aria-labelledby=composition-heading]').getBoundingClientRect();return{x:r.x+scrollX,y:r.y+scrollY,width:r.width,height:r.height,scale:1}})()");
+    expect(await b.evaluate("Array.from(document.querySelectorAll('[data-composition-block] button')).every(button=>button.getBoundingClientRect().height>=44)")).toBe(true);
+    const compositionShot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true,clip:compositionClip});await writeFile("/tmp/spall-273-composition.png",Buffer.from(compositionShot.data,"base64"));
+    linkCollection={revision:12,has_more:false,next_after_position:null,blocks:[]};await visit("/dashboard/identity","No blocks in Working yet.");expect(linksNow()!.blocks).toHaveLength(0);
     const gatewayCalls = calls.filter(call => call.endsWith("execute_owner_profile_editor_server")).length;
     budgetDenied = true; await visit("/dashboard/identity", "We couldn’t load your Identity Working.");
     expect(calls.filter(call => call.endsWith("execute_owner_profile_editor_server"))).toHaveLength(gatewayCalls);

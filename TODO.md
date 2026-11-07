@@ -2,11 +2,11 @@
 
 **Status:** Execution backlog  
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
-**Last synchronized:** 2026-11-07 WIB
+**Last synchronized:** 2026-11-08 WIB
 
 Latest delivery: returning Product/Resource Draft creation, Spill recovery,
 Product destination and media Working editing are integrated with local browser/DB
-proofs. Identity Text/Contact add/edit Working is now integrated. Baseline80d877a all8
+proofs. Identity Text/Contact add/edit and block composition Working are integrated. Baseline80d877a all8
 remote jobs PASS; next exact pushed gates PENDING. First Publish5Nov MISSED; full J1–J9 and
 release readiness OPEN. Next: public Spill/detail transport, remaining Identity
 preview/blocks/media and explicit Publish/universal workspace handoff.
@@ -77,6 +77,38 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Connected Identity block composition — 2026-11-08 WIB
+
+- JIT [12.273](docs/product-spec/technical-architecture/12.273-connected-identity-block-controls-contract.md)
+  precedes source. Identity now shows an ordered private block manager with
+  keyboard Up/Down, explicit Show/Hide in Working and checked contextual removal
+  confirmation. Six kinds/hidden/missing payloads supported; real empty state.
+  Membership updates appear only after guarded exact ack, then owning-page refresh.
+- Fixed3operation service gateway, original private ACLs retained, verified Auth
+  subject and blocks-save30/min distributed quota. Original Owner/binding locks,
+  aggregate CAS, server-derived adjacency, scoped payload cascade and Published
+  isolation retained. Unknown/stale outcomes freeze for full GET; no retry/Undo
+  or public Hide/Restore inference. Unsaved-block removal warning is explicit.
+- Local14,616webunit tests214files + remaining workspace tests, typecheck/lint/
+  production build/7tooling PASS(0errors/one existing fixture warning). SQL087
+  PASS33;045/046/047/085/086/087 PASS355 assertions. Actual Next/Chromium dev2/2
+  PASS78.95s, compiled2/2 PASS43.49s: six-kind/missing rendering, move/hide/show,
+  unchecked no-dispatch/confirmed removal, no ghost row after ack, lost reply,
+  stale/cross-editor freeze, sparse-position append, empty state and responsive
+  widths360/768/1440 with44px control targets. Screenshot inspected.
+- Browser provider now allocates max-position+1, matching real SQL after middle
+  removal; strict duplicate-position reader/assertions retained. Initial real UI
+  ack/render lag fixed by acknowledged presentation state, not assertion removal.
+- d75db0b Security42404840078/Guard42404840005 and CI42404840031 Database128500197405/
+  Media128500197500 PASS; Application runtime128500197476/downstream Application
+  still PENDING at readback. New exact push gates PENDING, not release verification.
+  First Publish5Nov MISSED;8Nov target partial;15Nov at risk. Remaining Identity
+  media/Spill CTA/preview/Publish, public Spill/detail/search, full J1–J9/25screens,
+  operator/analytics/settings/lifecycle and live-provider gates remain OPEN.
+- Read-only PR6 merge simulation against main5c2bd8d reports conflicts only in
+  pnpm-lock.yaml and pnpm-workspace.yaml. Preserve current patched versions and
+  Owner main safeguards during reviewed reconciliation; no merge/ref mutation.
 
 ### Connected Identity Contact Working — 2026-11-07 WIB
 
@@ -10190,7 +10222,7 @@ where private foundations exist. No screen is production verified this run.
 | P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
-| D02 Identity Editor | Connected Profile/style + first/add/edit links, Text and Contact Working/browser fixture | OPEN: remaining blocks/preview/publish + provider |
+| D02 Identity Editor | Connected Profile/style + Link/Text/Contact creation/editing + block composition Working/browser fixture | OPEN: media/Spill CTA/preview/publish + provider |
 | D03 Spill Manager | Mounted 20-row seek manager and exact saved Item editor; native browser fixture | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
 | D05 Edit Product | Setup/general raw Working, destination editing and upload/select/remove media; SQL/actual SDK/browser fixtures | OPEN: live media/safety/preview/publish lifecycle |

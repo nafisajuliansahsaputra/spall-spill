@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({ session: vi.fn(), service: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.session }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
-import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient, createProductImageClient, admitProductMedia, createTextEditorClient, createContactEditorClient } from "./profile-editor-server";
+import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient, createProductImageClient, admitProductMedia, createTextEditorClient, createContactEditorClient, createBlockControlsClient } from "./profile-editor-server";
 const subject = "26000000-0000-4000-8000-000000000001";
 let denied = false;
 let calls: { url: string; body: Record<string, unknown>; headers: Headers }[];
@@ -132,3 +132,6 @@ it("Text denies exhausted quota before elevated dispatch",async()=>{denied=true;
 
 it.each(["initialize_current_owner_blocks_from_contact","add_current_owner_contact_block_working","save_current_owner_block_contact_working"])("Contact factory isolates %s and consumes mutation budget",async operation=>{const client=await createContactEditorClient();await client.schema("api").rpc(operation,{input_intent:{}});expect(calls[1]!.url).toContain("/rpc/execute_owner_contact_editor_server");expect(JSON.stringify(calls[0]!.body)).toContain("contact-save-");expect(calls[0]!.body).toEqual(expect.arrayContaining(["30","390"]));expect(()=>client.schema("api").rpc("save_current_owner_block_text_working")).toThrow();});
 it("Contact budget denial never reaches service gateway",async()=>{denied=true;const client=await createContactEditorClient();expect((await client.schema("api").rpc("add_current_owner_contact_block_working",{})).error).not.toBeNull();expect(calls).toHaveLength(1);});
+
+it.each(["save_current_owner_block_visibility_working","move_current_owner_block_working","remove_current_owner_block_working"])("block controls scope %s with mutation quota",async operation=>{const client=await createBlockControlsClient();await client.schema("api").rpc(operation,{input_working:{}});expect(calls[1]!.url).toContain("/rpc/execute_owner_block_controls_server");expect(JSON.stringify(calls[0]!.body)).toContain("blocks-save-");expect(calls[0]!.body).toEqual(expect.arrayContaining(["30","390"]));expect(()=>client.schema("api").rpc("save_current_owner_block_text_working")).toThrow();});
+it("block controls budget denies before elevated dispatch",async()=>{denied=true;const client=await createBlockControlsClient();expect((await client.schema("api").rpc("remove_current_owner_block_working",{})).error).not.toBeNull();expect(calls).toHaveLength(1);});
