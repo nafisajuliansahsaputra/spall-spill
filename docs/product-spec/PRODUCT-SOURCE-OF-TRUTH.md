@@ -9615,7 +9615,38 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
-#### Returning Owner Product media — 2026-11-07 WIB
+### Connected Identity Text Working — 2026-11-07 WIB
+
+- JIT [12.271](./technical-architecture/12.271-connected-identity-text-editor-contract.md)
+  precedes source. /dashboard/identity now creates the first Text collection or
+  appends Text, edits existing/missing payloads and explicitly saves raw plain
+  Text Working, including hidden/unfinished blocks. GET allocates nothing.
+- Separate3operation service-only gateway; original RPC ACLs remain closed.
+  Verified/bound Auth subject and distributed text-save30/min admission; original
+  Owner/binding locks, collection CAS, typed payload validation and5s SDK proofs.
+  Exact form fields/revisions/visibility only; no browser Owner/op selection.
+- Sibling Text forms serialize and share acknowledged bases. Link saves use the
+  same collection and freeze unsaved Text for full GET; no silent rebase. Unknown
+  save/allocation freezes without retry/duplication; explicit readback recovers.
+  Published, Profile/layout, other blocks, order and existing visibility retained.
+- Local14,541webunit tests212files + remaining workspace tests, typecheck,
+  lint(0errors/one existing fixture warning),7tooling and production build PASS.
+  SQL085 PASS37 +7Text/link regression files PASS473 assertions. Original underlying
+  Text allocation/save/initialization races passed baseline80d877a exact Database;
+  fresh full Supabase and all race gates rerun on next exact pushed CI.
+- Actual Next/Chromium dev PASS2/2(67.40s): first/add/edit/reload, hidden and empty
+  Text, literal markup not executed, missing payload recovery, cross-editor CAS,
+  stale/unknown save and unknown allocation exactly once, responsive360/768/1440.
+  Fixture Redis allowlist now admits fixed Text namespace; no assertion/timeout
+  removed. Screenshot inspected. Fresh compiled browser PASS2/2(26.42s).
+- Baseline80d877a all8jobs PASS: CI42376332435 Database128414559542,
+  Application runtime128414559568,Media128414559310,Application128417164592;
+  Security42376332490 Secret128414559334/SAST128414559202/Dependency128414559345;
+  Guard42376332437. New exact gates PENDING; no full D02/J5/J9 closure. First
+  Publish5Nov MISSED;15Nov at risk. Contact/media/Spill CTA, full preview/explicit
+  Publish/universal handoff, public Spill/detail/search and remaining MVP OPEN.
+
+### Returning Owner Product media — 2026-11-07 WIB
 
 - JIT [12.270](docs/product-spec/technical-architecture/12.270-owner-product-media-contract.md)
   precedes source. Setup/general Product editors now upload JPEG/PNG/WebP through

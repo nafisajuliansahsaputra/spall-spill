@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({ session: vi.fn(), service: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.session }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
-import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient, createProductImageClient, admitProductMedia } from "./profile-editor-server";
+import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient, createProductImageClient, admitProductMedia, createTextEditorClient } from "./profile-editor-server";
 const subject = "26000000-0000-4000-8000-000000000001";
 let denied = false;
 let calls: { url: string; body: Record<string, unknown>; headers: Headers }[];
@@ -119,3 +119,13 @@ it.each(["resolve_current_owner_product_destinations","save_current_owner_produc
 
 it.each(["resolve_current_owner_product_image","save_current_owner_product_image"])("image gateway scopes %s",async operation=>{const client=await createProductImageClient();await client.schema("api").rpc(operation,{input_working:{}});expect(calls[1]!.url).toContain("/rpc/execute_owner_product_image_server");expect(JSON.stringify(calls[0]!.body)).toContain(operation.startsWith("save")?"product-image-save-":"product-image-read-");expect(()=>client.schema("api").rpc("save_current_owner_product_destinations")).toThrow();});
 it("media metadata consumes a shared mutation ceiling before service work",async()=>{await admitProductMedia(subject);expect(calls).toHaveLength(1);expect(JSON.stringify(calls[0]!.body)).toContain("product-media-save-");expect(JSON.stringify(calls[0]!.body)).toContain('"30"');expect(JSON.stringify(calls[0]!.body)).not.toContain(subject);});
+
+it.each(["initialize_current_owner_blocks_from_text","add_current_owner_text_block_working","save_current_owner_block_text_working"])("Text factory scopes and budgets %s", async operation => {
+ const client=await createTextEditorClient();await client.schema("api").rpc(operation,{input_working:{}});
+ expect(calls[1]!.url).toContain("/rpc/execute_owner_text_editor_server");expect(calls[1]!.body.input_subject).toBe(subject);
+ expect(JSON.stringify(calls[0]!.body)).toContain("text-save-");expect(calls[0]!.body).toEqual(expect.arrayContaining(["30","390"]));
+ expect(JSON.stringify(calls[0]!.body)).not.toContain(subject);
+ expect(()=>client.schema("api").rpc("save_current_owner_block_link_working")).toThrow();
+ const profile=await createProfileEditorClient();expect(()=>profile.schema("api").rpc(operation)).toThrow();
+});
+it("Text denies exhausted quota before elevated dispatch",async()=>{denied=true;const client=await createTextEditorClient();expect((await client.schema("api").rpc("add_current_owner_text_block_working",{})).error).not.toBeNull();expect(calls).toHaveLength(1);});

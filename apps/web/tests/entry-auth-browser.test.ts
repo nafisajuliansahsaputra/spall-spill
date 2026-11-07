@@ -24,7 +24,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
   const gatewayOperations: string[] = [];
   let overlay: null | { display_name: string | null; bio: string | null; revision: number; source_profile_revision: number } = null;
   function currentOverlay(): typeof overlay { return overlay; }
-  type FixtureLink = {block_id:string;kind:"social"|"generic_link";position:number;is_visible:boolean;payload_state:"present";media_asset_state:null;working:{kind:"social"|"generic_link";title:string|null;social_platform:string|null;destination_url:string|null}};
+  type FixtureLink = {block_id:string;kind:"social"|"generic_link"|"text";position:number;is_visible:boolean;payload_state:"present";media_asset_state:null;working:{kind:"social"|"generic_link"|"text";title?:string|null;social_platform?:string|null;destination_url?:string|null;text?:string|null}};
   let linkCollection:null|{revision:number;blocks:FixtureLink[];has_more:false;next_after_position:null}=null;
   const linksNow=()=>linkCollection;let nextLink=100;
 
@@ -81,7 +81,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path === "/redis") {
       const command = JSON.parse(body); expect(command[0]).toBe("eval");
-      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product)-/);
+      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text)-/);
       expect(command[3]).not.toContain(user.id);
       response.end(JSON.stringify({ result: budgetDenied ? 0 : 1 })); return;
     }
@@ -98,7 +98,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
       if(["create_product_media_upload_intent_server","resolve_product_media_upload_intent_server","complete_product_media_upload_server"].includes(name)){
         expect(data.input_auth_user_id).toBe(user.id);const item=[...starterItems,...extraResources].find(row=>row.reference===data.input_reference&&row.kind==="product");expect(item).toBeDefined();let result:unknown;
         if(name==="create_product_media_upload_intent_server"){
@@ -187,6 +187,23 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
             if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
           }
         }else throw new Error("Unexpected starter gateway operation");
+        response.end(JSON.stringify(result));return;
+      }
+      if (name === "execute_owner_text_editor_server") {
+        expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);
+        const first=data.input_operation==="initialize_current_owner_blocks_from_text";
+        const saving=data.input_operation==="save_current_owner_block_text_working";
+        const value=saving?data.input_payload.input_working:data.input_payload.input_intent;
+        let result:unknown;
+        if(first&&linkCollection!==null)result={status:"already_initialized"};
+        else if(!first&&(!linkCollection||value.base_collection_revision!==linkCollection.revision))result={status:"stale_write"};
+        else if(saving){const block=linkCollection!.blocks.find(row=>row.block_id===value.block_id&&row.kind==="text");
+          if(!block)result={status:"block_not_found"};else{block.working=value.text_working;block.payload_state="present";linkCollection!.revision+=1;result={status:"success",block_id:block.block_id,collection_revision:linkCollection!.revision};}
+        }else{const block_id=`27100000-0000-4000-8000-${String(nextLink++).padStart(12,"0")}`;const blocks=linkCollection?.blocks??[];
+          blocks.push({block_id,kind:"text",position:blocks.length+1,is_visible:value.is_visible,payload_state:"present",media_asset_state:null,working:value.text_working});
+          linkCollection={revision:first?1:linkCollection!.revision+1,blocks,has_more:false,next_after_position:null};result={status:"success",block_id,collection_revision:linkCollection.revision};
+        }
+        if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
         response.end(JSON.stringify(result));return;
       }
       if (name === "execute_owner_profile_editor_server") {
@@ -621,6 +638,48 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     expect(errors.length).toBe(errorsBeforeEditor);
     const linksScreenshot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});
     await writeFile("/tmp/spall-263-links.png",Buffer.from(linksScreenshot.data,"base64"));
+    // Text initialization, append and save use the actual protected page/action transport.
+    linkCollection=null;await visit("/dashboard/identity","Add Text");expect(linksNow()).toBeNull();
+    const newText='form[aria-label="New Text Working"]';
+    const addText=async()=>{await b.evaluate(`document.querySelector('${newText}').requestSubmit()`);};
+    await scopedInput(newText,"text"," <script>window.textExecuted=true</script>\n Plain <b>text</b> ");
+    await addText();await text("Text block added to Working.");
+    expect(linksNow()!.revision).toBe(1);expect(linksNow()!.blocks).toHaveLength(1);const textId=linksNow()!.blocks[0]!.block_id;
+    expect(linksNow()!.blocks[0]!.working.text).toContain("<script>");expect(await b.evaluate("window.textExecuted===undefined")).toBe(true);
+    expect(await b.evaluate(`document.querySelector('${newText} button[type=submit]').disabled`)).toBe(true);
+    await b.evaluate(`document.querySelector('${newText} button[type=button]').click()`);
+    await scopedInput(newText,"text","  Hidden note  ");await b.evaluate(`document.querySelector('${newText} [name=visibility]').focus()`);
+    await b.command("Input.dispatchKeyEvent",{type:"keyDown",key:"ArrowDown",code:"ArrowDown",windowsVirtualKeyCode:40});await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"ArrowDown",code:"ArrowDown",windowsVirtualKeyCode:40});
+    await addText();await text("Text block added to Working.");expect(linksNow()!.revision).toBe(2);expect(linksNow()!.blocks[1]!.is_visible).toBe(false);
+    const textForm=`form[data-text-block="${textId}"]`;
+    const saveText=async()=>{await b.evaluate(`document.querySelector('${textForm}').requestSubmit()`);};
+    await scopedInput(textForm,"text","  Edited literal <em>private</em>  ");await saveText();await text("Text saved in Working.");expect(linksNow()!.revision).toBe(3);
+    await reloadFromLink('[data-text-reload] a',"Text blocks");expect(await b.evaluate(`document.querySelector('${textForm} [name=text]').value`)).toBe("  Edited literal <em>private</em>  ");
+    // A Link change bumps the same collection and freezes unsaved Text without rebasing it.
+    await scopedInput(textForm,"text","Keep unsaved Text across Link save");await scopedInput(creationForm,"title","Shared collection link");await createLink();await text("Link block added to Working.");
+    await text("Reload saved work to reconcile all Text blocks");expect(await b.evaluate(`document.querySelector('${textForm} [name=text]').value`)).toBe("Keep unsaved Text across Link save");
+    await reloadFromLink('[data-text-reload] a',"Text blocks");
+    loseAcknowledgment=true;const textSaves=gatewayOperations.filter(x=>x==="save_current_owner_block_text_working").length;
+    await scopedInput(textForm,"text","Saved Text despite unknown response");await saveText();await text("We couldn’t confirm this Text change.");loseAcknowledgment=false;
+    expect(gatewayOperations.filter(x=>x==="save_current_owner_block_text_working")).toHaveLength(textSaves+1);
+    expect(await b.evaluate(`document.querySelector('${textForm} button[type=submit]').disabled`)).toBe(true);
+    await reloadFromLink('[data-text-reload] a',"Text blocks");expect(await b.evaluate(`document.querySelector('${textForm} [name=text]').value`)).toBe("Saved Text despite unknown response");
+    linksNow()!.revision+=1;await scopedInput(textForm,"text","Retain stale Text");await saveText();await text("We couldn’t confirm this Text change.");
+    expect(await b.evaluate(`document.querySelector('${textForm} [name=text]').value`)).toBe("Retain stale Text");
+    await reloadFromLink('[data-text-reload] a',"Text blocks");
+    await b.evaluate(`document.querySelector('${newText} button[type=submit]').click()`);await text("Text block added to Working.");expect(linksNow()!.blocks.at(-1)!.working.text).toBe("");
+    await b.evaluate(`document.querySelector('${newText} button[type=button]').click()`);await scopedInput(newText,"text","Recover allocation without duplication");
+    loseAcknowledgment=true;const beforeTextCount=linksNow()!.blocks.length;const textAdds=gatewayOperations.filter(x=>x==="add_current_owner_text_block_working").length;
+    await addText();await text("We couldn’t confirm this Text change.");loseAcknowledgment=false;
+    expect(linksNow()!.blocks).toHaveLength(beforeTextCount+1);expect(gatewayOperations.filter(x=>x==="add_current_owner_text_block_working")).toHaveLength(textAdds+1);
+    expect(await b.evaluate(`document.querySelector('${newText} button[type=submit]').disabled`)).toBe(true);
+    await reloadFromLink('[data-text-reload] a',"Text blocks");expect(linksNow()!.blocks).toHaveLength(beforeTextCount+1);
+    const missingBlock=linksNow()!.blocks.find(row=>row.block_id===textId)!;
+    Object.assign(missingBlock,{payload_state:"missing",working:null});await visit("/dashboard/identity","This saved block has no content yet.");
+    await scopedInput(textForm,"text","Recovered missing Text content");await saveText();await text("Text saved in Working.");
+    expect(JSON.stringify(setup.identity)).toBe(originalProfile);expect(JSON.stringify(currentOverlay())).toBe(originalOverlay);expect(setup.revision).toBe(originalProgress);
+    for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width<600});expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);}
+    const textScreenshot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-271-text.png",Buffer.from(textScreenshot.data,"base64"));
     const gatewayCalls = calls.filter(call => call.endsWith("execute_owner_profile_editor_server")).length;
     budgetDenied = true; await visit("/dashboard/identity", "We couldn’t load your Identity Working.");
     expect(calls.filter(call => call.endsWith("execute_owner_profile_editor_server"))).toHaveLength(gatewayCalls);

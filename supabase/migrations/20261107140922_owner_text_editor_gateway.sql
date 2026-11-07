@@ -1,0 +1,37 @@
+begin;
+create function api.execute_owner_text_editor_server(input_subject uuid,input_operation text,input_payload jsonb)
+returns jsonb language plpgsql volatile security definer set search_path='' as $$
+declare
+  previous_claims text := current_setting('request.jwt.claims',true);
+  previous_sub text := current_setting('request.jwt.claim.sub',true);
+  result jsonb;
+begin
+  if input_subject is null or input_operation is null or jsonb_typeof(input_payload) is distinct from 'object'
+    or input_operation not in ('initialize_current_owner_blocks_from_text','add_current_owner_text_block_working','save_current_owner_block_text_working') then
+    return jsonb_build_object('status','unavailable'); end if;
+  if (input_operation in ('initialize_current_owner_blocks_from_text','add_current_owner_text_block_working') and
+      (not(input_payload ? 'input_intent') or (input_payload-'input_intent')<>'{}'::jsonb))
+    or (input_operation='save_current_owner_block_text_working' and
+      (not(input_payload ? 'input_working') or (input_payload-'input_working')<>'{}'::jsonb)) then
+    return jsonb_build_object('status','unavailable'); end if;
+  perform set_config('request.jwt.claims',jsonb_build_object('sub',input_subject,'role','authenticated')::text,true);
+  perform set_config('request.jwt.claim.sub',input_subject::text,true);
+  case input_operation
+    when 'initialize_current_owner_blocks_from_text' then result:=api.initialize_current_owner_blocks_from_text(input_payload->'input_intent');
+    when 'add_current_owner_text_block_working' then result:=api.add_current_owner_text_block_working(input_payload->'input_intent');
+    when 'save_current_owner_block_text_working' then result:=api.save_current_owner_block_text_working(input_payload->'input_working');
+  end case;
+  perform set_config('request.jwt.claims',coalesce(previous_claims,''),true);
+  perform set_config('request.jwt.claim.sub',coalesce(previous_sub,''),true);
+  return result;
+exception when others then
+  perform set_config('request.jwt.claims',coalesce(previous_claims,''),true);
+  perform set_config('request.jwt.claim.sub',coalesce(previous_sub,''),true);
+  raise;
+end;
+$$;
+revoke all on function api.execute_owner_text_editor_server(uuid,text,jsonb) from public,anon,authenticated;
+grant execute on function api.execute_owner_text_editor_server(uuid,text,jsonb) to service_role;
+comment on function api.execute_owner_text_editor_server(uuid,text,jsonb) is
+  'Fixed Text Working server admission; verified Auth subject and distributed save budget required. Original RPCs remain closed. No publication authority.';
+commit;

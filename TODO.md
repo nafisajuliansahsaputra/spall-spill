@@ -6,7 +6,8 @@
 
 Latest delivery: returning Product/Resource Draft creation, Spill recovery,
 Product destination and media Working editing are integrated with local browser/DB
-proofs. New exact pushed gates PENDING. First Publish5Nov MISSED; full J1–J9 and
+proofs. Identity Text add/edit Working is now integrated. Baseline80d877a all8
+remote jobs PASS; next exact pushed gates PENDING. First Publish5Nov MISSED; full J1–J9 and
 release readiness OPEN. Next: public Spill/detail transport, remaining Identity
 preview/blocks/media and explicit Publish/universal workspace handoff.
 
@@ -76,6 +77,37 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Connected Identity Text Working — 2026-11-07 WIB
+
+- JIT [12.271](docs/product-spec/technical-architecture/12.271-connected-identity-text-editor-contract.md)
+  precedes source. /dashboard/identity now creates the first Text collection or
+  appends Text, edits existing/missing payloads and explicitly saves raw plain
+  Text Working, including hidden/unfinished blocks. GET allocates nothing.
+- Separate3operation service-only gateway; original RPC ACLs remain closed.
+  Verified/bound Auth subject and distributed text-save30/min admission; original
+  Owner/binding locks, collection CAS, typed payload validation and5s SDK proofs.
+  Exact form fields/revisions/visibility only; no browser Owner/op selection.
+- Sibling Text forms serialize and share acknowledged bases. Link saves use the
+  same collection and freeze unsaved Text for full GET; no silent rebase. Unknown
+  save/allocation freezes without retry/duplication; explicit readback recovers.
+  Published, Profile/layout, other blocks, order and existing visibility retained.
+- Local14,541webunit tests212files + remaining workspace tests, typecheck,
+  lint(0errors/one existing fixture warning),7tooling and production build PASS.
+  SQL085 PASS37 +7Text/link regression files PASS473 assertions. Original underlying
+  Text allocation/save/initialization races passed baseline80d877a exact Database;
+  fresh full Supabase and all race gates rerun on next exact pushed CI.
+- Actual Next/Chromium dev PASS2/2(67.40s): first/add/edit/reload, hidden and empty
+  Text, literal markup not executed, missing payload recovery, cross-editor CAS,
+  stale/unknown save and unknown allocation exactly once, responsive360/768/1440.
+  Fixture Redis allowlist now admits fixed Text namespace; no assertion/timeout
+  removed. Screenshot inspected. Fresh compiled browser PASS2/2(26.42s).
+- Baseline80d877a all8jobs PASS: CI42376332435 Database128414559542,
+  Application runtime128414559568,Media128414559310,Application128417164592;
+  Security42376332490 Secret128414559334/SAST128414559202/Dependency128414559345;
+  Guard42376332437. New exact gates PENDING; no full D02/J5/J9 closure. First
+  Publish5Nov MISSED;15Nov at risk. Contact/media/Spill CTA, full preview/explicit
+  Publish/universal handoff, public Spill/detail/search and remaining MVP OPEN.
 
 ### Returning Owner Product media — 2026-11-07 WIB
 
@@ -10132,7 +10164,7 @@ where private foundations exist. No screen is production verified this run.
 | P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
-| D02 Identity Editor | Connected Profile/style + first/add/edit links Working/browser fixture | OPEN: remaining blocks/preview/publish + provider |
+| D02 Identity Editor | Connected Profile/style + first/add/edit links and Text Working/browser fixture | OPEN: remaining blocks/preview/publish + provider |
 | D03 Spill Manager | Mounted 20-row seek manager and exact saved Item editor; native browser fixture | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
 | D05 Edit Product | Setup/general raw Working, destination editing and upload/select/remove media; SQL/actual SDK/browser fixtures | OPEN: live media/safety/preview/publish lifecycle |
