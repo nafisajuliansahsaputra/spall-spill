@@ -9615,6 +9615,32 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
+### Connected Identity Contact Working — 2026-11-07 WIB
+
+- JIT [12.272](./technical-architecture/12.272-connected-identity-contact-editor-contract.md)
+  precedes source. /dashboard/identity now first/add/edit/saves email, WhatsApp and
+  phone Contact Working, including missing, hidden, blank and unfinished tuples.
+  Native fields retain raw label/value; no target normalization, contact action,
+  provider fetch, automatic creation on GET or Published mutation.
+- Fixed3operation service-only gateway, closed original ACLs, verified/bound Auth
+  subject and distributed contact-save30/min quota; original Owner/binding locks,
+  strict tuple/CAS/5s acknowledgments. Sibling operations serialize; cross-Text/Link
+  newer revisions and stale/unknown outcomes freeze for explicit full GET without
+  automatic retry/duplicate. Other Text, Profile/layout and visibility are retained.
+- Local14,580webunit tests213files + remaining workspace tests, typecheck/lint/
+  build/7tooling PASS (0errors,one pre-existing fixture warning). SQL086 PASS37;
+   5Contact regression files +Text gateway PASS597. Actual dev Next/Chromium2/2 PASS
+  (102.99s), covering all3types, literal invalid values, absent-type/empty recovery,
+  missing payload, shared collection conflict, lost save/allocation/reload, no
+  contact href and responsive360/768/1440. Screenshot inspected. Fresh compiled
+  browser2/2 PASS34.24s; public dev1/1 PASS6.79s after exact transient-CDP
+  navigation readiness repair. Existing15s timeout/CSP/referrer assertions retained.
+- c165b2a Security42380901039 and Guard42380901089 PASS; CI42380901085 remains
+  PENDING, not full fresh DB/race/browser acceptance. New final push gates PENDING.
+  Controlled fixtures do not establish live provider/public Contact validity.
+  First Publish5Nov MISSED;15Nov at risk. Full D02/J1–J9, Identity media/Spill CTA/
+  preview/Publish, public Spill/detail/search, analytics/operator/lifecycle OPEN.
+
 ### Connected Identity Text Working — 2026-11-07 WIB
 
 - JIT [12.271](./technical-architecture/12.271-connected-identity-text-editor-contract.md)

@@ -6,7 +6,7 @@
 
 Latest delivery: returning Product/Resource Draft creation, Spill recovery,
 Product destination and media Working editing are integrated with local browser/DB
-proofs. Identity Text add/edit Working is now integrated. Baseline80d877a all8
+proofs. Identity Text/Contact add/edit Working is now integrated. Baseline80d877a all8
 remote jobs PASS; next exact pushed gates PENDING. First Publish5Nov MISSED; full J1–J9 and
 release readiness OPEN. Next: public Spill/detail transport, remaining Identity
 preview/blocks/media and explicit Publish/universal workspace handoff.
@@ -77,6 +77,32 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Connected Identity Contact Working — 2026-11-07 WIB
+
+- JIT [12.272](docs/product-spec/technical-architecture/12.272-connected-identity-contact-editor-contract.md)
+  precedes source. /dashboard/identity now first/add/edit/saves email, WhatsApp and
+  phone Contact Working, including missing, hidden, blank and unfinished tuples.
+  Native fields retain raw label/value; no target normalization, contact action,
+  provider fetch, automatic creation on GET or Published mutation.
+- Fixed3operation service-only gateway, closed original ACLs, verified/bound Auth
+  subject and distributed contact-save30/min quota; original Owner/binding locks,
+  strict tuple/CAS/5s acknowledgments. Sibling operations serialize; cross-Text/Link
+  newer revisions and stale/unknown outcomes freeze for explicit full GET without
+  automatic retry/duplicate. Other Text, Profile/layout and visibility are retained.
+- Local14,580webunit tests213files + remaining workspace tests, typecheck/lint/
+  build/7tooling PASS (0errors,one pre-existing fixture warning). SQL086 PASS37;
+   5Contact regression files +Text gateway PASS597. Actual dev Next/Chromium2/2 PASS
+  (102.99s), covering all3types, literal invalid values, absent-type/empty recovery,
+  missing payload, shared collection conflict, lost save/allocation/reload, no
+  contact href and responsive360/768/1440. Screenshot inspected. Fresh compiled
+  browser2/2 PASS34.24s; public dev1/1 PASS6.79s after exact transient-CDP
+  navigation readiness repair. Existing15s timeout/CSP/referrer assertions retained.
+- c165b2a Security42380901039 and Guard42380901089 PASS; CI42380901085 remains
+  PENDING, not full fresh DB/race/browser acceptance. New final push gates PENDING.
+  Controlled fixtures do not establish live provider/public Contact validity.
+  First Publish5Nov MISSED;15Nov at risk. Full D02/J1–J9, Identity media/Spill CTA/
+  preview/Publish, public Spill/detail/search, analytics/operator/lifecycle OPEN.
 
 ### Connected Identity Text Working — 2026-11-07 WIB
 
@@ -10164,7 +10190,7 @@ where private foundations exist. No screen is production verified this run.
 | P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
-| D02 Identity Editor | Connected Profile/style + first/add/edit links and Text Working/browser fixture | OPEN: remaining blocks/preview/publish + provider |
+| D02 Identity Editor | Connected Profile/style + first/add/edit links, Text and Contact Working/browser fixture | OPEN: remaining blocks/preview/publish + provider |
 | D03 Spill Manager | Mounted 20-row seek manager and exact saved Item editor; native browser fixture | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
 | D05 Edit Product | Setup/general raw Working, destination editing and upload/select/remove media; SQL/actual SDK/browser fixtures | OPEN: live media/safety/preview/publish lifecycle |

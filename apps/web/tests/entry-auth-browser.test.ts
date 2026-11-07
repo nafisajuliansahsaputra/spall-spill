@@ -24,7 +24,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
   const gatewayOperations: string[] = [];
   let overlay: null | { display_name: string | null; bio: string | null; revision: number; source_profile_revision: number } = null;
   function currentOverlay(): typeof overlay { return overlay; }
-  type FixtureLink = {block_id:string;kind:"social"|"generic_link"|"text";position:number;is_visible:boolean;payload_state:"present";media_asset_state:null;working:{kind:"social"|"generic_link"|"text";title?:string|null;social_platform?:string|null;destination_url?:string|null;text?:string|null}};
+  type FixtureLink = {block_id:string;kind:"social"|"generic_link"|"text"|"contact";position:number;is_visible:boolean;payload_state:"present";media_asset_state:null;working:{kind:"social"|"generic_link"|"text"|"contact";title?:string|null;social_platform?:string|null;destination_url?:string|null;text?:string|null;contact_type?:"email"|"whatsapp"|"phone"|null;label?:string|null;value?:string|null}};
   let linkCollection:null|{revision:number;blocks:FixtureLink[];has_more:false;next_after_position:null}=null;
   const linksNow=()=>linkCollection;let nextLink=100;
 
@@ -81,7 +81,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path === "/redis") {
       const command = JSON.parse(body); expect(command[0]).toBe("eval");
-      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text)-/);
+      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text|contact)-/);
       expect(command[3]).not.toContain(user.id);
       response.end(JSON.stringify({ result: budgetDenied ? 0 : 1 })); return;
     }
@@ -98,7 +98,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
       if(["create_product_media_upload_intent_server","resolve_product_media_upload_intent_server","complete_product_media_upload_server"].includes(name)){
         expect(data.input_auth_user_id).toBe(user.id);const item=[...starterItems,...extraResources].find(row=>row.reference===data.input_reference&&row.kind==="product");expect(item).toBeDefined();let result:unknown;
         if(name==="create_product_media_upload_intent_server"){
@@ -187,6 +187,23 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
             if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
           }
         }else throw new Error("Unexpected starter gateway operation");
+        response.end(JSON.stringify(result));return;
+      }
+      if (name === "execute_owner_contact_editor_server") {
+        expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);
+        const first=data.input_operation==="initialize_current_owner_blocks_from_contact";
+        const saving=data.input_operation==="save_current_owner_block_contact_working";
+        const value=saving?data.input_payload.input_working:data.input_payload.input_intent;
+        let result:unknown;
+        if(first&&linkCollection!==null)result={status:"already_initialized"};
+        else if(!first&&(!linkCollection||value.base_collection_revision!==linkCollection.revision))result={status:"stale_write"};
+        else if(saving){const block=linkCollection!.blocks.find(row=>row.block_id===value.block_id&&row.kind==="contact");
+          if(!block)result={status:"block_not_found"};else{block.working=value.contact_working;block.payload_state="present";linkCollection!.revision+=1;result={status:"success",block_id:block.block_id,collection_revision:linkCollection!.revision};}
+        }else{const block_id=`27200000-0000-4000-8000-${String(nextLink++).padStart(12,"0")}`;const blocks=linkCollection?.blocks??[];
+          blocks.push({block_id,kind:"contact",position:blocks.length+1,is_visible:value.is_visible,payload_state:"present",media_asset_state:null,working:value.contact_working});
+          linkCollection={revision:first?1:linkCollection!.revision+1,blocks,has_more:false,next_after_position:null};result={status:"success",block_id,collection_revision:linkCollection.revision};
+        }
+        if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture acknowledgment lost"}');return;}
         response.end(JSON.stringify(result));return;
       }
       if (name === "execute_owner_text_editor_server") {
@@ -680,6 +697,39 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     expect(JSON.stringify(setup.identity)).toBe(originalProfile);expect(JSON.stringify(currentOverlay())).toBe(originalOverlay);expect(setup.revision).toBe(originalProgress);
     for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width<600});expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);}
     const textScreenshot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-271-text.png",Buffer.from(textScreenshot.data,"base64"));
+    linkCollection=null;await visit("/dashboard/identity","Add Contact");expect(linksNow()).toBeNull();
+    const newContact='form[aria-label="New Contact Working"]';
+    const addContact=async()=>{await b.evaluate(`document.querySelector('${newContact}').requestSubmit()`);};
+    const contactType=async(selector:string,index:number)=>{await b.evaluate(`document.querySelector('${selector} [name=contactType]').focus()`);
+      for(const key of ["Home",...Array.from({length:index},()=>"ArrowDown")]){await b.command("Input.dispatchKeyEvent",{type:"keyDown",key,code:key,windowsVirtualKeyCode:key==="Home"?36:40});await b.command("Input.dispatchKeyEvent",{type:"keyUp",key,code:key,windowsVirtualKeyCode:key==="Home"?36:40});}
+    };
+    await contactType(newContact,1);await scopedInput(newContact,"label"," Raw <script>label</script> ");await scopedInput(newContact,"value","javascript:unfinished <em>email</em>");
+    await addContact();await text("Contact block added to Working.");expect(linksNow()!.revision).toBe(1);expect(linksNow()!.blocks[0]!.working.contact_type).toBe("email");
+    const contactId=linksNow()!.blocks[0]!.block_id;const contactForm=`form[data-contact-block="${contactId}"]`;
+    expect(await b.evaluate(`document.querySelector('${newContact} button[type=submit]').disabled`)).toBe(true);
+    await b.evaluate(`document.querySelector('${newContact} button[type=button]').click()`);await contactType(newContact,2);await scopedInput(newContact,"value"," +62 incomplete ");
+    await b.evaluate(`document.querySelector('${newContact} [name=visibility]').focus()`);await b.command("Input.dispatchKeyEvent",{type:"keyDown",key:"ArrowDown",code:"ArrowDown",windowsVirtualKeyCode:40});await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"ArrowDown",code:"ArrowDown",windowsVirtualKeyCode:40});
+    await addContact();await text("Contact block added to Working.");expect(linksNow()!.blocks[1]!.working.contact_type).toBe("whatsapp");expect(linksNow()!.blocks[1]!.is_visible).toBe(false);
+    await b.evaluate(`document.querySelector('${newContact} button[type=button]').click()`);await contactType(newContact,3);await scopedInput(newContact,"value"," 0123 unfinished ");await addContact();await text("Contact block added to Working.");expect(linksNow()!.blocks[2]!.working.contact_type).toBe("phone");
+    await reloadFromLink('[data-contact-reload] a',"Contact blocks");expect(await b.evaluate(`document.querySelector('${contactForm} [name=value]').value`)).toBe("javascript:unfinished <em>email</em>");
+    expect(await b.evaluate("Array.from(document.querySelectorAll('a')).some(a=>['mailto:','tel:','https://wa.me'].some(prefix=>(a.getAttribute('href')||'').startsWith(prefix)))")).toBe(false);
+    await scopedInput(contactForm,"value","Keep unsaved Contact across Text save");await scopedInput(newText,"text","Text beside Contact");await addText();await text("Text block added to Working.");await text("Reload saved work to reconcile all Contact blocks");
+    expect(await b.evaluate(`document.querySelector('${contactForm} [name=value]').value`)).toBe("Keep unsaved Contact across Text save");
+    await reloadFromLink('[data-contact-reload] a',"Contact blocks");const textBeforeContact=JSON.stringify(linksNow()!.blocks.filter(row=>row.kind==="text"));
+    const saveContact=async()=>{await b.evaluate(`document.querySelector('${contactForm}').requestSubmit()`);};
+    await scopedInput(contactForm,"label","  Edited raw label  ");await scopedInput(contactForm,"value","  raw not-an-email  ");await saveContact();await text("Contact saved in Working.");expect(JSON.stringify(linksNow()!.blocks.filter(row=>row.kind==="text"))).toBe(textBeforeContact);
+    await reloadFromLink('[data-contact-reload] a',"Contact blocks");expect(await b.evaluate(`document.querySelector('${contactForm} [name=label]').value`)).toBe("  Edited raw label  ");
+    loseAcknowledgment=true;const contactSaves=gatewayOperations.filter(x=>x==="save_current_owner_block_contact_working").length;await scopedInput(contactForm,"value","Contact saved despite missing reply");await saveContact();await text("We couldn’t confirm this Contact change.");loseAcknowledgment=false;
+    expect(gatewayOperations.filter(x=>x==="save_current_owner_block_contact_working")).toHaveLength(contactSaves+1);expect(await b.evaluate(`document.querySelector('${contactForm} button[type=submit]').disabled`)).toBe(true);
+    await reloadFromLink('[data-contact-reload] a',"Contact blocks");expect(await b.evaluate(`document.querySelector('${contactForm} [name=value]').value`)).toBe("Contact saved despite missing reply");
+    linksNow()!.revision+=1;await scopedInput(contactForm,"label","Retain stale Contact");await saveContact();await text("We couldn’t confirm this Contact change.");expect(await b.evaluate(`document.querySelector('${contactForm} [name=label]').value`)).toBe("Retain stale Contact");
+    await reloadFromLink('[data-contact-reload] a',"Contact blocks");loseAcknowledgment=true;const beforeContactCount=linksNow()!.blocks.length;
+    await addContact();await text("We couldn’t confirm this Contact change.");loseAcknowledgment=false;expect(linksNow()!.blocks).toHaveLength(beforeContactCount+1);expect(linksNow()!.blocks.at(-1)!.working.contact_type).toBeNull();expect(linksNow()!.blocks.at(-1)!.working.value).toBe("");
+    await reloadFromLink('[data-contact-reload] a',"Contact blocks");expect(linksNow()!.blocks).toHaveLength(beforeContactCount+1);
+    Object.assign(linksNow()!.blocks.find(row=>row.block_id===contactId)!,{payload_state:"missing",working:null});await visit("/dashboard/identity","This saved Contact block has no content yet.");
+    await scopedInput(contactForm,"value","Missing contact recovered");await saveContact();await text("Contact saved in Working.");
+    for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width<600});expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);}
+    const contactScreenshot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-272-contact.png",Buffer.from(contactScreenshot.data,"base64"));
     const gatewayCalls = calls.filter(call => call.endsWith("execute_owner_profile_editor_server")).length;
     budgetDenied = true; await visit("/dashboard/identity", "We couldn’t load your Identity Working.");
     expect(calls.filter(call => call.endsWith("execute_owner_profile_editor_server"))).toHaveLength(gatewayCalls);

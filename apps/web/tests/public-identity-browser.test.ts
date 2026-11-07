@@ -44,8 +44,13 @@ it("renders anonymous Published Identity and fresh Connection navigation in actu
   await b.command("Fetch.enable",{patterns:[{urlPattern:"https://destination.example.test/*",requestStage:"Request"}]});
   b.on("Fetch.requestPaused",v=>{const e=v as {requestId:string;request:{url:string;method:string;headers:Record<string,string>}};if(e.request.url==="https://destination.example.test/favicon.ico"){void b.command("Fetch.fulfillRequest",{requestId:e.requestId,responseCode:204});return;}expect(e.request.url).toBe(destination);expect(e.request.method).toBe("GET");expect(e.request.headers.Referer).toBeUndefined();void b.command("Fetch.fulfillRequest",{requestId:e.requestId,responseCode:200,responseHeaders:[{name:"Content-Type",value:"text/html"}],body:Buffer.from("<h1>Fixture destination</h1>").toString("base64")});});
   const destinationReady=async()=>{
-    const reply=await b.command<{result:{value?:unknown};exceptionDetails?:unknown}>("Runtime.evaluate",{expression:"typeof document !== 'undefined' && document.readyState === 'complete' && document.body?.innerText.includes('Fixture destination') === true",returnByValue:true});
-    return reply.exceptionDetails===undefined&&reply.result.value===true;
+    try {
+      const reply=await b.command<{result:{value?:unknown};exceptionDetails?:unknown}>("Runtime.evaluate",{expression:"typeof document !== 'undefined' && document.readyState === 'complete' && document.body?.innerText.includes('Fixture destination') === true",returnByValue:true});
+      return reply.exceptionDetails===undefined&&reply.result.value===true;
+    } catch(error) {
+      if(error instanceof Error&&error.message==="Inspected target navigated or closed")return false;
+      throw error;
+    }
   };
   const visit=async(path:string,text:string)=>{await b.command("Page.navigate",{url:origin+path});await until(()=>b.evaluate<boolean>(`document.readyState==='complete'&&document.body?.innerText.includes(${JSON.stringify(text)})`),20000);};
   await visit("/public-alias","Published <script>not executed</script>");expect(await b.evaluate("document.querySelectorAll('header script').length")).toBe(0);
