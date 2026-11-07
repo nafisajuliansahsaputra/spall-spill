@@ -6,7 +6,8 @@
 
 Latest delivery: returning Owner Product and Resource Draft creation, bounded Spill
 manager and saved Working editors are connected; local acceptance is recorded below.
-New exact pushed gates remain PENDING. First Publish 5 Nov MISSED; full J1–J9
+Product destination Working is integrated; new exact pushed gates remain PENDING.
+First Publish 5 Nov MISSED; full J1–J9
 and release readiness remain OPEN. Next: Product media/destination integration, public
 Spill/detail transport, and explicit Publish with universal workspace handoff.
 
@@ -76,6 +77,39 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Returning Owner Product destinations — 2026-11-07 WIB
+
+- JIT [12.269](docs/product-spec/technical-architecture/12.269-owner-product-destinations-contract.md)
+  precedes source. Setup/general Product editors now support explicit destination
+  add/replace/remove/order. Valid host/provider binding, one destination/provider,
+  affiliate query retention, independent preparation CAS and immutable references
+  are preserved. Saves retain the exact image, raw Item Working and Published state.
+- Fixed service-only gateway and verified-subject read600/save30 quotas; no URL
+  fetch, approval verdict, public href or onboarding eligibility bypass. Invalid
+  input retains text and acknowledged CAS base; stale/unknown/newer state freezes
+  until full GET readback. Exact acknowledgment refreshes only its editor path.
+- SQL083 PASS48; regression076/081/082 PASS37+44+46; real Owner-lock destination
+  contention yields exactly one success and one stale save. New FK blocks source
+  TRUNCATE earlier;082 now also includes the dependent preparation table to retain
+  the original immutability-trigger assertion. No assertion/control removed.
+- Local typecheck/lint(0errors,one existing fixture warning)/build and7tooling
+  PASS; web14472unit tests207files and remaining workspace tests PASS. Actual
+  Next/Chromium dev PASS2/2(58.41s) and fresh compiled PASS2/2(19.31s), covering
+  destination add/replace/remove, validation/save/reload, affiliate retention, stale/
+  unknown acknowledgments, retained image/raw Working, CSP and360/768/1440 widths.
+  Native creation validation also retains bounded input and intent through action
+  recovery; old browser assertions remain. Screenshot visually inspected. One dev
+  rerun collided with the preceding server lock; not counted as PASS. Controlled
+  providers/component SQL are not live-provider verification. New exact push gates
+  PENDING until observed. Baselinebabd234 all8push jobs PASS:CI42333823803
+  Application128289100755/runtime128286195145/DB128286195408/Media128286195450,
+  Security42333823675 and Guard42333823740.
+- Scope remains private destination Working, not general media upload/full D05/
+  J5/J9 or Publish acceptance. Onboarding-only upload APIs cannot serve completed
+  Owners; general media needs a separate bounded path. First Publish5Nov MISSED;
+  target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
+  and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
 ### Returning Owner Product Draft → shared Spill recovery — 2026-11-07 WIB
 
@@ -10069,7 +10103,7 @@ where private foundations exist. No screen is production verified this run.
 | D02 Identity Editor | Connected Profile/style + first/add/edit links Working/browser fixture | OPEN: remaining blocks/preview/publish + provider |
 | D03 Spill Manager | Mounted 20-row seek manager and exact saved Item editor; native browser fixture | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
-| D05 Edit Product | Setup and general Product raw Working save/reload; SQL/browser fixture | OPEN: media/destination/publish lifecycle |
+| D05 Edit Product | Setup/general raw Working and structured destination save/reload; SQL/browser fixture | OPEN: media/safety/preview/publish lifecycle |
 | D06 Add Resource | Returning Owner multiple meaningful Draft creation and lost-ack readback; SQL/browser fixture | OPEN: preview/publish + live providers |
 | D07 Edit Resource | Setup and general Resource raw Working/meaning save/reload; SQL/browser fixture | OPEN: media/destination/preview/publish lifecycle |
 | A01 Sign Up | Connected form + browser confirmation fixture | PROVIDER PENDING: live verification/resolver |

@@ -18,3 +18,5 @@ it("empty shell is not persisted",async()=>{const f=form();f.set("title","");exp
 it("uncertain commit freezes for manager readback without automatic retry",async()=>{
  mocks.create.mockResolvedValue({status:"outcome_unknown"});expect((await createResourceDraftAction(initial,form())).status).toBe("reload");expect(mocks.create).toHaveBeenCalledTimes(1);expect(mocks.revalidate).not.toHaveBeenCalled();expect(mocks.redirect).not.toHaveBeenCalled();
 });
+
+it("validation preserves creation intent and raw input for native action recovery",async()=>{const f=form();f.set("title"," Raw title ");f.set("sourceUrl","javascript:unfinished");const result=await createResourceDraftAction(initial,f);expect(result.status).toBe("error");expect(result.creationId).toBe(f.get("creationId"));expect(result.title).toBe(" Raw title ");expect(result.sourceUrl).toBe("javascript:unfinished");expect(mocks.client).not.toHaveBeenCalled();});

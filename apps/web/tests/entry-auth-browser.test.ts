@@ -37,6 +37,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     {reference:2,kind:"resource",source_revision:2,working_revision:null as number|null,source_changed:false,title:"Setup Resource",source_url:"https://resource.example.test/source" as string|null,resource_type:"document" as string|null,published_lifecycle:"hidden" as string|null,has_primary_image:false,destinations:[]},
   ];
   const extraResources:typeof starterItems=[];
+  const preparationRevisions=new Map<number,number>([[1,4]]);
   const creationIntents=new Map<string,{input:Record<string,unknown>;ack:Record<string,unknown>}>();
   const jwtPart = (value: unknown) => Buffer.from(JSON.stringify(value)).toString("base64url");
   const jwtHeader = jwtPart({ alg: "HS256", typ: "JWT" });
@@ -69,7 +70,23 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      if(name === "execute_owner_product_destinations_server"){
+        expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);const value=data.input_payload.input_working;
+        const reference=data.input_operation==="resolve_current_owner_product_destinations"?data.input_payload.input_reference:value.reference;
+        const item=[...starterItems,...extraResources].find(row=>row.reference===reference&&row.kind==="product");let result:unknown;
+        if(!item)result={status:"unavailable"};
+        else if(data.input_operation==="resolve_current_owner_product_destinations")result={status:"success",current_handle:setup.handle,primary_use_case:setup.useCase,reference,source_revision:item.source_revision,preparation_revision:preparationRevisions.get(reference)??null,destinations:item.destinations,has_primary_image:item.has_primary_image};
+        else if(data.input_operation==="save_current_owner_product_destinations"){
+          expect(Object.keys(value).sort()).toEqual(["base_preparation_revision","base_source_revision","destinations","reference"]);
+          if(value.base_source_revision!==item.source_revision)result={status:"stale_source"};
+          else if(value.base_preparation_revision!==(preparationRevisions.get(reference)??null))result={status:"stale_write"};
+          else{const revision=(preparationRevisions.get(reference)??0)+1;preparationRevisions.set(reference,revision);item.destinations=value.destinations;
+            result={status:"success",reference,source_revision:item.source_revision,preparation_revision:revision,destinations:item.destinations};
+            if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture destination reply lost"}');return;}
+          }
+        }else throw Error("Unexpected destination operation");response.end(JSON.stringify(result));return;
+      }
       if(name === "execute_owner_product_creation_server"){
         expect(data.input_subject).toBe(user.id);expect(data.input_operation).toBe("create_current_owner_product_draft");gatewayOperations.push(data.input_operation);
         const value=data.input_payload.input_draft;expect(Object.keys(value).sort()).toEqual(["creation_id","source_url","title"]);
@@ -664,6 +681,23 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     expect(extraResources).toHaveLength(6);expect(await b.evaluate("document.querySelector('form[aria-label=\"New Product Draft\"] button').disabled")).toBe(true);
     await reloadFromLink('form a[href="/dashboard/spill"]',"Good things, kept here.");await text("Product saved despite lost creation reply");expect(extraResources).toHaveLength(6);expect(JSON.stringify(setup)).toBe(setupBeforeResources);
     for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
+    await visit("/dashboard/spill/1/edit","Keep shaping this product.");
+    const saveDestinations=()=>b.evaluate("document.querySelector('form[aria-label=\"Product destinations\"] button').click()");
+    await input("destinations","javascript:alert(1)");await saveDestinations();await text("Use up to ten ordinary HTTP or HTTPS links");expect(await b.evaluate("document.querySelector('[name=destinations]').value")).toBe("javascript:alert(1)");
+    await input("destinations","https://shopee.co.id/item?affiliate=owner\nhttps://tokopedia.com/item");await saveDestinations();await text("Destinations saved privately.");expect(starterItems[0]!.has_primary_image).toBe(true);expect(starterItems[0]!.destinations[0]!.destination_url).toBe("https://shopee.co.id/item?affiliate=owner");
+    await visit("/dashboard/spill/1/edit","Keep shaping this product.");expect(await b.evaluate("document.querySelector('[name=destinations]').value")).toContain("affiliate=owner");
+    await input("destinations","https://shopee.co.id/other");await saveDestinations();await text("Destinations saved privately.");expect(starterItems[0]!.destinations).toHaveLength(1);
+    await input("destinations","");await saveDestinations();await text("Destinations saved privately.");expect(starterItems[0]!.destinations).toEqual([]);expect(starterItems[0]!.has_primary_image).toBe(true);
+    await visit("/dashboard/spill/6/edit","Keep shaping this product.");
+    await input("destinations","https://shop.example.test/first?tag=owner");await saveDestinations();await text("Destinations saved privately.");
+    await input("destinations","https://shop.example.test/duplicate\nhttps://shop.example.test/other");await saveDestinations();await text("Use up to ten ordinary HTTP or HTTPS links");expect(await b.evaluate("document.querySelector('[name=destinations]').value")).toContain("duplicate");
+    await input("destinations","https://shop.example.test/after-validation");await saveDestinations();await text("Destinations saved privately.");expect(preparationRevisions.get(6)).toBe(2);
+    await input("destinations","https://shop.example.test/stale");preparationRevisions.set(6,3);await saveDestinations();await text("We couldn’t confirm this save. Keep your links");expect(await b.evaluate("document.querySelector('form[aria-label=\"Product destinations\"] button').disabled")).toBe(true);
+    await reloadFromLink('a[href="/dashboard/spill/6/edit"]',"Keep shaping this product.");await input("destinations","https://shop.example.test/saved-after-lost-reply");loseAcknowledgment=true;await saveDestinations();await text("We couldn’t confirm this save. Keep your links");loseAcknowledgment=false;
+    await reloadFromLink('a[href="/dashboard/spill/6/edit"]',"Keep shaping this product.");expect(await b.evaluate("document.querySelector('[name=destinations]').value")).toBe("https://shop.example.test/saved-after-lost-reply");expect(await b.evaluate("document.querySelector('[name=sourceUrl]').value")).toBe("javascript:unfinished-product");
+    expect(await b.evaluate("document.querySelector('a[href^=\"https://shop.example.test/\"]')===null")).toBe(true);expect(JSON.stringify(setup)).toBe(setupBeforeResources);
+    for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
+    const destinationCapture=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-269-product-destinations.png",Buffer.from(destinationCapture.data,"base64"));
     expect(calls.some(call => call.includes("publish_current"))).toBe(false);
     expect(cspErrors).toEqual([]);
   } finally {

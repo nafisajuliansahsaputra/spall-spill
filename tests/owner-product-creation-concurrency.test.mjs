@@ -41,6 +41,15 @@ test('Product creation serializes duplicate/distinct intents and preserves raw W
   assert.deepEqual((await Promise.all([save('Raw A'),save('Raw B')])).map(x=>x.status).sort(),['stale_write','success']);
   assert.equal(await query(`select title from core.workspace_product_drafts where owner_id='${owner}' and spill_reference=1;`),'Product');
   assert.equal(await query(`select count(*) from core.spill_item_identity_registry where owner_id='${owner}';`),'3');
+
+  const destination=async suffix=>JSON.parse(await query(`begin;set local role service_role;select api.execute_owner_product_destinations_server('${subject}','save_current_owner_product_destinations','${JSON.stringify({input_working:{reference:1,base_source_revision:1,base_preparation_revision:null,destinations:[{provider_key:'external:shop.example.test',destination_url:'https://shop.example.test/'+suffix}]}})}');commit;`));
+  const destinationLock=session(`begin;select id from core.owners where id='${owner}' for update;select 'owner_locked';\n`,true);
+  await Promise.race([destinationLock.ready,destinationLock.done.then(()=>{throw Error('Destination Owner barrier exited');})]);
+  const destinationRace=Promise.all([destination('one'),destination('two')]);
+  try{const until=Date.now()+5000;let waiting=0;while(waiting<2){waiting=Number(await query(`select count(*) from pg_stat_activity where wait_event_type='Lock' and query like '%execute_owner_product_destinations_server%' and query like '%${subject}%';`));if(waiting<2){assert.ok(Date.now()<until,'Both destination mutations wait behind Owner lock');await new Promise(resolve=>setTimeout(resolve,25));}}}
+  finally{destinationLock.release();await destinationLock.done;}
+  assert.deepEqual((await destinationRace).map(x=>x.status).sort(),['stale_write','success']);
+  assert.equal(await query(`select revision from core.workspace_product_preparations where owner_id='${owner}';`),'1');
  }finally{
   await query(`delete from auth.users where id='${subject}';`);
   if(owner){const reserved=await query(`select count(*) from core.spill_item_identity_registry where owner_id='${owner}';`);await query(`delete from core.owner_handle_namespaces where owner_id='${owner}';delete from core.owners where id='${owner}';`);

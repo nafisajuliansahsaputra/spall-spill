@@ -61,7 +61,7 @@ select is((select title from core.workspace_product_drafts where spill_reference
 select is((select jsonb_agg(to_jsonb(p) order by p.item_id) from core.spill_item_publications p where owner_id in(select owner_id from actors)),(select jsonb_agg(snapshot order by snapshot->>'item_id') from saved_public),'Published rows unchanged');
 select throws_ok($q$update core.workspace_product_drafts set title='Overwrite'$q$,'23514','Product creation source is immutable; use Working.','No source overwrite');
 select throws_ok($q$delete from core.workspace_product_drafts$q$,'23514','Product creation source is immutable; use Working.','No ordinary delete');
-select throws_ok($q$truncate core.workspace_product_drafts$q$,'23514','Product creation source is immutable; use Working.','No source truncate');
+select throws_ok($q$truncate core.workspace_product_drafts,core.workspace_product_preparations$q$,'23514','Product creation source is immutable; use Working.','No source truncate even with dependent preparation');
 select is(api.execute_owner_product_creation_server('26800000-0000-4000-8000-000000000001','resolve_current_owner_spill_manager','{}')->>'status','unavailable','Gateway refuses arbitrary catalog operation');
 select is(api.execute_owner_product_creation_server('26800000-0000-4000-8000-000000000001','create_current_owner_product_draft','{"input_draft":null,"owner_id":"foreign"}')->>'status','unavailable','Gateway refuses extra payload selector');
 create function pg_temp.reject_new_resource() returns trigger language plpgsql as $$begin raise exception 'fixture resource failure';end;$$;

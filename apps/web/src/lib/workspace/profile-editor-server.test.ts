@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({ session: vi.fn(), service: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.session }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
-import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient } from "./profile-editor-server";
+import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient } from "./profile-editor-server";
 const subject = "26000000-0000-4000-8000-000000000001";
 let denied = false;
 let calls: { url: string; body: Record<string, unknown>; headers: Headers }[];
@@ -114,3 +114,5 @@ it("Product creation has its fixed gateway and mutation quota, isolated from oth
  expect(()=>client.schema("api").rpc("create_current_owner_resource_draft")).toThrow();
  const resource=await createResourceCatalogClient();expect(()=>resource.schema("api").rpc("create_current_owner_product_draft")).toThrow();
 });
+
+it.each(["resolve_current_owner_product_destinations","save_current_owner_product_destinations"])("destination factory admits only its fixed %s gateway",async operation=>{const client=await createProductDestinationsClient();await client.schema("api").rpc(operation,{input_working:{}});expect(calls[1]!.url).toContain("/rpc/execute_owner_product_destinations_server");expect(JSON.stringify(calls[0]!.body)).toContain(operation.startsWith("save")?"product-dest-save-":"product-dest-read-");expect(()=>client.schema("api").rpc("create_current_owner_product_draft")).toThrow();});

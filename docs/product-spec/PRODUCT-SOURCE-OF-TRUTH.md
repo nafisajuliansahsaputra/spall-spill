@@ -9582,6 +9582,39 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   Full analytics/operator/lifecycle acceptance remains OPEN. First Publish5Nov
   MISSED; last fully closed checkpoint S4; target15Nov remains at risk.
 
+#### Returning Owner Product destinations — 2026-11-07 WIB
+
+- JIT [12.269](docs/product-spec/technical-architecture/12.269-owner-product-destinations-contract.md)
+  precedes source. Setup/general Product editors now support explicit destination
+  add/replace/remove/order. Valid host/provider binding, one destination/provider,
+  affiliate query retention, independent preparation CAS and immutable references
+  are preserved. Saves retain the exact image, raw Item Working and Published state.
+- Fixed service-only gateway and verified-subject read600/save30 quotas; no URL
+  fetch, approval verdict, public href or onboarding eligibility bypass. Invalid
+  input retains text and acknowledged CAS base; stale/unknown/newer state freezes
+  until full GET readback. Exact acknowledgment refreshes only its editor path.
+- SQL083 PASS48; regression076/081/082 PASS37+44+46; real Owner-lock destination
+  contention yields exactly one success and one stale save. New FK blocks source
+  TRUNCATE earlier;082 now also includes the dependent preparation table to retain
+  the original immutability-trigger assertion. No assertion/control removed.
+- Local typecheck/lint(0errors,one existing fixture warning)/build and7tooling
+  PASS; web14472unit tests207files and remaining workspace tests PASS. Actual
+  Next/Chromium dev PASS2/2(58.41s) and fresh compiled PASS2/2(19.31s), covering
+  destination add/replace/remove, validation/save/reload, affiliate retention, stale/
+  unknown acknowledgments, retained image/raw Working, CSP and360/768/1440 widths.
+  Native creation validation also retains bounded input and intent through action
+  recovery; old browser assertions remain. Screenshot visually inspected. One dev
+  rerun collided with the preceding server lock; not counted as PASS. Controlled
+  providers/component SQL are not live-provider verification. New exact push gates
+  PENDING until observed. Baselinebabd234 all8push jobs PASS:CI42333823803
+  Application128289100755/runtime128286195145/DB128286195408/Media128286195450,
+  Security42333823675 and Guard42333823740.
+- Scope remains private destination Working, not general media upload/full D05/
+  J5/J9 or Publish acceptance. Onboarding-only upload APIs cannot serve completed
+  Owners; general media needs a separate bounded path. First Publish5Nov MISSED;
+  target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
+  and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit
