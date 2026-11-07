@@ -6,7 +6,7 @@
 
 Latest delivery: returning Product/Resource Draft creation, Spill recovery,
 Product destination and media Working editing are integrated with local browser/DB
-proofs. Identity Text/Contact add/edit and block composition Working are integrated. Baseline80d877a all8
+proofs. Identity Text/Contact add/edit and block composition Working are integrated. Baseline2645682 all8
 remote jobs PASS; next exact pushed gates PENDING. First Publish5Nov MISSED; full J1–J9 and
 release readiness OPEN. Next: public Spill/detail transport, remaining Identity
 preview/blocks/media and explicit Publish/universal workspace handoff.
@@ -77,6 +77,22 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Owner exact-reference entry — 2026-11-08 WIB
+
+- [12.274](docs/product-spec/technical-architecture/12.274-owner-exact-reference-entry-contract.md):
+  Spill Manager has native GET Find by #reference; canonical numeric/# input
+  opens the existing protected own Item editor. Invalid/duplicate input stays
+  inline; no arbitrary redirect, Owner selector, allocation or publication.
+- Existing guarded/budgeted catalog read precedes redirect; target editor still
+  independently resolves own Item truth. New29parser cases, typecheck/lint/build
+  PASS; compiled Next/Chromium2/2 PASS41.88s (#Product navigation, hostile/duplicate
+  denial and existing owner flows). No DB/schema/permission change. Full suite
+  PASS14,645webtests/215files plus remaining packages and7tooling. No public exact lookup/J6/J7/full D03 or live-provider closure.
+- Baseline2645682 all8remote jobs PASS: CI42405983837 (Database128504182461,
+  Media128504182779,Application runtime128504182815,Application128507174759),
+  Security42405983683,Guard42405983776. New exact push gates PENDING. First
+  Publish5Nov MISSED;8Nov partial;15Nov at risk; existing P0/provider/PR conflicts remain.
 
 ### Connected Identity block composition — 2026-11-08 WIB
 
@@ -10223,7 +10239,7 @@ where private foundations exist. No screen is production verified this run.
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
 | D02 Identity Editor | Connected Profile/style + Link/Text/Contact creation/editing + block composition Working/browser fixture | OPEN: media/Spill CTA/preview/publish + provider |
-| D03 Spill Manager | Mounted 20-row seek manager and exact saved Item editor; native browser fixture | OPEN: search/filter/hide/restore/archive |
+| D03 Spill Manager | Mounted 20-row seek manager, #reference entry and exact saved Item editor; native browser fixture | OPEN: title search/filter/hide/restore/archive |
 | D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
 | D05 Edit Product | Setup/general raw Working, destination editing and upload/select/remove media; SQL/actual SDK/browser fixtures | OPEN: live media/safety/preview/publish lifecycle |
 | D06 Add Resource | Returning Owner multiple meaningful Draft creation and lost-ack readback; SQL/browser fixture | OPEN: preview/publish + live providers |

@@ -9615,6 +9615,22 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
+### Owner exact-reference entry — 2026-11-08 WIB
+
+- [12.274](./technical-architecture/12.274-owner-exact-reference-entry-contract.md):
+  Spill Manager has native GET Find by #reference; canonical numeric/# input
+  opens the existing protected own Item editor. Invalid/duplicate input stays
+  inline; no arbitrary redirect, Owner selector, allocation or publication.
+- Existing guarded/budgeted catalog read precedes redirect; target editor still
+  independently resolves own Item truth. New29parser cases, typecheck/lint/build
+  PASS; compiled Next/Chromium2/2 PASS41.88s (#Product navigation, hostile/duplicate
+  denial and existing owner flows). No DB/schema/permission change. Full suite
+  PASS14,645webtests/215files plus remaining packages and7tooling. No public exact lookup/J6/J7/full D03 or live-provider closure.
+- Baseline2645682 all8remote jobs PASS: CI42405983837 (Database128504182461,
+  Media128504182779,Application runtime128504182815,Application128507174759),
+  Security42405983683,Guard42405983776. New exact push gates PENDING. First
+  Publish5Nov MISSED;8Nov partial;15Nov at risk; existing P0/provider/PR conflicts remain.
+
 ### Connected Identity block composition — 2026-11-08 WIB
 
 - JIT [12.273](./technical-architecture/12.273-connected-identity-block-controls-contract.md)

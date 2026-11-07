@@ -891,6 +891,10 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     expect(extraResources).toHaveLength(6);expect(await b.evaluate("document.querySelector('form[aria-label=\"New Product Draft\"] button').disabled")).toBe(true);
     await reloadFromLink('form a[href="/dashboard/spill"]',"Good things, kept here.");await text("Product saved despite lost creation reply");expect(extraResources).toHaveLength(6);expect(JSON.stringify(setup)).toBe(setupBeforeResources);
     for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
+    await visit("/dashboard/spill","Good things, kept here.");
+    await scopedInput('form[aria-label="Find saved Item"]',"reference","#1");await b.evaluate("document.querySelector('form[aria-label=\"Find saved Item\"]').requestSubmit()");await text("Keep shaping this product.");expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill/1/edit");
+    await visit("/dashboard/spill?reference=%2F%2Fevil.test","Enter a positive reference");expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill");
+    await visit("/dashboard/spill?reference=1&reference=2","Enter a positive reference");
     await visit("/dashboard/spill/1/edit","Keep shaping this product.");
     const saveDestinations=()=>b.evaluate("document.querySelector('form[aria-label=\"Product destinations\"] button').click()");
     await input("destinations","javascript:alert(1)");await saveDestinations();await text("Use up to ten ordinary HTTP or HTTPS links");expect(await b.evaluate("document.querySelector('[name=destinations]').value")).toBe("javascript:alert(1)");
