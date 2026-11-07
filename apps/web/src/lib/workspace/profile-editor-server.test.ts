@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({ session: vi.fn(), service: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.session }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
-import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient } from "./profile-editor-server";
+import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient } from "./profile-editor-server";
 const subject = "26000000-0000-4000-8000-000000000001";
 let denied = false;
 let calls: { url: string; body: Record<string, unknown>; headers: Headers }[];
@@ -105,4 +105,12 @@ it.each(["resolve_current_owner_spill_manager","resolve_current_owner_item_recov
 });
 it("Resource factory cannot select private editor or publication operations",async()=>{
  const client=await createResourceCatalogClient();expect(()=>client.schema("api").rpc("publish_current_onboarding",{})).toThrow();expect(()=>client.schema("api").rpc("save_current_owner_starter_item_working",{})).toThrow();expect(calls).toEqual([]);
+});
+
+it("Product creation has its fixed gateway and mutation quota, isolated from other factories",async()=>{
+ const client=await createProductCreationClient();await client.schema("api").rpc("create_current_owner_product_draft",{input_draft:{}});
+ expect(JSON.stringify(calls[0]!.body)).toContain("product-save-");expect(JSON.stringify(calls[0]!.body)).toContain('"30"');
+ expect(calls[1]!.url).toContain("/rpc/execute_owner_product_creation_server");expect(calls[1]!.body.input_subject).toBe(subject);
+ expect(()=>client.schema("api").rpc("create_current_owner_resource_draft")).toThrow();
+ const resource=await createResourceCatalogClient();expect(()=>resource.schema("api").rpc("create_current_owner_product_draft")).toThrow();
 });

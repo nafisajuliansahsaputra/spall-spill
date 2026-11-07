@@ -9550,6 +9550,38 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   preserving original onboarding uniqueness, then public Spill/detail and full
   explicit publication/handoff. Deadline risk remains; this is partial delivery.
 
+#### Returning Owner Product Draft → shared Spill recovery — 2026-11-07 WIB
+
+- JIT [12.268](docs/product-spec/technical-architecture/12.268-returning-product-draft-contract.md)
+  precedes source after pinned11.22/D04/D05 and actual267 review. Completed Owners
+  can start a Product with a marketplace/affiliate source or manual title, save
+  multiple private Drafts, find them in Spill, and save/reload raw Working at the
+  same immutable reference. Original onboarding uniqueness, setup Home and public
+  snapshots remain unchanged. Empty editor GET and empty save allocate nothing.
+- Product creation has its own fixed service-only gateway and verified-subject
+  mutation quota30/minute. Owner-first/binding locks, same-intent exact replay,
+  changed-intent conflict, atomic reference reservation and conservative lost-ack
+  readback follow267. Original direct RPC/table/client ACLs stay closed. Source URL
+  is private retained input, not a verified structured marketplace destination.
+- PostgreSQL17 component082 PASS46 (including truncate denial, rollback, cross-owner,
+  replay after Working, private source immutability and unchanged Published/setup).
+  Original076+Resource081 PASS37+44 after the additive Product migration. Real
+  duplicate/distinct creation contention and raw Working CAS PASS; privacy cleanup
+  preserves reference tombstones. Fresh full Supabase reset remains a CI gate.
+- Web unit PASS14444/205files and remaining workspace tests PASS. Actual Next+
+  Chromium dev entry/editor/recovery/public Identity flows PASS2/2 (62.33s),
+  including new manual/source-only Products, affiliate query retention, unknown
+  acknowledgment readback, no GET creation, raw unsafe source as text and responsive
+  360/768/1440. Fresh compiled browser PASS2/2 (18.67s), typecheck/lint/build
+  and7tooling PASS; lint retains one existing runtime-fixture warning,0errors.
+- Resource implementation0261a235: Guard42333343677 and Security42333343657 all
+  PASS; CI42333343695 still PENDING at this review. New Product push needs its
+  own exact full gates. No full D04/D05/J5/J9 closure or live-provider acceptance.
+- Next P0: Product media/structured destination integration, public Spill/detail
+  transport, modular Identity preview and explicit first Publish/universal handoff.
+  Full analytics/operator/lifecycle acceptance remains OPEN. First Publish5Nov
+  MISSED; last fully closed checkpoint S4; target15Nov remains at risk.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

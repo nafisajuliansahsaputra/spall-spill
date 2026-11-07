@@ -4,10 +4,10 @@
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
 **Last synchronized:** 2026-11-07 WIB
 
-Latest delivery: returning Owner Resource Draft creation, bounded Spill manager,
-and saved Resource Working editor are connected; local acceptance is recorded below.
+Latest delivery: returning Owner Product and Resource Draft creation, bounded Spill
+manager and saved Working editors are connected; local acceptance is recorded below.
 New exact pushed gates remain PENDING. First Publish 5 Nov MISSED; full J1–J9
-and release readiness remain OPEN. Next: general Product creation/editor, public
+and release readiness remain OPEN. Next: Product media/destination integration, public
 Spill/detail transport, and explicit Publish with universal workspace handoff.
 
 ## Autonomous Codex Cloud lane — 2026-10-05
@@ -76,6 +76,38 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Returning Owner Product Draft → shared Spill recovery — 2026-11-07 WIB
+
+- JIT [12.268](docs/product-spec/technical-architecture/12.268-returning-product-draft-contract.md)
+  precedes source after pinned11.22/D04/D05 and actual267 review. Completed Owners
+  can start a Product with a marketplace/affiliate source or manual title, save
+  multiple private Drafts, find them in Spill, and save/reload raw Working at the
+  same immutable reference. Original onboarding uniqueness, setup Home and public
+  snapshots remain unchanged. Empty editor GET and empty save allocate nothing.
+- Product creation has its own fixed service-only gateway and verified-subject
+  mutation quota30/minute. Owner-first/binding locks, same-intent exact replay,
+  changed-intent conflict, atomic reference reservation and conservative lost-ack
+  readback follow267. Original direct RPC/table/client ACLs stay closed. Source URL
+  is private retained input, not a verified structured marketplace destination.
+- PostgreSQL17 component082 PASS46 (including truncate denial, rollback, cross-owner,
+  replay after Working, private source immutability and unchanged Published/setup).
+  Original076+Resource081 PASS37+44 after the additive Product migration. Real
+  duplicate/distinct creation contention and raw Working CAS PASS; privacy cleanup
+  preserves reference tombstones. Fresh full Supabase reset remains a CI gate.
+- Web unit PASS14444/205files and remaining workspace tests PASS. Actual Next+
+  Chromium dev entry/editor/recovery/public Identity flows PASS2/2 (62.33s),
+  including new manual/source-only Products, affiliate query retention, unknown
+  acknowledgment readback, no GET creation, raw unsafe source as text and responsive
+  360/768/1440. Fresh compiled browser PASS2/2 (18.67s), typecheck/lint/build
+  and7tooling PASS; lint retains one existing runtime-fixture warning,0errors.
+- Resource implementation0261a235: Guard42333343677 and Security42333343657 all
+  PASS; CI42333343695 still PENDING at this review. New Product push needs its
+  own exact full gates. No full D04/D05/J5/J9 closure or live-provider acceptance.
+- Next P0: Product media/structured destination integration, public Spill/detail
+  transport, modular Identity preview and explicit first Publish/universal handoff.
+  Full analytics/operator/lifecycle acceptance remains OPEN. First Publish5Nov
+  MISSED; last fully closed checkpoint S4; target15Nov remains at risk.
 
 ### Returning Owner Resource Draft → Spill manager → saved editing — 2026-11-07 WIB
 
@@ -10036,8 +10068,8 @@ where private foundations exist. No screen is production verified this run.
 | D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
 | D02 Identity Editor | Connected Profile/style + first/add/edit links Working/browser fixture | OPEN: remaining blocks/preview/publish + provider |
 | D03 Spill Manager | Mounted 20-row seek manager and exact saved Item editor; native browser fixture | OPEN: search/filter/hide/restore/archive |
-| D04 Add Product | Onboarding draft UI only | OPEN: returning owner create/publish |
-| D05 Edit Product | Existing setup Product raw Working save/reload/browser fixture | OPEN: general editor/media/destination/publish lifecycle |
+| D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
+| D05 Edit Product | Setup and general Product raw Working save/reload; SQL/browser fixture | OPEN: media/destination/publish lifecycle |
 | D06 Add Resource | Returning Owner multiple meaningful Draft creation and lost-ack readback; SQL/browser fixture | OPEN: preview/publish + live providers |
 | D07 Edit Resource | Setup and general Resource raw Working/meaning save/reload; SQL/browser fixture | OPEN: media/destination/preview/publish lifecycle |
 | A01 Sign Up | Connected form + browser confirmation fixture | PROVIDER PENDING: live verification/resolver |

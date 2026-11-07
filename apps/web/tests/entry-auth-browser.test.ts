@@ -52,7 +52,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     response.setHeader("content-type", "application/json");
     if (path === "/redis") {
       const command = JSON.parse(body); expect(command[0]).toBe("eval");
-      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource)-/);
+      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product)-/);
       expect(command[3]).not.toContain(user.id);
       response.end(JSON.stringify({ result: budgetDenied ? 0 : 1 })); return;
     }
@@ -69,7 +69,19 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      if(name === "execute_owner_product_creation_server"){
+        expect(data.input_subject).toBe(user.id);expect(data.input_operation).toBe("create_current_owner_product_draft");gatewayOperations.push(data.input_operation);
+        const value=data.input_payload.input_draft;expect(Object.keys(value).sort()).toEqual(["creation_id","source_url","title"]);
+        const previous=creationIntents.get(value.creation_id);let result:unknown;
+        if(previous)result=JSON.stringify(previous.input)===JSON.stringify(value)?previous.ack:{status:"conflicting_intent"};
+        else{const reference=Math.max(0,...starterItems.map(item=>item.reference),...extraResources.map(item=>item.reference))+1;
+          extraResources.push({reference,kind:"product",source_revision:1,working_revision:null,source_changed:false,title:value.title,source_url:value.source_url,resource_type:null,published_lifecycle:null,has_primary_image:false,destinations:[]});
+          const ack={status:"success",reference,...value};creationIntents.set(value.creation_id,{input:value,ack});result=ack;
+          if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture Product creation reply lost"}');return;}
+        }
+        response.end(JSON.stringify(result));return;
+      }
       if(name === "execute_owner_resource_catalog_server"){
         expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);let result:unknown;
         const context={status:"success",current_handle:setup.handle,primary_use_case:setup.useCase};
@@ -636,6 +648,22 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     expect(await b.evaluate("location.search")).toBe("?before=101");expect(await b.evaluate("document.body.innerText.includes('Pagination Resource 120')")).toBe(false);
     extraResources.splice(3);await visit("/dashboard/spill","Lost acknowledgment Resource");
     const managerCapture=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-267-manager.png",Buffer.from(managerCapture.data,"base64"));
+    // General Product creation is independent of setup and Resource meaning.
+    await reloadFromLink('a[href="/dashboard/spill/new/product"]',"Start with a Product.");expect(extraResources).toHaveLength(3);
+    const productIntent=await b.evaluate("document.querySelector('[name=creationId]').value");
+    await submit();await text("Add a title or an ordinary public HTTP/HTTPS source.");expect(extraResources).toHaveLength(3);
+    await input("sourceUrl","javascript:alert(1)");await input("title","Manual useful Product");await submit();await text("Use an ordinary public HTTP or HTTPS URL");
+    expect(await b.evaluate("document.querySelector('[name=creationId]').value")).toBe(productIntent);expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe("Manual useful Product");
+    await input("sourceUrl","");await submit();await text("Keep shaping this product.");expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill/6/edit");expect(extraResources).toHaveLength(4);
+    await input("title","<img src=x onerror=alert(1)> private Product");await input("sourceUrl","javascript:unfinished-product");await submit();await text("Working saved privately.");
+    await visit("/dashboard/spill/6/edit","Keep shaping this product.");expect(await b.evaluate("document.querySelector('[name=sourceUrl]').value")).toBe("javascript:unfinished-product");expect(await b.evaluate("document.querySelector('a[href^=\"javascript:\"]')===null")).toBe(true);
+    await reloadFromLink('a[href="/dashboard/spill/new/product"]',"Start with a Product.");
+    expect(await b.evaluate("document.querySelector('[name=creationId]').value")).not.toBe(productIntent);
+    await input("sourceUrl","https://shop.example.test/affiliate?tag=owner");await submit();await text("Keep shaping this product.");expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill/7/edit");expect(extraResources[4]!.source_url).toBe("https://shop.example.test/affiliate?tag=owner");expect(extraResources[4]!.destinations).toEqual([]);
+    await reloadFromLink('a[href="/dashboard/spill/new/product"]',"Start with a Product.");await input("title","Product saved despite lost creation reply");loseAcknowledgment=true;await submit();await text("We couldn’t confirm creation.");loseAcknowledgment=false;
+    expect(extraResources).toHaveLength(6);expect(await b.evaluate("document.querySelector('form[aria-label=\"New Product Draft\"] button').disabled")).toBe(true);
+    await reloadFromLink('form a[href="/dashboard/spill"]',"Good things, kept here.");await text("Product saved despite lost creation reply");expect(extraResources).toHaveLength(6);expect(JSON.stringify(setup)).toBe(setupBeforeResources);
+    for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
     expect(calls.some(call => call.includes("publish_current"))).toBe(false);
     expect(cspErrors).toEqual([]);
   } finally {

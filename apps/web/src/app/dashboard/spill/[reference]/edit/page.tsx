@@ -19,6 +19,7 @@ export default async function StarterItemPage({params}:{params:Promise<{referenc
    {item.kind==="product"?<section className="space-y-3" aria-label="Saved Product preparation"><h2 className="text-xl font-semibold">Your saved preparation</h2><p className="text-sm">Primary image: {item.has_primary_image?"Selected and retained":"Not selected"}</p>
     {item.destinations.length?<ul className="space-y-3">{item.destinations.map(destination=><li key={destination.provider_key} className="rounded-xl border border-neutral-300 p-4 text-sm"><p className="font-semibold">{destination.provider_key}</p><p className="mt-2 break-all">{destination.destination_url}</p><p className="mt-2">Destination checks are required before publishing.</p></li>)}</ul>:<p className="text-sm">No marketplace destinations saved yet.</p>}
    </section>:null}
+   {item.kind==="product"?<DocumentLink href="/dashboard/spill/new/product" className="button">Add another Product</DocumentLink>:null}
    {item.kind==="resource"?<DocumentLink href="/dashboard/spill/new/resource" className="text-sm underline">Create another Resource</DocumentLink>:null}
    <p className="text-sm leading-6 text-neutral-600">Your saved Working stays private. Publishing and media/destination changes are not available here yet.</p>
   </div>
