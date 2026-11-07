@@ -311,6 +311,9 @@ jobs:
       - name: Verify starter Item Working recovery CAS races
         run: node --test tests/owner-starter-recovery-concurrency.test.mjs
 
+      - name: Verify returning Resource creation and Working races
+        run: node --test tests/owner-resource-creation-concurrency.test.mjs
+
       - name: Verify isolated profile photo and recoverable text CAS races
         run: node --test tests/identity-profile-photo-working-concurrency.test.mjs
 

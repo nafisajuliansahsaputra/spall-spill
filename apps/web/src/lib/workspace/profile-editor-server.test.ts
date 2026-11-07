@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({ session: vi.fn(), service: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.session }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
-import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor } from "./profile-editor-server";
+import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient } from "./profile-editor-server";
 const subject = "26000000-0000-4000-8000-000000000001";
 let denied = false;
 let calls: { url: string; body: Record<string, unknown>; headers: Headers }[];
@@ -94,4 +94,15 @@ it.each(["initialize_current_owner_blocks_from_link", "add_current_owner_link_bl
  const client=await createProfileEditorClient();await client.schema("api").rpc(operation,{input_intent:{}});
  expect(JSON.stringify(calls[0]!.body)).toContain("profile-save-");expect(calls[0]!.body).toEqual(expect.arrayContaining(["30","390"]));
  const starter=await createStarterRecoveryClient();expect(()=>starter.schema("api").rpc(operation)).toThrow();
+});
+
+it.each(["resolve_current_owner_spill_manager","resolve_current_owner_item_recovery","create_current_owner_resource_draft"])("fixed Resource factory admits %s with its own quota",async operation=>{
+ const client=await createResourceCatalogClient();await client.schema("api").rpc(operation,{});expect(calls[1]!.url).toContain("execute_owner_resource_catalog_server");expect(calls[1]!.body.input_subject).toBe(subject);
+ expect(JSON.stringify(calls[0]!.body)).toContain(operation==="create_current_owner_resource_draft"?"resource-save-":"resource-read-");
+ if(operation==="create_current_owner_resource_draft")expect(calls[0]!.body).toEqual(expect.arrayContaining(["30","390"]));
+ const profile=await createProfileEditorClient();expect(()=>profile.schema("api").rpc(operation,{})).toThrow();
+ const starter=await createStarterRecoveryClient();expect(()=>starter.schema("api").rpc(operation,{})).toThrow();
+});
+it("Resource factory cannot select private editor or publication operations",async()=>{
+ const client=await createResourceCatalogClient();expect(()=>client.schema("api").rpc("publish_current_onboarding",{})).toThrow();expect(()=>client.schema("api").rpc("save_current_owner_starter_item_working",{})).toThrow();expect(calls).toEqual([]);
 });

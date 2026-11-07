@@ -33,9 +33,11 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     identity: null as null | { display_name: string; bio: string | null; profile_asset_key: null; revision: number },
     layout: null as null | { starter_key: string; revision: number } };
   const starterItems = [
-    {reference:1,kind:"product",source_revision:2,working_revision:null as number|null,source_changed:false,title:"Setup Product",source_url:"https://shop.example.test/product",resource_type:null as string|null,published_lifecycle:null as string|null,has_primary_image:true,destinations:[{provider_key:"external:shop.example.test",destination_url:"https://shop.example.test/product"}]},
-    {reference:2,kind:"resource",source_revision:2,working_revision:null as number|null,source_changed:false,title:"Setup Resource",source_url:"https://resource.example.test/source",resource_type:"document" as string|null,published_lifecycle:"hidden" as string|null,has_primary_image:false,destinations:[]},
+    {reference:1,kind:"product",source_revision:2,working_revision:null as number|null,source_changed:false,title:"Setup Product",source_url:"https://shop.example.test/product" as string|null,resource_type:null as string|null,published_lifecycle:null as string|null,has_primary_image:true,destinations:[{provider_key:"external:shop.example.test",destination_url:"https://shop.example.test/product"}]},
+    {reference:2,kind:"resource",source_revision:2,working_revision:null as number|null,source_changed:false,title:"Setup Resource",source_url:"https://resource.example.test/source" as string|null,resource_type:"document" as string|null,published_lifecycle:"hidden" as string|null,has_primary_image:false,destinations:[]},
   ];
+  const extraResources:typeof starterItems=[];
+  const creationIntents=new Map<string,{input:Record<string,unknown>;ack:Record<string,unknown>}>();
   const jwtPart = (value: unknown) => Buffer.from(JSON.stringify(value)).toString("base64url");
   const jwtHeader = jwtPart({ alg: "HS256", typ: "JWT" });
   const jwtPayload = jwtPart({ sub: user.id, aud: "authenticated", role: "authenticated", exp: Math.floor(Date.now() / 1000) + 3600, iat: Math.floor(Date.now() / 1000), iss: "isolated-provider" });
@@ -50,7 +52,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     response.setHeader("content-type", "application/json");
     if (path === "/redis") {
       const command = JSON.parse(body); expect(command[0]).toBe("eval");
-      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter)-/);
+      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource)-/);
       expect(command[3]).not.toContain(user.id);
       response.end(JSON.stringify({ result: budgetDenied ? 0 : 1 })); return;
     }
@@ -67,13 +69,37 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      if(name === "execute_owner_resource_catalog_server"){
+        expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);let result:unknown;
+        const context={status:"success",current_handle:setup.handle,primary_use_case:setup.useCase};
+        const all=[...starterItems,...extraResources];
+        if(data.input_operation==="resolve_current_owner_item_recovery"){
+          result={...context,item:all.find(item=>item.reference===data.input_payload.input_reference)??null};
+        }else if(data.input_operation==="resolve_current_owner_spill_manager"){
+          const cursor=data.input_payload.input_reference;
+          const rows=all.filter(item=>cursor===null||item.reference<cursor).sort((a,b)=>b.reference-a.reference);
+          const items=rows.slice(0,20).map(item=>({reference:item.reference,kind:item.kind,title_preview:item.title?.slice(0,160)??null,resource_type:item.resource_type,working_revision:item.working_revision,source_changed:item.source_changed,published_lifecycle:item.published_lifecycle}));
+          result={...context,items,has_more:rows.length>20,next_before_reference:rows.length>20?items.at(-1)!.reference:null};
+        }else if(data.input_operation==="create_current_owner_resource_draft"){
+          const value=data.input_payload.input_draft;expect(Object.keys(value).sort()).toEqual(["creation_id","resource_type","source_url","title"]);
+          const previous=creationIntents.get(value.creation_id);
+          if(previous)result=JSON.stringify(previous.input)===JSON.stringify(value)?previous.ack:{status:"conflicting_intent"};
+          else{
+            const reference=Math.max(0,...all.map(item=>item.reference))+1;
+            extraResources.push({reference,kind:"resource",source_revision:1,working_revision:null,source_changed:false,title:value.title,source_url:value.source_url,resource_type:value.resource_type,published_lifecycle:null,has_primary_image:false,destinations:[]});
+            const ack={status:"success",reference,...value};creationIntents.set(value.creation_id,{input:value,ack});result=ack;
+            if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture creation reply lost"}');return;}
+          }
+        }else throw Error("Unexpected Resource operation");
+        response.end(JSON.stringify(result));return;
+      }
       if (name === "execute_owner_starter_recovery_server") {
         expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);
         let result: unknown;
         if(data.input_operation === "resolve_current_owner_starter_recovery") result={status:"success",current_handle:setup.handle,primary_use_case:setup.useCase,items:starterItems};
         else if(data.input_operation === "save_current_owner_starter_item_working") {
-          const value=data.input_payload.input_working;const item=starterItems.find(item=>item.reference===value.reference);
+          const value=data.input_payload.input_working;const item=[...starterItems,...extraResources].find(item=>item.reference===value.reference);
           if(!item)result={status:"unavailable"};
           else if(item.source_revision!==value.base_source_revision || item.working_revision!==value.base_working_revision)result={status:"stale_write"};
           else if(item.published_lifecycle==="archived")result={status:"owner_not_eligible"};
@@ -572,8 +598,44 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     const retainedItems=starterItems.splice(0);
     await visit("/dashboard","Pick up where you left off.");
     expect(await b.evaluate("document.querySelector('a[href=\"/dashboard/identity\"]') !== null")).toBe(true);
-    expect(await b.evaluate("document.querySelectorAll('a[href^=\"/dashboard/spill/\"]').length")).toBe(0);
+    expect(await b.evaluate("document.querySelectorAll('a[href^=\"/dashboard/spill/\"][href$=\"/edit\"]').length")).toBe(0);
     starterItems.push(...retainedItems);
+    // General returning Resource creation is available to Personal without re-onboarding.
+    const priorCreations=creationIntents.size;const setupBeforeResources=JSON.stringify(setup);
+    await visit("/dashboard/spill/new/resource","Give your Resource a purpose.");
+    expect(creationIntents.size).toBe(priorCreations);expect(extraResources).toHaveLength(0);
+    const initialIntent=await b.evaluate("document.querySelector('[name=creationId]').value");
+    const chooseType=async(type:string)=>{await b.evaluate(`(()=>{const e=document.querySelector('select[name=resourceType]');e.value=${JSON.stringify(type)};e.dispatchEvent(new Event('change',{bubbles:true}));})()`);};
+    await chooseType("portfolio");await submit();await text("Choose a Resource type and add a title");expect(extraResources).toHaveLength(0);
+    expect(await b.evaluate("document.querySelector('[name=resourceType]').value")).toBe("portfolio");
+    await input("title","First returning Resource");await input("sourceUrl","javascript:bad()");await submit();await text("Use an ordinary public HTTP or HTTPS URL");
+    expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe("First returning Resource");expect(await b.evaluate("document.querySelector('[name=creationId]').value")).toBe(initialIntent);expect(extraResources).toHaveLength(0);
+    await until(()=>b.evaluate<boolean>("document.querySelector('form[aria-label=\"New Resource Draft\"] button').disabled===false"));
+    await input("sourceUrl","");expect(await b.evaluate("document.querySelector('[name=sourceUrl]').value")).toBe("");expect(await b.evaluate("document.querySelector('[name=resourceType]').value")).toBe("portfolio");
+    await submit();await text("Keep shaping this resource.").catch(async e=>{throw Error(String(e)+" "+await b.evaluate("JSON.stringify({fields:Array.from(new FormData(document.querySelector('form[aria-label=\"New Resource Draft\"]')).entries()),body:document.body.innerText})"));});
+    expect(extraResources).toHaveLength(1);expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill/3/edit");
+    await input("title"," <unfinished Resource> ");await chooseType("media_kit");await input("sourceUrl","javascript:unfinished()");await submit();await text("Working saved privately");
+    await reloadFromLink('a[href="/dashboard/spill/3/edit"]',"Keep shaping this resource.");
+    expect(await b.evaluate("document.querySelector('[name=sourceUrl]').value")).toBe("javascript:unfinished()");
+    expect(await b.evaluate("document.querySelector('a[href^=\"javascript:\"]')===null")).toBe(true);
+    await visit("/dashboard/spill","Good things, kept here.");expect(await b.evaluate("document.body.innerText.includes('<unfinished Resource>')")).toBe(true);
+    await reloadFromLink('a[href="/dashboard/spill/new/resource"]',"Give your Resource a purpose.");
+    await chooseType("menu");await input("sourceUrl","https://example.test/menu");await submit();await text("Keep shaping this resource.");
+    expect(extraResources).toHaveLength(2);expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill/4/edit");
+    await reloadFromLink('a[href="/dashboard/spill/new/resource"]',"Give your Resource a purpose.");
+    await chooseType("document");await input("title","Lost acknowledgment Resource");loseAcknowledgment=true;await submit();await text("We couldn’t confirm creation.");loseAcknowledgment=false;
+    expect(extraResources).toHaveLength(3);expect(await b.evaluate("document.querySelector('form[aria-label=\"New Resource Draft\"] button').disabled")).toBe(true);
+    expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe("Lost acknowledgment Resource");
+    await reloadFromLink('form a[href="/dashboard/spill"]',"Good things, kept here.");await text("Lost acknowledgment Resource");
+    expect(extraResources).toHaveLength(3);expect(extraResources.every(item=>item.published_lifecycle===null)).toBe(true);
+    for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
+    expect(JSON.stringify(setup)).toBe(setupBeforeResources);
+    const seeded=Array.from({length:21},(_,i)=>({reference:100+i,kind:"resource",source_revision:1,working_revision:null,source_changed:false,title:`Pagination Resource ${100+i}`,source_url:null,resource_type:"document",published_lifecycle:null,has_primary_image:false,destinations:[]}));extraResources.push(...seeded as typeof extraResources);
+    await visit("/dashboard/spill","Pagination Resource 120");expect(await b.evaluate("document.querySelector('a[href=\"/dashboard/spill?before=101\"]')!==null")).toBe(true);
+    await b.evaluate("document.querySelector('a[href=\"/dashboard/spill?before=101\"]').click()");await text("Lost acknowledgment Resource");
+    expect(await b.evaluate("location.search")).toBe("?before=101");expect(await b.evaluate("document.body.innerText.includes('Pagination Resource 120')")).toBe(false);
+    extraResources.splice(3);await visit("/dashboard/spill","Lost acknowledgment Resource");
+    const managerCapture=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-267-manager.png",Buffer.from(managerCapture.data,"base64"));
     expect(calls.some(call => call.includes("publish_current"))).toBe(false);
     expect(cspErrors).toEqual([]);
   } finally {

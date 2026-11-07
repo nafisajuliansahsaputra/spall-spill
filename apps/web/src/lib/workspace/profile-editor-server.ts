@@ -8,15 +8,22 @@ import { productClickBudgetScript } from "../public/product-click-budget";
 
 const subjectSchema = z.string().uuid();
 const profileOperations = new Map(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working", "initialize_current_owner_blocks_from_link", "add_current_owner_link_block_working"].map(name => [name, "execute_owner_profile_editor_server"]));
-const mutationOperations = new Set(["save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working", "initialize_current_owner_blocks_from_link", "add_current_owner_link_block_working", "save_current_owner_starter_item_working"]);
+const mutationOperations = new Set(["save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working", "initialize_current_owner_blocks_from_link", "add_current_owner_link_block_working", "save_current_owner_starter_item_working", "create_current_owner_resource_draft"]);
 const starterOperations = new Map([
   ["resolve_current_owner_home_context", "execute_owner_profile_editor_server"],
   ["resolve_current_owner_starter_recovery", "execute_owner_starter_recovery_server"],
   ["save_current_owner_starter_item_working", "execute_owner_starter_recovery_server"],
 ]);
+const resourceOperations = new Map([
+ ["resolve_current_owner_home_context", "execute_owner_profile_editor_server"],
+ ["resolve_current_owner_spill_manager", "execute_owner_resource_catalog_server"],
+ ["resolve_current_owner_item_recovery", "execute_owner_resource_catalog_server"],
+ ["create_current_owner_resource_draft", "execute_owner_resource_catalog_server"],
+]);
+export async function createResourceCatalogClient() { return createBoundWorkingClient(resourceOperations, "resource"); }
 /** Atomic action-specific distributed quota; no process-local fallback. */
 export async function admitProfileEditor(subject: string, save: boolean) { return admitOwnerWorking(subject, save, "profile"); }
-async function admitOwnerWorking(subject: string, save: boolean, scope: "profile" | "starter") {
+async function admitOwnerWorking(subject: string, save: boolean, scope: "profile" | "starter" | "resource") {
   const deployment = process.env.SPALL_OWNER_PROFILE_BUDGET_NAMESPACE;
   if (!subjectSchema.safeParse(subject).success || !deployment || !/^[a-z][a-z0-9-]{0,23}$/.test(deployment)) return false;
   const namespace = `${scope}-${save ? "save" : "read"}-${deployment}`;
@@ -32,7 +39,7 @@ async function admitOwnerWorking(subject: string, save: boolean, scope: "profile
  * auth/state still use the normal session, and every proof stays actor-bound. */
 export async function createProfileEditorClient() { return createBoundWorkingClient(profileOperations, "profile"); }
 export async function createStarterRecoveryClient() { return createBoundWorkingClient(starterOperations, "starter"); }
-async function createBoundWorkingClient(operations: ReadonlyMap<string, string>, scope: "profile" | "starter") {
+async function createBoundWorkingClient(operations: ReadonlyMap<string, string>, scope: "profile" | "starter" | "resource") {
   const session = await createClient();
   const proof = await session.auth.getClaims();
   const parsed = subjectSchema.safeParse(proof.data?.claims?.sub);

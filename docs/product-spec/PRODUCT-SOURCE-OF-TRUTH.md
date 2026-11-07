@@ -9515,6 +9515,41 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   Spill/detail transport,then complete explicit publication/handoff. Do not enable
   first Publish by discarding valid drafts or pretending credentials are the only gap.
 
+#### Returning Owner Resource Draft → Spill manager → saved editing — 2026-11-07 WIB
+
+- JIT [12.267](docs/product-spec/technical-architecture/12.267-returning-resource-draft-contract.md)
+  precedes source. Completed Owners can create multiple meaningful Resource Drafts,
+  browse 20 recognition rows per page, reopen by exact reference, and save/reload
+  unfinished title/source/meaning Working. Stable Spill navigation and explicit
+  Add Resource are mounted; GET creates nothing. Original setup tables/readers
+  retain their one-per-Owner/max-two semantics. No Published mutation or live URL fetch.
+- Private immutable creation source, atomic Owner-first reference reservation,
+  Owner-scoped intent replay/conflict, fixed service-only gateway, verified-subject
+  distributed read/create quota, bounded exact lookup/pagination and existing raw
+  Working CAS are integrated. Unknown creation acknowledgment freezes the form
+  until explicit full-GET manager readback; validation preserves input/intent.
+- Local PostgreSQL17 component SQL081 PASS44 plus unchanged076 PASS37; real
+  Owner-lock contention same/different-intent creation and Working CAS PASS.
+  Includes ACL/RLS deny, cross-owner, type-only no allocation, rollback, replay
+  after editing, unchanged public/setup state, 20-row seek and privacy cascade
+  with reference tombstones. Component DB is not a full fresh Supabase reset.
+- Web unit tests PASS14424/203files; remaining workspace package tests PASS.
+  Typecheck/build PASS after correcting a nullable-source browser fixture type,
+  without suppressing the error or changing production behavior. Lint PASS
+  (0 errors, one existing next-editor-runtime fixture warning); tooling PASS7.
+  Actual Next+Chromium entry/editor/recovery and public Identity flows PASS in
+  dev (2/2,53.33s) and fresh compiled build (2/2,16.36s). Resource cases include
+  validation retention, multiple creation, raw edit/reload, lost acknowledgment,
+  20-row pagination and responsive360/768/1440. Controlled TLS Auth/RPC/Redis
+  fixtures plus real SQL tests are not live-provider acceptance.
+- Baseline b7b8f1ab exact push CI42302953140, Security42302953207 and
+  Guard42302953223 all PASS. New source gates PENDING until pushed/observed.
+  No complete D03/D06/D07/J5/J9 closure; publication/lifecycle/media/destination
+  and live-provider acceptance remain OPEN. Last fully closed checkpoint is S4.
+- Next dependency-ready slice: general Product Draft creation and saved editor,
+  preserving original onboarding uniqueness, then public Spill/detail and full
+  explicit publication/handoff. Deadline risk remains; this is partial delivery.
+
 #### Integrated implementation frontier — 2026-10-06
 
 The preserved implementation was integrated through commit

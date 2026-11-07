@@ -4,11 +4,11 @@
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
 **Last synchronized:** 2026-11-07 WIB
 
-Latest delivery: mounted Published Identity and fresh legacy Connection navigation;
-local SQL/browser/build gates passed; SAST HTML-template remediation retested,
-new exact pushed gates pending. Default-off
-staging is not live verification. First Publish5Nov MISSED. Next P0:public Spill/
-Product/Resource transport and explicit Publish with universal workspace handoff.
+Latest delivery: returning Owner Resource Draft creation, bounded Spill manager,
+and saved Resource Working editor are connected; local acceptance is recorded below.
+New exact pushed gates remain PENDING. First Publish 5 Nov MISSED; full J1–J9
+and release readiness remain OPEN. Next: general Product creation/editor, public
+Spill/detail transport, and explicit Publish with universal workspace handoff.
 
 ## Autonomous Codex Cloud lane — 2026-10-05
 
@@ -76,6 +76,41 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Returning Owner Resource Draft → Spill manager → saved editing — 2026-11-07 WIB
+
+- JIT [12.267](docs/product-spec/technical-architecture/12.267-returning-resource-draft-contract.md)
+  precedes source. Completed Owners can create multiple meaningful Resource Drafts,
+  browse 20 recognition rows per page, reopen by exact reference, and save/reload
+  unfinished title/source/meaning Working. Stable Spill navigation and explicit
+  Add Resource are mounted; GET creates nothing. Original setup tables/readers
+  retain their one-per-Owner/max-two semantics. No Published mutation or live URL fetch.
+- Private immutable creation source, atomic Owner-first reference reservation,
+  Owner-scoped intent replay/conflict, fixed service-only gateway, verified-subject
+  distributed read/create quota, bounded exact lookup/pagination and existing raw
+  Working CAS are integrated. Unknown creation acknowledgment freezes the form
+  until explicit full-GET manager readback; validation preserves input/intent.
+- Local PostgreSQL17 component SQL081 PASS44 plus unchanged076 PASS37; real
+  Owner-lock contention same/different-intent creation and Working CAS PASS.
+  Includes ACL/RLS deny, cross-owner, type-only no allocation, rollback, replay
+  after editing, unchanged public/setup state, 20-row seek and privacy cascade
+  with reference tombstones. Component DB is not a full fresh Supabase reset.
+- Web unit tests PASS14424/203files; remaining workspace package tests PASS.
+  Typecheck/build PASS after correcting a nullable-source browser fixture type,
+  without suppressing the error or changing production behavior. Lint PASS
+  (0 errors, one existing next-editor-runtime fixture warning); tooling PASS7.
+  Actual Next+Chromium entry/editor/recovery and public Identity flows PASS in
+  dev (2/2,53.33s) and fresh compiled build (2/2,16.36s). Resource cases include
+  validation retention, multiple creation, raw edit/reload, lost acknowledgment,
+  20-row pagination and responsive360/768/1440. Controlled TLS Auth/RPC/Redis
+  fixtures plus real SQL tests are not live-provider acceptance.
+- Baseline b7b8f1ab exact push CI42302953140, Security42302953207 and
+  Guard42302953223 all PASS. New source gates PENDING until pushed/observed.
+  No complete D03/D06/D07/J5/J9 closure; publication/lifecycle/media/destination
+  and live-provider acceptance remain OPEN. Last fully closed checkpoint is S4.
+- Next dependency-ready slice: general Product Draft creation and saved editor,
+  preserving original onboarding uniqueness, then public Spill/detail and full
+  explicit publication/handoff. Deadline risk remains; this is partial delivery.
 
 ### Connected Published Identity and safe legacy Connection — 2026-11-07 WIB
 
@@ -10000,11 +10035,11 @@ where private foundations exist. No screen is production verified this run.
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
 | D02 Identity Editor | Connected Profile/style + first/add/edit links Working/browser fixture | OPEN: remaining blocks/preview/publish + provider |
-| D03 Spill Manager | No integrated screen | OPEN: search/filter/hide/restore/archive |
+| D03 Spill Manager | Mounted 20-row seek manager and exact saved Item editor; native browser fixture | OPEN: search/filter/hide/restore/archive |
 | D04 Add Product | Onboarding draft UI only | OPEN: returning owner create/publish |
 | D05 Edit Product | Existing setup Product raw Working save/reload/browser fixture | OPEN: general editor/media/destination/publish lifecycle |
-| D06 Add Resource | Onboarding draft UI only | OPEN: returning owner create/publish |
-| D07 Edit Resource | Existing setup Resource raw Working/meaning save/reload/browser fixture | OPEN: general editor/publish lifecycle |
+| D06 Add Resource | Returning Owner multiple meaningful Draft creation and lost-ack readback; SQL/browser fixture | OPEN: preview/publish + live providers |
+| D07 Edit Resource | Setup and general Resource raw Working/meaning save/reload; SQL/browser fixture | OPEN: media/destination/preview/publish lifecycle |
 | A01 Sign Up | Connected form + browser confirmation fixture | PROVIDER PENDING: live verification/resolver |
 | A02 Login | Success/failure + SSR→O01 + logout/resume browser fixture | PROVIDER PENDING: live success/session |
 | A03 Recovery | New actual SDK/action/dev+compiled browser flow | PROVIDER PENDING: inbox/expiry/replay/abuse |
