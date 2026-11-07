@@ -18,4 +18,3 @@ export function ProductDraftForm({creationId}:{creationId:string}){
   {state.status==="reload"?<p><DocumentLink href="/dashboard/spill" className="text-sm underline">Check saved Items in Spill</DocumentLink></p>:null}
  </form>;
 }
-
