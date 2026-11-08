@@ -895,6 +895,12 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     await scopedInput('form[aria-label="Find saved Item"]',"reference","#1");await b.evaluate("document.querySelector('form[aria-label=\"Find saved Item\"]').requestSubmit()");await text("Keep shaping this product.");expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill/1/edit");
     await visit("/dashboard/spill?reference=%2F%2Fevil.test","Enter a positive reference");expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill");
     await visit("/dashboard/spill?reference=1&reference=2","Enter a positive reference");
+    const countBeforeLookup=extraResources.length;
+    await visit("/dashboard/spill?reference=3","Keep shaping this resource.");expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill/3/edit");
+    await visit("/dashboard/spill?reference=%23999999","No saved Item with that reference.");expect(extraResources).toHaveLength(countBeforeLookup);
+    expect(await b.evaluate("document.querySelector('[name=reference]').value")).toBe("#999999");
+    await scopedInput('form[aria-label="Find saved Item"]',"reference","1");await b.evaluate("document.querySelector('form[aria-label=\"Find saved Item\"]').requestSubmit()");await text("Keep shaping this product.");
+
     await visit("/dashboard/spill/1/edit","Keep shaping this product.");
     const saveDestinations=()=>b.evaluate("document.querySelector('form[aria-label=\"Product destinations\"] button').click()");
     await input("destinations","javascript:alert(1)");await saveDestinations();await text("Use up to ten ordinary HTTP or HTTPS links");expect(await b.evaluate("document.querySelector('[name=destinations]').value")).toBe("javascript:alert(1)");

@@ -6,7 +6,7 @@
 
 Latest delivery: returning Product/Resource Draft creation, Spill recovery,
 Product destination and media Working editing are integrated with local browser/DB
-proofs. Identity Text/Contact add/edit and block composition Working are integrated. Baseline2645682 all8
+proofs. Identity Text/Contact add/edit and block composition Working are integrated. Baselineeca23f6 all8
 remote jobs PASS; next exact pushed gates PENDING. First Publish5Nov MISSED; full J1–J9 and
 release readiness OPEN. Next: public Spill/detail transport, remaining Identity
 preview/blocks/media and explicit Publish/universal workspace handoff.
@@ -77,6 +77,24 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Owner exact lookup missing state — 2026-11-08 WIB
+
+- [12.275](docs/product-spec/technical-architecture/12.275-owner-reference-lookup-miss-contract.md):
+  valid #/numeric lookup now resolves the exact own Item before redirecting.
+  A missing/foreign-equivalent reference has an internal D03 empty state and
+  retry form, retaining the query without pretending the catalog is empty.
+  Only one guarded Owner context is used per lookup; provider/auth failures
+  retain existing error/redirect handling. No allocation or Published change.
+- Local14,645webtests/215files plus remaining workspace tests, typecheck/lint/
+  build/7tooling PASS(0errors/one existing warning). Actual compiled Next/Chromium
+  2/2 PASS39.57s: #Product, plain Resource, missing #999999/query retention,
+  correction to found Product, invalid/duplicate input, unchanged Item count and
+  previous owner/public flows. No DB/schema/ACL/provider configuration changed.
+- Baselineeca23f6 CI42410163457/Security42410163458/Guard42410163505 all PASS.
+  New exact push gates PENDING. Full D03/J5/public J6/J7/live and release remain
+  OPEN. First Publish5Nov MISSED;8Nov partial;15Nov at risk. Next critical work
+  remains Identity media/preview/Publish and public Spill/detail/search transport.
 
 ### Owner exact-reference entry — 2026-11-08 WIB
 
