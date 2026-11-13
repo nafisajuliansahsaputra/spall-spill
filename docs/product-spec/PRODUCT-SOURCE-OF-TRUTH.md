@@ -9615,6 +9615,21 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
+### Saved Identity Working preview — 2026-11-14 WIB
+
+- [12.276](./technical-architecture/12.276-owner-saved-identity-preview-contract.md)
+  connects the private saved Working preview to D02. Existing guarded complete
+  snapshot, trusted bounded media signing and post-signing Owner/snapshot readback
+  protect the preview. Visible six-kind composition is escaped; hidden blocks
+  excluded, link/contact/Spill actions inactive. No Published/receipt/DB/grant change.
+- Actual compiled Next/Chromium2/2 PASS91.49s,8targeted tests/typecheck/lint/build/
+  7tooling and full14,653webtests/216files plus remaining packages PASS; exact
+  push gates PENDING. Detailed
+  controlled-provider evidence and first load-related timeout attempts in TODO.
+  Full D02/live in-context preview/J5/S5/S6/first Publish remain OPEN; S4 stays last
+  CLOSED / VERIFIED. First Publish5Nov missed;11/13Nov full milestones unmet;
+  15Nov release HIGH RISK, with remaining code and provider gates distinct.
+
 ### Owner exact lookup missing state — 2026-11-08 WIB
 
 - [12.275](./technical-architecture/12.275-owner-reference-lookup-miss-contract.md):

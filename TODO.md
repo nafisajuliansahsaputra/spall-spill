@@ -2,14 +2,15 @@
 
 **Status:** Execution backlog  
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
-**Last synchronized:** 2026-11-08 WIB
+**Last synchronized:** 2026-11-14 WIB
 
-Latest delivery: returning Product/Resource Draft creation, Spill recovery,
-Product destination and media Working editing are integrated with local browser/DB
-proofs. Identity Text/Contact add/edit and block composition Working are integrated. Baselineeca23f6 all8
-remote jobs PASS; next exact pushed gates PENDING. First Publish5Nov MISSED; full J1–J9 and
-release readiness OPEN. Next: public Spill/detail transport, remaining Identity
-preview/blocks/media and explicit Publish/universal workspace handoff.
+Latest delivery: connected saved Identity Working preview, Profile/style/Link/Text/
+Contact editing, composition controls, Product/Resource Draft recovery and Product
+media/destinations. Baseline941d4e6 CI/Security/Guard PASS; new exact push gates
+PENDING. First Publish5Nov MISSED;8Nov partial;11/13Nov full milestones unmet.
+Full J1–J9/25screens and release readiness OPEN;15Nov HIGH RISK. Next: explicit
+publication/universal handoff and public Spill/detail/search, remaining Identity
+media/CTA, lifecycle, operator/analytics/settings and live staging/release evidence.
 
 ## Autonomous Codex Cloud lane — 2026-10-05
 
@@ -77,6 +78,39 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Saved Identity Working preview — 2026-11-14 WIB
+
+- [12.276](docs/product-spec/technical-architecture/12.276-owner-saved-identity-preview-contract.md):
+  Identity editor now opens a private saved Working preview and returns to editing.
+  Six-kind visible composition, raw text/contact/link context and existing starter
+  styles render from the coherent guarded reader. Hidden blocks are excluded;
+  external/contact/Spill actions remain inactive, with explicit missing/media notices.
+- Only trusted selected profile/visible registered Media keys are signed, deduplicated
+  with four workers/3s deadline. Same request-bound Owner client rechecks the whole
+  saved snapshot after signing; denial/change discards it. Unavailable rows cannot
+  reuse another row's signed URL. No DB/grant/Published/provider changes.
+- Targeted8 tests, typecheck, lint(0errors/one existing warning), fresh production
+  build and7tooling PASS. Compiled Next/Chromium2/2 PASS91.49s: saved/back navigation,
+  raw text, hidden exclusion, finalized sanitizer image/no-referrer, unavailable
+  shared-asset denial, restricted redirect and360/768/1440 overflow. Screenshot
+  inspected. Final full regression PASS14,653webtests/216files plus remaining
+  workspace packages; sequential web suite171.22s.
+- First concurrent regression attempt had one existing5s oversize-test timeout;
+  browser aggregate120s also timed out under load. Controls unchanged; sequential
+  browser and full suite now PASS, including the unchanged oversize test.
+- Baseline941d4e6 CI42429130305/Security42429130298/Guard42429130363 PASS.
+  New exact push gates PENDING. Saved preview is not unsaved/live in-context
+  preview or Publish/receipt validity. Full D02/J5/J1–J9/25screens remain OPEN.
+  First Publish5Nov MISSED;8Nov partial;11/13Nov full milestones unmet;15Nov
+  release target HIGH RISK. Next: publication/universal handoff and public
+  Spill/detail/search; remaining Identity media/CTA, lifecycle/operator/analytics/
+  settings and live staging/release evidence remain open.
+- Resume audit: this fresh executor started clean on main5c2bd8d; fetched and
+  switched to exact autonomous941d4e6 before implementation. Prior uncommitted276
+  work/logs were absent and rebuilt from Git contracts. No cause inferred for the
+  historic Oct29 automation gap; original audit remains below. No Goal/schedule,
+  main/design refs, provider credentials or deployment configuration changed.
 
 ### Owner exact lookup missing state — 2026-11-08 WIB
 
@@ -10256,7 +10290,7 @@ where private foundations exist. No screen is production verified this run.
 | P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
-| D02 Identity Editor | Connected Profile/style + Link/Text/Contact creation/editing + block composition Working/browser fixture | OPEN: media/Spill CTA/preview/publish + provider |
+| D02 Identity Editor | Connected Profile/style, Link/Text/Contact editing, composition controls and saved Working preview/browser fixture | OPEN: media/Spill CTA editing, live in-context preview, publish + provider |
 | D03 Spill Manager | Mounted 20-row seek manager, #reference entry and exact saved Item editor; native browser fixture | OPEN: title search/filter/hide/restore/archive |
 | D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
 | D05 Edit Product | Setup/general raw Working, destination editing and upload/select/remove media; SQL/actual SDK/browser fixtures | OPEN: live media/safety/preview/publish lifecycle |

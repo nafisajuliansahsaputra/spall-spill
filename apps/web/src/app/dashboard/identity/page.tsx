@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { DocumentLink } from "@/components/document-link";
 import { OwnerWorkspaceHeader } from "@/components/owner-workspace-header";
 import { createProfileEditorClient } from "@/lib/workspace/profile-editor-server";
 import { createOwnerEditableIdentityWorking } from "@/lib/workspace/owner-editable-identity-working";
@@ -28,7 +29,9 @@ export default async function IdentityEditorPage() {
     <OwnerWorkspaceHeader active="identity" />
     <div className="mx-auto max-w-3xl space-y-8 py-10">
       <div><span className="eyebrow">@{page.current_handle} · Private workspace</span><h1 className="my-4 font-serif text-5xl">Your Identity, in progress.</h1>
-        <p className="text-sm leading-6">Edit your Profile, starting style and links here. Saved changes stay separate from your published Identity.</p></div>
+        <p className="text-sm leading-6">Edit your Profile, starting style and links here. Saved changes stay separate from your published Identity.</p>
+        <p className="mt-4"><DocumentLink href="/dashboard/identity/preview" className="button">Preview saved Working</DocumentLink></p>
+        <p className="mt-2 text-sm">Save edits before previewing. Only saved Working is shown.</p></div>
       <section aria-labelledby="profile-heading" className="rounded-3xl border border-neutral-300 bg-white/60 p-6">
         <h2 id="profile-heading" className="mb-5 text-2xl font-semibold">Profile</h2>
         {page.profile_text_state === "source_changed" ? <p role="status" className="mb-5 text-sm">Your source profile changed. Your saved text is retained; review it before saving against the latest profile.</p> : null}

@@ -744,6 +744,13 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     await scopedInput(contactForm,"value","Missing contact recovered");await saveContact();await text("Contact saved in Working.");
     for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width<600});expect(await b.evaluate("document.documentElement.scrollWidth <= window.innerWidth")).toBe(true);}
     const contactScreenshot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-272-contact.png",Buffer.from(contactScreenshot.data,"base64"));
+    const beforePreview=JSON.stringify(linksNow());
+    await reloadFromLink('a[href="/dashboard/identity/preview"]',"See your saved Identity.");
+    await text("Text beside Contact");
+    expect(await b.evaluate("document.querySelectorAll('[data-preview-kind=contact]').length")).toBe(3);
+    expect(await b.evaluate("document.querySelectorAll('a[href^=\"mailto:\"],a[href^=\"tel:\"],a[href^=\"javascript:\"]').length")).toBe(0);
+    expect(JSON.stringify(linksNow())).toBe(beforePreview);
+    await reloadFromLink('header a.underline[href="/dashboard/identity"]',"Your Identity, in progress.");
     const kinds=["social","generic_link","text","contact","media","spill_cta"];
     const compositionIds=kinds.map((_,i)=>`27300000-0000-4000-8000-${String(i+1).padStart(12,"0")}`);
     linkCollection={revision:1,has_more:false,next_after_position:null,blocks:kinds.map((kind,i)=>({block_id:compositionIds[i],kind,position:i+1,is_visible:true,payload_state:"missing",media_asset_state:kind==="media"?"not_selected":null,working:null}))} as unknown as NonNullable<ReturnType<typeof linksNow>>;
@@ -928,6 +935,26 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     loseAcknowledgment=true;await saveImage();await text("We couldn’t confirm this image save.");loseAcknowledgment=false;expect(await b.evaluate("document.querySelector('form[aria-label=\"Product image selection\"] button').disabled")).toBe(true);
     await reloadFromLink('a[href="/dashboard/spill/6/edit"]',"Keep shaping this product.");await until(()=>b.evaluate<boolean>("document.querySelector('img[alt=\"Saved Product primary image\"]')?.naturalWidth===16"));expect(JSON.stringify(extraResources[3]!.destinations)).toBe(destinationsBeforeImage);expect(await b.evaluate("document.querySelector('[name=sourceUrl]').value")).toBe("javascript:unfinished-product");
     for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
+    const beforeMediaPreview=linksNow();
+    linkCollection={revision:1,has_more:false,next_after_position:null,blocks:[{block_id:"27600000-0000-4000-8000-000000000001",kind:"media",position:1,is_visible:true,payload_state:"present",media_asset_state:"registered",working:{kind:"media",asset_key:selectedImages.get(6),alt_text:"Preview media"}}]} as unknown as NonNullable<ReturnType<typeof linksNow>>;
+    const mediaRow=linksNow()!.blocks[0]!;
+    linkCollection!.blocks.push({...mediaRow,block_id:"27600000-0000-4000-8000-000000000002",position:2,is_visible:false},
+      {...mediaRow,block_id:"27600000-0000-4000-8000-000000000003",position:3,media_asset_state:"unavailable"} as unknown as typeof mediaRow);
+    await visit("/dashboard/identity/preview","See your saved Identity.");
+    expect(await b.evaluate("document.querySelectorAll('[data-preview-kind=media]').length")).toBe(2);
+    expect(await b.evaluate("document.querySelectorAll('[data-preview-kind=media] img').length")).toBe(1);
+    await text("Selected media is temporarily unavailable.");
+    await until(()=>b.evaluate<boolean>("document.querySelector('img[alt=\"Preview media\"]')?.naturalWidth===16"));
+    expect(await b.evaluate("document.querySelector('img[alt=\"Preview media\"]').referrerPolicy")).toBe("no-referrer");
+    for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
+    const previewCapture=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-276-preview.png",Buffer.from(previewCapture.data,"base64"));
+    accountState="restricted";
+    await visit("/dashboard/identity/preview","Your account access is restricted");
+    expect(await b.evaluate("location.pathname")).toBe("/dashboard/account-status");
+    expect(await b.evaluate("document.querySelector('[data-preview-kind]')===null")).toBe(true);
+    accountState="active";
+    linkCollection=beforeMediaPreview;
+    await visit("/dashboard/spill/6/edit","Keep shaping this product.");
     const destinationCapture=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-269-product-destinations.png",Buffer.from(destinationCapture.data,"base64"));
     expect(calls.some(call => call.includes("publish_current"))).toBe(false);
     expect(cspErrors).toEqual([]);
