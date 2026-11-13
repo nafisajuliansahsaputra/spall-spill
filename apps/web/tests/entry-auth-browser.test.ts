@@ -18,7 +18,7 @@ async function listen(server: Server) {
   return address.port;
 }
 it("connects auth, onboarding and returning Profile Working in real Next and Chromium", async () => {
-  const calls: string[] = []; let used = false; let unavailable = false;
+  const calls: string[] = []; let used = false; let unavailable = false; let failIdentityRead = false;
   let accountState: "onboarding_incomplete" | "restricted" | "suspended" | "active" = "onboarding_incomplete";
   let failLogout = false; let budgetDenied = false; let loseAcknowledgment = false;
   const gatewayOperations: string[] = [];
@@ -243,6 +243,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
         const context = { status: "success", current_handle: setup.handle, primary_use_case: setup.useCase };
         if (data.input_operation === "resolve_current_owner_home_context") result = context;
         else if (data.input_operation === "resolve_current_owner_editable_identity_working_page") {
+          if (failIdentityRead) { response.statusCode=503; response.end('{"message":"private preview provider detail"}'); return; }
           expect(data.input_payload).toEqual({ input_request: { expected_collection_revision: null, after_position: null } });
           result = { ...context, profile_working: setup.identity, layout_working: setup.layout,
             connection_source_working: null, legacy_identity_work: "unchanged", publication_comparison: "not_assessed",
@@ -749,6 +750,15 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     await text("Text beside Contact");
     expect(await b.evaluate("document.querySelectorAll('[data-preview-kind=contact]').length")).toBe(3);
     expect(await b.evaluate("document.querySelectorAll('a[href^=\"mailto:\"],a[href^=\"tel:\"],a[href^=\"javascript:\"]').length")).toBe(0);
+    expect(JSON.stringify(linksNow())).toBe(beforePreview);
+    failIdentityRead=true;
+    await visit("/dashboard/identity/preview","We couldn’t load this preview.");
+    expect(await b.evaluate("document.querySelector('[data-preview-kind]')===null")).toBe(true);
+    expect(await b.evaluate("document.body.innerText.includes('private preview provider detail')")).toBe(false);
+    expect(JSON.stringify(linksNow())).toBe(beforePreview);
+    failIdentityRead=false;
+    await reloadFromLink('a[href="/dashboard/identity/preview"]',"See your saved Identity.");
+    await text("Text beside Contact");
     expect(JSON.stringify(linksNow())).toBe(beforePreview);
     await reloadFromLink('header a.underline[href="/dashboard/identity"]',"Your Identity, in progress.");
     const kinds=["social","generic_link","text","contact","media","spill_cta"];

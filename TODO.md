@@ -6,7 +6,7 @@
 
 Latest delivery: connected saved Identity Working preview, Profile/style/Link/Text/
 Contact editing, composition controls, Product/Resource Draft recovery and Product
-media/destinations. Baseline941d4e6 CI/Security/Guard PASS; new exact push gates
+media/destinations. Baseline430b17f CI/Security/Guard PASS; new exact push gates
 PENDING. First Publish5Nov MISSED;8Nov partial;11/13Nov full milestones unmet.
 Full J1–J9/25screens and release readiness OPEN;15Nov HIGH RISK. Next: explicit
 publication/universal handoff and public Spill/detail/search, remaining Identity
@@ -91,16 +91,19 @@ and relevant locked technical contracts.
   saved snapshot after signing; denial/change discards it. Unavailable rows cannot
   reuse another row's signed URL. No DB/grant/Published/provider changes.
 - Targeted8 tests, typecheck, lint(0errors/one existing warning), fresh production
-  build and7tooling PASS. Compiled Next/Chromium2/2 PASS91.49s: saved/back navigation,
+  build and7tooling PASS. Latest compiled Next/Chromium2/2 PASS124.35s: saved/back navigation,
   raw text, hidden exclusion, finalized sanitizer image/no-referrer, unavailable
   shared-asset denial, restricted redirect and360/768/1440 overflow. Screenshot
   inspected. Final full regression PASS14,653webtests/216files plus remaining
-  workspace packages; sequential web suite171.22s.
+  workspace packages; latest sequential web suite190.54s. Route-local loading/error
+  recovery now retries the preview itself via full GET. Browser failure of the exact
+  private reader shows no partial data/provider detail; corrected retry preserves
+  byte-identical saved Working, without mutation replay.
 - First concurrent regression attempt had one existing5s oversize-test timeout;
   browser aggregate120s also timed out under load. Controls unchanged; sequential
   browser and full suite now PASS, including the unchanged oversize test.
-- Baseline941d4e6 CI42429130305/Security42429130298/Guard42429130363 PASS.
-  New exact push gates PENDING. Saved preview is not unsaved/live in-context
+- Implementation430b17f CI43474312547/Security43474313203/Guard43474312592
+  all PASS. New recovery follow-through exact push gates PENDING. Saved preview is not unsaved/live in-context
   preview or Publish/receipt validity. Full D02/J5/J1–J9/25screens remain OPEN.
   First Publish5Nov MISSED;8Nov partial;11/13Nov full milestones unmet;15Nov
   release target HIGH RISK. Next: publication/universal handoff and public
@@ -110,7 +113,7 @@ and relevant locked technical contracts.
   switched to exact autonomous941d4e6 before implementation. Prior uncommitted276
   work/logs were absent and rebuilt from Git contracts. No cause inferred for the
   historic Oct29 automation gap; original audit remains below. No Goal/schedule,
-  main/design refs, provider credentials or deployment configuration changed.
+  remote main/design branches, provider credentials or deployment configuration changed.
 
 ### Owner exact lookup missing state — 2026-11-08 WIB
 
