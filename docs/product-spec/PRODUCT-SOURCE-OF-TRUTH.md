@@ -9615,6 +9615,27 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
+### Public Spill browse/search and exact recognition — 2026-11-14 WIB
+
+- [12.281](./technical-architecture/12.281-public-spill-recognition-routes-contract.md)
+  mounts anonymous Published-only browse/title/type/seek and exact/#reference detail
+  recognition for Product/Resource. Keyword results never auto-open; numeric-like
+  invalid inputs never fall back. Actual Product media, Resource meanings, Back/
+  scope/zero/unavailable/retry/loading states and canonical navigation are connected.
+- Default-off service-only gateway, aggregate600reads/min before SQL, strict URL-free
+  DTOs/cursors,5s abort/monotonic guard and final Identity recheck keep original
+  grants/private snapshots closed. No live config, publication or raw outbound href.
+  Local62targeted/14,838webtests/223files + workspace/7tooling and316component SQL
+  PASS. Final full typecheck/lint(0errors/one old warning)/production build and
+  compiled actual Next/Chromium8/8 PASS126.24s, including recovery/keyboard and
+  browse/both details360/768/1440, actual image and quota-before-SQL. Screenshot
+  inspected. Exact-push gates PENDING until observed.
+- Full P02/P03/P04/J6–J8 remain OPEN: native one-use outbound/trusted ingress12.43,
+  category/Featured/modular entry/publication and live providers require further work.
+  Operator/analytics/settings/full25screens/release stay OPEN;last CLOSED S4,
+  0new complete journeys CLOSED,15Nov HIGH RISK. Controlled providers/minimal Auth/
+  component PG do not prove production readiness.
+
 ### Published media admission hardening — 2026-11-14 WIB
 
 - [12.280](./technical-architecture/12.280-public-media-admission-contract.md)
@@ -9626,7 +9647,9 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
 - Final targeted96,14,776webtests/221files/7tooling/build/typecheck/lint and
   compiled Next/Chromium7/7 PASS110.86s after monotonic strengthening; clean component
   SQL98 PASS. Baselinef7e7ebb CI43580350979/Security43580351025/Guard43580351007 PASS;
-  latest media hardening push gates PENDING. Controlled providers/minimal Auth/
+  fa7717b CI43603832887 attempt2/Security43603832893/Guard43603832889 PASS.
+  Initial Media fixture startup failure retried without source/control weakening.
+  Controlled providers/minimal Auth/
   component PG are not live or full Supabase evidence. Full media/publication/
   S5/S6/J1–J9/25screens/release remain OPEN;S4 last CLOSED,15Nov HIGH RISK.
 

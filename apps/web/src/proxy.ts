@@ -3,7 +3,7 @@ import type {
 } from "next/server";
 import { NextResponse } from "next/server";
 
-import { isPublicIdentityPath, isPublicIdentityOpenPath } from "@/lib/public/identity-path";
+import { isPublicIdentityPath, isPublicIdentityOpenPath, isPublicSpillPath } from "@/lib/public/identity-path";
 
 import {
   createContentSecurityPolicy,
@@ -57,13 +57,13 @@ export async function proxy(
     contentSecurityPolicy,
   );
 
-  const publicIdentity = isPublicIdentityPath(request.nextUrl.pathname) || isPublicIdentityOpenPath(request.nextUrl.pathname);
+  const publicIdentity = isPublicIdentityPath(request.nextUrl.pathname) || isPublicIdentityOpenPath(request.nextUrl.pathname) || isPublicSpillPath(request.nextUrl.pathname);
   const response = publicIdentity ? NextResponse.next({ request: { headers: requestHeaders } })
     : await updateSession(request, requestHeaders);
   if (publicIdentity) {
     response.headers.set("Cache-Control", "private, no-store, max-age=0");
     response.headers.set("CDN-Cache-Control", "no-store");
-    response.headers.set("Referrer-Policy", isPublicIdentityPath(request.nextUrl.pathname) ? "same-origin" : "no-referrer");
+    response.headers.set("Referrer-Policy", (isPublicIdentityPath(request.nextUrl.pathname)||isPublicSpillPath(request.nextUrl.pathname)) ? "same-origin" : "no-referrer");
   }
 
   response.headers.set(

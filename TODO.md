@@ -4,14 +4,14 @@
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
 **Last synchronized:** 2026-11-14 WIB
 
-Latest delivery: admission/deadline protection for Published images and private
-Owner title/reference search with type + lifecycle filters,
-plus staged first Identity-only Publish/public page/workspace handoff and private
-Identity/Product/Resource editing. Baselinef7e7ebb CI/Security/Guard PASS; latest
-push gates PENDING. First Publish5Nov MISSED;8Nov partial;11/13Nov full milestones
-unmet. Full J1–J9/25screens/release OPEN;15Nov HIGH RISK. Next: complete publication
-bundles/media, public Spill/detail/search, lifecycle/operator/analytics/settings
-and authorized live-provider/release evidence.
+Latest delivery: staged anonymous Published Spill browse/title search/#reference
+and Product/Resource recognition routes, Published image admission hardening,
+Owner catalog filters and Identity-only first Publish/workspace handoff. Baseline
+fa7717b CI/Security/Guard PASS (CI attempt2 after fixture startup failure); current
+slice local gates PASS, exact push gates PENDING. First Publish5Nov MISSED;8Nov partial;11/13Nov full
+milestones unmet. Full J1–J9/25screens/release OPEN;15Nov HIGH RISK. Next: complete
+publication bundles/media/modular CTA and native outbound, lifecycle/operator/
+analytics/settings and authorized live-provider/release evidence.
 
 ## Autonomous Codex Cloud lane — 2026-10-05
 
@@ -85,6 +85,35 @@ and relevant locked technical contracts.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
 
+### Public Spill browse/search and exact recognition routes — 2026-11-14 WIB
+
+- [12.281](docs/product-spec/technical-architecture/12.281-public-spill-recognition-routes-contract.md):
+  real anonymous /{handle}/spill and /{handle}/spill/{reference} integrate Published
+  Product/Resource recognition, real Product images, Resource meanings,20-row seek,
+  title relevance/type filters/clear/zero-results and numeric/#reference auto-detail.
+  A sole keyword result stays in the list; malformed numeric shapes never fall
+  back to title search. Back/scope/current canonical navigation and unavailable/
+  retry/loading recovery are mounted. No forced P01 CTA or raw external href.
+- Default-off fixed service-only gateway; original readers/raw snapshots remain
+  closed. Fixed aggregate600reads/min before SQL, one5s abort/monotonic deadline,
+  strict bounded DTO/cursor/query binding, URL stripping and final Published Identity
+  recheck. No Working/Owner selectors, session refresh, public grant or live flag.
+- Targeted62 PASS, full14,838webtests/223files + other packages and7tooling PASS.
+  Initial four new clock-fixture assertions were instrumented at the wrong phase;
+  corrected phase-aware provider clock and fresh full rerun PASS, no relaxed gate.
+  SQL09155 +020/022/024/025/040 regressions261 =316 PASS in the clean PG17/minimal
+  Auth component lab; not fresh full Supabase/live-provider evidence. Final full
+  typecheck/lint(0errors/one existing warning)/production build PASS; compiled actual
+  Next/Chromium8/8 PASS126.24s: pagination/Back, exact/#ref auto-detail, one-keyword
+  list, image, unavailable browse recovery, exhausted quota before SQL, active
+  accessible filter/keyboard and browse/Product/Resource360/768/1440 with no CSP/
+  auth/private-URL leaks. Screenshot inspected. Exact-push gates PENDING.
+- Details honestly show temporary native link unavailability.12.43 trusted ingress,
+  one-use Product/Resource actions, category/Featured, modular entry/publication,
+  analytics/operator/settings/live release remain OPEN. Recognition integration is
+  not full P02/P03/P04/J6–J8 acceptance. Last CLOSED S4;0new complete journeys CLOSED;
+  first Publish5Nov MISSED,11/13Nov full milestones unmet,15Nov HIGH RISK.
+
 ### Published image admission and deadline hardening — 2026-11-14 WIB
 
 - [12.280](docs/product-spec/technical-architecture/12.280-public-media-admission-contract.md):
@@ -111,7 +140,9 @@ and relevant locked technical contracts.
   unrelated prior fixture publications; fresh rerun preserved the test unchanged.
   This is not fresh full Supabase reset/lint/advisors or live R2/Redis/DB evidence.
 - Exact f7e7ebb CI43580350979/Security43580351025/Guard43580351007 PASS. Latest
-  media hardening push gates PENDING. Browser Promise/CDP fixture handling uses
+  fa7717b CI43603832887 attempt2/Security43603832893/Guard43603832889 PASS.
+  Initial Media fixture startup failure was reproduced with unchanged controls:
+  local92/92 PASS82.97s and remote retry PASS. Browser Promise/CDP handling uses
   explicit polling;120s test/5s CDP controls unchanged.96 targeted includes expired/
   backward/nonfinite completion without timer execution. Flags remain off; Owner-approved live configuration/
   load/restore/release evidence still required. Full media publication/S5/S6/J1–J9/
@@ -10425,9 +10456,9 @@ where private foundations exist. No screen is production verified this run.
 | Screen | Current usable/integration evidence | Remaining acceptance |
 |---|---|---|
 | P01 Public Identity | Mounted Published Profile/legacy Connection; SQL + dev/compiled browser PASS; default-off | OPEN: modular blocks/media/report, live activation + J1/J4 |
-| P02 Public Spill | No integrated route | OPEN: browse/search/exact reference |
-| P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
-| P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
+| P02 Public Spill | Mounted Published browse/title search/type filter/seek/exact-reference auto-detail; component SQL + actual browser fixture | OPEN: category/Featured, modular entry, full J6/J7 + live gates |
+| P03 Product Detail | Mounted exact Published recognition/image/provider labels; component SQL + actual browser fixture | OPEN: native one-use destination transport/provider + full J6/J7 |
+| P04 Resource Detail | Mounted exact Published recognition/semantic type; component SQL + actual browser fixture | OPEN: native Open transport/provider + full J8 |
 | D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
 | D02 Identity Editor | Connected Profile/style, Link/Text/Contact editing, Spill integration creation, composition controls and saved preview/browser fixture | OPEN: media editing, live in-context preview, publish + provider |
 | D03 Spill Manager | Mounted20-row seek, saved-title/exact-reference search, type/lifecycle filters, clear/Back recovery and exact saved editor | OPEN: category/health/lifecycle actions/final ordering + provider acceptance |
@@ -10452,7 +10483,8 @@ where private foundations exist. No screen is production verified this run.
 
 J1/J4: OPEN first Identity publication; J2: OPEN Product publication + destination;
 J3: OPEN Resource publication; J5: OPEN returning workspace CRUD/publish lifecycle;
-J6: OPEN exact lookup/public route; J7: OPEN browse/search; J8: OPEN public Resource;
+J6/J7: mounted exact lookup/browse/search, OPEN native action/full journey;
+J8: mounted Resource recognition, OPEN native Open/full journey;
 J9: OPEN additive capability integration. Auth entry/recovery fixtures do not close
 any complete J1–J9 journey. Prior O01-S4 remains last CLOSED / VERIFIED checkpoint.
 

@@ -1,0 +1,18 @@
+import { expect,it } from "vitest";
+import { classifySpillQuery,decodeSpillCursor,spillPath,spillBrowseSchema,spillDetailSchema,spillQuerySchema } from "./spill-contract";
+import { isPublicSpillPath } from "./identity-path";
+const cursor={q:"needle",kind:"all" as const,rank:2,published_at:"2026-11-14T00:00:00.000000Z",reference:27};
+const row={reference:27,kind:"resource",title:"Needle",resource_type:"document",primary_image_path:null,available:false,rank:2,published_at:cursor.published_at};
+const page={status:"success",current_handle:"creator",display_name:"Creator",q:"needle",kind:"all",has_products:false,has_resources:true,items:[row],has_more:false,next_cursor:null};
+it.each(["27","#27","9007199254740991"])("classifies canonical %s as exact",q=>expect(classifySpillQuery(q)).toEqual({mode:"exact",reference:Number(q.replace('#',''))}));
+it.each(["01","#01","-27","+27","1.5","1e2","#9007199254740992","٢٧","２７"])("never searches numeric-like malformed %s",q=>expect(classifySpillQuery(q).mode).toBe("invalid_reference"));
+it.each(["","white shoes","#menu","shoe 27"])("keeps text %s keyword-selectable",q=>expect(classifySpillQuery(q).mode).toBe("keyword"));
+it("normalizes whitespace without SQL wildcard semantics",()=>expect(spillQuerySchema.parse("  Needle\t item\n ")).toBe("Needle item"));
+it("encodes a scope-bound cursor in a fixed creator path",()=>{const path=spillPath("creator","needle","all",cursor);const encoded=new URL(path,"https://fixture.test").searchParams.get("cursor");expect(decodeSpillCursor(encoded,"needle","all")).toEqual(cursor);expect(decodeSpillCursor(encoded,"other","all")).toBeNull();expect(decodeSpillCursor(encoded,"needle","resource")).toBeNull();});
+it.each(["../bad","a".repeat(1025),"e30",["e30"],null])("rejects malformed cursor %j",v=>expect(decodeSpillCursor(v,"needle","all")).toBeNull());
+it("accepts a degraded Resource without URL or synthetic image",()=>expect(spillBrowseSchema.safeParse(page).success).toBe(true));
+it.each([{...page,owner_id:"private"},{...page,items:[{...row,source_url:"https://private.test"}]},{...page,items:[row,row]},{...page,has_resources:false},{...page,has_more:true},{...page,current_handle:"dashboard"},{...page,kind:"product"},{...page,items:[{...row,primary_image_path:"/private"}]}])("rejects malformed/private catalog %j",v=>expect(spillBrowseSchema.safeParse(v).success).toBe(false));
+it("rejects browse order and malformed continuation",()=>{expect(spillBrowseSchema.safeParse({...page,items:[row,{...row,reference:28}]}).success).toBe(false);expect(spillBrowseSchema.safeParse({...page,items:Array.from({length:20},(_,i)=>({...row,reference:30-i})),has_more:true,next_cursor:{...cursor,reference:11,rank:1}}).success).toBe(false);});
+it("rejects destination URLs in detail DTOs",()=>{const detail={status:"success",current_handle:"creator",display_name:"Creator",spill_reference:27,title:"Resource",resource_type:"document",available:true};expect(spillDetailSchema.safeParse({status:"success",item_type:"resource",detail}).success).toBe(true);expect(spillDetailSchema.safeParse({status:"success",item_type:"resource",detail:{...detail,source_url:"https://source.test"}}).success).toBe(false);});
+it.each(["/creator/spill","/creator/spill/27"])("recognizes exact public path %s",p=>expect(isPublicSpillPath(p)).toBe(true));
+it.each(["/dashboard/spill","/login/spill/1","/creator/spill/01","/creator/spill/1/edit","/creator/spill/9007199254740992"])("keeps malformed/private path %s protected",p=>expect(isPublicSpillPath(p)).toBe(false));
