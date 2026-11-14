@@ -11,6 +11,7 @@ import { resolveCurrentResourceDraftState } from "@/lib/onboarding/resource-draf
 import { resolveCurrentProductPreparation } from "@/lib/onboarding/product-preparation";
 import { resolveCurrentOnboardingPreview } from "@/lib/onboarding/preview";
 import { PrivateOnboardingPreview } from "./private-preview";
+import { firstIdentityPublishAvailable } from "@/lib/onboarding/first-publish-config";
 import { PreviewConfirmationForm } from "./preview-confirmation-form";
 import {
   resolveCurrentBasicIdentityState,
@@ -776,7 +777,7 @@ export default async function OnboardingPage({
               </div>
 
               {preview?.status === "success" ? <PrivateOnboardingPreview preview={preview} profileUrl={savedProfilePreviewUrl} productImageUrl={preparedProductImageUrl} /> : null}
-              {preview?.status === "success" ? <div className="mt-5"><PreviewConfirmationForm key={preview.snapshot_hash} snapshotHash={preview.snapshot_hash} /></div> : null}
+              {preview?.status === "success" ? <div className="mt-5"><PreviewConfirmationForm key={preview.snapshot_hash} snapshotHash={preview.snapshot_hash} publishAvailable={firstIdentityPublishAvailable()} publicationBlocked={preview.identity_validation_issues.length > 0} /></div> : null}
             </>
           ) : null}
 

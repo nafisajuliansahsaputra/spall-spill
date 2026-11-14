@@ -59,7 +59,7 @@ export function PrivateOnboardingPreview({ preview, profileUrl, productImageUrl 
   const connection = preview.connection_working;
   const items = [preview.product_draft, preview.resource_draft].filter((item) => item !== null);
   return <div className="space-y-5">
-    <p className="rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm leading-6">Private preview. Review what people will see before your first publication. Nothing on this screen is public yet.</p>
+    <p className="rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm leading-6">Private preview. Review your saved Identity and Items before choosing what to publish. This preview does not change your public page.</p>
     <fieldset className="flex flex-wrap items-center gap-3">
       <legend className="mb-2 text-sm font-medium">Preview size</legend>
       {(["mobile", "desktop"] as const).map((value) => <label key={value} className="flex items-center gap-2 text-sm capitalize">
@@ -92,6 +92,6 @@ export function PrivateOnboardingPreview({ preview, profileUrl, productImageUrl 
     </section> : null}
     {preview.product_draft ? <ItemReview label="Product" draft={preview.product_draft} imageUrl={productImageUrl} /> : null}
     {preview.resource_draft ? <ItemReview label="Resource" draft={preview.resource_draft} /> : null}
-    <p className="rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm leading-6">Your work is saved privately. First publication is being completed; you can keep reviewing and editing your setup.</p>
+    <p className="rounded-xl border border-neutral-200 bg-neutral-50 p-4 text-sm leading-6">This review shows your saved setup. Publication requires a separate explicit confirmation below.</p>
   </div>;
 }

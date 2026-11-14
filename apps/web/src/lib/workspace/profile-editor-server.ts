@@ -6,17 +6,24 @@ import { createSupabaseServiceClient } from "@/lib/supabase/service";
 import { createIdentityTextEditorUpstashBudgetTransport } from "./identity-text-editor-budget-upstash";
 import { productClickBudgetScript } from "../public/product-click-budget";
 
+import { firstIdentityPublishAvailable } from "../onboarding/first-publish-config";
+
 const subjectSchema = z.string().uuid();
 const profileOperations = new Map(["resolve_current_owner_home_context", "resolve_current_owner_editable_identity_working_page", "save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working", "initialize_current_owner_blocks_from_link", "add_current_owner_link_block_working"].map(name => [name, "execute_owner_profile_editor_server"]));
 const textOperations = new Map(["initialize_current_owner_blocks_from_text", "add_current_owner_text_block_working", "save_current_owner_block_text_working"].map(name => [name, "execute_owner_text_editor_server"]));
 const contactOperations = new Map(["initialize_current_owner_blocks_from_contact", "add_current_owner_contact_block_working", "save_current_owner_block_contact_working"].map(name => [name, "execute_owner_contact_editor_server"]));
 const spillCtaOperations = new Map(["initialize_current_owner_blocks_from_spill_cta", "add_current_owner_spill_cta_block_working"].map(name => [name, "execute_owner_spill_cta_editor_server"]));
 export async function createSpillCtaEditorClient() { return createBoundWorkingClient(spillCtaOperations, "spill-cta"); }
+const firstPublishOperations = new Map([["publish_current_onboarding_identity", "execute_onboarding_publish_server"]]);
+export async function createOnboardingPublishClient() {
+  if (!firstIdentityPublishAvailable()) throw new Error("First Publish unavailable");
+  return createBoundWorkingClient(firstPublishOperations, "first-publish");
+}
 const blockOperations = new Map(["save_current_owner_block_visibility_working", "move_current_owner_block_working", "remove_current_owner_block_working"].map(name => [name, "execute_owner_block_controls_server"]));
 export async function createBlockControlsClient() { return createBoundWorkingClient(blockOperations, "blocks"); }
 export async function createContactEditorClient() { return createBoundWorkingClient(contactOperations, "contact"); }
 export async function createTextEditorClient() { return createBoundWorkingClient(textOperations, "text"); }
-const mutationOperations = new Set([...spillCtaOperations.keys(), ...textOperations.keys(), ...contactOperations.keys(), ...blockOperations.keys(), "save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working", "initialize_current_owner_blocks_from_link", "add_current_owner_link_block_working", "save_current_owner_starter_item_working", "create_current_owner_resource_draft", "create_current_owner_product_draft", "save_current_owner_product_destinations", "save_current_owner_product_image"]);
+const mutationOperations = new Set([...firstPublishOperations.keys(), ...spillCtaOperations.keys(), ...textOperations.keys(), ...contactOperations.keys(), ...blockOperations.keys(), "save_current_owner_profile_text_working", "save_current_owner_layout_working", "save_current_owner_block_link_working", "initialize_current_owner_blocks_from_link", "add_current_owner_link_block_working", "save_current_owner_starter_item_working", "create_current_owner_resource_draft", "create_current_owner_product_draft", "save_current_owner_product_destinations", "save_current_owner_product_image"]);
 const starterOperations = new Map([
   ["resolve_current_owner_home_context", "execute_owner_profile_editor_server"],
   ["resolve_current_owner_starter_recovery", "execute_owner_starter_recovery_server"],
@@ -46,7 +53,7 @@ export async function createProductImageClient(){return createBoundWorkingClient
 export async function admitProductMedia(subject:string){return admitOwnerWorking(subject,true,"product-media");}
 /** Atomic action-specific distributed quota; no process-local fallback. */
 export async function admitProfileEditor(subject: string, save: boolean) { return admitOwnerWorking(subject, save, "profile"); }
-async function admitOwnerWorking(subject: string, save: boolean, scope: "profile" | "starter" | "resource" | "product" | "product-dest" | "product-media" | "product-image" | "text" | "contact" | "blocks" | "spill-cta") {
+async function admitOwnerWorking(subject: string, save: boolean, scope: "profile" | "starter" | "resource" | "product" | "product-dest" | "product-media" | "product-image" | "text" | "contact" | "blocks" | "spill-cta" | "first-publish") {
   const deployment = process.env.SPALL_OWNER_PROFILE_BUDGET_NAMESPACE;
   if (!subjectSchema.safeParse(subject).success || !deployment || !/^[a-z][a-z0-9-]{0,23}$/.test(deployment)) return false;
   const namespace = `${scope}-${save ? "save" : "read"}-${deployment}`;
@@ -62,7 +69,7 @@ async function admitOwnerWorking(subject: string, save: boolean, scope: "profile
  * auth/state still use the normal session, and every proof stays actor-bound. */
 export async function createProfileEditorClient() { return createBoundWorkingClient(profileOperations, "profile"); }
 export async function createStarterRecoveryClient() { return createBoundWorkingClient(starterOperations, "starter"); }
-async function createBoundWorkingClient(operations: ReadonlyMap<string, string>, scope: "profile" | "starter" | "resource" | "product" | "product-dest" | "product-media" | "product-image" | "text" | "contact" | "blocks" | "spill-cta") {
+async function createBoundWorkingClient(operations: ReadonlyMap<string, string>, scope: "profile" | "starter" | "resource" | "product" | "product-dest" | "product-media" | "product-image" | "text" | "contact" | "blocks" | "spill-cta" | "first-publish") {
   const session = await createClient();
   const proof = await session.auth.getClaims();
   const parsed = subjectSchema.safeParse(proof.data?.claims?.sub);

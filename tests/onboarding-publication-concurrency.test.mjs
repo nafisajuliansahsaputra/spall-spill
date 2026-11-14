@@ -93,3 +93,29 @@ test('a destination verdict expiring while Publish waits for Owner lock never cr
     assert.equal(await query(`select revision from core.resource_drafts where owner_id='${context.ownerId}';`),'1');
   } finally { await query(`delete from auth.users where id='${context.authId}';`); }
 });
+
+const publishThroughServer = (context,receipt) => query(`begin; set local role service_role;
+ select api.execute_onboarding_publish_server('${context.authId}','publish_current_onboarding_identity',
+ jsonb_build_object('input_receipt_id','${receipt.receipt_id}','input_snapshot_hash','${receipt.snapshot_hash}')); commit;`).then(output=>jsonRows(output)[0]);
+test('fixed server publication gateway serializes duplicate intent and preserves source/Draft state',async()=>{
+ const context=await fixture(true);
+ try {
+  const review=await context.confirm();const replies=await Promise.all([publishThroughServer(context,review),publishThroughServer(context,review)]);
+  assert.equal(replies[0].status,'success');assert.deepEqual(replies[0],replies[1]);assert.equal(replies[0].item_status,null);
+  assert.equal(await query(`select count(*) from core.identity_publications where owner_id='${context.ownerId}';`),'1');
+  assert.equal(await query(`select count(*) from core.spill_item_publications where owner_id='${context.ownerId}';`),'0');
+  assert.equal(await query(`select revision from core.resource_drafts where owner_id='${context.ownerId}';`),'1');
+  await query(`update core.onboarding_preview_receipts set issued_at=now()-interval '70 minutes',expires_at=now()-interval '1 hour' where owner_id='${context.ownerId}';`);
+  assert.deepEqual(await publishThroughServer(context,review),replies[0]);
+ } finally {await query(`delete from auth.users where id='${context.authId}';`);}
+});
+test('fixed gateway repeats eligibility after Owner lock contention',async()=>{
+ const context=await fixture();
+ try {
+  const review=await context.confirm();let signalLock;const locked=new Promise(resolve=>{signalLock=resolve;});
+  const holder=query(`begin; select id from core.owners where id='${context.ownerId}' for update;select 'LOCK_HELD';select pg_sleep(1);update core.owners set account_state='restricted' where id='${context.ownerId}';commit;`,output=>{if(output.includes('LOCK_HELD'))signalLock();});
+  await Promise.race([locked,holder.then(()=>{throw Error('No observed lock');})]);
+  assert.equal((await publishThroughServer(context,review)).status,'owner_not_eligible');await holder;
+  assert.equal(await query(`select count(*) from core.identity_publications where owner_id='${context.ownerId}';`),'0');
+ } finally {await query(`delete from auth.users where id='${context.authId}';`);}
+});

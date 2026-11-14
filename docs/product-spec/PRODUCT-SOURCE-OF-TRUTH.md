@@ -9615,6 +9615,28 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
+### Explicit first Identity publication and handoff — 2026-11-14 WIB
+
+- [12.278](./technical-architecture/12.278-first-identity-publish-handoff-contract.md)
+  connects reviewed receipt + explicit Identity-only consent to12.18's transaction,
+  public-safe Published routing and D01 recovery of retained Product/Resource Drafts.
+  Default-off flag additionally requires staged public Identity/origin/budget config.
+  Fixed service-only operation, verified actor/save quota/deadline and same-Owner
+  completion proof; original RPC/table ACLs stay closed. Unknown outcome freezes
+  until full saved GET; no automatic retry or rollback/success inference.
+- Legacy first publication cannot omit modular/Profile Text/media work. Exact prior
+  receipt replay stays immutable after TTL/Working edits; account restriction wins.
+  No Item publication or full P01/modular/bundle acceptance inferred.
+- Local107 targeted/14,734webtests/219files/7tooling, SQL210/native5 and final
+  typecheck/lint/build PASS. Compiled Next/Chromium5/5 PASS117.88s: explicit consent,
+  real public route/D01 retained Drafts, lost acknowledgment GET reconciliation
+  without duplicate publication, immutable public snapshot after Working edit,
+  responsive360/768/1440 and old flows. Screenshot inspected/copy corrected. Component/controlled-provider evidence
+  does not substitute for full Supabase or authorized staging/live-provider gates.
+  Prior02e0d0f CI/Security/Guard all PASS after unchanged CI retry2. Latest push gates
+  PENDING. S4 remains last CLOSED;0new fulljourneys CLOSED. Full S5/S6/J1–J9/25screens
+  and15Nov release remain OPEN/HIGH RISK. No live flag/config/deployment change.
+
 ### Connected private Spill integration — 2026-11-14 WIB
 
 - [12.277](./technical-architecture/12.277-connected-spill-cta-working-contract.md)
@@ -9627,7 +9649,7 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   recovery without duplicate creation. Component SQL236 assertions and exact native
   file7 cases PASS. Component/controlled-provider limitations detailed in TODO;
   full Supabase/remote/live gates remain required. Baseline223595b three workflows
-  PASS; latest push gates PENDING. S4 stays last CLOSED; full D02/J5/S5/S6/J1–J9/
+  PASS;02e0d0f exact CI/Security/Guard PASS after retry2. S4 stays last CLOSED; full D02/J5/S5/S6/J1–J9/
   25screens and15Nov release remain OPEN/HIGH RISK. No Published/provider change.
 
 ### Saved Identity Working preview — 2026-11-14 WIB

@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({ session: vi.fn(), service: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.session }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
-import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient, createProductImageClient, admitProductMedia, createTextEditorClient, createContactEditorClient, createBlockControlsClient, createSpillCtaEditorClient } from "./profile-editor-server";
+import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient, createProductImageClient, admitProductMedia, createTextEditorClient, createContactEditorClient, createBlockControlsClient, createSpillCtaEditorClient, createOnboardingPublishClient } from "./profile-editor-server";
 const subject = "26000000-0000-4000-8000-000000000001";
 let denied = false;
 let calls: { url: string; body: Record<string, unknown>; headers: Headers }[];
@@ -143,4 +143,16 @@ it.each(["initialize_current_owner_blocks_from_spill_cta","add_current_owner_spi
  expect(()=>client.schema("api").rpc("publish_current_onboarding")).toThrow();
  const profile=await createProfileEditorClient();expect(()=>profile.schema("api").rpc(operation)).toThrow();
  denied=true;const before=calls.length;expect((await client.schema("api").rpc(operation,{input_intent:{}})).error).not.toBeNull();expect(calls).toHaveLength(before+1);
+});
+
+it("requires both staged flags and a valid public origin before any first Publish client I/O",async()=>{
+ for(const [flag,pub,origin] of [["false","true","https://spall.test"],["true","false","https://spall.test"],["true","true","https://spall.test/path"]]){
+ vi.stubEnv("SPALL_FIRST_IDENTITY_PUBLISH_ENABLED",flag);vi.stubEnv("SPALL_PUBLIC_IDENTITY_ENABLED",pub);vi.stubEnv("SPALL_PUBLIC_ORIGIN",origin);await expect(createOnboardingPublishClient()).rejects.toThrow();
+ }expect(calls).toEqual([]);
+});
+it("confines first Publish to one fixed operation and separate save quota",async()=>{
+ vi.stubEnv("SPALL_PUBLIC_IDENTITY_BUDGET_NAMESPACE","test");vi.stubEnv("SPALL_FIRST_IDENTITY_PUBLISH_ENABLED","true");vi.stubEnv("SPALL_PUBLIC_IDENTITY_ENABLED","true");vi.stubEnv("SPALL_PUBLIC_ORIGIN","https://spall.test");
+ const client=await createOnboardingPublishClient();await client.schema("api").rpc("publish_current_onboarding_identity",{});
+ expect(JSON.stringify(calls[0]!.body)).toContain("first-publish-save-test");expect(calls[1]!.url).toContain("/rpc/execute_onboarding_publish_server");expect(calls[1]!.body.input_subject).toBe(subject);
+ expect(()=>client.schema("api").rpc("publish_current_onboarding")).toThrow();expect(()=>client.schema("api").rpc("save_current_owner_profile_text_working")).toThrow();
 });

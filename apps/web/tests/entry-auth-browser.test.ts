@@ -17,7 +17,10 @@ async function listen(server: Server) {
   const address = server.address(); if (!address || typeof address === "string") throw new Error("Missing fixture address");
   return address.port;
 }
-it.each([false, true])("connects real Owner workflows (Spill integration only: %s)", async spillOnly => {
+it.each(["existing", "spill", "publish", "publish-lost"])("connects real Owner workflows (%s)", async scenario => {
+  const spillOnly = scenario === "spill", publishOnly = scenario.startsWith("publish"), publicationLost = scenario === "publish-lost";
+  let published: null | { name: string; bio: string | null; starter: string; handle: string } = null;
+  let confirmed = false;
   const calls: string[] = []; let used = false; let unavailable = false; let failIdentityRead = false;
   let accountState: "onboarding_incomplete" | "restricted" | "suspended" | "active" = "onboarding_incomplete";
   let failLogout = false; let budgetDenied = false; let loseAcknowledgment = false;
@@ -81,7 +84,7 @@ it.each([false, true])("connects real Owner workflows (Spill integration only: %
     }
     if (path === "/redis") {
       const command = JSON.parse(body); expect(command[0]).toBe("eval");
-      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text|contact|blocks|spill-cta)-/);
+      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text|contact|blocks|spill-cta|first-publish|public-identity)-/);
       expect(command[3]).not.toContain(user.id);
       response.end(JSON.stringify({ result: budgetDenied ? 0 : 1 })); return;
     }
@@ -98,7 +101,22 @@ it.each([false, true])("connects real Owner workflows (Spill integration only: %
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_spill_cta_editor_server" || name === "execute_owner_block_controls_server" || name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_onboarding_publish_server" || name === "execute_public_identity_server" || name === "execute_owner_spill_cta_editor_server" || name === "execute_owner_block_controls_server" || name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      if(name === "execute_public_identity_server") {
+        expect(Object.keys(data).sort()).toEqual(["input_binding","input_handle","input_operation"]);expect(data.input_operation).toBe("read");expect(data.input_binding).toBeNull();
+        if(data.input_handle!==setup.handle){response.end('{"status":"unavailable"}');return;}
+        response.end(JSON.stringify(published ? {status:"success",current_handle:published.handle,display_name:published.name,bio:published.bio,starter_key:published.starter,connection:null,has_spill:false} : {status:"unavailable"}));return;
+      }
+      if(name === "execute_onboarding_publish_server") {
+        expect(data.input_subject).toBe(user.id);expect(data.input_operation).toBe("publish_current_onboarding_identity");
+        expect(data.input_payload).toEqual({input_receipt_id:"25800000-0000-4000-8000-000000000002",input_snapshot_hash:"b".repeat(64)});
+        expect(confirmed).toBe(true);expect(published).toBeNull();expect(linkCollection).toBeNull();
+        gatewayOperations.push(data.input_operation);
+        published={name:setup.identity!.display_name,bio:setup.identity!.bio,starter:setup.layout!.starter_key,handle:setup.handle!};
+        accountState="active";setup.revision++;
+        if(publicationLost){response.statusCode=503;response.end('{"message":"fixture publication acknowledgment lost"}');return;}
+        response.end(JSON.stringify({status:"success",identity_status:"published",item_status:null,bundle:"identity_only",publication_id:"27800000-0000-4000-8000-000000000004",published_at:new Date().toISOString(),current_handle:setup.handle,spill_reference:null}));return;
+      }
       if(["create_product_media_upload_intent_server","resolve_product_media_upload_intent_server","complete_product_media_upload_server"].includes(name)){
         expect(data.input_auth_user_id).toBe(user.id);const item=[...starterItems,...extraResources].find(row=>row.reference===data.input_reference&&row.kind==="product");expect(item).toBeDefined();let result:unknown;
         if(name==="create_product_media_upload_intent_server"){
@@ -322,7 +340,7 @@ it.each([false, true])("connects real Owner workflows (Spill integration only: %
         connection_working: null, product_draft: null, resource_draft: null, snapshot_hash: "b".repeat(64),
       };
       else if (name === "confirm_current_onboarding_preview") {
-        expect(data.input_snapshot_hash).toBe("b".repeat(64));
+        expect(data.input_snapshot_hash).toBe("b".repeat(64));confirmed=true;
         result = { status: "success", receipt_id: "25800000-0000-4000-8000-000000000002", snapshot_hash: "b".repeat(64), expires_at: new Date(Date.now() + 600000).toISOString() };
       }
       else if (["claim_current_owner_handle", "set_current_owner_primary_use_case", "save_current_owner_basic_identity", "save_current_owner_starter_composition", "advance_current_owner_relevant_first_job"].includes(name)) {
@@ -364,7 +382,7 @@ it.each([false, true])("connects real Owner workflows (Spill integration only: %
     return new Response(response.body, { status: response.status, headers: response.headers });
   };`);
   const app = spawn(process.execPath, [resolve("node_modules/next/dist/bin/next"), process.env.SPALL_ENTRY_COMPILED === "1" ? "start" : "dev", "--hostname", "127.0.0.1", "--port", String(port)], {
-    env: { ...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --require=${relay}`, SUPABASE_SERVICE_ROLE_KEY: "isolated-service-role", UPSTASH_REDIS_REST_URL: "https://fixture.upstash.io", UPSTASH_REDIS_REST_TOKEN: "fixture-budget-token", SPALL_OWNER_PROFILE_BUDGET_NAMESPACE: "browser",R2_S3_ENDPOINT:`https://127.0.0.1:${providerPort}`,R2_ACCESS_KEY_ID:"fixture-r2-access",R2_SECRET_ACCESS_KEY:"fixture-r2-secret",R2_PROFILE_BUCKET:"fixture-media",MEDIA_SANITIZER_URL:`https://127.0.0.1:${providerPort}`,MEDIA_SANITIZER_SHARED_SECRET:mediaSecret, NEXT_TELEMETRY_DISABLED: "1", NODE_EXTRA_CA_CERTS: cert, NEXT_PUBLIC_SUPABASE_URL: `https://127.0.0.1:${providerPort}`, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "publishable-local-fixture" },
+    env: { ...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --require=${relay}`, SUPABASE_SERVICE_ROLE_KEY: "isolated-service-role", SPALL_FIRST_IDENTITY_PUBLISH_ENABLED:publishOnly?"true":"false",SPALL_PUBLIC_IDENTITY_ENABLED:publishOnly?"true":"false",SPALL_PUBLIC_ORIGIN:appOrigin,SPALL_PUBLIC_IDENTITY_BUDGET_NAMESPACE:"browser", UPSTASH_REDIS_REST_URL: "https://fixture.upstash.io", UPSTASH_REDIS_REST_TOKEN: "fixture-budget-token", SPALL_OWNER_PROFILE_BUDGET_NAMESPACE: "browser",R2_S3_ENDPOINT:`https://127.0.0.1:${providerPort}`,R2_ACCESS_KEY_ID:"fixture-r2-access",R2_SECRET_ACCESS_KEY:"fixture-r2-secret",R2_PROFILE_BUCKET:"fixture-media",MEDIA_SANITIZER_URL:`https://127.0.0.1:${providerPort}`,MEDIA_SANITIZER_SHARED_SECRET:mediaSecret, NEXT_TELEMETRY_DISABLED: "1", NODE_EXTRA_CA_CERTS: cert, NEXT_PUBLIC_SUPABASE_URL: `https://127.0.0.1:${providerPort}`, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "publishable-local-fixture" },
     stdio: ["ignore", "pipe", "pipe"], detached: true,
   });
   let logs = ""; app.stdout.on("data", x => { logs += String(x); }); app.stderr.on("data", x => { logs += String(x); });
@@ -390,7 +408,7 @@ it.each([false, true])("connects real Owner workflows (Spill integration only: %
     const visit = async (path: string, expected: string) => {
       const tree=await b.command<{frameTree:{frame:{loaderId:string}}}>("Page.getFrameTree");
       await b.command("Page.navigate", { url: origin + path });
-      await documentReady(expected,tree.frameTree.frame.loaderId,true);
+      try { await documentReady(expected,tree.frameTree.frame.loaderId,true); } catch(error) { throw new Error(`Navigation ${path}: ${await b.evaluate("document.body?.innerText")}`,{cause:error}); }
     };
     const reloadFromLink = async (selector: string, expected: string) => {
       const tree=await b.command<{frameTree:{frame:{loaderId:string}}}>("Page.getFrameTree");
@@ -415,6 +433,38 @@ it.each([false, true])("connects real Owner workflows (Spill integration only: %
       await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"a",code:"KeyA",windowsVirtualKeyCode:65});
       await b.command("Input.insertText",{text:value});
     };
+    if(publishOnly){
+      setup.step=5;setup.handle="fixture-creator";setup.useCase="personal";
+      setup.identity={display_name:"Published first Identity",bio:"Saved private review",profile_asset_key:null,revision:1};setup.layout={starter_key:"clean",revision:1};
+      starterItems[1]!.published_lifecycle=null;
+      const items=JSON.stringify(starterItems),identity=JSON.stringify(setup.identity),layout=JSON.stringify(setup.layout),revision=setup.revision;
+      await visit("/fixture-creator","This page is unavailable.");
+      await visit("/login","Good to have you back.");await input("email","owner@example.test");await input("password","new-password");await submit();await text("Private preview.");
+      expect(gatewayOperations).not.toContain("publish_current_onboarding_identity");
+      await b.evaluate("Array.from(document.querySelectorAll('button')).find(el=>el.textContent==='Confirm this preview').click()");await text("Ready to share your Identity?");
+      await b.evaluate("Array.from(document.querySelectorAll('button')).find(el=>el.textContent==='Publish Identity').click()");
+      expect(gatewayOperations).not.toContain("publish_current_onboarding_identity");
+      await b.evaluate("document.querySelector('[name=confirmIdentityOnly]').click()");
+      await b.evaluate("Array.from(document.querySelectorAll('button')).find(el=>el.textContent==='Publish Identity').click()");await text(publicationLost ? "We couldn’t confirm publication." : "Your Identity is published. Product and Resource Drafts remain private.");
+      expect(gatewayOperations.filter(op=>op==="publish_current_onboarding_identity")).toHaveLength(1);expect(setup.revision).toBe(revision+1);expect(JSON.stringify(starterItems)).toBe(items);expect(JSON.stringify(setup.identity)).toBe(identity);expect(JSON.stringify(setup.layout)).toBe(layout);
+      expect(await b.evaluate("Array.from(document.querySelectorAll('button')).find(el=>el.textContent==='Preview reviewed').disabled")).toBe(true);
+      expect(await b.evaluate("document.body.innerText.includes('Nothing on this screen is public yet')||document.body.innerText.includes('Nothing has been published')")).toBe(false);
+      const publicationShot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile(publicationLost?"/tmp/spall-278-publication-lost.png":"/tmp/spall-278-publication.png",Buffer.from(publicationShot.data,"base64"));
+      if(publicationLost){
+        expect(await b.evaluate("Array.from(document.querySelectorAll('button')).some(el=>el.textContent==='Publish Identity')")).toBe(false);
+        await reloadFromLink('a[href="/onboarding"]',"Pick up where you left off.");
+        expect(gatewayOperations.filter(op=>op==="publish_current_onboarding_identity")).toHaveLength(1);
+        await visit("/fixture-creator","Published first Identity");
+      }else await reloadFromLink('a[href="/fixture-creator"]',"Published first Identity");
+      expect(await b.evaluate("document.body.innerText.includes('Setup Product')||document.body.innerText.includes('Setup Resource')")).toBe(false);
+      for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
+      await visit("/dashboard","Pick up where you left off.");await text("Setup Product");await text("Setup Resource");
+      expect(await b.evaluate("document.querySelector('a[href=\"/dashboard/spill/1/edit\"]')!==null && document.querySelector('a[href=\"/dashboard/spill/2/edit\"]')!==null")).toBe(true);
+      await visit("/dashboard/spill/2/edit","Keep shaping this resource.");expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe("Setup Resource");
+      setup.identity={...setup.identity!,display_name:"New private Working name",revision:2};
+      await visit("/fixture-creator","Published first Identity");expect(await b.evaluate("document.body.innerText.includes('New private Working name')")).toBe(false);
+      expect(cspErrors).toEqual([]);return;
+    }
     if(spillOnly){
       accountState="active";setup.step=5;setup.handle="fixture-creator";setup.useCase="personal";
       setup.identity={display_name:"Spill Owner",bio:null,profile_asset_key:null,revision:1};setup.layout={starter_key:"clean",revision:1};

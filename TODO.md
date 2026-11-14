@@ -4,13 +4,13 @@
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
 **Last synchronized:** 2026-11-14 WIB
 
-Latest delivery: connected private Spill integration creation, saved Identity preview,
-Profile/style/Link/Text/Contact editing, composition controls and Product/Resource
-Draft/media/destination workflows. Baseline223595b CI/Security/Guard PASS; latest
-push gates PENDING. First Publish5Nov MISSED;8Nov partial;11/13Nov full milestones
-unmet. Full J1–J9/25screens and release readiness OPEN;15Nov HIGH RISK. Next:
-publication/universal handoff, public Spill/detail/search and Identity media;
-remaining lifecycle/operator/analytics/settings and live staging/release evidence.
+Latest delivery: default-off explicit first Identity-only Publish with public page
+and universal workspace handoff; private Spill integration/Identity editing and
+Product/Resource Draft/media/destination workflows. Baseline02e0d0f CI/Security/
+Guard PASS (CI retry2); latest push gates PENDING. First Publish5Nov MISSED;
+8Nov partial;11/13Nov full milestones unmet. Full J1–J9/25screens and release
+readiness OPEN;15Nov HIGH RISK. Next: complete publication bundles/media, public
+Spill/detail/search; lifecycle/operator/analytics/settings and live release gates.
 
 ## Autonomous Codex Cloud lane — 2026-10-05
 
@@ -79,6 +79,41 @@ and relevant locked technical contracts.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
 
+### Explicit first Identity Publish and workspace handoff — 2026-11-14 WIB
+
+- [12.278](docs/product-spec/technical-architecture/12.278-first-identity-publish-handoff-contract.md):
+  O01-S6 now offers an explicit Identity-only consent after private preview receipt.
+  Verified success shows published Identity/Items still private and explicit public
+  page/workspace links; D01 retains both setup Product/Resource Draft recoveries.
+  No automatic publish, Item fallback or successful outcome from query parameters.
+- Default-off first-Publish flag also requires staged public Identity, valid origin
+  and public budget namespace. Fixed service-only operation, strict receipt/hash,
+  literal identity_only, original RPC/table ACLs closed, subject-bound save30/min,
+  5s guarded SDK deadline/no retry, same actor/Owner incomplete→active postproof.
+  SQL holds Owner/binding through delegation, restores JWT GUCs and preserves12.18
+  exact replay after TTL/current Working changes; current restriction still wins.
+  Legacy snapshot rejects modular collection/Profile Text recovery and selected
+  Profile Media; no silent omission or claim of complete modular publication.
+- Local107 targeted tests, full14,734webtests/219files + other workspace packages,
+  7tooling tests PASS. SQL089 PASS37 and018/019/080/088 regressions PASS173 (210
+  total); exact native onboarding-publication file PASS5, including two new gateway
+  contention/replay cases. Component PG17/minimal Auth/pgTap lab limitations remain;
+  this is not local full Supabase reset/lint/advisors or live-provider evidence.
+- Final typecheck/lint(0errors/one existing warning)/build PASS. Compiled Next/
+  Chromium5/5 PASS117.88s with old flows retained: explicit consent, one Publish,
+  real public routing, both retained Drafts in D01 and Resource editor recovery,
+  immutable public snapshot after Working edit, unknown acknowledgment→frozen UI→
+  explicit GET reconciliation without duplicate publication, responsive360/768/1440
+  and no CSP errors. Screenshot inspected; pre/post-Publish copy stays truthful.
+  Existing02e0d0f exact CI43534494845 retry2, Security43534494896 and Guard43534494914
+  PASS. Original Media CI failure was a Chromium startup timeout before TLS assertion;
+  unchanged local92/92 and exact-SHA retry passed. No security controls weakened.
+- Code staging only; Owner-authorized canonical staging configuration/live checks
+  remain required. Full S5/S6/J1–J9/25screens remain OPEN, last CLOSED is S4, 0new
+  complete journeys CLOSED. Deadline15Nov HIGH RISK; remaining Product/Resource/
+  modular/media publication, public catalog/safe actions, lifecycle/analytics/
+  operator/settings and release gates are implementation work, not only credentials.
+
 ### Connected private Spill integration — 2026-11-14 WIB
 
 - [12.277](docs/product-spec/technical-architecture/12.277-connected-spill-cta-working-contract.md):
@@ -108,7 +143,7 @@ and relevant locked technical contracts.
   fresh Supabase reset/lint/advisors or live-provider evidence. CI remains unchanged
   and still runs full DB gates plus the extended native file.
 - Baseline223595b CI43525064935/Security43525064922/Guard43525064920 all PASS.
-  New exact push gates PENDING. No production configuration/credential/remote
+  Exact02e0d0f CI/Security/Guard PASS after CI retry2. No production configuration/credential/remote
   permission or main/design branch changes. First Publish/S5/S6/full D02/J5 and
   release remain OPEN; last CLOSED remains S4.15Nov HIGH RISK; remaining P0 code
   and existing staging/safety/ingress/manual release gates remain distinct.
@@ -10336,7 +10371,7 @@ where private foundations exist. No screen is production verified this run.
 | A01 Sign Up | Connected form + browser confirmation fixture | PROVIDER PENDING: live verification/resolver |
 | A02 Login | Success/failure + SSR→O01 + logout/resume browser fixture | PROVIDER PENDING: live success/session |
 | A03 Recovery | New actual SDK/action/dev+compiled browser flow | PROVIDER PENDING: inbox/expiry/replay/abuse |
-| O01 Onboarding | S1–S6 private-review browser fixture; prior S4 verified | OPEN: first Publish + public handoff |
+| O01 Onboarding | S1–S6 private review + staged Identity-only Publish/public/D01 handoff | OPEN: full bundles/media/modular + provider acceptance |
 | D08 Analytics | No integrated screen | OPEN: locked MVP metrics/data/UI |
 | D09 Settings | No integrated screen | OPEN: profile/account/security settings |
 | D10 Account Notice | Restricted/suspended + logout/retry browser fixture | OPEN: full notice/appeal acceptance |
