@@ -9615,6 +9615,24 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
+### Owner catalog search and filters — 2026-11-14 WIB
+
+- [12.279](./technical-architecture/12.279-owner-catalog-search-filter-contract.md)
+  integrates saved-title/reference search and combinable type/lifecycle filters in
+  D03, URL-addressed scope, seek continuation and clear/zero-result recovery. Saved
+  Working overrides source without changing Published lifecycle. SQL filters before
+  bounded21-row recognition retrieval; original private ACLs remain closed. Fixed
+  verified-subject gateway/read budget and guarded same-actor/context read apply.
+- Local98 targeted/14,756webtests/220files/7tooling/typecheck/lint/build and170SQL
+  PASS. Final compiled Next/Chromium6/6 PASS110.29s after sequential rerun of an
+  old-case timeout under concurrent test/build load;120s per-test gate unchanged.
+  Search/pagination/Back/invalid scope and old publication flows pass. Local
+  component/controlled provider evidence is not fresh Supabase/live-provider proof.
+  Baselineeee9e2b CI43557028787/Security43557028784/Guard43557028791 PASS; latest push
+  gates PENDING. No new publication/provider/deploy privilege or public J7 claim.
+  Full D03/category/health/lifecycle/final ordering and S5/S6/J1–J9/25screens/release
+  remain OPEN; last CLOSED S4,0new fulljourneys closed,15Nov HIGH RISK.
+
 ### Explicit first Identity publication and handoff — 2026-11-14 WIB
 
 - [12.278](./technical-architecture/12.278-first-identity-publish-handoff-contract.md)

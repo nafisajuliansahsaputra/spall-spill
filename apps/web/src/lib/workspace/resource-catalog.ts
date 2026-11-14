@@ -4,6 +4,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { normalizeExternalDestination } from "@spall-spill/external-destination-policy";
 import { resourceTypeSchema } from "@/lib/onboarding/resource-draft-contract";
 import { starterItemSchema } from "./starter-recovery";
+import { catalogFilterSchema, type CatalogFilter } from "./catalog-filter";
 import { createOwnerGuardedRead } from "./owner-guarded-read";
 const revision=z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 const uuid=z.string().uuid();
@@ -22,6 +23,21 @@ const managerItem=z.object({reference:revision,kind:z.enum(["product","resource"
 export const managerSchema=z.object({...context,items:z.array(managerItem).max(20),has_more:z.boolean(),next_before_reference:revision.nullable()}).strict()
  .refine(v=>v.items.every((item,i)=>i===0||item.reference<v.items[i-1]!.reference)
  &&(v.has_more?v.items.length===20&&v.next_before_reference===v.items.at(-1)!.reference:v.next_before_reference===null));
+export const filteredManagerSchema=z.object({filter:catalogFilterSchema,...context,items:z.array(managerItem).max(20),has_more:z.boolean(),next_before_reference:revision.nullable()}).strict().refine(v=>managerSchema.safeParse({status:v.status,current_handle:v.current_handle,primary_use_case:v.primary_use_case,items:v.items,has_more:v.has_more,next_before_reference:v.next_before_reference}).success);
+export function createFilteredCatalogReader(client:Pick<SupabaseClient,"auth"|"schema">,value:CatalogFilter){
+ const filter=catalogFilterSchema.parse(value);
+ const referenceLike=filter.q.startsWith("#")||/^[0-9]+$/.test(filter.q);
+ const number=/^#?[1-9][0-9]{0,15}$/.test(filter.q)?Number(filter.q.replace(/^#/,"")):NaN;
+ const exactReference=Number.isSafeInteger(number)&&number>0?number:null;
+ const observe=async(signal:AbortSignal)=>{
+  const reply=await client.schema("api").rpc("resolve_current_owner_spill_manager_filtered",{input_filter:filter}).abortSignal(signal);
+  if(reply.error||signal.aborted||Buffer.byteLength(JSON.stringify(reply.data),"utf8")>1048576)return null;
+  const parsed=filteredManagerSchema.safeParse(reply.data);
+  if(!parsed.success||(reply.data as {filter:CatalogFilter}).filter.q!==filter.q||JSON.stringify(parsed.data.filter)!==JSON.stringify(filter)||!parsed.data.items.every(row=>(!referenceLike||row.reference===exactReference)&&(filter.before===null||row.reference<filter.before)&&(filter.kind==="all"||row.kind===filter.kind)&&(filter.lifecycle==="all"||(filter.lifecycle==="draft"?row.published_lifecycle===null:row.published_lifecycle===filter.lifecycle))))return null;
+  return parsed.data;
+ };
+ return createOwnerGuardedRead<z.infer<typeof filteredManagerSchema>>(client,observe,(a,b)=>a.current_handle===b.current_handle&&a.primary_use_case===b.primary_use_case);
+}
 const itemSchema=z.object({...context,item:starterItemSchema.nullable()}).strict();
 export function createResourceCatalogReader(client:Pick<SupabaseClient,"auth"|"schema">,reference:number|null,exact=false){
  if(reference!==null&&!revision.safeParse(reference).success)throw Error("Invalid reference");

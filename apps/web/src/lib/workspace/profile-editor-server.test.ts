@@ -156,3 +156,5 @@ it("confines first Publish to one fixed operation and separate save quota",async
  expect(JSON.stringify(calls[0]!.body)).toContain("first-publish-save-test");expect(calls[1]!.url).toContain("/rpc/execute_onboarding_publish_server");expect(calls[1]!.body.input_subject).toBe(subject);
  expect(()=>client.schema("api").rpc("publish_current_onboarding")).toThrow();expect(()=>client.schema("api").rpc("save_current_owner_profile_text_working")).toThrow();
 });
+
+it("confines catalog search to its fixed gateway under Resource read quota",async()=>{const client=await createResourceCatalogClient();await client.schema("api").rpc("resolve_current_owner_spill_manager_filtered",{input_filter:{q:"safe",kind:"all",lifecycle:"all",before:null}});expect(JSON.stringify(calls[0]!.body)).toContain("resource-read-test");expect(calls[1]!.url).toContain("/rpc/execute_owner_catalog_search_server");expect(calls[1]!.body.input_subject).toBe(subject);});

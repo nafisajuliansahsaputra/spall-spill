@@ -17,7 +17,7 @@ async function listen(server: Server) {
   const address = server.address(); if (!address || typeof address === "string") throw new Error("Missing fixture address");
   return address.port;
 }
-it.each(["existing", "spill", "publish", "publish-lost"])("connects real Owner workflows (%s)", async scenario => {
+it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects real Owner workflows (%s)", async scenario => {
   const spillOnly = scenario === "spill", publishOnly = scenario.startsWith("publish"), publicationLost = scenario === "publish-lost";
   let published: null | { name: string; bio: string | null; starter: string; handle: string } = null;
   let confirmed = false;
@@ -101,13 +101,21 @@ it.each(["existing", "spill", "publish", "publish-lost"])("connects real Owner w
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_onboarding_publish_server" || name === "execute_public_identity_server" || name === "execute_owner_spill_cta_editor_server" || name === "execute_owner_block_controls_server" || name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_catalog_search_server" || name === "execute_onboarding_publish_server" || name === "execute_public_identity_server" || name === "execute_owner_spill_cta_editor_server" || name === "execute_owner_block_controls_server" || name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      if(name === "execute_owner_catalog_search_server"){
+        expect(data.input_subject).toBe(user.id);expect(data.input_operation).toBe("resolve_current_owner_spill_manager_filtered");expect(Object.keys(data.input_payload)).toEqual(["input_filter"]);
+        const f=data.input_payload.input_filter;expect(Object.keys(f).sort()).toEqual(["before","kind","lifecycle","q"]);
+        const referenceLike=f.q.startsWith("#")||/^[0-9]+$/.test(f.q);const exact=/^#?[1-9][0-9]{0,15}$/.test(f.q)?Number(f.q.replace(/^#/,"")):null;
+        const all=[...starterItems,...extraResources].filter(item=>(f.before===null||item.reference<f.before)&&(f.kind==="all"||item.kind===f.kind)&&(f.lifecycle==="all"||(f.lifecycle==="draft"?item.published_lifecycle===null:item.published_lifecycle===f.lifecycle))&&(!f.q||(referenceLike?item.reference===exact:item.title.toLowerCase().includes(f.q.toLowerCase())))).sort((a,b)=>b.reference-a.reference);
+        const items=all.slice(0,20).map(item=>({reference:item.reference,kind:item.kind,title_preview:item.title?.slice(0,160)??null,resource_type:item.resource_type,working_revision:item.working_revision,source_changed:item.source_changed,published_lifecycle:item.published_lifecycle}));
+        response.end(JSON.stringify({status:"success",current_handle:setup.handle,primary_use_case:setup.useCase,filter:f,items,has_more:all.length>20,next_before_reference:all.length>20?items.at(-1)!.reference:null}));return;
+      }
       if(name === "execute_public_identity_server") {
         expect(Object.keys(data).sort()).toEqual(["input_binding","input_handle","input_operation"]);expect(data.input_operation).toBe("read");expect(data.input_binding).toBeNull();
         if(data.input_handle!==setup.handle){response.end('{"status":"unavailable"}');return;}
         response.end(JSON.stringify(published ? {status:"success",current_handle:published.handle,display_name:published.name,bio:published.bio,starter_key:published.starter,connection:null,has_spill:false} : {status:"unavailable"}));return;
       }
-      if(name === "execute_onboarding_publish_server") {
+      if(name === "execute_owner_catalog_search_server" || name === "execute_onboarding_publish_server") {
         expect(data.input_subject).toBe(user.id);expect(data.input_operation).toBe("publish_current_onboarding_identity");
         expect(data.input_payload).toEqual({input_receipt_id:"25800000-0000-4000-8000-000000000002",input_snapshot_hash:"b".repeat(64)});
         expect(confirmed).toBe(true);expect(published).toBeNull();expect(linkCollection).toBeNull();
@@ -433,6 +441,28 @@ it.each(["existing", "spill", "publish", "publish-lost"])("connects real Owner w
       await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"a",code:"KeyA",windowsVirtualKeyCode:65});
       await b.command("Input.insertText",{text:value});
     };
+    if(scenario==="search"){
+      accountState="active";setup.step=5;setup.handle="fixture-creator";setup.useCase="personal";setup.identity={display_name:"Catalog Owner",bio:null,profile_asset_key:null,revision:1};setup.layout={starter_key:"clean",revision:1};
+      for(let n=0;n<27;n++)extraResources.push({reference:n+10,kind:"resource",source_revision:1,working_revision:null,source_changed:false,title:`Needle Resource ${n}`,source_url:null,resource_type:"document",published_lifecycle:null,has_primary_image:false,destinations:[]});
+      const original=JSON.stringify({setup,starterItems,extraResources});
+      await visit("/login","Good to have you back.");await input("email","owner@example.test");await input("password","new-password");await submit();await text("Pick up where you left off.");await visit("/dashboard/spill","Good things, kept here.");
+      const form='form[aria-label="Search saved Items"]';
+      const search=async(q:string,kind="all",lifecycle="all")=>{
+        await scopedInput(form,"q",q);await b.evaluate(`document.querySelector('${form} [name=kind]').value=${JSON.stringify(kind)};document.querySelector('${form} [name=lifecycle]').value=${JSON.stringify(lifecycle)};document.querySelector('${form}').requestSubmit()`);
+      };
+      await search("  NeEdLe  ","resource","draft");await text("20 matching saved Items on this page.");expect(await b.evaluate("location.search")).toContain("kind=resource");
+      for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
+      const shot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-279-manager.png",Buffer.from(shot.data,"base64"));
+      await b.evaluate("Array.from(document.querySelectorAll('nav[aria-label=\"Spill pages\"] a')).find(a=>a.textContent==='Older Items').click()");await text("7 matching saved Items on this page.");expect(await b.evaluate("location.search")).toContain("q=NeEdLe");expect(await b.evaluate("document.querySelectorAll('li a[href*=\"/edit\"]').length")).toBe(7);
+      await b.evaluate("Array.from(document.querySelectorAll('nav[aria-label=\"Spill pages\"] a')).find(a=>a.textContent==='Newest Items').click()");await text("20 matching saved Items on this page.");
+      await search("Setup Resource","resource","hidden");await text("1 matching saved Items on this page.");await text("Hidden · Working stays separate.");
+      await search("#1");await text("Search: “#1”.");expect(await b.evaluate("location.pathname")).toBe("/dashboard/spill");expect(await b.evaluate("document.querySelectorAll('li a[href*=\"/edit\"]').length")).toBe(1);
+      await b.evaluate("document.querySelector('li a[href=\"/dashboard/spill/1/edit\"]').click()");await text("Keep shaping this product.");await b.evaluate("history.back()");await text("Search: “#1”.");expect(await b.evaluate("document.querySelector('form[aria-label=\"Search saved Items\"] [name=q]').value")).toBe("#1");
+      await search("no matching title");await text("No Items match this scope.");await reloadFromLink('p[role=status] a[href="/dashboard/spill"]',"Good things, kept here.");expect(await b.evaluate(`document.querySelector('${form} [name=q]').value`)).toBe("");
+      const searches=calls.filter(path=>path.endsWith("/execute_owner_catalog_search_server")).length;
+      await visit("/dashboard/spill?kind=all&kind=resource","Check your search and filters.");expect(calls.filter(path=>path.endsWith("/execute_owner_catalog_search_server"))).toHaveLength(searches);
+      expect(JSON.stringify({setup,starterItems,extraResources})).toBe(original);expect(cspErrors).toEqual([]);return;
+    }
     if(publishOnly){
       setup.step=5;setup.handle="fixture-creator";setup.useCase="personal";
       setup.identity={display_name:"Published first Identity",bio:"Saved private review",profile_asset_key:null,revision:1};setup.layout={starter_key:"clean",revision:1};

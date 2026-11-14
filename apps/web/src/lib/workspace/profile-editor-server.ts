@@ -30,6 +30,7 @@ const starterOperations = new Map([
   ["save_current_owner_starter_item_working", "execute_owner_starter_recovery_server"],
 ]);
 const resourceOperations = new Map([
+ ["resolve_current_owner_spill_manager_filtered", "execute_owner_catalog_search_server"],
  ["resolve_current_owner_home_context", "execute_owner_profile_editor_server"],
  ["resolve_current_owner_spill_manager", "execute_owner_resource_catalog_server"],
  ["resolve_current_owner_item_recovery", "execute_owner_resource_catalog_server"],

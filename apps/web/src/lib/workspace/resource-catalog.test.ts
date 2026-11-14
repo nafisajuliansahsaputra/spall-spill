@@ -1,5 +1,5 @@
 import { expect,it,vi,afterEach } from "vitest";
-import { createResourceDraft,createResourceCatalogReader,resourceCreationSchema,managerSchema } from "./resource-catalog";
+import { createResourceDraft,createResourceCatalogReader,createFilteredCatalogReader,resourceCreationSchema,managerSchema } from "./resource-catalog";
 const subject="26700000-0000-4000-8000-000000000001",owner="26700000-0000-4000-8000-000000000002",key="26700000-0000-4000-8000-000000000010";
 const input={creation_id:key,resource_type:"portfolio",title:"Portfolio",source_url:null};
 const context={status:"success",current_handle:"resource-owner",primary_use_case:"personal"};
@@ -56,3 +56,14 @@ it("creation deadline cancels an unresponsive boundary",async()=>{
  const client={...f.client as object,auth:{getClaims:async()=>({data:{claims:{sub:subject}},error:null})},schema:()=>({rpc:()=>({abortSignal:(s:AbortSignal)=>{signal=s;return new Promise(()=>{});}})})};
  const result=createResourceDraft(client as never,input);await vi.advanceTimersByTimeAsync(5001);expect((await result).status).toBe("unavailable");expect(signal?.aborted).toBe(true);
 });
+
+const filter={q:"Private",kind:"resource" as const,lifecycle:"draft" as const,before:null};
+it("reads a twice-observed normalized filter-bound catalog with current actor proof",async()=>{const f=fixture();f.setPayload({...context,filter,items:[row],has_more:false,next_before_reference:null});expect((await createFilteredCatalogReader(f.client,filter).read()).status).toBe("success");expect(f.calls.filter(x=>x==="resolve_current_owner_spill_manager_filtered")).toHaveLength(2);});
+it.each([
+ {filter:{...filter,q:"other"}}, {filter:{...filter,q:" Private "}}, {filter:{...filter,owner_id:owner}},
+ {items:[{...row,kind:"product",resource_type:null}]}, {items:[{...row,published_lifecycle:"published"}]},
+ {items:[{...row,source_url:"private"}]}, {items:[row,row]},
+])("rejects filter/binding/scope/shape drift %j",async change=>{const f=fixture();f.setPayload({...context,filter,items:[row],has_more:false,next_before_reference:null,...change});expect((await createFilteredCatalogReader(f.client,filter).read()).status).toBe("unavailable");});
+it("does not dispatch filtered reads for a restricted actor",async()=>{const f=fixture();f.restrict();expect((await createFilteredCatalogReader(f.client,filter).read()).status).toBe("restricted");expect(f.calls).not.toContain("resolve_current_owner_spill_manager_filtered");});
+
+it("rejects wrong or malformed exact-reference results despite matching filter echo",async()=>{for(const q of ["#4","#01","9007199254740992"]){const f=fixture();const exact={...filter,q};f.setPayload({...context,filter:exact,items:[row],has_more:false,next_before_reference:null});expect((await createFilteredCatalogReader(f.client,exact).read()).status).toBe("unavailable");}});

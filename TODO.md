@@ -4,13 +4,13 @@
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
 **Last synchronized:** 2026-11-14 WIB
 
-Latest delivery: default-off explicit first Identity-only Publish with public page
-and universal workspace handoff; private Spill integration/Identity editing and
-Product/Resource Draft/media/destination workflows. Baseline02e0d0f CI/Security/
-Guard PASS (CI retry2); latest push gates PENDING. First Publish5Nov MISSED;
-8Nov partial;11/13Nov full milestones unmet. Full J1–J9/25screens and release
-readiness OPEN;15Nov HIGH RISK. Next: complete publication bundles/media, public
-Spill/detail/search; lifecycle/operator/analytics/settings and live release gates.
+Latest delivery: private Owner title/reference search with type + lifecycle filters,
+plus staged first Identity-only Publish/public page/workspace handoff and private
+Identity/Product/Resource editing. Baselineeee9e2b CI/Security/Guard PASS; latest
+push gates PENDING. First Publish5Nov MISSED;8Nov partial;11/13Nov full milestones
+unmet. Full J1–J9/25screens/release OPEN;15Nov HIGH RISK. Next: complete publication
+bundles/media, public Spill/detail/search, lifecycle/operator/analytics/settings
+and authorized live-provider/release evidence.
 
 ## Autonomous Codex Cloud lane — 2026-10-05
 
@@ -78,6 +78,35 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Owner catalog title search and operational filters — 2026-11-14 WIB
+
+- [12.279](docs/product-spec/technical-architecture/12.279-owner-catalog-search-filter-contract.md):
+  D03 searches current saved titles or exact references, combines Product/Resource
+  and Draft/Published/Hidden/Archived filters, preserves scope in seek pagination
+  and browser Back, and provides explicit zero-results/clear recovery. Invalid
+  query/filter verifies Owner access but runs no catalog search. No keyword auto-
+  open, fuzzy/wildcard interpretation, lifecycle mutation or public discovery claim.
+- New fixed service-only search gateway retains original RPC/table/view ACLs and
+  restores JWT settings; same request-bound subject, Resource read600/min budget
+  and guarded actor/context/two-observation read. SQL applies Owner/filter/seek
+  before LIMIT21, returns20 recognition rows plus bound filter, no source URLs or
+  rich destinations/media. Current Working title shadows source, even when blank.
+- Targeted98 and full14,756webtests/220files + other packages PASS;7tooling, final
+  typecheck/lint(0errors/one existing warning)/production build PASS. New SQL090
+  PASS32 plus081/082/083 regressions PASS138 (170 total). Component PG17/minimal
+  Auth/pgTap limitations remain; full fresh Supabase/remote/provider proof required.
+- First compiled search browser case PASS:20+7 seek, scoped URL, hidden Resource,
+  exact reference selection, editor/browser Back, clear and mobile360/768/1440.
+  Screenshot inspected. Final full compiled Next/Chromium6/6 PASS110.29s:
+  old flows, invalid scope recovery/no search I/O, both publication cases retained.
+  Initial concurrent unit/build/browser run exceeded unchanged120s in the old large
+  case; sequential rerun after other processes ended passed. No controls weakened.
+- Baselineeee9e2b exact CI43557028787/Security43557028784/Guard43557028791 PASS.
+  Latest push gates PENDING. Full D03 still needs category/health/operational actions
+  and final ordering; full S5/S6/J1–J9/25screens/release OPEN, last CLOSED S4,0new
+  complete journeys CLOSED.15Nov HIGH RISK; staging/ingress/safety/provider and PR
+  conflict/promotion gates unchanged. No production config/deploy/branch integration.
 
 ### Explicit first Identity Publish and workspace handoff — 2026-11-14 WIB
 
@@ -10363,7 +10392,7 @@ where private foundations exist. No screen is production verified this run.
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
 | D02 Identity Editor | Connected Profile/style, Link/Text/Contact editing, Spill integration creation, composition controls and saved preview/browser fixture | OPEN: media editing, live in-context preview, publish + provider |
-| D03 Spill Manager | Mounted 20-row seek manager, #reference entry and exact saved Item editor; native browser fixture | OPEN: title search/filter/hide/restore/archive |
+| D03 Spill Manager | Mounted20-row seek, saved-title/exact-reference search, type/lifecycle filters, clear/Back recovery and exact saved editor | OPEN: category/health/lifecycle actions/final ordering + provider acceptance |
 | D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
 | D05 Edit Product | Setup/general raw Working, destination editing and upload/select/remove media; SQL/actual SDK/browser fixtures | OPEN: live media/safety/preview/publish lifecycle |
 | D06 Add Resource | Returning Owner multiple meaningful Draft creation and lost-ack readback; SQL/browser fixture | OPEN: preview/publish + live providers |
