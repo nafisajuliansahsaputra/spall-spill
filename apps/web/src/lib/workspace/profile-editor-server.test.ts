@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({ session: vi.fn(), service: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.session }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
-import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient, createProductImageClient, admitProductMedia, createTextEditorClient, createContactEditorClient, createBlockControlsClient } from "./profile-editor-server";
+import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient, createProductImageClient, admitProductMedia, createTextEditorClient, createContactEditorClient, createBlockControlsClient, createSpillCtaEditorClient } from "./profile-editor-server";
 const subject = "26000000-0000-4000-8000-000000000001";
 let denied = false;
 let calls: { url: string; body: Record<string, unknown>; headers: Headers }[];
@@ -135,3 +135,12 @@ it("Contact budget denial never reaches service gateway",async()=>{denied=true;c
 
 it.each(["save_current_owner_block_visibility_working","move_current_owner_block_working","remove_current_owner_block_working"])("block controls scope %s with mutation quota",async operation=>{const client=await createBlockControlsClient();await client.schema("api").rpc(operation,{input_working:{}});expect(calls[1]!.url).toContain("/rpc/execute_owner_block_controls_server");expect(JSON.stringify(calls[0]!.body)).toContain("blocks-save-");expect(calls[0]!.body).toEqual(expect.arrayContaining(["30","390"]));expect(()=>client.schema("api").rpc("save_current_owner_block_text_working")).toThrow();});
 it("block controls budget denies before elevated dispatch",async()=>{denied=true;const client=await createBlockControlsClient();expect((await client.schema("api").rpc("remove_current_owner_block_working",{})).error).not.toBeNull();expect(calls).toHaveLength(1);});
+
+it.each(["initialize_current_owner_blocks_from_spill_cta","add_current_owner_spill_cta_block_working"])("Spill integration factory confines %s",async operation=>{
+ const client=await createSpillCtaEditorClient();await client.schema("api").rpc(operation,{input_intent:{}});
+ expect(calls[1]!.url).toContain("/rpc/execute_owner_spill_cta_editor_server");expect(calls[1]!.body.input_subject).toBe(subject);
+ expect(JSON.stringify(calls[0]!.body)).toContain("spill-cta-save-");expect(JSON.stringify(calls[0]!.body)).toContain('"30"');
+ expect(()=>client.schema("api").rpc("publish_current_onboarding")).toThrow();
+ const profile=await createProfileEditorClient();expect(()=>profile.schema("api").rpc(operation)).toThrow();
+ denied=true;const before=calls.length;expect((await client.schema("api").rpc(operation,{input_intent:{}})).error).not.toBeNull();expect(calls).toHaveLength(before+1);
+});

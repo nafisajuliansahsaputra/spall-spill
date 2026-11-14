@@ -9615,6 +9615,21 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
+### Connected private Spill integration — 2026-11-14 WIB
+
+- [12.277](./technical-architecture/12.277-connected-spill-cta-working-contract.md)
+  connects explicit own-Spill CTA initialization/append to D02, existing guarded
+  SDK/atomic SQL, service-only fixed gateway, subject-bound quota and shared CAS.
+  Visibility/order/removal reuse existing composition controls. Saved preview
+  excludes hidden integrations; no public link/label/eligibility or Publish inferred.
+- Local14,680webtests/217files,7tooling/typecheck/lint/build PASS. Compiled browser
+  3/3 PASS110.09s covers hidden init/append/preview, stale/cross-editor and lost-ack
+  recovery without duplicate creation. Component SQL236 assertions and exact native
+  file7 cases PASS. Component/controlled-provider limitations detailed in TODO;
+  full Supabase/remote/live gates remain required. Baseline223595b three workflows
+  PASS; latest push gates PENDING. S4 stays last CLOSED; full D02/J5/S5/S6/J1–J9/
+  25screens and15Nov release remain OPEN/HIGH RISK. No Published/provider change.
+
 ### Saved Identity Working preview — 2026-11-14 WIB
 
 - [12.276](./technical-architecture/12.276-owner-saved-identity-preview-contract.md)

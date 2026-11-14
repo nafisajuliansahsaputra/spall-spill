@@ -79,3 +79,29 @@ test('Owner restriction committed while allocator waits wins before any initiali
   assert.equal((await execute(true)).status,'owner_not_eligible'); await held;
   assert.equal(await query(`select count(*) from core.identity_block_collections_working where owner_id='${owners[0]}';`),'0');
 });
+
+const executeGateway = (initialize, actor = actors[0]) => query(`begin; set local role service_role;
+  set local request.jwt.claim.sub='${actors[1]}';
+  select api.execute_owner_spill_cta_editor_server('${actor}', '${initialize ? 'initialize_current_owner_blocks_from_spill_cta' : 'add_current_owner_spill_cta_block_working'}',
+    '${JSON.stringify({input_intent:intent(initialize)})}');
+  select current_setting('request.jwt.claim.sub'); select pg_sleep(0.3); commit;`).then(output => {
+    assert.ok(output.split('\n').includes(actors[1]), 'Gateway restores ambient subject after each real transaction');
+    return result(output);
+  });
+test('fixed server gateway serializes initialization and append without duplicate markers', async () => {
+  const initialized = await Promise.all([executeGateway(true), executeGateway(true)]);
+  assert.deepEqual(initialized.map(reply => reply.status).sort(), ['already_initialized', 'success']);
+  const appended = await Promise.all([executeGateway(false), executeGateway(false)]);
+  assert.deepEqual(appended.map(reply => reply.status).sort(), ['stale_write', 'success']);
+  assert.equal((await executeGateway(false)).status, 'stale_write');
+  assert.equal(await query(`select count(*)||':'||max(c.revision) from core.identity_block_spill_cta_working m join core.identity_block_collections_working c using(owner_id) where m.owner_id='${owners[0]}';`), '2:2');
+});
+test('fixed server gateway keeps concurrent subjects isolated from the ambient subject', async () => {
+  const replies = await Promise.all(actors.map(actor => executeGateway(true, actor)));
+  assert.ok(replies.every(reply => reply.status === 'success'));
+  assert.notEqual(replies[0].block_id, replies[1].block_id);
+  for (let index = 0; index < owners.length; index++) {
+    assert.equal(await query(`select count(*) from core.identity_block_spill_cta_working where owner_id='${owners[index]}' and block_id='${replies[index].block_id}';`), '1');
+    assert.equal(await query(`select count(*) from core.identity_block_spill_cta_working where owner_id='${owners[index]}' and block_id='${replies[1-index].block_id}';`), '0');
+  }
+});

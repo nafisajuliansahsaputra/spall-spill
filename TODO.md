@@ -4,13 +4,13 @@
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
 **Last synchronized:** 2026-11-14 WIB
 
-Latest delivery: connected saved Identity Working preview, Profile/style/Link/Text/
-Contact editing, composition controls, Product/Resource Draft recovery and Product
-media/destinations. Baseline430b17f CI/Security/Guard PASS; new exact push gates
-PENDING. First Publish5Nov MISSED;8Nov partial;11/13Nov full milestones unmet.
-Full J1–J9/25screens and release readiness OPEN;15Nov HIGH RISK. Next: explicit
-publication/universal handoff and public Spill/detail/search, remaining Identity
-media/CTA, lifecycle, operator/analytics/settings and live staging/release evidence.
+Latest delivery: connected private Spill integration creation, saved Identity preview,
+Profile/style/Link/Text/Contact editing, composition controls and Product/Resource
+Draft/media/destination workflows. Baseline223595b CI/Security/Guard PASS; latest
+push gates PENDING. First Publish5Nov MISSED;8Nov partial;11/13Nov full milestones
+unmet. Full J1–J9/25screens and release readiness OPEN;15Nov HIGH RISK. Next:
+publication/universal handoff, public Spill/detail/search and Identity media;
+remaining lifecycle/operator/analytics/settings and live staging/release evidence.
 
 ## Autonomous Codex Cloud lane — 2026-10-05
 
@@ -78,6 +78,40 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Connected private Spill integration — 2026-11-14 WIB
+
+- [12.277](docs/product-spec/technical-architecture/12.277-connected-spill-cta-working-contract.md):
+  D02 now explicitly creates the first/appended own-Spill integration in Working,
+  with visibility, acknowledged shared CAS base, Add another, and full saved GET
+  recovery. Existing composition controls own hide/show/order/remove. Preview
+  excludes hidden integrations and keeps public actions inactive. No URL/handle/
+  public CTA label input or publication/Spill activation inference.
+- Two-operation service-only gateway, original private ACLs retained, verified
+  request-bound subject and spill-cta save30/min quota. Strict singleton form,
+  fixed semantic payload, no writes on GET/fallback or replay. Stale/unknown/newer
+  cross-editor revisions freeze; lost acknowledgments reconcile without duplicates.
+  Valid integrations now have an accurate Owner description instead of false missing
+  content or internal target-code output. No mutable CTA content/label decision.
+- Targeted78 tests PASS; full14,680webtests/217files plus remaining packages and
+  7tooling PASS. Final typecheck/lint(0errors/one existing warning)/production build
+  PASS. Actual compiled Next/Chromium3/3 PASS110.09s: explicit hidden init, visible
+  append, own saved preview, cross-Text freeze with retained choice, stale and
+  lost-ack nonduplication, exact readback, responsive360/768/1440 and old journeys.
+  Existing large flow/assertions remain; new integration case runs separately
+  under unchanged120s per-test timeout. Screenshot inspected; internal code removed.
+- Component PostgreSQL17: new088 PASS29 and066/085/086/087 regressions PASS207
+  (236 total). Exact committed native CTA file PASS7, including two new actual
+  server-gateway race/isolation cases; extra lab contention confirms post-lock
+  restriction and GUC restoration. Lab uses minimal Auth/pgTap1.3.5 source21ceed1,
+  excludes only two cron installers from local component provisioning, and is not
+  fresh Supabase reset/lint/advisors or live-provider evidence. CI remains unchanged
+  and still runs full DB gates plus the extended native file.
+- Baseline223595b CI43525064935/Security43525064922/Guard43525064920 all PASS.
+  New exact push gates PENDING. No production configuration/credential/remote
+  permission or main/design branch changes. First Publish/S5/S6/full D02/J5 and
+  release remain OPEN; last CLOSED remains S4.15Nov HIGH RISK; remaining P0 code
+  and existing staging/safety/ingress/manual release gates remain distinct.
 
 ### Saved Identity Working preview — 2026-11-14 WIB
 
@@ -10293,7 +10327,7 @@ where private foundations exist. No screen is production verified this run.
 | P03 Product Detail | Isolated renderer/click foundations | OPEN: real route + destination/provider |
 | P04 Resource Detail | Isolated recognition/Open foundations | OPEN: real route + source/provider |
 | D01 Owner Home | Guarded Home/setup Item recovery + explicit View public Identity/browser fixture | OPEN: full overview/universal publication handoff |
-| D02 Identity Editor | Connected Profile/style, Link/Text/Contact editing, composition controls and saved Working preview/browser fixture | OPEN: media/Spill CTA editing, live in-context preview, publish + provider |
+| D02 Identity Editor | Connected Profile/style, Link/Text/Contact editing, Spill integration creation, composition controls and saved preview/browser fixture | OPEN: media editing, live in-context preview, publish + provider |
 | D03 Spill Manager | Mounted 20-row seek manager, #reference entry and exact saved Item editor; native browser fixture | OPEN: title search/filter/hide/restore/archive |
 | D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
 | D05 Edit Product | Setup/general raw Working, destination editing and upload/select/remove media; SQL/actual SDK/browser fixtures | OPEN: live media/safety/preview/publish lifecycle |

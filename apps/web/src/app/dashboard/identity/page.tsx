@@ -5,6 +5,7 @@ import { OwnerWorkspaceHeader } from "@/components/owner-workspace-header";
 import { createProfileEditorClient } from "@/lib/workspace/profile-editor-server";
 import { createOwnerEditableIdentityWorking } from "@/lib/workspace/owner-editable-identity-working";
 import { resolveCurrentOwnerState } from "@/lib/auth/owner-state";
+import { SpillIntegrationEditor } from "./spill-cta-editor";
 import { BlockControls } from "./block-controls";
 import { SavedLinksEditor } from "./links-editor";
 import { ContactBlocksEditor } from "./contact-editor";
@@ -42,7 +43,7 @@ export default async function IdentityEditorPage() {
         <LayoutWorkingForm starterKey={page.layout_working.starter_key} revision={page.layout_working.revision} />
       </section>
       <BlockControls revision={page.collection?.revision ?? null} blocks={(page.collection?.blocks ?? []).map(block => {
-        const content = block.working === null ? null : "text" in block.working ? block.working.text : "label" in block.working ? block.working.label : "title" in block.working ? block.working.title : null;
+        const content = block.working === null ? null : block.working.kind === "spill_cta" ? "Your own Spill" : "text" in block.working ? block.working.text : "label" in block.working ? block.working.label : "title" in block.working ? block.working.title : null;
         return { id: block.block_id, kind: block.kind, visible: block.is_visible, label: content ? Array.from(content).slice(0, 100).join("") : "Content not saved or label not set" };
       })} />
       {
@@ -63,14 +64,18 @@ export default async function IdentityEditorPage() {
           block.kind === "contact" ? [{ blockId: block.block_id, isVisible: block.is_visible, contactType: block.working?.contact_type ?? null,
             label: block.working?.label ?? null, value: block.working?.value ?? null, missing: block.working === null }] : [])} />
       </section>
+      <section aria-labelledby="spill-integration-heading" className="space-y-4">
+        <h2 id="spill-integration-heading" className="text-2xl font-semibold">Spill integration</h2>
+        <SpillIntegrationEditor revision={page.collection?.revision ?? null} />
+      </section>
       <section aria-labelledby="other-heading" className="space-y-4">
         <h2 id="other-heading" className="text-2xl font-semibold">Other saved parts</h2>
-        <p className="text-sm leading-6">These parts are preserved. Editing them and publishing updates are still being connected.</p>
+        <p className="text-sm leading-6">These parts are preserved. Media editing and publishing updates are still being connected. Missing integration content is retained; remove it explicitly in Block composition before replacing it.</p>
         <p className="text-sm">Photo: {page.profile_working.profile_asset_key ? "Selected" : "Not selected"}</p>
         {page.connection_source_working ? <p className="break-all text-sm">Saved connection: {page.connection_source_working.destination_url}</p> : null}
         {page.collection?.blocks.length ? <ul className="space-y-3">{page.collection.blocks.filter(block => block.kind !== "social" && block.kind !== "generic_link" && block.kind !== "text" && block.kind !== "contact").map(block => <li key={block.block_id} className="rounded-xl border border-neutral-300 p-4 text-sm">
-          <p className="font-semibold">{block.kind.replaceAll("_", " ")} · {block.is_visible ? "Visible in Working" : "Hidden in Working"}</p>
-          {block.working ? <dl className="mt-2 space-y-2">{Object.entries(block.working).filter(([key]) => !["kind", "asset_key"].includes(key)).map(([key,value]) => <div key={key}><dt>{key.replaceAll("_", " ")}</dt><dd className="whitespace-pre-wrap break-all">{typeof value === "string" ? value : "Not set"}</dd></div>)}</dl> : <p>Content has not been saved yet.</p>}
+          <p className="font-semibold">{block.kind === "spill_cta" ? "Spill integration" : "Media"} · {block.is_visible ? "Visible in Working" : "Hidden in Working"}</p>
+          {block.working?.kind === "spill_cta" ? <p className="mt-2">Connects to your own Spill. Public availability is checked separately before publishing.</p> : block.working ? <dl className="mt-2 space-y-2">{Object.entries(block.working).filter(([key]) => !["kind", "asset_key"].includes(key)).map(([key,value]) => <div key={key}><dt>{key.replaceAll("_", " ")}</dt><dd className="whitespace-pre-wrap break-all">{typeof value === "string" ? value : "Not set"}</dd></div>)}</dl> : <p>Content has not been saved yet.</p>}
         </li>)}</ul> : <p className="text-sm">No modular blocks saved yet.</p>}
       </section>
     </div>

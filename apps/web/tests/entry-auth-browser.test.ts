@@ -17,14 +17,14 @@ async function listen(server: Server) {
   const address = server.address(); if (!address || typeof address === "string") throw new Error("Missing fixture address");
   return address.port;
 }
-it("connects auth, onboarding and returning Profile Working in real Next and Chromium", async () => {
+it.each([false, true])("connects real Owner workflows (Spill integration only: %s)", async spillOnly => {
   const calls: string[] = []; let used = false; let unavailable = false; let failIdentityRead = false;
   let accountState: "onboarding_incomplete" | "restricted" | "suspended" | "active" = "onboarding_incomplete";
   let failLogout = false; let budgetDenied = false; let loseAcknowledgment = false;
   const gatewayOperations: string[] = [];
   let overlay: null | { display_name: string | null; bio: string | null; revision: number; source_profile_revision: number } = null;
   function currentOverlay(): typeof overlay { return overlay; }
-  type FixtureLink = {block_id:string;kind:"social"|"generic_link"|"text"|"contact";position:number;is_visible:boolean;payload_state:"present";media_asset_state:null;working:{kind:"social"|"generic_link"|"text"|"contact";title?:string|null;social_platform?:string|null;destination_url?:string|null;text?:string|null;contact_type?:"email"|"whatsapp"|"phone"|null;label?:string|null;value?:string|null}};
+  type FixtureLink = {block_id:string;kind:"social"|"generic_link"|"text"|"contact"|"spill_cta";position:number;is_visible:boolean;payload_state:"present";media_asset_state:null;working:{kind:"social"|"generic_link"|"text"|"contact"|"spill_cta";title?:string|null;social_platform?:string|null;destination_url?:string|null;text?:string|null;contact_type?:"email"|"whatsapp"|"phone"|null;label?:string|null;value?:string|null;target?:"owner_spill"}};
   let linkCollection:null|{revision:number;blocks:FixtureLink[];has_more:false;next_after_position:null}=null;
   const linksNow=()=>linkCollection;let nextLink=100;
 
@@ -81,7 +81,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path === "/redis") {
       const command = JSON.parse(body); expect(command[0]).toBe("eval");
-      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text|contact|blocks)-/);
+      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text|contact|blocks|spill-cta)-/);
       expect(command[3]).not.toContain(user.id);
       response.end(JSON.stringify({ result: budgetDenied ? 0 : 1 })); return;
     }
@@ -98,7 +98,7 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_block_controls_server" || name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_spill_cta_editor_server" || name === "execute_owner_block_controls_server" || name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
       if(["create_product_media_upload_intent_server","resolve_product_media_upload_intent_server","complete_product_media_upload_server"].includes(name)){
         expect(data.input_auth_user_id).toBe(user.id);const item=[...starterItems,...extraResources].find(row=>row.reference===data.input_reference&&row.kind==="product");expect(item).toBeDefined();let result:unknown;
         if(name==="create_product_media_upload_intent_server"){
@@ -188,6 +188,20 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
           }
         }else throw new Error("Unexpected starter gateway operation");
         response.end(JSON.stringify(result));return;
+      }
+      if(name==="execute_owner_spill_cta_editor_server"){
+        expect(data.input_subject).toBe(user.id);expect(Object.keys(data.input_payload)).toEqual(["input_intent"]);gatewayOperations.push(data.input_operation);
+        const value=data.input_payload.input_intent;expect(value.spill_cta_working).toEqual({kind:"spill_cta",target:"owner_spill"});let result:unknown;
+        const first=data.input_operation==="initialize_current_owner_blocks_from_spill_cta";
+        expect(["initialize_current_owner_blocks_from_spill_cta","add_current_owner_spill_cta_block_working"]).toContain(data.input_operation);
+        if(first&&linkCollection!==null)result={status:"already_initialized"};
+        else if(!first&&(!linkCollection||value.base_collection_revision!==linkCollection.revision))result={status:"stale_write"};
+        else{
+          const blocks=linkCollection?.blocks??[],block_id=`27700000-0000-4000-8000-${String(nextLink++).padStart(12,"0")}`;
+          blocks.push({block_id,kind:"spill_cta",position:blocks.reduce((max,row)=>Math.max(max,row.position),0)+1,is_visible:value.is_visible,payload_state:"present",media_asset_state:null,working:{kind:"spill_cta",target:"owner_spill"}});
+          linkCollection={revision:(linkCollection?.revision??0)+1,blocks,has_more:false,next_after_position:null};result={status:"success",block_id,collection_revision:linkCollection.revision};
+          if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture CTA acknowledgment lost"}');return;}
+        }response.end(JSON.stringify(result));return;
       }
       if(name==="execute_owner_block_controls_server"){
         expect(data.input_subject).toBe(user.id);gatewayOperations.push(data.input_operation);const value=data.input_payload.input_working;
@@ -395,6 +409,40 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     };
     const submit = async () => { await b.evaluate(`document.querySelector('form:not([aria-label="Sign out"])').requestSubmit()`); };
     const text = async (value: string) => until(() => b.evaluate<boolean>(`document.body?.innerText.includes(${JSON.stringify(value)}) === true`), 20000);
+    const scopedInput=async(selector:string,name:string,value:string)=>{
+      await b.evaluate(`document.querySelector(${JSON.stringify(selector+' [name="'+name+'"]')}).focus()`);
+      await b.command("Input.dispatchKeyEvent",{type:"keyDown",key:"a",code:"KeyA",modifiers:2,windowsVirtualKeyCode:65});
+      await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"a",code:"KeyA",windowsVirtualKeyCode:65});
+      await b.command("Input.insertText",{text:value});
+    };
+    if(spillOnly){
+      accountState="active";setup.step=5;setup.handle="fixture-creator";setup.useCase="personal";
+      setup.identity={display_name:"Spill Owner",bio:null,profile_asset_key:null,revision:1};setup.layout={starter_key:"clean",revision:1};
+      const original=JSON.stringify(setup),items=JSON.stringify(starterItems);
+      await visit("/login","Good to have you back.");await input("email","owner@example.test");await input("password","new-password");await submit();await text("Pick up where you left off.");
+      await visit("/dashboard/identity","Spill integration");
+      const form='form[aria-label="New Spill integration"]';
+      const add=()=>b.evaluate(`document.querySelector('${form} button[type=submit]').click()`);
+      await b.evaluate(`document.querySelector('${form} [name=visibility]').value='false';document.querySelector('${form} [name=visibility]').dispatchEvent(new Event('change',{bubbles:true}))`);
+      await add();await text("Spill integration added to Working.");expect(linksNow()!.revision).toBe(1);expect(linksNow()!.blocks).toHaveLength(1);expect(linksNow()!.blocks[0]!.is_visible).toBe(false);
+      expect(await b.evaluate(`document.querySelector('${form} button[type=submit]').disabled`)).toBe(true);
+      await b.evaluate(`Array.from(document.querySelectorAll('${form} button')).find(button=>button.textContent==='Add another integration').click()`);
+      await add();await until(()=>linksNow()?.revision===2);await text("Spill integration added to Working.");expect(linksNow()!.blocks).toHaveLength(2);expect(linksNow()!.blocks[1]!.is_visible).toBe(true);
+      const reload=()=>reloadFromLink('[data-spill-cta-reload] a',"Spill integration");await reload();
+      expect(await b.evaluate("document.querySelectorAll('[data-composition-block]').length")).toBe(2);
+      expect(await b.evaluate("document.body.innerText.includes('owner_spill')")).toBe(false);await text("Your own Spill");
+      await reloadFromLink('a[href="/dashboard/identity/preview"]',"See your saved Identity.");expect(await b.evaluate("document.querySelectorAll('[data-preview-kind=spill_cta]').length")).toBe(1);expect(await b.evaluate("document.querySelector('a[href=\"/fixture-creator/spill\"]')===null")).toBe(true);
+      await reloadFromLink('header a.underline[href="/dashboard/identity"]',"Spill integration");
+      await b.evaluate(`document.querySelector('${form} [name=visibility]').value='false';document.querySelector('${form} [name=visibility]').dispatchEvent(new Event('change',{bubbles:true}))`);
+      await scopedInput('form[aria-label="New Text Working"]',"text","Text alongside integration");await b.evaluate("document.querySelector('form[aria-label=\"New Text Working\"] button[type=submit]').click()");await text("Text block added to Working.");await text("Reload saved work to reconcile this integration");expect(await b.evaluate(`document.querySelector('${form} [name=visibility]').value`)).toBe("false");
+      await reload();linksNow()!.revision+=1;await add();await text("We couldn’t confirm this Spill integration.");expect(linksNow()!.blocks.filter(row=>row.kind==="spill_cta")).toHaveLength(2);
+      await reload();loseAcknowledgment=true;const before=gatewayOperations.filter(op=>op==="add_current_owner_spill_cta_block_working").length;await add();await text("We couldn’t confirm this Spill integration.");loseAcknowledgment=false;
+      expect(gatewayOperations.filter(op=>op==="add_current_owner_spill_cta_block_working")).toHaveLength(before+1);expect(linksNow()!.blocks.filter(row=>row.kind==="spill_cta")).toHaveLength(3);expect(await b.evaluate(`document.querySelector('${form} button[type=submit]').disabled`)).toBe(true);
+      await reload();expect(linksNow()!.blocks.filter(row=>row.kind==="spill_cta")).toHaveLength(3);expect(JSON.stringify(setup)).toBe(original);expect(JSON.stringify(starterItems)).toBe(items);
+      for(const width of [360,768,1440]){await b.command("Emulation.setDeviceMetricsOverride",{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate("document.documentElement.scrollWidth<=innerWidth")).toBe(true);}
+      const shot=await b.command<{data:string}>("Page.captureScreenshot",{format:"png",captureBeyondViewport:true});await writeFile("/tmp/spall-277-integration.png",Buffer.from(shot.data,"base64"));
+      expect(calls.some(call=>call.includes("publish_current"))).toBe(false);expect(cspErrors).toEqual([]);return;
+    }
     for (const width of [360, 768, 1440]) {
       await b.command("Emulation.setDeviceMetricsOverride", { width, height: 950, deviceScaleFactor: 1, mobile: width < 600 });
       await visit("/", "A little you.");
@@ -582,12 +630,6 @@ it("connects auth, onboarding and returning Profile Working in real Next and Chr
     }
     expect(errors.length).toBe(errorsBeforeEditor);
     const creationForm='form[aria-label="New link Working"]';
-    const scopedInput=async(selector:string,name:string,value:string)=>{
-      await b.evaluate(`document.querySelector(${JSON.stringify(selector+' [name="'+name+'"]')}).focus()`);
-      await b.command("Input.dispatchKeyEvent",{type:"keyDown",key:"a",code:"KeyA",modifiers:2,windowsVirtualKeyCode:65});
-      await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"a",code:"KeyA",windowsVirtualKeyCode:65});
-      await b.command("Input.insertText",{text:value});
-    };
     const createLink=async()=>{await b.evaluate(`document.querySelector('${creationForm}').requestSubmit()`);};
     const anotherLink=async()=>{await b.evaluate(`document.querySelector('${creationForm} button[type="button"]').click()`);};
     const chooseSecond=async(name:string)=>{
