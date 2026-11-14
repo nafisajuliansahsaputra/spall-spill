@@ -4,15 +4,21 @@
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
 **Last synchronized:** 2026-11-14 WIB
 
-Latest delivery: private Owner title/reference search with type + lifecycle filters,
+Latest delivery: admission/deadline protection for Published images and private
+Owner title/reference search with type + lifecycle filters,
 plus staged first Identity-only Publish/public page/workspace handoff and private
-Identity/Product/Resource editing. Baselineeee9e2b CI/Security/Guard PASS; latest
+Identity/Product/Resource editing. Baselinef7e7ebb CI/Security/Guard PASS; latest
 push gates PENDING. First Publish5Nov MISSED;8Nov partial;11/13Nov full milestones
 unmet. Full J1–J9/25screens/release OPEN;15Nov HIGH RISK. Next: complete publication
 bundles/media, public Spill/detail/search, lifecycle/operator/analytics/settings
 and authorized live-provider/release evidence.
 
 ## Autonomous Codex Cloud lane — 2026-10-05
+
+Observed14Nov resume: tools previously reported environment ready before execution
+returned no usable environment; subsequent supplied context restored access. At
+14:13UTC WIP/HEAD remained intact and final gate logs had completed09:46UTC. No
+reset/automation duplication or claim that historical gaps were caused by quota.
 
 This is an execution-mode checkpoint, not new product authority. Product behavior
 continues to come from the canonical Product Source of Truth, locked User Flows,
@@ -78,6 +84,38 @@ and relevant locked technical contracts.
   the environment and bounded cycle above are proven healthy.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
+
+### Published image admission and deadline hardening — 2026-11-14 WIB
+
+- [12.280](docs/product-spec/technical-architecture/12.280-public-media-admission-contract.md):
+  audit found anonymous image endpoints could reach elevated SQL/R2 without budget.
+  Identity/Product media now share a default-off, deployment-scoped60GET/min Redis
+  ceiling before SQL/storage. No caller partitions, local fallback or application
+  replay. This is aggregate overload protection, not trusted viewer fairness or a
+  replacement for12.43 Product/Resource outbound ingress provenance.
+- One5s aggregate guard spans admission, initial Published descriptor, canonical
+  storage and final exact Published recheck, with real SDK abort/no-store/
+  redirect:error, merged object cancellation and monotonic phase checks. Late,
+  backward/nonfinite time cannot deliver bytes even before timer callbacks run.
+  Existing MIME/size/WebP framing, stream release, snapshot revocation and uniform
+  no-store404 remain. No SQL/grant, publication, credential or live config change.
+- Final targeted96, full14,776webtests/221files + other packages,7tooling,
+  production build/typecheck/lint(0errors/one existing warning) PASS. Final compiled
+  Next/Chromium7/7 PASS110.86s after monotonic-time strengthening:
+  anonymous Identity/Product image decode, actual bytes despite Range/conditional
+  headers, no session refresh/cookie, exhausted quota before SQL/R2, post-download
+  revocation and stalled-stream abort without final SQL, plus old Owner/public flows.
+- Existing SQL022/024 PASS98 in a clean component PG17 DB with minimal Auth and
+  real pgTap1.3.5(public schema for role visibility), all canonical DDL through279
+  except two previously noted cron installers. Old lab global-count assertion had
+  unrelated prior fixture publications; fresh rerun preserved the test unchanged.
+  This is not fresh full Supabase reset/lint/advisors or live R2/Redis/DB evidence.
+- Exact f7e7ebb CI43580350979/Security43580351025/Guard43580351007 PASS. Latest
+  media hardening push gates PENDING. Browser Promise/CDP fixture handling uses
+  explicit polling;120s test/5s CDP controls unchanged.96 targeted includes expired/
+  backward/nonfinite completion without timer execution. Flags remain off; Owner-approved live configuration/
+  load/restore/release evidence still required. Full media publication/S5/S6/J1–J9/
+  25screens/release OPEN;last CLOSED S4,0new complete journeys CLOSED,15Nov HIGH RISK.
 
 ### Owner catalog title search and operational filters — 2026-11-14 WIB
 

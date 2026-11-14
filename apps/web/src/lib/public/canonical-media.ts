@@ -15,9 +15,11 @@ export const canonicalMediaDescriptorSchema = z.object({
 }).strict();
 type Descriptor = z.infer<typeof canonicalMediaDescriptorSchema>;
 
-export async function downloadCanonicalPublishedMedia(descriptor: Descriptor): Promise<Buffer> {
+export async function downloadCanonicalPublishedMedia(descriptor: Descriptor, signal?:AbortSignal): Promise<Buffer> {
   const { client, bucket } = createProfileMediaR2Connection();
-  const deadline = AbortSignal.timeout(10_000);
+  const objectDeadline = AbortSignal.timeout(10_000);
+  const deadline = signal ? AbortSignal.any([objectDeadline,signal]) : objectDeadline;
+  if(deadline.aborted)throw new Error("Unavailable media.");
   const object = await client.send(new GetObjectCommand({ Bucket: bucket, Key: descriptor.object_key }), { abortSignal: deadline });
   if (!(object.Body instanceof Readable)) throw new Error("Unavailable media.");
   const body = object.Body;

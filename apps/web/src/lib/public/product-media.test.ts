@@ -1,5 +1,6 @@
+import { createClient } from "@supabase/supabase-js";
 import { Readable } from "node:stream";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 const mocks = vi.hoisted(() => ({ service: vi.fn(), rpc: vi.fn(), r2: vi.fn(), send: vi.fn() }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
@@ -9,8 +10,10 @@ const descriptor = { status: "success", spill_reference: 27, current_handle: "cr
   content_type: "image/webp", byte_size: 12, width: 100, height: 100, publication_token: "a".repeat(64) };
 function webp() { const bytes = Buffer.alloc(12); bytes.write("RIFF"); bytes.writeUInt32LE(4,4); bytes.write("WEBP",8); return bytes; }
 describe("Published Product media transport", () => {
+  afterEach(()=>{vi.useRealTimers();vi.restoreAllMocks();vi.unstubAllEnvs();vi.unstubAllGlobals();});
   beforeEach(() => {
-    mocks.service.mockReturnValue({ schema: () => ({ rpc: mocks.rpc }) });
+    vi.stubEnv("SPALL_PUBLIC_MEDIA_ENABLED","true");vi.stubEnv("SPALL_PUBLIC_MEDIA_BUDGET_NAMESPACE","test");vi.stubEnv("UPSTASH_REDIS_REST_URL","https://fixture.upstash.io");vi.stubEnv("UPSTASH_REDIS_REST_TOKEN","fixture-budget-token");vi.stubGlobal("fetch",vi.fn(async()=>Response.json({result:1})));
+    mocks.service.mockReturnValue({ schema: () => ({ rpc: (...args:unknown[])=>({abortSignal:()=>mocks.rpc(...args)}) }) });
     mocks.rpc.mockResolvedValue({ data: descriptor, error: null });
     mocks.r2.mockReturnValue({ client: { send: mocks.send }, bucket: "test-private-bucket" });
     mocks.send.mockImplementation(async () => ({ ContentType: "image/webp", ContentLength: 12, Body: Readable.from([webp()]) }));
@@ -83,4 +86,16 @@ describe("Published Product media transport", () => {
     if (where === "credential") mocks.service.mockImplementation(() => { throw error; });
     expect(await readPublishedProductMedia("creator", "27")).toBeNull();
   });
+
+it("denies before elevated lookup or storage when media quota is exhausted",async()=>{vi.stubGlobal("fetch",vi.fn(async()=>Response.json({result:0})));expect(await readPublishedProductMedia("creator","27")).toBeNull();expect(mocks.service).not.toHaveBeenCalled();expect(mocks.send).not.toHaveBeenCalled();});
+
+it("uses real abortable SDK builders with no-store and redirect:error",async()=>{
+ mocks.service.mockImplementation((fetcher:typeof fetch)=>createClient("https://fixture.supabase.co","service-fixture-key",{global:{fetch:fetcher},auth:{persistSession:false,autoRefreshToken:false}}));
+ vi.stubGlobal("fetch",vi.fn(async(url:unknown)=>String(url).startsWith("https://fixture.upstash.io")?Response.json({result:1}):Response.json(descriptor)));
+ expect(await readPublishedProductMedia("creator","27")).toEqual(webp());const calls=vi.mocked(fetch).mock.calls.filter(c=>String(c[0]).includes("supabase.co"));expect(calls).toHaveLength(2);
+ for(const call of calls){expect(call[1]!.cache).toBe("no-store");expect(call[1]!.redirect).toBe("error");expect(call[1]!.signal).toBeInstanceOf(AbortSignal);expect(JSON.parse(String(call[1]!.body))).toEqual({input_handle:"creator",input_spill_reference:27});}
+});
+it("does not start storage after a late descriptor",async()=>{vi.useFakeTimers();let release:((v:unknown)=>void)|undefined;mocks.rpc.mockImplementationOnce(()=>new Promise(resolve=>{release=resolve;}));const pending=readPublishedProductMedia("creator","27");await vi.advanceTimersByTimeAsync(5001);expect(await pending).toBeNull();release!({data:descriptor,error:null});await vi.advanceTimersByTimeAsync(1);expect(mocks.send).not.toHaveBeenCalled();expect(mocks.rpc).toHaveBeenCalledTimes(1);});
+it("destroys a stalled stream at aggregate deadline without final lookup",async()=>{vi.useFakeTimers();const body=new Readable({read(){}});mocks.send.mockResolvedValue({ContentType:"image/webp",ContentLength:12,Body:body});const pending=readPublishedProductMedia("creator","27");await vi.advanceTimersByTimeAsync(5001);expect(await pending).toBeNull();expect(body.destroyed).toBe(true);expect(mocks.rpc).toHaveBeenCalledTimes(1);});
+
 });

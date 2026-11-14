@@ -9615,6 +9615,21 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
+### Published media admission hardening — 2026-11-14 WIB
+
+- [12.280](./technical-architecture/12.280-public-media-admission-contract.md)
+  closes unbudgeted elevated SQL/R2 entry in existing anonymous image transports.
+  Default-off shared deployment60GET/min ceiling, one5s aggregate guard, actual
+  SDK cancellation/no-store and monotonic phase checks preserve Published-only
+  exact recheck, canonical stream bounds/release and uniform404. No new grants,
+  publication or live configuration. Outbound12.43/fairness/load gates stay distinct.
+- Final targeted96,14,776webtests/221files/7tooling/build/typecheck/lint and
+  compiled Next/Chromium7/7 PASS110.86s after monotonic strengthening; clean component
+  SQL98 PASS. Baselinef7e7ebb CI43580350979/Security43580351025/Guard43580351007 PASS;
+  latest media hardening push gates PENDING. Controlled providers/minimal Auth/
+  component PG are not live or full Supabase evidence. Full media/publication/
+  S5/S6/J1–J9/25screens/release remain OPEN;S4 last CLOSED,15Nov HIGH RISK.
+
 ### Owner catalog search and filters — 2026-11-14 WIB
 
 - [12.279](./technical-architecture/12.279-owner-catalog-search-filter-contract.md)

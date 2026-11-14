@@ -1,5 +1,5 @@
 import { Readable } from "node:stream";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
 const mocks = vi.hoisted(() => ({ service: vi.fn(), rpc: vi.fn(), r2: vi.fn(), send: vi.fn() }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
@@ -9,8 +9,10 @@ const descriptor = { status: "success", current_handle: "creator", object_key: "
   content_type: "image/webp", byte_size: 12, width: 100, height: 100, publication_token: "a".repeat(64) };
 function webp() { const bytes = Buffer.alloc(12); bytes.write("RIFF"); bytes.writeUInt32LE(4,4); bytes.write("WEBP",8); return bytes; }
 describe("Published Identity media transport", () => {
+  afterEach(()=>{vi.useRealTimers();vi.restoreAllMocks();vi.unstubAllEnvs();vi.unstubAllGlobals();});
   beforeEach(() => {
-    mocks.service.mockReturnValue({ schema: () => ({ rpc: mocks.rpc }) });
+    vi.stubEnv("SPALL_PUBLIC_MEDIA_ENABLED","true");vi.stubEnv("SPALL_PUBLIC_MEDIA_BUDGET_NAMESPACE","test");vi.stubEnv("UPSTASH_REDIS_REST_URL","https://fixture.upstash.io");vi.stubEnv("UPSTASH_REDIS_REST_TOKEN","fixture-budget-token");vi.stubGlobal("fetch",vi.fn(async()=>Response.json({result:1})));
+    mocks.service.mockReturnValue({ schema: () => ({ rpc: (...args:unknown[])=>({abortSignal:()=>mocks.rpc(...args)}) }) });
     mocks.rpc.mockResolvedValue({ data: descriptor, error: null });
     mocks.r2.mockReturnValue({ client: { send: mocks.send }, bucket: "test-private-bucket" });
     mocks.send.mockImplementation(async () => ({ ContentType: "image/webp", ContentLength: 12, Body: Readable.from([webp()]) }));
@@ -75,4 +77,7 @@ describe("Published Identity media transport", () => {
     if (where === "credential") mocks.service.mockImplementation(() => { throw error; });
     expect(await readPublishedIdentityMedia("creator")).toBeNull();
   });
+
+it("denies before elevated lookup or storage when media quota is exhausted",async()=>{vi.stubGlobal("fetch",vi.fn(async()=>Response.json({result:0})));expect(await readPublishedIdentityMedia("creator")).toBeNull();expect(mocks.service).not.toHaveBeenCalled();expect(mocks.send).not.toHaveBeenCalled();});
+
 });
