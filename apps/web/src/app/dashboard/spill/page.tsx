@@ -40,7 +40,7 @@ export default async function SpillManagerPage({searchParams}:{searchParams:Prom
    <Link prefetch={false} href={`/dashboard/spill/${item.reference}/edit`} className="mt-5 inline-block font-semibold underline underline-offset-4">{item.published_lifecycle==="archived"?"View archived Item":"Edit saved Item"}</Link>
   </li>)}</ul>:<section className="rounded-3xl border border-neutral-300 p-8"><h2 className="font-serif text-3xl">{scoped?"No Items match this scope.":"Start with something useful."}</h2><p className="mt-3 text-sm leading-6">{scoped?"Try another title or reference, or clear your search and filters to see saved Items.":"No saved Items in this view. Create a Resource when you are ready."}</p>{scoped?<DocumentLink href="/dashboard/spill" className="mt-4 inline-block text-sm underline">Show all saved Items</DocumentLink>:null}</section>}
   <nav aria-label="Spill pages" className="flex flex-wrap gap-6 text-sm">{before!==undefined?<Link prefetch={false} href={catalogFilterPath(filter)} className="underline">Newest Items</Link>:null}{page.has_more?<Link prefetch={false} href={catalogFilterPath(filter,page.next_before_reference)} className="underline">Older Items</Link>:null}</nav>
-  <p className="text-sm leading-6 text-neutral-600">Resume saved Items or create Product and Resource Drafts here. Publishing and lifecycle actions are not available in this view yet.</p>
+  <p className="text-sm leading-6 text-neutral-600">Resume saved Items or create Product and Resource Drafts here. Open a previously published Item to manage its visibility. Publishing remains a separate step.</p>
  </div></main>;
 }
 

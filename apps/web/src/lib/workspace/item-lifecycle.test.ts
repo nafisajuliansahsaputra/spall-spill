@@ -1,0 +1,31 @@
+import { createClient } from "@supabase/supabase-js";
+import { afterEach,beforeEach,expect,it,vi } from "vitest";
+import { changeItemLifecycle,createItemLifecycleReader } from "./item-lifecycle";
+import { lifecycleCommandSchema,lifecycleTarget } from "./item-lifecycle-contract";
+const subject="28200000-0000-4000-8000-000000000001",owner="28200000-0000-4000-8000-000000000002",intent="28200000-0000-4000-8000-000000000003";
+const command={intent_id:intent,reference:27,expected_revision:1,expected_lifecycle:"published" as const,action:"hide" as const,confirmed:false};
+const initial={status:"success",current_handle:"creator",primary_use_case:"personal",reference:27,kind:"resource",lifecycle:"published",revision:1};
+let value:typeof initial,actor:string,ownerId:string,calls:string[],ack:unknown,afterMutation:(()=>void)|undefined,onState:(()=>void)|undefined;
+function client(){const sdk=createClient("https://fixture.supabase.co","fixture-key",{auth:{persistSession:false,autoRefreshToken:false},global:{fetch:vi.fn(async(url,init)=>{
+ const name=String(url).split('/').at(-1)!;calls.push(name);expect(init?.signal).toBeInstanceOf(AbortSignal);
+ if(name==='resolve_current_owner_state'){onState?.();return Response.json({status:"active",owner_id:ownerId,account_state:"active",onboarding_completed:true});}
+ if(name==='resolve_current_owner_home_context')return Response.json({status:"success",current_handle:"creator",primary_use_case:"personal"});
+ if(name==='resolve_current_owner_spill_lifecycle')return Response.json(value);
+ expect(name).toBe('change_current_owner_spill_lifecycle');expect(JSON.parse(String(init?.body))).toEqual({input_command:command});afterMutation?.();return Response.json(ack);
+ })}});vi.spyOn(sdk.auth,"getClaims").mockImplementation(async()=>({data:{claims:{sub:actor}},error:null}) as never);return sdk;}
+beforeEach(()=>{value={...initial,lifecycle:"hidden",revision:2};actor=subject;ownerId=owner;calls=[];afterMutation=undefined;onState=undefined;ack={status:"success",intent_id:intent,reference:27,kind:"resource",lifecycle:"hidden",revision:2};});
+afterEach(()=>{vi.restoreAllMocks();vi.useRealTimers();});
+it("changes lifecycle once and checks actor/Owner/current readback before success",async()=>{expect(await changeItemLifecycle(client(),command)).toEqual(ack);expect(calls).toEqual(['resolve_current_owner_state','change_current_owner_spill_lifecycle','resolve_current_owner_state','resolve_current_owner_spill_lifecycle','resolve_current_owner_state']);});
+it.each([{reference:0},{expected_revision:0},{confirmed:true},{owner_id:owner},{reference:Number.MAX_SAFE_INTEGER+1},{action:"delete"}])("denies malformed command before SDK %j",async patch=>{expect(await changeItemLifecycle(client(),{...command,...patch})).toEqual({status:"invalid_command"});expect(calls).toEqual([]);});
+it.each([{reference:28},{revision:3},{lifecycle:"published"},{intent_id:owner},{owner_id:owner}])("freezes unverified ack without replay %j",async patch=>{ack={...(ack as object),...patch};expect(await changeItemLifecycle(client(),command)).toEqual({status:"outcome_unknown"});expect(calls.filter(n=>n==='change_current_owner_spill_lifecycle')).toHaveLength(1);});
+it.each(['subject','owner','readback','kind','revision'])('denies post-dispatch drift %s',async drift=>{afterMutation=()=>{if(drift==='subject')actor=owner;if(drift==='owner')ownerId=subject;if(drift==='readback')value.lifecycle='archived';if(drift==='kind')value.kind='product';if(drift==='revision')value.revision=3;};expect(await changeItemLifecycle(client(),command)).toEqual({status:"outcome_unknown"});});
+it('refuses replay receipt as current truth after another lifecycle change',async()=>{value={...initial,lifecycle:'published',revision:3};expect(await changeItemLifecycle(client(),command)).toEqual({status:'outcome_unknown'});});
+it('guards two exact read observations and context',async()=>{value={...initial};expect(await createItemLifecycleReader(client(),27).read()).toEqual(value);expect(calls.filter(x=>x==='resolve_current_owner_spill_lifecycle')).toHaveLength(2);value.reference=28;expect(await createItemLifecycleReader(client(),27).read()).toEqual({status:'unavailable'});});
+it('aborts a stalled mutation without replay',async()=>{vi.useFakeTimers();const c=client();const rpc=c.schema('api').rpc.bind(c.schema('api'));let signal:AbortSignal|undefined;vi.spyOn(c,'schema').mockReturnValue({rpc:(name:string,args:unknown)=>name==='change_current_owner_spill_lifecycle'?{abortSignal:(s:AbortSignal)=>{signal=s;return new Promise(()=>{});}}:rpc(name,args as never)} as never);const pending=changeItemLifecycle(c,command);await vi.advanceTimersByTimeAsync(5001);expect(await pending).toEqual({status:'outcome_unknown'});expect(signal?.aborted).toBe(true);});
+it.each([['hide','published','hidden'],['restore','hidden','published'],['archive','published','archived'],['archive','hidden','archived'],['restore','archived','hidden'],['hide','hidden',null],['archive','archived',null]])('locked transition %s %s', (action,state,target)=>{expect(lifecycleTarget(action as never,state as never)).toBe(target);});
+it('requires explicit confirmation exclusively for Archive',()=>{expect(lifecycleCommandSchema.safeParse({...command,action:'archive'}).success).toBe(false);expect(lifecycleCommandSchema.safeParse({...command,action:'archive',confirmed:true}).success).toBe(true);});
+
+it.each([5100,100,Number.NaN,Number.POSITIVE_INFINITY])('rejects late/backward/nonfinite ack before timers %s',async completion=>{let now=100;vi.spyOn(performance,'now').mockImplementation(()=>now);onState=()=>{now=101;};afterMutation=()=>{now=completion;};expect(await changeItemLifecycle(client(),command)).toEqual({status:'outcome_unknown'});});
+
+it.each(['stale_write','review_required','revision_exhausted','conflicting_intent'])('keeps verified negative outcome %s specific without replay',async status=>{ack={status};expect(await changeItemLifecycle(client(),command)).toEqual({status});expect(calls.filter(x=>x==='change_current_owner_spill_lifecycle')).toHaveLength(1);});
+it('does not expose a negative outcome after actor drift',async()=>{ack={status:'review_required'};afterMutation=()=>{actor=owner;};expect(await changeItemLifecycle(client(),command)).toEqual({status:'outcome_unknown'});});

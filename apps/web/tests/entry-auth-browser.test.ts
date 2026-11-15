@@ -17,7 +17,7 @@ async function listen(server: Server) {
   const address = server.address(); if (!address || typeof address === "string") throw new Error("Missing fixture address");
   return address.port;
 }
-it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects real Owner workflows (%s)", async scenario => {
+it.each(["existing", "spill", "publish", "publish-lost", "search", "lifecycle"])("connects real Owner workflows (%s)", async scenario => {
   const spillOnly = scenario === "spill", publishOnly = scenario.startsWith("publish"), publicationLost = scenario === "publish-lost";
   let published: null | { name: string; bio: string | null; starter: string; handle: string } = null;
   let confirmed = false;
@@ -43,6 +43,9 @@ it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects re
     {reference:2,kind:"resource",source_revision:2,working_revision:null as number|null,source_changed:false,title:"Setup Resource",source_url:"https://resource.example.test/source" as string|null,resource_type:"document" as string|null,published_lifecycle:"hidden" as string|null,has_primary_image:false,destinations:[]},
   ];
   const extraResources:typeof starterItems=[];
+  let lifecycleDispatches=0;
+  const lifecycleRevisions=new Map<number,number>([[2,1]]);
+  const lifecycleReceipts=new Map<string,{command:string;ack:object}>();
   const preparationRevisions=new Map<number,number>([[1,4]]);
   const selectedImages=new Map<number,string>([[1,"27000000-0000-4000-8000-000000000001"]]);
   const mediaIntents=new Map<string,{reference:number;key:string;type:string;size:number;status:string;asset?:{asset_key:string;object_key:string;stored_content_type:"image/webp";byte_size:number;width:number;height:number}}>();
@@ -84,7 +87,7 @@ it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects re
     }
     if (path === "/redis") {
       const command = JSON.parse(body); expect(command[0]).toBe("eval");
-      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text|contact|blocks|spill-cta|first-publish|public-identity)-/);
+      expect(command[2]).toBe(2); expect(command[3]).toMatch(/^spall-identity-text-editor:(profile|starter|resource|product|text|contact|blocks|spill-cta|first-publish|public-identity|public-spill|public-media|item-lifecycle)-/);
       expect(command[3]).not.toContain(user.id);
       response.end(JSON.stringify({ result: budgetDenied ? 0 : 1 })); return;
     }
@@ -101,7 +104,29 @@ it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects re
     }
     if (path.startsWith("/rest/v1/rpc/")) {
       const name = path.split("/").at(-1)!; const data = JSON.parse(body);
-      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_catalog_search_server" || name === "execute_onboarding_publish_server" || name === "execute_public_identity_server" || name === "execute_owner_spill_cta_editor_server" || name === "execute_owner_block_controls_server" || name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      expect(request.headers["content-profile"]).toBe("api"); expect(request.headers.authorization).toBe((name === "execute_owner_spill_lifecycle_server" || name === "execute_public_spill_server" || name === "execute_owner_catalog_search_server" || name === "execute_onboarding_publish_server" || name === "execute_public_identity_server" || name === "execute_owner_spill_cta_editor_server" || name === "execute_owner_block_controls_server" || name === "execute_owner_contact_editor_server" || name === "execute_owner_text_editor_server" || name === "execute_owner_profile_editor_server" || name === "execute_owner_starter_recovery_server" || name === "execute_owner_resource_catalog_server" || name === "execute_owner_product_creation_server" || name === "execute_owner_product_destinations_server" || name === "execute_owner_product_image_server" || name === "create_product_media_upload_intent_server" || name === "resolve_product_media_upload_intent_server" || name === "complete_product_media_upload_server") ? "Bearer isolated-service-role" : `Bearer ${access}`);
+      if(name === "execute_public_spill_server"){
+        expect(data.input_operation).toBe("detail");const item=starterItems.find(v=>v.reference===data.input_query.reference);
+        response.end(JSON.stringify(item?.published_lifecycle==='published'?{status:'success',item_type:'resource',detail:{status:'success',current_handle:setup.handle,display_name:'Lifecycle Owner',spill_reference:2,title:'Published Resource',resource_type:'document',available:false}}:{status:'unavailable'}));return;
+      }
+      if(name === "execute_owner_spill_lifecycle_server"){
+        expect(data.input_subject).toBe(user.id);expect(Object.keys(data).sort()).toEqual(['input_operation','input_payload','input_subject']);
+        const ref=data.input_operation==='resolve_current_owner_spill_lifecycle'?data.input_payload.input_reference:data.input_payload.input_command.reference;
+        const item=starterItems.find(v=>v.reference===ref);if(!item?.published_lifecycle||accountState!=='active'){response.end('{"status":"unavailable"}');return;}
+        const revision=lifecycleRevisions.get(ref)??1;
+        if(data.input_operation==='resolve_current_owner_spill_lifecycle'){response.end(JSON.stringify({status:'success',current_handle:setup.handle,primary_use_case:setup.useCase,reference:ref,kind:item.kind,lifecycle:item.published_lifecycle,revision}));return;}
+        expect(data.input_operation).toBe('change_current_owner_spill_lifecycle');lifecycleDispatches++;const c=data.input_payload.input_command;
+        expect(Object.keys(c).sort()).toEqual(['action','confirmed','expected_lifecycle','expected_revision','intent_id','reference']);
+        const prior=lifecycleReceipts.get(c.intent_id);let result:object;
+        if(prior)result=prior.command===JSON.stringify(c)?prior.ack:{status:'conflicting_intent'};
+        else if(c.expected_revision!==revision||c.expected_lifecycle!==item.published_lifecycle)result={status:'stale_write'};
+        else{
+          const target=c.action==='hide'&&item.published_lifecycle==='published'?'hidden':c.action==='restore'&&item.published_lifecycle==='hidden'?'published':c.action==='restore'&&item.published_lifecycle==='archived'?'hidden':c.action==='archive'&&c.confirmed&&item.published_lifecycle!=='archived'?'archived':null;
+          if(!target)result={status:'invalid_transition'};else{item.published_lifecycle=target;lifecycleRevisions.set(ref,revision+1);result={status:'success',intent_id:c.intent_id,reference:ref,kind:item.kind,lifecycle:target,revision:revision+1};lifecycleReceipts.set(c.intent_id,{command:JSON.stringify(c),ack:result});}
+        }
+        if(loseAcknowledgment){response.statusCode=503;response.end('{"message":"fixture lifecycle reply lost"}');return;}
+        response.end(JSON.stringify(result));return;
+      }
       if(name === "execute_owner_catalog_search_server"){
         expect(data.input_subject).toBe(user.id);expect(data.input_operation).toBe("resolve_current_owner_spill_manager_filtered");expect(Object.keys(data.input_payload)).toEqual(["input_filter"]);
         const f=data.input_payload.input_filter;expect(Object.keys(f).sort()).toEqual(["before","kind","lifecycle","q"]);
@@ -115,7 +140,7 @@ it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects re
         if(data.input_handle!==setup.handle){response.end('{"status":"unavailable"}');return;}
         response.end(JSON.stringify(published ? {status:"success",current_handle:published.handle,display_name:published.name,bio:published.bio,starter_key:published.starter,connection:null,has_spill:false} : {status:"unavailable"}));return;
       }
-      if(name === "execute_owner_catalog_search_server" || name === "execute_onboarding_publish_server") {
+      if(name === "execute_owner_spill_lifecycle_server" || name === "execute_public_spill_server" || name === "execute_owner_catalog_search_server" || name === "execute_onboarding_publish_server") {
         expect(data.input_subject).toBe(user.id);expect(data.input_operation).toBe("publish_current_onboarding_identity");
         expect(data.input_payload).toEqual({input_receipt_id:"25800000-0000-4000-8000-000000000002",input_snapshot_hash:"b".repeat(64)});
         expect(confirmed).toBe(true);expect(published).toBeNull();expect(linkCollection).toBeNull();
@@ -390,12 +415,13 @@ it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects re
     return new Response(response.body, { status: response.status, headers: response.headers });
   };`);
   const app = spawn(process.execPath, [resolve("node_modules/next/dist/bin/next"), process.env.SPALL_ENTRY_COMPILED === "1" ? "start" : "dev", "--hostname", "127.0.0.1", "--port", String(port)], {
-    env: { ...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --require=${relay}`, SUPABASE_SERVICE_ROLE_KEY: "isolated-service-role", SPALL_FIRST_IDENTITY_PUBLISH_ENABLED:publishOnly?"true":"false",SPALL_PUBLIC_IDENTITY_ENABLED:publishOnly?"true":"false",SPALL_PUBLIC_ORIGIN:appOrigin,SPALL_PUBLIC_IDENTITY_BUDGET_NAMESPACE:"browser", UPSTASH_REDIS_REST_URL: "https://fixture.upstash.io", UPSTASH_REDIS_REST_TOKEN: "fixture-budget-token", SPALL_OWNER_PROFILE_BUDGET_NAMESPACE: "browser",R2_S3_ENDPOINT:`https://127.0.0.1:${providerPort}`,R2_ACCESS_KEY_ID:"fixture-r2-access",R2_SECRET_ACCESS_KEY:"fixture-r2-secret",R2_PROFILE_BUCKET:"fixture-media",MEDIA_SANITIZER_URL:`https://127.0.0.1:${providerPort}`,MEDIA_SANITIZER_SHARED_SECRET:mediaSecret, NEXT_TELEMETRY_DISABLED: "1", NODE_EXTRA_CA_CERTS: cert, NEXT_PUBLIC_SUPABASE_URL: `https://127.0.0.1:${providerPort}`, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "publishable-local-fixture" },
+    env: { ...process.env, NODE_OPTIONS: `${process.env.NODE_OPTIONS ?? ""} --require=${relay}`, SUPABASE_SERVICE_ROLE_KEY: "isolated-service-role", SPALL_FIRST_IDENTITY_PUBLISH_ENABLED:publishOnly?"true":"false",SPALL_PUBLIC_IDENTITY_ENABLED:publishOnly||scenario==="lifecycle"?"true":"false",SPALL_PUBLIC_SPILL_ENABLED:scenario==="lifecycle"?"true":"false",SPALL_PUBLIC_MEDIA_ENABLED:scenario==="lifecycle"?"true":"false",SPALL_PUBLIC_MEDIA_BUDGET_NAMESPACE:"browser",SPALL_PUBLIC_SPILL_BUDGET_NAMESPACE:"browser",SPALL_PUBLIC_ORIGIN:appOrigin,SPALL_PUBLIC_IDENTITY_BUDGET_NAMESPACE:"browser", UPSTASH_REDIS_REST_URL: "https://fixture.upstash.io", UPSTASH_REDIS_REST_TOKEN: "fixture-budget-token", SPALL_OWNER_PROFILE_BUDGET_NAMESPACE: "browser",R2_S3_ENDPOINT:`https://127.0.0.1:${providerPort}`,R2_ACCESS_KEY_ID:"fixture-r2-access",R2_SECRET_ACCESS_KEY:"fixture-r2-secret",R2_PROFILE_BUCKET:"fixture-media",MEDIA_SANITIZER_URL:`https://127.0.0.1:${providerPort}`,MEDIA_SANITIZER_SHARED_SECRET:mediaSecret, NEXT_TELEMETRY_DISABLED: "1", NODE_EXTRA_CA_CERTS: cert, NEXT_PUBLIC_SUPABASE_URL: `https://127.0.0.1:${providerPort}`, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: "publishable-local-fixture" },
     stdio: ["ignore", "pipe", "pipe"], detached: true,
   });
   let logs = ""; app.stdout.on("data", x => { logs += String(x); }); app.stderr.on("data", x => { logs += String(x); });
   const origin = `http://127.0.0.1:${port}`;
   let browser: Awaited<ReturnType<typeof chromiumFixture>> | undefined;
+  let lifecyclePublicBrowser: Awaited<ReturnType<typeof chromiumFixture>> | undefined;
   try {
     await until(async () => { if (app.exitCode !== null) throw new Error("Next exited: " + logs.slice(-1000)); try { return (await fetch(origin, { signal: AbortSignal.timeout(2000) })).ok; } catch { return false; } }, 40000);
     browser = await chromiumFixture({certificateSpki});
@@ -433,7 +459,7 @@ it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects re
         await b.command("Input.dispatchKeyEvent", { type: "keyUp", key: "Backspace", code: "Backspace", windowsVirtualKeyCode: 8 });
       }
     };
-    const submit = async () => { await b.evaluate(`document.querySelector('form:not([aria-label="Sign out"])').requestSubmit()`); };
+    const submit = async () => { await b.evaluate(`(document.querySelector('form[aria-label="Item Working"]')||document.querySelector('form:not([aria-label="Sign out"])')).requestSubmit()`); };
     const text = async (value: string) => until(() => b.evaluate<boolean>(`document.body?.innerText.includes(${JSON.stringify(value)}) === true`), 20000);
     const scopedInput=async(selector:string,name:string,value:string)=>{
       await b.evaluate(`document.querySelector(${JSON.stringify(selector+' [name="'+name+'"]')}).focus()`);
@@ -441,6 +467,37 @@ it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects re
       await b.command("Input.dispatchKeyEvent",{type:"keyUp",key:"a",code:"KeyA",windowsVirtualKeyCode:65});
       await b.command("Input.insertText",{text:value});
     };
+    if(scenario==='lifecycle'){
+      lifecyclePublicBrowser=await chromiumFixture();const visitor=lifecyclePublicBrowser;await visitor.command('Page.enable');await visitor.command('Log.enable');
+      visitor.on('Log.entryAdded',v=>{const line=(v as {entry:{text:string}}).entry.text;if(/Content Security Policy|Refused to.*(script|style)/i.test(line))cspErrors.push(line);});
+      accountState='active';setup.step=5;setup.handle='fixture-creator';setup.useCase='personal';setup.identity={display_name:'Lifecycle Owner',bio:null,profile_asset_key:null,revision:1};setup.layout={starter_key:'clean',revision:1};starterItems[1]!.published_lifecycle='published';published={name:'Lifecycle Owner',bio:null,starter:'clean',handle:setup.handle};
+      await visit('/login','Good to have you back.');await input('email','owner@example.test');await input('password','new-password');await submit();await text('Pick up where you left off.');
+      await visit('/dashboard/spill','Good things, kept here.');await b.evaluate(`document.querySelector('a[href="/dashboard/spill/2/edit"]').click()`);await text('Keep shaping this resource.');
+      const publicUnavailable=async()=>{
+        const response=await fetch(origin+'/fixture-creator/spill/2'),body=await response.text();
+        // App Router may commit 200 before streamed notFound; the unavailable
+        // document must still contain no Published/Working recognition or URL.
+        expect([200,404]).toContain(response.status);expect(response.headers.get('cache-control')).toContain('no-store');
+        expect(body.includes('NEXT_HTTP_ERROR_FALLBACK;404')||body.includes('This Spill or Item is unavailable.')).toBe(true);expect(body).not.toContain('Published Resource');expect(body).not.toContain('Unsaved local Resource');expect(body).not.toContain('source_url');
+        await visitor.command('Page.navigate',{url:origin+'/fixture-creator/spill/2'});
+        await until(()=>visitor.evaluate<boolean>("document.readyState==='complete'&&document.body.innerText.includes('This Spill or Item is unavailable.')"),20000);
+        expect(await visitor.evaluate("document.body.innerText.includes('Published Resource')")).toBe(false);
+      };
+      const lifecycleSubmit=(label:string)=>b.evaluate(`document.querySelector('form[aria-label="${label}"] button').click()`);
+      await input('title','Unsaved local Resource');await lifecycleSubmit('Hide Item');await text('Hidden from public discovery.');expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe('Unsaved local Resource');expect(starterItems[1]!.title).toBe('Setup Resource');
+      await publicUnavailable();await lifecycleSubmit('Restore Item');await text('Restored using the last Published version.');
+      const publicBody=await (await fetch(origin+'/fixture-creator/spill/2')).text();expect(publicBody).toContain('Published Resource');expect(publicBody).not.toContain('Unsaved local Resource');
+      await b.evaluate("document.querySelector('#item-lifecycle details').open=true");await text('Archive intentionally retires this Item.');await b.evaluate("document.querySelector('#item-lifecycle details').open=false");expect(starterItems[1]!.published_lifecycle).toBe('published');
+      await b.evaluate("document.querySelector('#item-lifecycle details').open=true;document.querySelector('input[name=confirmed][type=checkbox]').click()");await lifecycleSubmit('Confirm Archive Item');await text('Archived. Saved work and the reference are retained.');await until(()=>b.evaluate<boolean>("document.activeElement?.textContent==='Restore to Hidden'"));expect(await b.evaluate("document.querySelector('[name=title]').disabled||document.querySelector('[name=title]').matches(':disabled')")).toBe(true);await publicUnavailable();
+      await lifecycleSubmit('Restore Item');await text('Restored to Hidden. It has not been republished.');expect(await b.evaluate(`document.querySelector('form[aria-label="Restore Item"] button').textContent`)).toBe('Restore Published version');await publicUnavailable();
+      await reloadFromLink('#item-lifecycle a','Keep shaping this resource.');expect(await b.evaluate("document.querySelector('[name=title]').matches(':disabled')")).toBe(false);await lifecycleSubmit('Restore Item');await text('Restored using the last Published version.');
+      lifecycleRevisions.set(2,7);await input('title','Keep this stale input');await lifecycleSubmit('Hide Item');await text('This Item changed in another request.');expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe('Keep this stale input');expect(starterItems[1]!.published_lifecycle).toBe('published');
+      await reloadFromLink('#item-lifecycle a','Keep shaping this resource.');loseAcknowledgment=true;const beforeLost=lifecycleReceipts.size,beforeDispatch=lifecycleDispatches;await lifecycleSubmit('Hide Item');await text('We couldn’t confirm the current lifecycle.');loseAcknowledgment=false;expect(lifecycleReceipts.size).toBe(beforeLost+1);expect(lifecycleDispatches).toBe(beforeDispatch+1);expect(starterItems[1]!.published_lifecycle).toBe('hidden');
+      await reloadFromLink('#item-lifecycle a','Keep shaping this resource.');expect(await b.evaluate("document.querySelector('#lifecycle-heading').textContent")).toBe('Hidden');
+      for(const width of [360,768,1440]){await b.command('Emulation.setDeviceMetricsOverride',{width,height:950,deviceScaleFactor:1,mobile:width===360});expect(await b.evaluate('document.documentElement.scrollWidth<=innerWidth')).toBe(true);}
+      const shot=await b.command<{data:string}>('Page.captureScreenshot',{format:'png',captureBeyondViewport:true});await writeFile('/tmp/spall-282-lifecycle.png',Buffer.from(shot.data,'base64'));
+      expect(starterItems[1]!.reference).toBe(2);expect(starterItems[1]!.title).toBe('Setup Resource');expect(cspErrors).toEqual([]);expect(errors).toEqual([]);return;
+    }
     if(scenario==="search"){
       accountState="active";setup.step=5;setup.handle="fixture-creator";setup.useCase="personal";setup.identity={display_name:"Catalog Owner",bio:null,profile_asset_key:null,revision:1};setup.layout={starter_key:"clean",revision:1};
       for(let n=0;n<27;n++)extraResources.push({reference:n+10,kind:"resource",source_revision:1,working_revision:null,source_changed:false,title:`Needle Resource ${n}`,source_url:null,resource_type:"document",published_lifecycle:null,has_primary_image:false,destinations:[]});
@@ -956,7 +1013,7 @@ it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects re
     await visit("/dashboard/spill/2/edit","Keep shaping this resource.");
     loseAcknowledgment=true;await input("title","Resource saved despite unknown response");await submit();await text("We couldn’t confirm this save.");loseAcknowledgment=false;
     await visit("/dashboard/spill/2/edit","Keep shaping this resource.");expect(await b.evaluate("document.querySelector('[name=title]').value")).toBe("Resource saved despite unknown response");
-    starterItems[1]!.published_lifecycle="archived";await visit("/dashboard/spill/2/edit","This Item is archived.");expect(await b.evaluate("document.querySelectorAll('form[aria-label=\"Item Working\"]').length")).toBe(0);await text("Resource saved despite unknown response");
+    starterItems[1]!.published_lifecycle="archived";await visit("/dashboard/spill/2/edit","Archived Item work is retained.");expect(await b.evaluate("document.querySelectorAll('form[aria-label=\"Item Working\"]').length")).toBe(0);await text("Resource saved despite unknown response");
     expect(errors.length).toBe(beforeRecoveryErrors);
     await visit("/dashboard/spill/999/edit","That saved Item isn’t available.");
     await visit("/dashboard","Pick up where you left off.");await b.evaluate("document.querySelector('.private-session-menu summary').click()");await logout();await text("Good to have you back.");
@@ -1091,6 +1148,7 @@ it.each(["existing", "spill", "publish", "publish-lost", "search"])("connects re
     expect(calls.some(call => call.includes("publish_current"))).toBe(false);
     expect(cspErrors).toEqual([]);
   } finally {
+    await lifecyclePublicBrowser?.close();
     await browser?.close();
     if (app.pid) { try { process.kill(-app.pid, "SIGTERM"); } catch {} }
     provider.closeAllConnections(); await new Promise<void>(r => provider.close(() => r()));

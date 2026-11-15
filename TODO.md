@@ -2,16 +2,16 @@
 
 **Status:** Execution backlog  
 **Rule:** work top-to-bottom unless a dependency or blocking defect requires a deliberate exception.  
-**Last synchronized:** 2026-11-14 WIB
+**Last synchronized:** 2026-11-15 WIB
 
-Latest delivery: staged anonymous Published Spill browse/title search/#reference
-and Product/Resource recognition routes, Published image admission hardening,
-Owner catalog filters and Identity-only first Publish/workspace handoff. Baseline
-fa7717b CI/Security/Guard PASS (CI attempt2 after fixture startup failure); current
-slice local gates PASS, exact push gates PENDING. First Publish5Nov MISSED;8Nov partial;11/13Nov full
-milestones unmet. Full J1–J9/25screens/release OPEN;15Nov HIGH RISK. Next: complete
-publication bundles/media/modular CTA and native outbound, lifecycle/operator/
-analytics/settings and authorized live-provider/release evidence.
+Latest delivery: connected Hide/Undo/Restore/confirmed Archive for existing
+Published Product/Resource snapshots, plus public Spill browse/search/detail and
+private Owner editing. Archived Restore returns Hidden; newer Working stays private.
+Baseline8f656bb CI/Security/Guard PASS. Current lifecycle local gates PASS; new
+exact-push gates PENDING.5Nov first-Publish milestone MISSED;8Nov partial;11/13Nov
+full milestones unmet.15Nov HIGH RISK: full J1–J9/25screens/release OPEN. Next P0:
+Item/modular/media publication, native safe outbound and Draft retirement; remaining
+analytics/operator/settings/category/Featured and live/release acceptance stay OPEN.
 
 ## Autonomous Codex Cloud lane — 2026-10-05
 
@@ -85,6 +85,45 @@ and relevant locked technical contracts.
 - [ ] Verify mobile monitoring/steering and one laptop-off continuation cycle
   before treating unattended operation as ready.
 
+### Owner Published Item visibility lifecycle — 2026-11-15 WIB
+
+- [12.282](docs/product-spec/technical-architecture/12.282-owner-published-item-lifecycle-contract.md):
+  real saved Item editor supports immediate Hide + Undo/Restore, confirmed Archive,
+  and Archived Restore → Hidden without republishing Working. Local inputs remain
+  mounted; editing pauses after Archive until fresh GET. Verified stale/review-required
+  failures show truthful recovery; unknown outcomes freeze without automatic retry.
+- SQL uses Owner→publication locks, revision CAS/ABA protection including snapshot
+  updates, overflow denial, immutable Owner+intent receipts with server-derived actor,
+  strict fixed service gateway and original RPC/raw table denial. Separate verified-
+  subject30save/600read per-minute budget and5s abort/monotonic/same-actor/Owner/current-
+  state checks precede successful UI acknowledgment. No raw URL/open transport added.
+- Full14,889webtests/225files + workspace packages,7tooling, final full typecheck/
+  lint(0errors/one old warning)/production build PASS. Fresh component PG17/minimal
+  Auth canonical DDL (two known cron installers excluded), SQL09273 + related
+  regressions408 =481 PASS, including actual roles/cross-owner/RLS under temporary
+  SELECT grants, replay/conflict, failed Restore rollback, immutable snapshots/time/
+  reference/Working and actor receipt. Real lock-barrier concurrency1/1 PASS7.38s,
+  duplicate/distinct/restriction races; disposable fixtures retain immutable history.
+- Final compiled actual Next/Chromium9/9 PASS205.44s, no skips: old flows plus
+  Hide/Undo/Archive/cancel/Archived Restore Hidden, retained local Working, stale/
+  lost-ack GET recovery, exactly one mutating HTTP dispatch after lost ack,
+  360/768/1440, keyboard focus and anonymous Hidden/Archived suppression/no CSP leaks.
+  A real focus race was fixed by waiting for pending=false; assertions/120s controls
+  retained. Initial pre-build fixture startup and incorrect SPA loader assumption
+  were corrected, not counted as PASS. Nested public detail now registers its own
+  generic unavailable recovery; streamed notFound can send200 but must leak no Item.
+  Screenshot inspected; controlled providers/component PG are not live evidence.
+- Pinned bb79dce D03 readback matches blob bcbc1a925c339cea84c2095aa45dd18c3871e68c;
+  D05/D07 independently confirm Archived→Hidden and last-Published restore semantics.
+  Legacy connector301 was resolved through temporary read-only Git cache. At01:09UTC
+  resume HEAD/WIP were intact; full browser log had completed20:46UTC. Cause of the
+  execution gap is unproven; no reset, duplicate Goal or quota-cause claim.
+- Baseline8f656bb all8push jobs PASS:CI43611442096/Security43611442091/Guard43611442072,
+  including5793DBassertions/91files, reset/lint/advisors/concurrency/retention. New
+  exact-push gates PENDING. Draft retirement/Item Publish/full D03/D05/D07/J5/J9,
+  native outbound/provider/operator/analytics/settings/release remain OPEN. Last
+  CLOSED S4;0new fulljourneys CLOSED;15Nov HIGH RISK. Existing Owner gates unchanged.
+
 ### Public Spill browse/search and exact recognition routes — 2026-11-14 WIB
 
 - [12.281](docs/product-spec/technical-architecture/12.281-public-spill-recognition-routes-contract.md):
@@ -107,7 +146,8 @@ and relevant locked technical contracts.
   Next/Chromium8/8 PASS126.24s: pagination/Back, exact/#ref auto-detail, one-keyword
   list, image, unavailable browse recovery, exhausted quota before SQL, active
   accessible filter/keyboard and browse/Product/Resource360/768/1440 with no CSP/
-  auth/private-URL leaks. Screenshot inspected. Exact-push gates PENDING.
+  auth/private-URL leaks. Screenshot inspected. Exact8f656bb CI43611442096/
+  Security43611442091/Guard43611442072 PASS, including fresh5793DB/91files.
 - Details honestly show temporary native link unavailability.12.43 trusted ingress,
   one-use Product/Resource actions, category/Featured, modular entry/publication,
   analytics/operator/settings/live release remain OPEN. Recognition integration is
@@ -10463,9 +10503,9 @@ where private foundations exist. No screen is production verified this run.
 | D02 Identity Editor | Connected Profile/style, Link/Text/Contact editing, Spill integration creation, composition controls and saved preview/browser fixture | OPEN: media editing, live in-context preview, publish + provider |
 | D03 Spill Manager | Mounted20-row seek, saved-title/exact-reference search, type/lifecycle filters, clear/Back recovery and exact saved editor | OPEN: category/health/lifecycle actions/final ordering + provider acceptance |
 | D04 Add Product | Multiple returning Owner manual/source Draft creation; SQL/browser fixture | OPEN: extraction/media/destination/publish |
-| D05 Edit Product | Setup/general raw Working, destination editing and upload/select/remove media; SQL/actual SDK/browser fixtures | OPEN: live media/safety/preview/publish lifecycle |
+| D05 Edit Product | Working/destinations/media plus existing Published snapshot Hide/Restore/confirmed Archive; SQL/SDK/browser fixtures | OPEN: Draft retirement/live media/safety/preview/publish |
 | D06 Add Resource | Returning Owner multiple meaningful Draft creation and lost-ack readback; SQL/browser fixture | OPEN: preview/publish + live providers |
-| D07 Edit Resource | Setup and general Resource raw Working/meaning save/reload; SQL/browser fixture | OPEN: media/destination/preview/publish lifecycle |
+| D07 Edit Resource | Working/meaning and existing Published snapshot Hide/Restore/confirmed Archive; SQL/SDK/browser fixtures | OPEN: Draft retirement/media/destination/preview/publish |
 | A01 Sign Up | Connected form + browser confirmation fixture | PROVIDER PENDING: live verification/resolver |
 | A02 Login | Success/failure + SSR→O01 + logout/resume browser fixture | PROVIDER PENDING: live success/session |
 | A03 Recovery | New actual SDK/action/dev+compiled browser flow | PROVIDER PENDING: inbox/expiry/replay/abuse |

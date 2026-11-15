@@ -9615,6 +9615,28 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   target15Nov at risk. Next: general media, public Spill/detail, explicit Publish
   and universal workspace handoff; analytics/operator/lifecycle remain OPEN.
 
+### Owner Published Item visibility lifecycle — 2026-11-15 WIB
+
+- [12.282](./technical-architecture/12.282-owner-published-item-lifecycle-contract.md)
+  connects existing Published Product/Resource Hide/Undo/Restore and confirmed
+  Archive in the saved editor. Archived Restore → Hidden; Hidden Restore uses last
+  eligible Published snapshot and never publishes newer Working. Revision CAS/ABA,
+  Owner/publication locks, immutable actor/intent receipts, closed original ACLs,
+  fixed service-only admission, quota/deadline and exact post-ack readback protect
+  truthful outcomes. Unknown results freeze until GET; local inputs are retained.
+- Full14,889webtests/225files + workspace/7tooling/typecheck/lint/build PASS; fresh
+  component SQL481 and actual PostgreSQL lock-barrier race1/1 PASS7.38s. Final compiled
+  Next/Chromium9/9 PASS205.44s preserves old flows and verifies visibility, Archive
+  confirmation/cancel/Hidden restore, single lost-ack dispatch, recovery, focus,
+  responsive widths and anonymous unavailable/no private recognition. Nested public
+  detail has explicit generic recovery. Screenshot inspected. Full Supabase/exact-
+  push gates remain PENDING; controlled providers/minimal Auth are not live proof.
+- Baseline8f656bb CI43611442096/Security43611442091/Guard43611442072 all PASS,
+  including fresh5793DB/91files and required concurrency/retention/advisors. Draft
+  retirement, Item/modular/media Publish, native outbound/providers, category/Featured,
+  analytics/operator/settings and full J1–J9/25screens/release remain OPEN. Last
+  CLOSED S4;0new complete journeys CLOSED,15Nov HIGH RISK. No production mutation.
+
 ### Public Spill browse/search and exact recognition — 2026-11-14 WIB
 
 - [12.281](./technical-architecture/12.281-public-spill-recognition-routes-contract.md)
@@ -9629,7 +9651,8 @@ Screen/J1–J9 acceptance ledger is maintained in TODO.md; no complete journey c
   PASS. Final full typecheck/lint(0errors/one old warning)/production build and
   compiled actual Next/Chromium8/8 PASS126.24s, including recovery/keyboard and
   browse/both details360/768/1440, actual image and quota-before-SQL. Screenshot
-  inspected. Exact-push gates PENDING until observed.
+  inspected. Exact8f656bb CI43611442096/Security43611442091/Guard43611442072
+  PASS, including fresh5793DBassertions/91files, reset/lint/advisors and race gates.
 - Full P02/P03/P04/J6–J8 remain OPEN: native one-use outbound/trusted ingress12.43,
   category/Featured/modular entry/publication and live providers require further work.
   Operator/analytics/settings/full25screens/release stay OPEN;last CLOSED S4,

@@ -3,7 +3,7 @@ import { afterEach, beforeEach, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({ session: vi.fn(), service: vi.fn() }));
 vi.mock("@/lib/supabase/server", () => ({ createClient: mocks.session }));
 vi.mock("@/lib/supabase/service", () => ({ createSupabaseServiceClient: mocks.service }));
-import { createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient, createProductImageClient, admitProductMedia, createTextEditorClient, createContactEditorClient, createBlockControlsClient, createSpillCtaEditorClient, createOnboardingPublishClient } from "./profile-editor-server";
+import { createItemLifecycleClient, createProfileEditorClient, createStarterRecoveryClient, admitProfileEditor, createResourceCatalogClient, createProductCreationClient, createProductDestinationsClient, createProductImageClient, admitProductMedia, createTextEditorClient, createContactEditorClient, createBlockControlsClient, createSpillCtaEditorClient, createOnboardingPublishClient } from "./profile-editor-server";
 const subject = "26000000-0000-4000-8000-000000000001";
 let denied = false;
 let calls: { url: string; body: Record<string, unknown>; headers: Headers }[];
@@ -158,3 +158,11 @@ it("confines first Publish to one fixed operation and separate save quota",async
 });
 
 it("confines catalog search to its fixed gateway under Resource read quota",async()=>{const client=await createResourceCatalogClient();await client.schema("api").rpc("resolve_current_owner_spill_manager_filtered",{input_filter:{q:"safe",kind:"all",lifecycle:"all",before:null}});expect(JSON.stringify(calls[0]!.body)).toContain("resource-read-test");expect(calls[1]!.url).toContain("/rpc/execute_owner_catalog_search_server");expect(calls[1]!.body.input_subject).toBe(subject);});
+
+it.each(["resolve_current_owner_spill_lifecycle","change_current_owner_spill_lifecycle"])("fixed Item lifecycle admission %s",async operation=>{
+ const client=await createItemLifecycleClient();await client.schema("api").rpc(operation,{});
+ expect(calls).toHaveLength(2);expect(calls[1]!.url).toContain("/rpc/execute_owner_spill_lifecycle_server");
+ expect(JSON.stringify(calls[0]!.body)).toContain(operation.startsWith("change")?"item-lifecycle-save-test":"item-lifecycle-read-test");
+ expect(calls[1]!.body.input_subject).toBe(subject);expect(()=>client.schema("api").rpc("publish_current_onboarding")).toThrow();
+});
+it("denies Item lifecycle quota without elevated dispatch",async()=>{denied=true;const client=await createItemLifecycleClient();expect((await client.schema("api").rpc("change_current_owner_spill_lifecycle",{})).error).not.toBeNull();expect(calls).toHaveLength(1);});
